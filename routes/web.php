@@ -9,9 +9,12 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'admin-cms'], function(){
-    Route::get('', [DashboardController::class, 'index']);
+    Auth::routes();
+
+    Route::group(['middleware' => 'auth'], function(){
+        Route::get('', [DashboardController::class, 'index']);
+    });
 });
 
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
