@@ -4,10 +4,10 @@ use App\Http\Controllers\Backend\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Frontend
+Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
 
+// CMS
 Route::group(['prefix' => 'admin-cms'], function(){
     Auth::routes();
 
