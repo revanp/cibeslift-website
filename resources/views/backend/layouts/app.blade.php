@@ -23,6 +23,10 @@
             <div class="d-flex flex-row flex-column-fluid page">
                 <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
                     @include('backend.layouts.header')
+
+                    <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+                        @yield('content')
+                    </div>
                 </div>
             </div>
         </div>

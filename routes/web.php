@@ -9,11 +9,13 @@ Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])-
 
 // CMS
 Route::group(['prefix' => 'admin-cms'], function(){
-    Auth::routes();
+    Route::get('login', [App\Http\Controllers\Backend\LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [App\Http\Controllers\Backend\LoginController::class, 'login'])->name('login');
+    Route::get('logout', [App\Http\Controllers\Backend\LoginController::class, 'logout']);
 
-    // Route::group(['middleware' => 'auth'], function(){
+    Route::group(['middleware' => 'auth'], function(){
         Route::get('', [DashboardController::class, 'index']);
-    // });
+    });
 });
 
 
