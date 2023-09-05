@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12 col-md-6">
                 <a href="#">
-                    <img src="{{ asset('frontend/images/cibes_logo.svg') }}" alt="">
+                    <img src="{{ asset('public/frontend/images/cibes_logo.svg') }}" alt="">
                 </a>
             </div>
             <div class="col-12 col-md-6">

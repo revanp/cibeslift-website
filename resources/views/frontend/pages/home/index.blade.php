@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="banner" style="background-image: url('{{ asset('frontend/images/Banner---Homepage-Website.jpg') }}');">
+<div class="banner" style="background-image: url('{{ asset('public/frontend/images/Banner---Homepage-Website.jpg') }}');">
     <div class="container h-100">
         <div class="row h-100 justify-content-center">
             <div class="col-12 col-md-8">
@@ -131,7 +131,7 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="text-center">
-                    <img src="{{ asset('frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
+                    <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
                 </div>
             </div>
         </div>
@@ -170,12 +170,12 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4 text-center">
-                <img src="{{ asset('frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
+                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
                 <p class="title-20-bold mt-3">Cibes V90 Galaxy</p>
             </div>
             <div class="col-12 col-md-8">
                 <div class="mb-4">
-                    <img src="{{ asset('frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" alt="">
+                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" alt="">
                 </div>
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi ipsam quam possimus perferendis laboriosam repudiandae voluptates voluptas, adipisci modi eligendi natus ab tenetur dolorem exercitationem quod eos rem cupiditate deleniti.</p>
                 <label class="title-20-bold">Ghani, Jakarta Timur</label>
@@ -240,7 +240,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4 text-center">
-                <img src="{{ asset('frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
+                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
             </div>
             <div class="col-12 col-md-8">
                 <h5 class="title-50-bold">Punya Pertanyaan Seputar Lift Rumah?</h5>
