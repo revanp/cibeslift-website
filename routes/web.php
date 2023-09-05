@@ -11,9 +11,9 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin-cms'], function(){
     Auth::routes();
 
-    Route::group(['middleware' => 'auth'], function(){
+    // Route::group(['middleware' => 'auth'], function(){
         Route::get('', [DashboardController::class, 'index']);
-    });
+    // });
 });
 
 
