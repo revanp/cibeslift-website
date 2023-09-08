@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Backend\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +13,16 @@ Route::group(['prefix' => 'admin-cms'], function(){
     Route::get('logout', [App\Http\Controllers\Backend\LoginController::class, 'logout']);
 
     Route::group(['middleware' => 'auth'], function(){
-        Route::get('', [DashboardController::class, 'index']);
+        Route::get('', [App\Http\Controllers\Backend\DashboardController::class, 'index']);
+
+        Route::group(['prefix' => 'settings'], function(){
+            Route::group(['prefix' => 'users'], function(){
+                Route::get('', [App\Http\Controllers\Backend\Settings\UsersController::class, 'index']);
+                Route::post('datatable', [App\Http\Controllers\Backend\Settings\UsersController::class, 'index']);
+                Route::get('create', [App\Http\Controllers\Backend\Settings\UsersController::class, 'create']);
+                Route::post('create', [App\Http\Controllers\Backend\Settings\UsersController::class, 'store']);
+            });
+        });
     });
 });
 

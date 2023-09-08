@@ -8,6 +8,7 @@
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
 
+        <link href="{{ asset('public/backend/plugins/custom/datatables/datatables.bundle.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('public/backend/plugins/custom/fullcalendar/fullcalendar.bundle.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
 
         <link href="{{ asset('public/backend/plugins/global/plugins.bundle.css?v=7.0.6" rel="stylesheet') }}" type="text/css"/>
@@ -95,5 +96,7 @@
         <script src="{{ asset('public/backend/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.6') }}"></script>
         <script src="{{ asset('public/backend/js/scripts.bundle.js?v=7.0.6') }}"></script>
         <script src="{{ asset('public/backend/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.6') }}"></script>
+        <script src="{{ asset('public/backend/plugins/custom/datatables/datatables.bundle.js?v=7.0.6') }}"></script>
+        @yield('script')
     </body>
 </html>
