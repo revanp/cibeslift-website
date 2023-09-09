@@ -30,7 +30,7 @@
             <div class="card card-custom">
                 <div class="card-header">
                     <div class="card-title">
-                        <span class="card-icon"><i class="flaticon2-supermarket text-primary"></i></span>
+                        <span class="card-icon"><i class="flaticon2-user"></i></span>
                         <h3 class="card-label">Create User</h3>
                     </div>
                     <div class="card-toolbar">
@@ -44,9 +44,69 @@
                         </a>
                     </div>
                 </div>
-                <div class="card-body">
-
-                </div>
+                <form action="{{ url('admin-cms/settings/users/create') }}" method="POST">
+                    @csrf
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Name</label>
+                                <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" placeholder="Enter name" name="name" value="{{ old('name') }}"/>
+                                @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Email</label>
+                                <input type="text" class="form-control @if($errors->has('email')) is-invalid @endif" placeholder="Enter email" name="email" value="{{ old('email') }}"/>
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Role</label>
+                                <select class="form-control @if($errors->has('role_id')) is-invalid @endif" name="role_id">
+                                    <option value="">-- SELECT ROLE --</option>
+                                    @foreach ($roles as $key => $val)
+                                        <option value="{{ $val->id }}" {{ old('role_id') == $val->id ? 'selected' : '' }}>{{ $val->name }}</option>
+                                    @endforeach
+                                    @error('role_id')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Password</label>
+                                <input type="password" class="form-control @if($errors->has('password')) is-invalid @endif" placeholder="Enter password" name="password"/>
+                                @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Password Confirmation</label>
+                                <input type="password" class="form-control @if($errors->has('password_confirmation')) is-invalid @endif" placeholder="Enter password" name="password_confirmation"/>
+                                @error('password_confirmation')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+		                <button type="reset" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

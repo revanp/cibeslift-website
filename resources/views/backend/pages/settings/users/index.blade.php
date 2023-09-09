@@ -27,7 +27,7 @@
             <div class="card card-custom">
                 <div class="card-header">
                     <div class="card-title">
-                        <span class="card-icon"><i class="flaticon2-supermarket text-primary"></i></span>
+                        <span class="card-icon"><i class="flaticon2-user"></i></span>
                         <h3 class="card-label">List Users</h3>
                     </div>
                     <div class="card-toolbar">
@@ -50,8 +50,8 @@
                                     <th>No.</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Created At</th>
-                                    <th>Updated At</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -85,11 +85,35 @@
                     {data: 'rownum'},
                     {data: 'name'},
                     {data: 'email'},
-                    {data: 'created_at'},
-                    {data: 'updated_at'},
+                    {data: 'role'},
+                    {data: 'is_active', searchable: false, orderable: false},
                     {data: 'action', searchable: false, orderable: false},
                 ]
             });
         });
+
+        $(document).on('click', '.btn-delete', function(e){
+            e.preventDefault();
+
+            var href = $(this).attr('href');
+
+            Swal.fire({
+                title: "Are you sure you want to delete this?",
+                text: "This will delete this data permanently. You cannot undo this action",
+                icon: "info",
+                buttonsStyling: false,
+                confirmButtonText: "<i class='la la-thumbs-up'></i> Yes!",
+                showCancelButton: true,
+                cancelButtonText: "<i class='la la-thumbs-down'></i> No, thanks",
+                customClass: {
+                    confirmButton: "btn btn-danger",
+                    cancelButton: "btn btn-default"
+                }
+            }).then(function(isConfirm) {
+                if(isConfirm.isConfirmed){
+                    window.location.href = href;
+                }
+            });
+        })
     </script>
 @endsection

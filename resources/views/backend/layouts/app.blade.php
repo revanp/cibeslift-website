@@ -3,17 +3,15 @@
     <head>
         <meta charset="utf-8"/>
         <title>Cibeslift CMS</title>
-        <meta name="description" content="Updates and statistics"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
 
-        <link href="{{ asset('public/backend/plugins/custom/datatables/datatables.bundle.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
-        <link href="{{ asset('public/backend/plugins/custom/fullcalendar/fullcalendar.bundle.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('public/backend/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css"/>
 
-        <link href="{{ asset('public/backend/plugins/global/plugins.bundle.css?v=7.0.6" rel="stylesheet') }}" type="text/css"/>
-        <link href="{{ asset('public/backend/plugins/custom/prismjs/prismjs.bundle.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
-        <link href="{{ asset('public/backend/css/style.bundle.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('public/backend/plugins/global/plugins.bundle.css') }}" rel="stylesheet type="text/css"/>
+        <link href="{{ asset('public/backend/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('public/backend/css/style.bundle.css') }}" rel="stylesheet" type="text/css"/>
 
         <link rel="shortcut icon" href="{{ asset('public/backend/media/logos/favicon.ico') }}"/>
     </head>
@@ -95,8 +93,56 @@
         <script src="{{ asset('public/backend/plugins/global/plugins.bundle.js?v=7.0.6') }}"></script>
         <script src="{{ asset('public/backend/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.6') }}"></script>
         <script src="{{ asset('public/backend/js/scripts.bundle.js?v=7.0.6') }}"></script>
-        <script src="{{ asset('public/backend/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.6') }}"></script>
         <script src="{{ asset('public/backend/plugins/custom/datatables/datatables.bundle.js?v=7.0.6') }}"></script>
+        <script>
+            @if($message = Session::get('success'))
+                $(document).ready(function(){
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "500",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+
+                    toastr.success("{{ $message }}");
+                });
+            @endif
+
+            @if($message = Session::get('error'))
+                $(document).ready(function(){
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "500",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+
+                    toastr.error("{{ $message }}");
+                });
+            @endif
+        </script>
         @yield('script')
     </body>
 </html>

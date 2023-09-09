@@ -14,6 +14,8 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@admin.io',
             'password' => bcrypt('123456'),
+            'role_id' => 1,
+            'is_active' => true,
             'created_at' => date('Y-m-d H:i:s')
         ]);
     }

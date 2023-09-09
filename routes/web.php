@@ -21,6 +21,9 @@ Route::group(['prefix' => 'admin-cms'], function(){
                 Route::post('datatable', [App\Http\Controllers\Backend\Settings\UsersController::class, 'index']);
                 Route::get('create', [App\Http\Controllers\Backend\Settings\UsersController::class, 'create']);
                 Route::post('create', [App\Http\Controllers\Backend\Settings\UsersController::class, 'store']);
+                Route::get('edit/{id}', [App\Http\Controllers\Backend\Settings\UsersController::class, 'edit']);
+                Route::put('edit/{id}', [App\Http\Controllers\Backend\Settings\UsersController::class, 'update']);
+                Route::get('delete/{id}', [App\Http\Controllers\Backend\Settings\UsersController::class, 'delete']);
             });
         });
     });
