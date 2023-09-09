@@ -37,11 +37,10 @@ class LoginController extends Controller
         $remember = !empty($input['remember']) ? true : false;
 
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt([
-            'email' => $input['email'],
-            'password' => $input['password'],
-        ], $remember)) {
-            return redirect()->intended('/')->withSuccess('You have Successfully loggedin');
+        if (Auth::attempt(['email' => $input['email'], 'password' => $input['password'],], $remember)) {
+            return redirect()->intended('/')->with(['success' => 'You have been successfully logged in']);
         }
+
+        return redirect()->back()->with(['error' => 'Wrong password, please try again']);
     }
 }
