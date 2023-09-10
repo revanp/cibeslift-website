@@ -13,7 +13,7 @@
         <link href="{{ asset('public/backend/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('public/backend/css/style.bundle.css') }}" rel="stylesheet" type="text/css"/>
 
-        <link rel="shortcut icon" href="{{ asset('public/backend/media/logos/favicon.ico') }}"/>
+        {{-- <link rel="shortcut icon" href="{{ asset('public/backend/media/logos/favicon.ico') }}"/> --}}
     </head>
     <body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled page-loading">
         @include('backend.layouts.header-mobile')
@@ -95,50 +95,32 @@
         <script src="{{ asset('public/backend/js/scripts.bundle.js?v=7.0.6') }}"></script>
         <script src="{{ asset('public/backend/plugins/custom/datatables/datatables.bundle.js?v=7.0.6') }}"></script>
         <script>
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "500",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
             @if($message = Session::get('success'))
                 $(document).ready(function(){
-                    toastr.options = {
-                        "closeButton": false,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": true,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "500",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    };
-
                     toastr.success("{{ $message }}");
                 });
             @endif
 
             @if($message = Session::get('error'))
                 $(document).ready(function(){
-                    toastr.options = {
-                        "closeButton": false,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": true,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "500",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    };
-
                     toastr.error("{{ $message }}");
                 });
             @endif

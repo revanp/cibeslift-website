@@ -9,6 +9,7 @@ use App\Models\Role;
 use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Exp;
 use Yajra\DataTables\DataTables;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
@@ -180,6 +181,46 @@ class UsersController extends Controller
             DB::rollBack();
 
             return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
+        }
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $input = $request->all();
+        $isAjax = $request->ajax() ? true : false;
+        $user   = Auth::user();
+
+        unset($input['_token']);
+
+        if($isAjax){
+            $id = $input['id'];
+            $isError = true;
+
+            $status = $input['status'] == '0' ? false : true;
+
+            try {
+                DB::beginTransaction();
+
+                $update = User::where('id', $id)->update([
+                    'is_active' => $status
+                ]);
+
+                DB::commit();
+
+                return response([
+                    'success' => true,
+                    'code' => 200,
+                    'message' => 'Status has been changed successfully'
+                ]);
+            }catch(Exception $e){
+                DB::rollBack();
+
+                return response([
+                    'success' => false,
+                    'code' => 50,
+                    'message' => 'Something went wrong'
+                ]);
+            }
         }
     }
 

@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin-cms'], function(){
                 Route::post('create', [App\Http\Controllers\Backend\Settings\UsersController::class, 'store']);
                 Route::get('edit/{id}', [App\Http\Controllers\Backend\Settings\UsersController::class, 'edit']);
                 Route::put('edit/{id}', [App\Http\Controllers\Backend\Settings\UsersController::class, 'update']);
+                Route::put('change-status', [App\Http\Controllers\Backend\Settings\UsersController::class, 'changeStatus']);
                 Route::get('delete/{id}', [App\Http\Controllers\Backend\Settings\UsersController::class, 'delete']);
             });
         });

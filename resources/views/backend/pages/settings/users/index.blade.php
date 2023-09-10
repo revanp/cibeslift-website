@@ -115,5 +115,35 @@
                 }
             });
         })
+
+        $(document).on('change', '.btn-activate', function(e){
+            event.preventDefault();
+
+            var t      = $(this);
+            var id     = t.attr("data-id");
+            var status = t.prop('checked') ? 1 : 0;
+
+            $.ajax({
+                url: "{{ url('admin-cms/settings/users/change-status') }}",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    _method: 'put',
+                    status: status,
+                    id: id,
+                    "_token": "{{ csrf_token() }}"
+                },
+            })
+            .done(function(res) {
+                if(res.success == true){
+                    toastr.success(res.message);
+                }else{
+                    toastr.error(res.message);
+                }
+            })
+            .fail(function(err) {
+                toastr.error(res.message);
+            });
+        });
     </script>
 @endsection
