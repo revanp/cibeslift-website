@@ -4,43 +4,42 @@ namespace App\Http\Controllers\Backend\Settings;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Role;
 use Yajra\DataTables\DataTables;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class UsersController extends Controller
+class RolesController extends Controller
 {
     public function index(Request $request)
     {
         if($request->method() == 'POST'){
             $reqDatatable  = $this->requestDatatables($request->input());
 
-            $users = User::with(['role']);
+            $roles = new Role();
 
             if ($reqDatatable['orderable']) {
                 foreach ($reqDatatable['orderable'] as $order) {
                     if($order['column'] == 'rownum') {
-                        $users = $users->orderBy('id', $order['dir']);
+                        $roles = $roles->orderBy('id', $order['dir']);
                     } else {
                         if(!empty($val['column'])){
-                            $users = $users->orderBy($order['column'], $order['dir']);
+                            $roles = $roles->orderBy($order['column'], $order['dir']);
                         }else{
-                            $users = $users->orderBy('id', 'desc');
+                            $roles = $roles->orderBy('id', 'desc');
                         }
                     }
                 }
             } else {
-                $users = $users->orderBy('id', 'desc');
+                $roles = $roles->orderBy('id', 'desc');
             }
 
-            $datatables = DataTables::of($users);
+            $datatables = DataTables::of($roles);
 
             if (isset($reqDatatable['orderable']['rownum'])) {
                 if ($reqDatatable['orderable']['rownum']['dir'] == 'desc') {
-                    $rownum      = abs($users->count() - ($reqDatatable['start'] * $reqDatatable['length']));
+                    $rownum      = abs($roles->count() - ($reqDatatable['start'] * $reqDatatable['length']));
                     $is_increase = false;
                 } else {
                     $rownum = ($reqDatatable['start'] * $reqDatatable['length']) + 1;
@@ -59,14 +58,11 @@ class UsersController extends Controller
                         return $rownum--;
                     }
                 })
-                ->addColumn('role', function($data){
-                    return $data->role->name;
-                })
                 ->addColumn('is_active', function($data){
                     $id = $data->id;
                     $isActive = $data->is_active;
 
-                    return view('backend.pages.settings.users.list.active', compact('id', 'isActive'));
+                    return view('backend.pages.settings.roles.list.active', compact('id', 'isActive'));
                 })
                 ->editColumn('created_at', function($data){
                     return date('d F Y H:i:s', strtotime($data->created_at));
@@ -77,10 +73,10 @@ class UsersController extends Controller
                 ->addColumn('action', function($data){
                     $html = '<div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">';
                         //* EDIT
-                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/settings/users/edit/'.$data->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/settings/roles/edit/'.$data->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
 
                         //* DELETE
-                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/settings/users/delete/'.$data->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/settings/roles/delete/'.$data->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
                     $html .= '</ul></div></div>';
 
                     return $html;
@@ -89,7 +85,7 @@ class UsersController extends Controller
                 ->toJson(true);
         }
 
-        return view('backend.pages.settings.users.index');
+        return view('backend.pages.settings.roles.index');
     }
 
     public function create()

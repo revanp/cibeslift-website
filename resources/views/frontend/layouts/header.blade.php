@@ -9,8 +9,8 @@
             <div class="col-12 col-md-6">
                 <div class="text-end">
                     <ul class="menu">
-                        <li><a href="#">Produk</a></li>
-                        <li><a href="#">Instalasi</a></li>
+                        <li><a href="#">{{ __('title.product') }}</a></li>
+                        <li><a href="#">{{ __('title.installation') }}</a></li>
                     </ul>
                     <a href="#" class="button-primary">Pasang Lift Rumah</a>
                 </div>
