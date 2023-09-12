@@ -12,7 +12,7 @@
                         <li><a href="#">{{ __('title.product') }}</a></li>
                         <li><a href="#">{{ __('title.installation') }}</a></li>
                     </ul>
-                    <a href="#" class="button-primary">Pasang Lift Rumah</a>
+                    <a href="#" class="button-primary">{{ __('buttons.install_a_home_elevator') }}</a>
                 </div>
             </div>
         </div>

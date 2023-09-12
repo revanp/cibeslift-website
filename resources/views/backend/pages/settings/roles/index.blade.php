@@ -120,7 +120,7 @@
             var status = t.prop('checked') ? 1 : 0;
 
             $.ajax({
-                url: "{{ url('admin-cms/settings/users/change-status') }}",
+                url: "{{ url('admin-cms/settings/roles/change-status') }}",
                 type: 'POST',
                 dataType: 'json',
                 data: {

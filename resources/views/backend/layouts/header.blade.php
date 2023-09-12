@@ -65,6 +65,13 @@
                                             <span class="menu-text">Users</span>
                                         </a>
                                     </li>
+
+                                    <li class="menu-item {{ (request()->is('admin-cms/settings/translations/*') || request()->is('admin-cms/settings/translations')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ url('admin-cms/settings/translations') }}" class="menu-link ">
+                                            <i class="flaticon2-sheet menu-icon"></i>
+                                            <span class="menu-text">Translations</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
