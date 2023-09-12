@@ -34,6 +34,12 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                 Route::put('change-status', [App\Http\Controllers\Backend\Settings\UsersController::class, 'changeStatus']);
                 Route::get('delete/{id}', [App\Http\Controllers\Backend\Settings\UsersController::class, 'delete']);
             });
+
+            Route::group(['prefix' => 'translations'], function(){
+                Route::get('', [App\Http\Controllers\Backend\Settings\TranslationsController::class, 'index']);
+                Route::post('update-value', [App\Http\Controllers\Backend\Settings\TranslationsController::class, 'updateValue']);
+                Route::post('publish', [App\Http\Controllers\Backend\Settings\TranslationsController::class, 'publish']);
+            });
         });
     });
 });

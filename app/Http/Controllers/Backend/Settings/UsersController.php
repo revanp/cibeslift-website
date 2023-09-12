@@ -63,10 +63,14 @@ class UsersController extends Controller
                     return $data->role->name;
                 })
                 ->addColumn('is_active', function($data){
-                    $id = $data->id;
-                    $isActive = $data->is_active;
+                    if(Auth::user()->id == $data->id){
+                        return '';
+                    }else{
+                        $id = $data->id;
+                        $isActive = $data->is_active;
 
-                    return view('backend.pages.settings.users.list.active', compact('id', 'isActive'));
+                        return view('backend.pages.settings.users.list.active', compact('id', 'isActive'));
+                    }
                 })
                 ->editColumn('created_at', function($data){
                     return date('d F Y H:i:s', strtotime($data->created_at));
@@ -75,15 +79,19 @@ class UsersController extends Controller
                     return date('d F Y H:i:s', strtotime($data->updated_at));
                 })
                 ->addColumn('action', function($data){
-                    $html = '<div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">';
-                        //* EDIT
-                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/settings/users/edit/'.$data->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
+                    if(Auth::user()->id == $data->id){
+                        return '';
+                    }else{
+                        $html = '<div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">';
+                            //* EDIT
+                            $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/settings/users/edit/'.$data->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
 
-                        //* DELETE
-                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/settings/users/delete/'.$data->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
-                    $html .= '</ul></div></div>';
+                            //* DELETE
+                            $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/settings/users/delete/'.$data->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
+                        $html .= '</ul></div></div>';
 
-                    return $html;
+                        return $html;
+                    }
                 })
                 ->rawColumns(['action'])
                 ->toJson(true);

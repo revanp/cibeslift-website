@@ -90,19 +90,13 @@ class RolesController extends Controller
 
     public function create()
     {
-        $roles = Role::get();
-
-        return view('backend.pages.settings.users.create', compact('roles'));
+        return view('backend.pages.settings.roles.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'email' => 'required|unique:users|email',
-            'name' => 'required',
-            'role_id' => 'required',
-            'password' => 'required|min:6',
-            'password_confirmation' => 'required_with:password|same:password|min:6'
+            'name' => 'required|unique:roles'
         ]);
 
         $input = $request->all();
@@ -110,17 +104,14 @@ class RolesController extends Controller
         try{
             DB::beginTransaction();
 
-            $insert = User::create([
-                'email'=> $input['email'],
-                'name'=> $input['name'],
-                'password'=> bcrypt($input['password']),
-                'role_id' => $input['role_id'],
+            $insert = Role::create([
+                'name' => $input['name'],
                 'is_active' => true
             ]);
 
             DB::commit();
 
-            return redirect('admin-cms/settings/users')->with(['success' => 'User has been created successfully']);
+            return redirect('admin-cms/settings/roles')->with(['success' => 'Role has been created successfully']);
         }catch(Exception $e){
             DB::rollBack();
 
@@ -130,21 +121,15 @@ class RolesController extends Controller
 
     public function edit($id)
     {
-        $data = User::find($id);
+        $data = Role::find($id);
 
-        $roles = Role::get();
-
-        return view('backend.pages.settings.users.edit', compact('data', 'roles'));
+        return view('backend.pages.settings.roles.edit', compact('data'));
     }
 
     public function update($id, Request $request)
     {
         $request->validate([
-            'email' => 'required|unique:users,email,'.$id.'|email',
-            'name' => 'required',
-            'role_id' => 'required',
-            'password' => '',
-            'password_confirmation' => 'same:password'
+            'name' => 'required|unique:roles,name,'.$id,
         ]);
 
         $input = $request->all();
@@ -152,26 +137,13 @@ class RolesController extends Controller
         try{
             DB::beginTransaction();
 
-            if(!empty($input['password'])){
-                $data = [
-                    'email'=> $input['email'],
-                    'name'=> $input['name'],
-                    'password'=> bcrypt($input['password']),
-                    'role_id' => $input['role_id'],
-                ];
-            }else{
-                $data = [
-                    'email'=> $input['email'],
-                    'name'=> $input['name'],
-                    'role_id' => $input['role_id'],
-                ];
-            }
-
-            $update = User::where('id', $id)->update($data);
+            $update = Role::where('id', $id)->update([
+                'name'=> $input['name']
+            ]);
 
             DB::commit();
 
-            return redirect('admin-cms/settings/users')->with(['success' => 'User has been updated successfully']);
+            return redirect('admin-cms/settings/roles')->with(['success' => 'Role has been updated successfully']);
         }catch(Exception $e){
             DB::rollBack();
 
@@ -196,7 +168,7 @@ class RolesController extends Controller
             try {
                 DB::beginTransaction();
 
-                $update = User::where('id', $id)->update([
+                $update = Role::where('id', $id)->update([
                     'is_active' => $status
                 ]);
 
@@ -212,7 +184,7 @@ class RolesController extends Controller
 
                 return response([
                     'success' => false,
-                    'code' => 50,
+                    'code' => 500,
                     'message' => 'Something went wrong'
                 ]);
             }
@@ -224,11 +196,11 @@ class RolesController extends Controller
         try{
             DB::beginTransaction();
 
-            $delete = User::where('id', $id)->delete();
+            $delete = Role::where('id', $id)->delete();
 
             DB::commit();
 
-            return redirect('admin-cms/settings/users')->with(['success' => 'User has been deleted successfully']);
+            return redirect('admin-cms/settings/roles')->with(['success' => 'Role has been deleted successfully']);
         }catch(Exception $e){
             DB::rollBack();
 
