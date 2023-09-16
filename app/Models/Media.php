@@ -19,4 +19,15 @@ class Media extends Model
     {
         return $this->morphTo();
     }
+
+    public function getPathAttribute($value)
+    {
+        return Storage::disk($this->attributes['disk'])
+            ->url($this->attributes['path'] . '/' . $this->attributes['file_name']);
+    }
+
+    public function getDirectoryAttribute($value)
+    {
+        return $this->attributes['path'] . '/' . $this->attributes['file_name'];
+    }
 }

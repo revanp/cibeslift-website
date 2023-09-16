@@ -12,6 +12,19 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
     Route::group(['middleware' => 'auth'], function(){
         Route::get('', [App\Http\Controllers\Backend\DashboardController::class, 'index']);
 
+        Route::group(['prefix' => 'home'], function(){
+            Route::group(['prefix' => 'header-banner'], function(){
+                Route::get('', [App\Http\Controllers\Backend\Home\HeaderBannerController::class, 'index']);
+                Route::post('datatable', [App\Http\Controllers\Backend\Home\HeaderBannerController::class, 'index']);
+                Route::get('create', [App\Http\Controllers\Backend\Home\HeaderBannerController::class, 'create']);
+                Route::post('create', [App\Http\Controllers\Backend\Home\HeaderBannerController::class, 'store']);
+                Route::get('edit/{id}', [App\Http\Controllers\Backend\Home\HeaderBannerController::class, 'edit']);
+                Route::put('edit/{id}', [App\Http\Controllers\Backend\Home\HeaderBannerController::class, 'update']);
+                Route::put('change-status', [App\Http\Controllers\Backend\Home\HeaderBannerController::class, 'changeStatus']);
+                Route::get('delete/{id}', [App\Http\Controllers\Backend\Home\HeaderBannerController::class, 'delete']);
+            });
+        });
+
         Route::group(['prefix' => 'settings'], function(){
             Route::group(['prefix' => 'roles'], function(){
                 Route::get('', [App\Http\Controllers\Backend\Settings\RolesController::class, 'index']);

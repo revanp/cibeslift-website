@@ -6,15 +6,15 @@
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <div class="d-flex align-items-baseline flex-wrap mr-5">
                     <h5 class="text-dark font-weight-bold my-1 mr-5">
-                        Users
+                        Header Banner
                     </h5>
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                         <li class="breadcrumb-item">
-                            <a href="#" class="text-muted">Settings</a>
+                            <a href="#" class="text-muted">Home</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/settings/users') }}" class="text-muted">Users</a>
+                            <a href="{{ url('admin-cms/home/header-banner') }}" class="text-muted">Header Banner</a>
                         </li>
                     </ul>
                 </div>
@@ -27,11 +27,11 @@
             <div class="card card-custom">
                 <div class="card-header">
                     <div class="card-title">
-                        <span class="card-icon"><i class="flaticon2-user"></i></span>
-                        <h3 class="card-label">List Users</h3>
+                        <span class="card-icon"><i class="flaticon2-analytics-2"></i></span>
+                        <h3 class="card-label">List Header Banner</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{ url('admin-cms/settings/users/create') }}" class="btn btn-primary font-weight-bolder">
+                        <a href="{{ url('admin-cms/home/header-banner/create') }}" class="btn btn-primary font-weight-bolder">
                             <i class="flaticon2-add icon-md"></i> New Record
                         </a>
                     </div>
@@ -42,9 +42,11 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Call to Action</th>
+                                    <th>Link</th>
                                     <th>Status</th>
                                     <th>#</th>
                                 </tr>
@@ -69,7 +71,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ url('admin-cms/settings/users/datatable') }}",
+                    url: "{{ url('admin-cms/home/header-banner/datatable') }}",
                     type: "POST",
                     data: {
                         "_token": "{{ csrf_token() }}"
@@ -77,38 +79,16 @@
                 },
                 columns: [
                     {data: 'rownum'},
-                    {data: 'name'},
-                    {data: 'email'},
-                    {data: 'role'},
+                    {data: 'image', searchable: false, orderable: false},
+                    {data: 'title'},
+                    {data: 'description'},
+                    {data: 'cta'},
+                    {data: 'link'},
                     {data: 'is_active', searchable: false, orderable: false},
                     {data: 'action', searchable: false, orderable: false},
                 ]
             });
         });
-
-        $(document).on('click', '.btn-delete', function(e){
-            e.preventDefault();
-
-            var href = $(this).attr('href');
-
-            Swal.fire({
-                title: "Are you sure you want to delete this?",
-                text: "This will delete this data permanently. You cannot undo this action",
-                icon: "info",
-                buttonsStyling: false,
-                confirmButtonText: "<i class='la la-thumbs-up'></i> Yes!",
-                showCancelButton: true,
-                cancelButtonText: "<i class='la la-thumbs-down'></i> No, thanks",
-                customClass: {
-                    confirmButton: "btn btn-danger",
-                    cancelButton: "btn btn-default"
-                }
-            }).then(function(isConfirm) {
-                if(isConfirm.isConfirmed){
-                    window.location.href = href;
-                }
-            });
-        })
 
         $(document).on('change', '.btn-activate', function(e){
             event.preventDefault();
@@ -118,7 +98,7 @@
             var status = t.prop('checked') ? 1 : 0;
 
             $.ajax({
-                url: "{{ url('admin-cms/settings/users/change-status') }}",
+                url: "{{ url('admin-cms/home/header-banner/change-status') }}",
                 type: 'POST',
                 dataType: 'json',
                 data: {

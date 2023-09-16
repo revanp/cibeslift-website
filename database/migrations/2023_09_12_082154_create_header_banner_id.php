@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('header_banner_id', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
         });

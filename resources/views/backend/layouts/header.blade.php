@@ -48,6 +48,21 @@
 				<div id="kt_header_menu" class="header-menu header-menu-left header-menu-mobile  header-menu-layout-default " >
 					<ul class="menu-nav ">
                         <li class="menu-item {{ request()->is('admin-cms') ? 'menu-item-active' : '' }}"  aria-haspopup="true"><a  href="{{ url('admin-cms') }}" class="menu-link "><span class="menu-text">Dashboard</span></a></li>
+
+                        <li class="menu-item menu-item-submenu menu-item-rel {{ request()->is('admin-cms/home/*') ? 'menu-item-active' : '' }}" data-menu-toggle="click" aria-haspopup="true"><a  href="javascript:;" class="menu-link menu-toggle">
+                            <span class="menu-text">Home</span><span class="menu-desc"></span><i class="menu-arrow"></i></a>
+                            <div class="menu-submenu menu-submenu-classic menu-submenu-left" >
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ (request()->is('admin-cms/home/header-banner/*') || request()->is('admin-cms/home/header-banner')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ url('admin-cms/home/header-banner') }}" class="menu-link ">
+                                            <i class="flaticon2-analytics-2 menu-icon"></i>
+                                            <span class="menu-text">Header Banner</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
                         <li class="menu-item menu-item-submenu menu-item-rel {{ request()->is('admin-cms/settings/*') ? 'menu-item-active' : '' }}" data-menu-toggle="click" aria-haspopup="true"><a  href="javascript:;" class="menu-link menu-toggle">
                             <span class="menu-text">Settings</span><span class="menu-desc"></span><i class="menu-arrow"></i></a>
                             <div class="menu-submenu menu-submenu-classic menu-submenu-left" >

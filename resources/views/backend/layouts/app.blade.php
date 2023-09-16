@@ -95,6 +95,30 @@
         <script src="{{ asset('public/backend/js/scripts.bundle.js?v=7.0.6') }}"></script>
         <script src="{{ asset('public/backend/plugins/custom/datatables/datatables.bundle.js?v=7.0.6') }}"></script>
         <script>
+            $(document).on('click', '.btn-delete', function(e){
+                e.preventDefault();
+
+                var href = $(this).attr('href');
+
+                Swal.fire({
+                    title: "Are you sure you want to delete this?",
+                    text: "This will delete this data permanently. You cannot undo this action",
+                    icon: "info",
+                    buttonsStyling: false,
+                    confirmButtonText: "<i class='la la-thumbs-up'></i> Yes!",
+                    showCancelButton: true,
+                    cancelButtonText: "<i class='la la-thumbs-down'></i> No, thanks",
+                    customClass: {
+                        confirmButton: "btn btn-danger",
+                        cancelButton: "btn btn-default"
+                    }
+                }).then(function(isConfirm) {
+                    if(isConfirm.isConfirmed){
+                        window.location.href = href;
+                    }
+                });
+            })
+
             toastr.options = {
                 "closeButton": false,
                 "debug": false,

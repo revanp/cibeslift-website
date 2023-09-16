@@ -16,6 +16,7 @@ class HeaderBannerId extends Model
     public $incrementing = true;
 
     protected $fillable  = [
+        'is_active',
         'image'
     ];
 
