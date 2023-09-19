@@ -6,15 +6,18 @@
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <div class="d-flex align-items-baseline flex-wrap mr-5">
                     <h5 class="text-dark font-weight-bold my-1 mr-5">
-                        Header Banner
+                        Questions
                     </h5>
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                         <li class="breadcrumb-item">
-                            <a href="#" class="text-muted">Home</a>
+                            <a href="#" class="text-muted">Content</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#" class="text-muted">Faq</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/home/header-banner') }}" class="text-muted">Header Banner</a>
+                            <a href="{{ url('admin-cms/content/faq/questions') }}" class="text-muted">Questions</a>
                         </li>
                     </ul>
                 </div>
@@ -27,11 +30,11 @@
             <div class="card card-custom">
                 <div class="card-header">
                     <div class="card-title">
-                        <span class="card-icon"><i class="flaticon2-analytics-2"></i></span>
-                        <h3 class="card-label">List Header Banner</h3>
+                        <span class="card-icon"><i class="flaticon2-information"></i></span>
+                        <h3 class="card-label">List Questions</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{ url('admin-cms/home/header-banner/create') }}" class="btn btn-primary font-weight-bolder">
+                        <a href="{{ url('admin-cms/content/faq/questions/create') }}" class="btn btn-primary font-weight-bolder">
                             <i class="flaticon2-add icon-md"></i> New Record
                         </a>
                     </div>
@@ -42,11 +45,9 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Image</th>
+                                    <th>Description</th>
                                     <th>Title</th>
                                     <th>Description</th>
-                                    <th>Call to Action</th>
-                                    <th>Link</th>
                                     <th>Status</th>
                                     <th>#</th>
                                 </tr>
@@ -71,7 +72,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ url('admin-cms/home/header-banner/datatable') }}",
+                    url: "{{ url('admin-cms/content/faq/questions/datatable') }}",
                     type: "POST",
                     data: {
                         "_token": "{{ csrf_token() }}"
@@ -79,11 +80,9 @@
                 },
                 columns: [
                     {data: 'rownum'},
-                    {data: 'image', searchable: false, orderable: false},
+                    {data: 'category'},
                     {data: 'title'},
                     {data: 'description'},
-                    {data: 'cta'},
-                    {data: 'link'},
                     {data: 'is_active', searchable: false, orderable: false},
                     {data: 'action', searchable: false, orderable: false},
                 ]
@@ -98,7 +97,7 @@
             var status = t.prop('checked') ? 1 : 0;
 
             $.ajax({
-                url: "{{ url('admin-cms/home/header-banner/change-status') }}",
+                url: "{{ url('admin-cms/content/faq/questions/change-status') }}",
                 type: 'POST',
                 dataType: 'json',
                 data: {

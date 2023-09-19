@@ -6,18 +6,21 @@
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <div class="d-flex align-items-baseline flex-wrap mr-5">
                     <h5 class="text-dark font-weight-bold my-1 mr-5">
-                        Edit Header Banner
+                        Edit Questions
                     </h5>
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                         <li class="breadcrumb-item">
-                            <a href="#" class="text-muted">Home</a>
+                            <a href="#" class="text-muted">Content</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ url('admin-cms/home/header-banner') }}" class="text-muted">Header Banner</a>
+                            <a href="#" class="text-muted">Faq</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ url('admin-cms/content/faq/questions') }}" class="text-muted">Questions</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/home/header-banner/edit/'.$headerBannerId->id) }}" class="text-muted">Edit Header Banner</a>
+                            <a href="{{ url('admin-cms/content/faq/questions/edit/'.$faqId->id) }}" class="text-muted">Edit Questions</a>
                         </li>
                     </ul>
                 </div>
@@ -31,10 +34,10 @@
                     <div class="card-header">
                         <div class="card-title">
                             <span class="card-icon"><i class="flaticon2-analytics-2"></i></span>
-                            <h3 class="card-label">Edit Header Banner</h3>
+                            <h3 class="card-label">Edit Questions</h3>
                         </div>
                         <div class="card-toolbar">
-                            <a href="{{ url('admin-cms/home/header-banner') }}" class="btn btn-danger font-weight-bolder">
+                            <a href="{{ url('admin-cms/content/faq/questions') }}" class="btn btn-danger font-weight-bolder">
                                 <span class="svg-icon svg-icon-md"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <polygon points="0 0 24 0 24 24 0 24"/>
@@ -44,26 +47,29 @@
                             </a>
                         </div>
                     </div>
-                    <form action="{{ url('admin-cms/home/header-banner/edit/'.$headerBannerId->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ url('admin-cms/content/faq/questions/edit/'.$faqId->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
+                        {{-- @method('PUT') --}}
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row mb-5">
                                 <div class="form-group col-md-6">
-                                    <label>Image</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image" class="custom-file-input  @if($errors->has('image')) is-invalid @endif" id="customFile"/>
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                    @error('image')
+                                    <label>Category</label>
+                                    <select name="id_faq_category_id" class="form-control @if($errors->has('id_faq_category_id')) is-invalid @endif">
+                                        <option value="">-- SELECT CATEGORY --</option>
+                                        @php
+                                            $idFaqCategoryId = !empty(old('id_faq_category_id')) ? old('id_faq_category_id') : $faqId->id_faq_category_id;
+                                        @endphp
+                                        @foreach ($categories as $key => $val)
+                                            <option value="{{ $val->id_faq_category_id }}" {{ $idFaqCategoryId == $val->id_faq_category_id ? 'selected' : '' }}>{{ $val->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('id_faq_category_id')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                             </div>
-
-                            <hr>
 
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
@@ -77,36 +83,18 @@
                             <div class="tab-content mb-4" style="display: block !important;">
                                 <div class="tab-pane active" id="idTab" role="tabpanel">
                                     <div class="row mt-5">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label>Title</label>
-                                            <input type="text" class="form-control @if($errors->has('input.id.title')) is-invalid @endif" placeholder="Enter title" name="input[id][title]" value="{{ !empty(old('input.id.title')) ? old('input.id.title') : $headerBanner['id']['title'] }}"/>
+                                            <input type="text" class="form-control @if($errors->has('input.id.title')) is-invalid @endif" placeholder="Enter title" name="input[id][title]" value="{{ !empty(old('input.id.title')) ? old('input.id.title') : $faq['id']['title'] }}"/>
                                             @error('input.id.title')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label>Call to Action</label>
-                                            <input type="text" class="form-control @if($errors->has('input.id.cta')) is-invalid @endif" placeholder="Enter call to action" name="input[id][cta]" value="{{ !empty(old('input.id.cta')) ? old('input.id.cta') : $headerBanner['id']['cta'] }}"/>
-                                            @error('input.id.cta')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label>Link</label>
-                                            <input type="text" class="form-control @if($errors->has('input.id.link')) is-invalid @endif" placeholder="Enter link" name="input[id][link]" value="{{ !empty(old('input.id.link')) ? old('input.id.link') : $headerBanner['id']['link'] }}"/>
-                                            @error('input.id.link')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label>Description</label>
-                                            <textarea name="input[id][description]" id="" rows="5" class="form-control @if($errors->has('input.id.description')) is-invalid @endif">{{ !empty(old('input.id.description')) ? old('input.id.description') : $headerBanner['id']['description'] }}</textarea>
+                                            <textarea name="input[id][description]" rows="5" class="form-control @if($errors->has('input.id.description')) is-invalid @endif">{{ !empty(old('input.id.description')) ? old('input.id.description') : $faq['id']['description'] }}</textarea>
                                             @error('input.id.description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -117,36 +105,18 @@
                                 </div>
                                 <div class="tab-pane" id="enTab" role="tabpanel">
                                     <div class="row mt-5">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label>Title</label>
-                                            <input type="text" class="form-control @if($errors->has('input.en.title')) is-invalid @endif" placeholder="Enter title" name="input[en][title]" value="{{ !empty(old('input.en.title')) ? old('input.en.title') : $headerBanner['en']['title'] }}"/>
+                                            <input type="text" class="form-control @if($errors->has('input.en.title')) is-invalid @endif" placeholder="Enter title" name="input[en][title]" value="{{ !empty(old('input.en.title')) ? old('input.en.title') : $faq['en']['title'] }}"/>
                                             @error('input.en.title')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label>Call to Action</label>
-                                            <input type="text" class="form-control @if($errors->has('input.en.cta')) is-invalid @endif" placeholder="Enter call to action" name="input[en][cta]" value="{{ !empty(old('input.en.cta')) ? old('input.en.cta') : $headerBanner['en']['cta'] }}"/>
-                                            @error('input.en.cta')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label>Link</label>
-                                            <input type="text" class="form-control @if($errors->has('input.en.link')) is-invalid @endif" placeholder="Enter link" name="input[en][link]" value="{{ !empty(old('input.en.link')) ? old('input.en.link') : $headerBanner['en']['link'] }}"/>
-                                            @error('input.en.link')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label>Description</label>
-                                            <textarea name="input[en][description]" id="" rows="5" class="form-control @if($errors->has('input.en.description')) is-invalid @endif">{{ !empty(old('input.en.description')) ? old('input.en.description') : $headerBanner['en']['description'] }}</textarea>
+                                            <textarea name="input[en][description]" rows="5" class="form-control @if($errors->has('input.en.description')) is-invalid @endif">{{ !empty(old('input.en.description')) ? old('input.en.description') : $faq['en']['description'] }}</textarea>
                                             @error('input.en.description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}

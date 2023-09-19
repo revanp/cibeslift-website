@@ -11,13 +11,13 @@
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                         <li class="breadcrumb-item">
-                            <a href="#" class="text-muted">Home</a>
+                            <a href="#" class="text-muted">Content</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ url('admin-cms/home/header-banner') }}" class="text-muted">Header Banner</a>
+                            <a href="{{ url('admin-cms/content/header-banner') }}" class="text-muted">Header Banner</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/home/header-banner/create') }}" class="text-muted">Create Header Banner</a>
+                            <a href="{{ url('admin-cms/content/header-banner/create') }}" class="text-muted">Create Header Banner</a>
                         </li>
                     </ul>
                 </div>
@@ -34,7 +34,7 @@
                             <h3 class="card-label">Create Header Banner</h3>
                         </div>
                         <div class="card-toolbar">
-                            <a href="{{ url('admin-cms/home/header-banner') }}" class="btn btn-danger font-weight-bolder">
+                            <a href="{{ url('admin-cms/content/header-banner') }}" class="btn btn-danger font-weight-bolder">
                                 <span class="svg-icon svg-icon-md"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <polygon points="0 0 24 0 24 24 0 24"/>
@@ -44,7 +44,7 @@
                             </a>
                         </div>
                     </div>
-                    <form action="{{ url('admin-cms/home/header-banner/create') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ url('admin-cms/content/header-banner/create') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="row">

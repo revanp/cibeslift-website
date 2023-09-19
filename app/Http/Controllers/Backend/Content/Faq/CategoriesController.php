@@ -1,26 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Home;
+namespace App\Http\Controllers\Backend\Content\Faq;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\HeaderBannerId;
-use App\Models\HeaderBanner;
+use App\Models\FaqCategoryId;
+use App\Models\FaqCategory;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 
-class HeaderBannerController extends Controller
+class CategoriesController extends Controller
 {
     public function index(Request $request)
     {
         if($request->ajax()){
             $reqDatatable  = $this->requestDatatables($request->input());
 
-            $data = HeaderBanner::with([
-                'headerBannerId',
-                'headerBannerId.image'
+            $data = FaqCategory::with([
+                'faqCategoryId',
             ])->where('language_code', 'id');
 
             if ($reqDatatable['orderable']) {
@@ -62,22 +61,19 @@ class HeaderBannerController extends Controller
                         return $rownum--;
                     }
                 })
-                ->addColumn('image', function($data){
-                    return '<a href="'. $data->headerBannerId->image->path .'" target="_BLANK"><img src="'.$data->headerBannerId->image->path.'" style="width:200px;"></a>';
-                })
                 ->addColumn('is_active', function($data){
-                    $id = $data->headerBannerId->id;
-                    $isActive = $data->headerBannerId->is_active;
+                    $id = $data->faqCategoryId->id;
+                    $isActive = $data->faqCategoryId->is_active;
 
-                    return view('backend.pages.home.header-banner.list.active', compact('id', 'isActive'));
+                    return view('backend.pages.content.faq.categories.list.active', compact('id', 'isActive'));
                 })
                 ->addColumn('action', function($data){
                     $html = '<div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">';
                         //* EDIT
-                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/home/header-banner/edit/'.$data->headerBannerId->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/content/faq/categories/edit/'.$data->faqCategoryId->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
 
                         //* DELETE
-                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/home/header-banner/delete/'.$data->headerBannerId->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/content/faq/categories/delete/'.$data->faqCategoryId->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
                     $html .= '</ul></div></div>';
 
                     return $html;
@@ -86,12 +82,12 @@ class HeaderBannerController extends Controller
                 ->toJson(true);
         }
 
-        return view('backend.pages.home.header-banner.index');
+        return view('backend.pages.content.faq.categories.index');
     }
 
     public function create()
     {
-        return view('backend.pages.home.header-banner.create');
+        return view('backend.pages.content.faq.categories.create');
     }
 
     public function store(Request $request)
@@ -101,28 +97,18 @@ class HeaderBannerController extends Controller
 
         unset($data['_token']);
 
-        $rules = [
-            'image' => ['required', 'file', 'image'],
-        ];
+        $rules = [];
 
         $messages = [];
 
-        $attributes = [
-            'image' => 'Upload File',
-        ];
+        $attributes = [];
 
         foreach ($request->input as $lang => $input) {
-            $rules["input.$lang.title"] = ['required'];
-            $rules["input.$lang.description"] = ['required'];
-            $rules["input.$lang.cta"] = ['required'];
-            $rules["input.$lang.link"] = ['required'];
+            $rules["input.$lang.name"] = ['required'];
 
             $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
-            $attributes["input.$lang.title"] = "$lang_name Title";
-            $attributes["input.$lang.description"] = "$lang_name Description";
-            $attributes["input.$lang.cta"] = "$lang_name Call To Action";
-            $attributes["input.$lang.link"] = "$lang_name Link";
+            $attributes["input.$lang.name"] = "$lang_name Name";
         }
 
         $request->validate($rules, $messages, $attributes);
@@ -132,39 +118,29 @@ class HeaderBannerController extends Controller
         try {
             DB::beginTransaction();
 
-            $headerBannerId = new HeaderBannerId();
+            $faqCategoryId = new FaqCategoryId();
 
-            $headerBannerId->fill([
+            $faqCategoryId->fill([
                 'is_active' => true
             ])->save();
 
-            $idHeaderBannerId = $headerBannerId->id;
+            $idFaqCategoryId = $faqCategoryId->id;
 
             foreach ($data['input'] as $languageCode => $input) {
-                $headerBanner = new HeaderBanner();
+                $faqCategory = new FaqCategory();
 
-                $input['id_header_banner_id'] = $idHeaderBannerId;
+                $input['id_faq_category_id'] = $idFaqCategoryId;
                 $input['language_code'] = $languageCode;
                 $input['created_by'] = $user->id;
                 $input['updated_by'] = $user->id;
                 $input['deleted_by'] = 0;
 
-                $headerBanner->fill($input)->save();
+                $faqCategory->fill($input)->save();
 
-                $idHeaderBanner = $headerBanner->id;
+                $idFaqCategory = $faqCategory->id;
             }
 
-            if ($request->hasFile('image')) {
-                $this->storeFile(
-                    $request->file('image'),
-                    $headerBannerId,
-                    'image',
-                    "images/header-banner/{$idHeaderBannerId}",
-                    'image'
-                );
-            }
-
-            $message = 'Header Banner created successfully';
+            $message = 'Faq Category created successfully';
 
             DB::commit();
         } catch (\Illuminate\Database\QueryException $e) {
@@ -180,27 +156,25 @@ class HeaderBannerController extends Controller
         if ($isError == true) {
             return redirect()->back()->with(['error' => $message]);
         } else {
-            return redirect(url('admin-cms/home/header-banner'))
+            return redirect(url('admin-cms/content/faq/categories'))
                 ->with(['success' => $message]);
         }
     }
 
     public function edit($id)
     {
-        $headerBannerId = HeaderBannerId::find($id);
+        $faqCategoryId = FaqCategoryId::find($id);
 
-        $imagePath = (!empty($headerBannerId) && $headerBannerId->image) ? $headerBannerId->image->path : '';
-
-        $headerBanner = HeaderBanner::where('id_header_banner_id', $id)
+        $faqCategory = FaqCategory::where('id_faq_category_id', $id)
             ->get()
             ->toArray();
 
-        foreach ($headerBanner as $key => $val) {
-            $headerBanner[$val['language_code']] = $val;
-            unset($headerBanner[$key]);
+        foreach ($faqCategory as $key => $val) {
+            $faqCategory[$val['language_code']] = $val;
+            unset($faqCategory[$key]);
         }
 
-        return view('backend.pages.home.header-banner.edit', compact('headerBannerId', 'imagePath', 'headerBanner'));
+        return view('backend.pages.content.faq.categories.edit', compact('faqCategoryId', 'faqCategory'));
     }
 
     public function update($id, Request $request)
@@ -210,28 +184,18 @@ class HeaderBannerController extends Controller
 
         unset($data['_token']);
 
-        $rules = [
-            'image' => ['file', 'image'],
-        ];
+        $rules = [];
 
         $messages = [];
 
-        $attributes = [
-            'image' => 'Upload File',
-        ];
+        $attributes = [];
 
         foreach ($request->input as $lang => $input) {
-            $rules["input.$lang.title"] = ['required'];
-            $rules["input.$lang.description"] = ['required'];
-            $rules["input.$lang.cta"] = ['required'];
-            $rules["input.$lang.link"] = ['required'];
+            $rules["input.$lang.name"] = ['required'];
 
             $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
-            $attributes["input.$lang.title"] = "$lang_name Title";
-            $attributes["input.$lang.description"] = "$lang_name Description";
-            $attributes["input.$lang.cta"] = "$lang_name Call To Action";
-            $attributes["input.$lang.link"] = "$lang_name Link";
+            $attributes["input.$lang.name"] = "$lang_name Name";
         }
 
         $request->validate($rules, $messages, $attributes);
@@ -241,42 +205,29 @@ class HeaderBannerController extends Controller
         try {
             DB::beginTransaction();
 
-            $headerBannerId = HeaderBannerId::find($id);
+            $faqCategoryId = FaqCategoryId::find($id);
 
-            $headerBannerId->fill([
+            $faqCategoryId->fill([
                 'is_active' => true
             ])->save();
 
-            $idHeaderBannerId = $headerBannerId->id;
+            $idFaqCategoryId = $faqCategoryId->id;
 
             foreach ($data['input'] as $languageCode => $input) {
-                $headerBanner = HeaderBanner::where([
-                    'id_header_banner_id' => $id,
-                    'language_code' => $languageCode
-                ])->first();
+                $faqCategory = FaqCategory::where('id_faq_category_id', $id)->first();
 
-                $input['id_header_banner_id'] = $idHeaderBannerId;
+                $input['id_faq_category_id'] = $idFaqCategoryId;
                 $input['language_code'] = $languageCode;
                 $input['created_by'] = $user->id;
                 $input['updated_by'] = $user->id;
                 $input['deleted_by'] = 0;
 
-                $headerBanner->fill($input)->save();
+                $faqCategory->fill($input)->save();
 
-                $idHeaderBanner = $headerBanner->id;
+                $idFaqCategory = $faqCategory->id;
             }
 
-            if ($request->hasFile('image')) {
-                $this->storeFile(
-                    $request->file('image'),
-                    $headerBannerId,
-                    'image',
-                    "images/header-banner/{$idHeaderBannerId}",
-                    'image'
-                );
-            }
-
-            $message = 'Header Banner updated successfully';
+            $message = 'Faq Category updated successfully';
 
             DB::commit();
         } catch (\Illuminate\Database\QueryException $e) {
@@ -292,7 +243,7 @@ class HeaderBannerController extends Controller
         if ($isError == true) {
             return redirect()->back()->with(['error' => $message]);
         } else {
-            return redirect(url('admin-cms/home/header-banner'))
+            return redirect(url('admin-cms/content/faq/categories'))
                 ->with(['success' => $message]);
         }
     }
@@ -314,7 +265,7 @@ class HeaderBannerController extends Controller
             try {
                 DB::beginTransaction();
 
-                $update = HeaderBannerId::where('id', $id)->update([
+                $update = FaqCategoryId::where('id', $id)->update([
                     'is_active' => $status
                 ]);
 
@@ -342,13 +293,13 @@ class HeaderBannerController extends Controller
         try{
             DB::beginTransaction();
 
-            $delete = HeaderBannerId::where('id', $id)->delete();
+            $delete = FaqCategoryId::where('id', $id)->delete();
 
-            $deleteChild = HeaderBanner::where('id_header_banner_id', $id)->delete();
+            $deleteChild = FaqCategory::where('id_faq_category_id', $id)->delete();
 
             DB::commit();
 
-            return redirect('admin-cms/home/header-banner')->with(['success' => 'Header Banner has been deleted successfully']);
+            return redirect('admin-cms/content/faq/categories')->with(['success' => 'Faq Category has been deleted successfully']);
         }catch(Exception $e){
             DB::rollBack();
 
