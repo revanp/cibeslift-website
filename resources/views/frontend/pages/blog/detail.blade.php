@@ -16,7 +16,7 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
-                    <img src="{{ asset('frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100 my-3" alt="">
+                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100 my-3" alt="">
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
@@ -24,7 +24,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    
+
                     <div class="row">
                         <div class="col-12 mb-5">
                             <h4 class="title-30-bold">Baca Artikel Lainnya</h4>

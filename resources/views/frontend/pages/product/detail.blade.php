@@ -55,7 +55,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-6">
-                    <div class="flex-middle">    
+                    <div class="flex-middle">
                         <span>
                             <h4 class="title-50-bold">Cibes Air Series</h4>
                             <p class="mb-5">Mengalir Seperti Air</p>
@@ -65,13 +65,13 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="text-center">
-                        <img src="{{ asset('frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" class="d-inline-block" alt="">
+                        <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" class="d-inline-block" alt="">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="section">
         <div class="container">
             <div class="row">
@@ -191,17 +191,17 @@
                     <a href="#" class="button-orange">Compare Model</a>
                 </div>
                 <div class="col-12 col-md-6">
-                    <img src="{{ asset('frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
+                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-6">
-                    <img src="{{ asset('frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
+                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
                 </div>
                 <div class="col-12 col-md-6">
                     <h5 class="title-50-bold">Customize Your Lift</h5>
@@ -327,7 +327,7 @@
         </div>
     </div>
 
-    
+
 
 @endsection
 

@@ -252,7 +252,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-6">
-                    <div class="flex-middle">    
+                    <div class="flex-middle">
                         <span>
                             <h4 class="title-50-bold">Customer Care yang Siap Melayani 24/7</h4>
                             <p class="mb-5">Demi keamanan dan kenyamanan Anda, kami siap selama 24 jam penuh setiap hari. bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.</p>
@@ -262,7 +262,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="text-center">
-                        <img src="{{ asset('frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
+                        <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
                     </div>
                 </div>
             </div>
