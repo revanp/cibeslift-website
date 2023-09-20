@@ -11,6 +11,9 @@ Route::get('/blog', [App\Http\Controllers\Frontend\BlogController::class, 'index
 Route::get('/blog/detail', [App\Http\Controllers\Frontend\BlogController::class, 'detail'])->name('detail');
 Route::get('/faq', [App\Http\Controllers\Frontend\FaqController::class, 'index'])->name('index');
 
+Route::get('/product', [App\Http\Controllers\Frontend\ProductController::class, 'product'])->name('product');
+Route::get('/product/detail', [App\Http\Controllers\Frontend\ProductController::class, 'detail'])->name('detail');
+
 // CMS
 Route::group(['prefix' => 'admin-cms'], function(){
     Auth::routes();
