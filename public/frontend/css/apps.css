@@ -12,7 +12,9 @@ body {
     right: 0;
     z-index: 99;
 }
-
+.c-white {
+    color: white !important;
+}
 .menu {
     padding: 0;
     margin: 0;
@@ -137,8 +139,11 @@ body {
     padding: 100px 0;
 }
 
-.card {
-
+.card-banner {
+    height: 660px;
+    width: 100%;
+    background: #404040;
+    padding: 24px;
 }
 .card-image-banner {
     height: 500px;
