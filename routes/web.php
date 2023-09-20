@@ -3,16 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-// Frontend
-Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
-Route::get('/about-us', [App\Http\Controllers\Frontend\AboutController::class, 'index'])->name('index');
-Route::get('/blog', [App\Http\Controllers\Frontend\BlogController::class, 'index'])->name('index');
-Route::get('/blog/detail', [App\Http\Controllers\Frontend\BlogController::class, 'detail'])->name('detail');
-Route::get('/faq', [App\Http\Controllers\Frontend\FaqController::class, 'index'])->name('index');
-
-Route::get('/product', [App\Http\Controllers\Frontend\ProductController::class, 'product'])->name('product');
-Route::get('/product/detail', [App\Http\Controllers\Frontend\ProductController::class, 'detail'])->name('detail');
-
 // CMS
 Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
     Route::get('login', [App\Http\Controllers\Backend\LoginController::class, 'showLoginForm'])->name('login');
@@ -21,6 +11,43 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
 
     Route::group(['middleware' => 'auth'], function(){
         Route::get('', [App\Http\Controllers\Backend\DashboardController::class, 'index']);
+
+        Route::group(['prefix' => 'content'], function(){
+            Route::group(['prefix' => 'header-banner'], function(){
+                Route::get('', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'index']);
+                Route::post('datatable', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'index']);
+                Route::get('create', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'create']);
+                Route::post('create', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'store']);
+                Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'edit']);
+                Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'update']);
+                Route::put('change-status', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'changeStatus']);
+                Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'delete']);
+            });
+
+            Route::group(['prefix' => 'faq'], function(){
+                Route::group(['prefix' => 'categories'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\Faq\CategoriesController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\Faq\CategoriesController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\Faq\CategoriesController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\Faq\CategoriesController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\Faq\CategoriesController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\Faq\CategoriesController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\Faq\CategoriesController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\Faq\CategoriesController::class, 'delete']);
+                });
+
+                Route::group(['prefix' => 'questions'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\Faq\QuestionsController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\Faq\QuestionsController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\Faq\QuestionsController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\Faq\QuestionsController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\Faq\QuestionsController::class, 'edit']);
+                    Route::post('edit/{id}', [App\Http\Controllers\Backend\Content\Faq\QuestionsController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\Faq\QuestionsController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\Faq\QuestionsController::class, 'delete']);
+                });
+            });
+        });
 
         Route::group(['prefix' => 'settings'], function(){
             Route::group(['prefix' => 'roles'], function(){
