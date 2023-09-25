@@ -77,6 +77,13 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                 Route::post('update-value', [App\Http\Controllers\Backend\Settings\TranslationsController::class, 'updateValue']);
                 Route::post('publish', [App\Http\Controllers\Backend\Settings\TranslationsController::class, 'publish']);
             });
+
+            Route::group(['prefix' => 'pages'], function(){
+                Route::get('', [App\Http\Controllers\Backend\Settings\PagesController::class, 'index']);
+                Route::post('datatable', [App\Http\Controllers\Backend\Settings\PagesController::class, 'index']);
+                Route::get('edit/{id}', [App\Http\Controllers\Backend\Settings\PagesController::class, 'edit']);
+                Route::put('edit/{id}', [App\Http\Controllers\Backend\Settings\PagesController::class, 'update']);
+            });
         });
     });
 });

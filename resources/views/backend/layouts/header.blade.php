@@ -96,6 +96,13 @@
                                         </a>
                                     </li>
 
+                                    <li class="menu-item {{ (request()->is('admin-cms/settings/pages/*') || request()->is('admin-cms/settings/pages')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ url('admin-cms/settings/pages') }}" class="menu-link ">
+                                            <i class="flaticon2-menu-3 menu-icon"></i>
+                                            <span class="menu-text">Pages</span>
+                                        </a>
+                                    </li>
+
                                     <li class="menu-item {{ (request()->is('admin-cms/settings/translations/*') || request()->is('admin-cms/settings/translations')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/settings/translations') }}" class="menu-link ">
                                             <i class="flaticon2-sheet menu-icon"></i>
