@@ -20,6 +20,12 @@
 </div>
 
 <div class="section">
+    <div style="height: 1000vh;">
+        <div id="scrolly-video"></div>
+    </div>
+</div>
+
+<div class="section">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mb-5">
@@ -291,4 +297,13 @@
 @endsection
 
 @push('script')
+
+<script src="https://cdn.jsdelivr.net/npm/scrolly-video@latest/dist/scrolly-video.js"></script>
+<script>
+    new ScrollyVideo({
+        scrollyVideoContainer: "scrolly-video",
+        src: "{{ asset('frontend/video/dongguang-showroom.mp4') }}"
+    });
+</script>
+
 @endpush
