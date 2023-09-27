@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<div class="section">
+<div class="section pt-0">
     <div style="height: 1000vh;">
         <div id="scrolly-video"></div>
     </div>
