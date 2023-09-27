@@ -302,7 +302,7 @@
 <script>
     new ScrollyVideo({
         scrollyVideoContainer: "scrolly-video",
-        src: "{{ asset('frontend/video/dongguang-showroom.mp4') }}"
+        src: "{{ asset('public/frontend/video/dongguang-showroom.mp4') }}"
     });
 </script>
 
