@@ -15,7 +15,7 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
-        if($request->method() == 'POST'){
+        if($request->ajax()){
             $reqDatatable  = $this->requestDatatables($request->input());
 
             $users = User::with(['role']);

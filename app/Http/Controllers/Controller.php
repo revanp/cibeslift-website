@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Storage;
 
 class Controller extends BaseController
 {
@@ -48,5 +49,31 @@ class Controller extends BaseController
         $data['length'] = ($params['length']) ? $params['length'] : 0;
 
         return $data;
+    }
+
+    protected function storeFile($file, $model, $relation, $path, $content_type = null)
+    {
+        $document = $file;
+        $fileName = $document->hashName();
+
+        $data = [
+            'content_type' => $content_type,
+            'name' => $document->getClientOriginalName(),
+            'path' => $path,
+            'file_name' => $fileName,
+            'type' => $document->getClientOriginalExtension() === 'pdf' ? 'pdf' : 'image',
+            'mime_type' => $document->getMimeType(),
+            'disk' => config('filesystems.default'),
+            'extension' => $document->getClientOriginalExtension(),
+            'size' => $document->getSize(),
+        ];
+
+        if ($model->$relation) {
+            $model->$relation()->update($data);
+        } else {
+            $model->$relation()->create($data);
+        }
+
+        Storage::putFileAs("$path/", $document, $fileName, 'public');
     }
 }
