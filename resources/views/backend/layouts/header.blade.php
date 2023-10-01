@@ -78,41 +78,53 @@
                             </div>
                         </li>
 
+                        <li class="menu-item menu-item-submenu menu-item-rel {{ request()->is('admin-cms/products/*') ? 'menu-item-active' : '' }}" data-menu-toggle="click" aria-haspopup="true">
+                            <a  href="javascript:;" class="menu-link menu-toggle">
+                                <i class="flaticon2-tools-and-utensils                                menu-icon"></i>
+                                <span class="menu-text">Products</span><span class="menu-desc"></span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu menu-submenu-classic menu-submenu-left" >
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ (request()->is('admin-cms/products/groups/*') || request()->is('admin-cms/products/groups')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ url('admin-cms/products/groups') }}" class="menu-link ">
+                                            <span class="menu-text">Groups</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
                         <li class="menu-item menu-item-submenu menu-item-rel {{ request()->is('admin-cms/settings/*') ? 'menu-item-active' : '' }}" data-menu-toggle="click" aria-haspopup="true"><a  href="javascript:;" class="menu-link menu-toggle">
-                            <span class="menu-text">Settings</span><span class="menu-desc"></span><i class="menu-arrow"></i></a>
+                            <i class="flaticon2-gear menu-icon"></i><span class="menu-text">Settings</span><span class="menu-desc"></span><i class="menu-arrow"></i></a>
                             <div class="menu-submenu menu-submenu-classic menu-submenu-left" >
                                 <ul class="menu-subnav">
                                     <li class="menu-item {{ (request()->is('admin-cms/settings/roles/*') || request()->is('admin-cms/settings/roles')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/settings/roles') }}" class="menu-link ">
-                                            <i class="flaticon2-avatar menu-icon"></i>
                                             <span class="menu-text">Roles</span>
                                         </a>
                                     </li>
 
                                     <li class="menu-item {{ (request()->is('admin-cms/settings/users/*') || request()->is('admin-cms/settings/users')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/settings/users') }}" class="menu-link ">
-                                            <i class="flaticon2-user menu-icon"></i>
                                             <span class="menu-text">Users</span>
                                         </a>
                                     </li>
 
                                     <li class="menu-item {{ (request()->is('admin-cms/settings/pages/*') || request()->is('admin-cms/settings/pages')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/settings/pages') }}" class="menu-link ">
-                                            <i class="flaticon2-menu-3 menu-icon"></i>
                                             <span class="menu-text">Pages</span>
                                         </a>
                                     </li>
 
                                     <li class="menu-item {{ (request()->is('admin-cms/settings/navbar/*') || request()->is('admin-cms/settings/navbar')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/settings/navbar') }}" class="menu-link ">
-                                            <i class="flaticon2-sort menu-icon"></i>
                                             <span class="menu-text">Navbar</span>
                                         </a>
                                     </li>
 
                                     <li class="menu-item {{ (request()->is('admin-cms/settings/translations/*') || request()->is('admin-cms/settings/translations')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/settings/translations') }}" class="menu-link ">
-                                            <i class="flaticon2-sheet menu-icon"></i>
                                             <span class="menu-text">Translations</span>
                                         </a>
                                     </li>

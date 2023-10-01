@@ -49,6 +49,19 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
             });
         });
 
+        Route::group(['prefix' => 'products'], function(){
+            Route::group(['prefix' => 'groups'], function(){
+                Route::get('', [App\Http\Controllers\Backend\Products\GroupsController::class, 'index']);
+                Route::post('datatable', [App\Http\Controllers\Backend\Products\GroupsController::class, 'index']);
+                Route::get('create', [App\Http\Controllers\Backend\Products\GroupsController::class, 'create']);
+                Route::post('create', [App\Http\Controllers\Backend\Products\GroupsController::class, 'store']);
+                Route::get('edit/{id}', [App\Http\Controllers\Backend\Products\GroupsController::class, 'edit']);
+                Route::post('edit/{id}', [App\Http\Controllers\Backend\Products\GroupsController::class, 'update']);
+                Route::put('change-status', [App\Http\Controllers\Backend\Products\GroupsController::class, 'changeStatus']);
+                Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\GroupsController::class, 'delete']);
+            });
+        });
+
         Route::group(['prefix' => 'settings'], function(){
             Route::group(['prefix' => 'roles'], function(){
                 Route::get('', [App\Http\Controllers\Backend\Settings\RolesController::class, 'index']);
