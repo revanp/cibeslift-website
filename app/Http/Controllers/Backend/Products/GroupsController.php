@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Exception;
+use Illuminate\Support\Str;
 
 class GroupsController extends Controller
 {
@@ -105,10 +106,12 @@ class GroupsController extends Controller
 
         foreach ($request->input as $lang => $input) {
             $rules["input.$lang.name"] = ['required'];
+            $rules["input.$lang.description"] = [];
 
             $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
             $attributes["input.$lang.name"] = "$lang_name Name";
+            $attributes["input.$lang.description"] = "$lang_name Description";
         }
 
         $request->validate($rules, $messages, $attributes);
@@ -132,12 +135,13 @@ class GroupsController extends Controller
             foreach ($data['input'] as $languageCode => $input) {
                 $productGroup = new ProductGroup();
 
+                $input['slug'] = Str::slug($input['name']);
                 $input['id_product_group_id'] = $idProductGroupId;
                 $input['language_code'] = $languageCode;
 
                 $productGroup->fill($input)->save();
 
-                $idFaq = $productGroup->id;
+                $idProductGroup = $productGroup->id;
             }
 
             $message = 'Product Group created successfully';
@@ -221,12 +225,13 @@ class GroupsController extends Controller
                     ->where('language_code', $languageCode)
                     ->first();
 
+                $input['slug'] = Str::slug($input['name']);
                 $input['id_product_group_id'] = $idProductGroupId;
                 $input['language_code'] = $languageCode;
 
                 $productGroup->fill($input)->save();
 
-                $idFaq = $productGroup->id;
+                $idProductGroup = $productGroup->id;
             }
 
             $message = 'Product Group updated successfully';

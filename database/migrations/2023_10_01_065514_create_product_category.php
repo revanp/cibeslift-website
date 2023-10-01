@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('product_group');
-        Schema::create('product_group', function (Blueprint $table) {
+        Schema::create('product_category', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('id_product_group_id');
-            $table->string('name');
-            $table->string('slug');
-            $table->text('description')->nullable();
-            $table->string('language_code',5);
+            $table->boolean('is_active')->default(true);
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_group');
+        Schema::dropIfExists('product_category');
     }
 };

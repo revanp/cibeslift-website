@@ -18,6 +18,8 @@ class ProductGroup extends Model
     protected $fillable  = [
         'id_product_group_id',
         'name',
+        'slug',
+        'description',
         'language_code',
     ];
 

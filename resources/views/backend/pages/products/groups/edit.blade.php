@@ -58,10 +58,23 @@
                             <div class="tab-content mb-4" style="display: block !important;">
                                 <div class="tab-pane active" id="idTab" role="tabpanel">
                                     <div class="row mt-5">
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6">
                                             <label>Name</label>
                                             <input type="text" class="form-control @if($errors->has('input.id.name')) is-invalid @endif" placeholder="Enter name" name="input[id][name]" value="{{ !empty(old('input.id.name')) ? old('input.id.name') : $productGroup['id']['name'] }}"/>
                                             @error('input.id.name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Slug</label>
+                                            <input type="text" disabled class="form-control" value="{{ $productGroup['id']['slug'] }}"/>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Description</label>
+                                            <textarea name="input[id][description]" class="ckeditor-id-description @if($errors->has('input.id.description')) is-invalid @endif">{{ !empty(old('input.id.description')) ? old('input.id.description') : $productGroup['id']['description'] }}</textarea>
+                                            @error('input.id.description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -71,10 +84,23 @@
                                 </div>
                                 <div class="tab-pane" id="enTab" role="tabpanel">
                                     <div class="row mt-5">
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6">
                                             <label>Name</label>
                                             <input type="text" class="form-control @if($errors->has('input.en.name')) is-invalid @endif" placeholder="Enter name" name="input[en][name]" value="{{ !empty(old('input.en.name')) ? old('input.en.name') : $productGroup['en']['name'] }}"/>
                                             @error('input.en.name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Slug</label>
+                                            <input type="text" disabled class="form-control" value="{{ $productGroup['en']['slug'] }}"/>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Description</label>
+                                            <textarea name="input[en][description]" class="ckeditor-en-description @if($errors->has('input.en.description')) is-invalid @endif">{{ !empty(old('input.en.description')) ? old('input.en.description') : $productGroup['en']['description'] }}</textarea>
+                                            @error('input.en.description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -95,9 +121,12 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('public/backend/plugins/custom/ckeditor/ckeditor-classic.bundle.js?v=7.0.6') }}"></script>
     <script>
         $(document).ready(function(){
+            ClassicEditor.create(document.querySelector('.ckeditor-id-description'));
 
+            ClassicEditor.create(document.querySelector('.ckeditor-en-description'));
         });
     </script>
 @endsection

@@ -42,6 +42,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Name</th>
+                                    <th>Slug</th>
                                     <th>Status</th>
                                     <th>#</th>
                                 </tr>
@@ -75,6 +76,7 @@
                 columns: [
                     {data: 'rownum'},
                     {data: 'name'},
+                    {data: 'slug'},
                     {data: 'is_active', searchable: false, orderable: false},
                     {data: 'action', searchable: false, orderable: false},
                 ]
