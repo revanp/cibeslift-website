@@ -13,11 +13,17 @@ return new class extends Migration
     {
         Schema::create('product_category', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_product_group_id');
-            $table->boolean('is_active')->default(true);
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
-            $table->integer('deleted_by')->nullable();
+            $table->bigInteger('id_product_category_id');
+            $table->string('name');
+            $table->string('slug');
+            $table->text('description')->nullable();
+            $table->string('post_title');
+            $table->text('post_description')->nullable();
+            $table->string('seo_title')->nullable();
+            $table->text('seo_description')->nullable();
+            $table->string('seo_keyword')->nullable();
+            $table->string('seo_canonical_url')->nullable();
+            $table->string('language_code',5);
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
         });

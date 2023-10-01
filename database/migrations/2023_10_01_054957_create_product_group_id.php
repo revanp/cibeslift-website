@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('product_group_id', function (Blueprint $table) {
             $table->id();
             $table->boolean('is_active')->default(true);
+            $table->integer('sort');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('deleted_by')->nullable();

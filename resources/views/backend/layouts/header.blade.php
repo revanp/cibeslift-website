@@ -91,6 +91,11 @@
                                             <span class="menu-text">Groups</span>
                                         </a>
                                     </li>
+                                    <li class="menu-item {{ (request()->is('admin-cms/products/categories/*') || request()->is('admin-cms/products/categories')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ url('admin-cms/products/categories') }}" class="menu-link ">
+                                            <span class="menu-text">Categories</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
