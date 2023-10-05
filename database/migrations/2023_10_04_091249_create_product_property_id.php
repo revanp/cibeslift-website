@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_category_id', function (Blueprint $table) {
+        Schema::create('product_property_id', function (Blueprint $table) {
             $table->id();
-            $table->string('video_url')->nullable();
-            $table->boolean('is_self_design')->default(true);
             $table->boolean('is_active')->default(true);
             $table->integer('sort');
             $table->integer('created_by')->nullable();
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_category_id');
+        Schema::dropIfExists('product_property_id');
     }
 };

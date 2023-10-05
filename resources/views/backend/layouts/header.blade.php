@@ -86,14 +86,24 @@
                             </a>
                             <div class="menu-submenu menu-submenu-classic menu-submenu-left" >
                                 <ul class="menu-subnav">
-                                    <li class="menu-item {{ (request()->is('admin-cms/products/groups/*') || request()->is('admin-cms/products/groups')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                    {{-- <li class="menu-item {{ (request()->is('admin-cms/products/groups/*') || request()->is('admin-cms/products/groups')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/products/groups') }}" class="menu-link ">
                                             <span class="menu-text">Groups</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="menu-item {{ (request()->is('admin-cms/products/categories/*') || request()->is('admin-cms/products/categories')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/products/categories') }}" class="menu-link ">
                                             <span class="menu-text">Categories</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item {{ (request()->is('admin-cms/products/properties/*') || request()->is('admin-cms/products/properties')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ url('admin-cms/products/properties') }}" class="menu-link ">
+                                            <span class="menu-text">Properties</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item {{ (request()->is('admin-cms/products/products/*') || request()->is('admin-cms/products/products')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ url('admin-cms/products/products') }}" class="menu-link ">
+                                            <span class="menu-text">Products</span>
                                         </a>
                                     </li>
                                 </ul>

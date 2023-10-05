@@ -64,6 +64,7 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
             Route::group(['prefix' => 'categories'], function(){
                 Route::get('', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'index']);
                 Route::post('datatable', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'index']);
+                Route::get('view/{id}', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'view']);
                 Route::get('create', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'create']);
                 Route::post('create', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'store']);
                 Route::get('edit/{id}', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'edit']);

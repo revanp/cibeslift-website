@@ -95,6 +95,21 @@
         <script src="{{ asset('public/backend/js/scripts.bundle.js?v=7.0.6') }}"></script>
         <script src="{{ asset('public/backend/plugins/custom/datatables/datatables.bundle.js?v=7.0.6') }}"></script>
         <script>
+            $(document).ready(function() {
+                $('.file-input').change(function(){
+                    readImgUrlAndPreview(this);
+                    function readImgUrlAndPreview(input){
+                        if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $(input).parent().find('.file-preview').attr('src', e.target.result);
+                                $(input).parent().find('.file-preview').css('opacity', 1);
+                            }
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                });
+            })
             $(document).on('click', '.btn-delete', function(e){
                 e.preventDefault();
 

@@ -6,7 +6,7 @@
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <div class="d-flex align-items-baseline flex-wrap mr-5">
                     <h5 class="text-dark font-weight-bold my-1 mr-5">
-                        Groups
+                        Categories
                     </h5>
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -14,7 +14,7 @@
                             <a href="#" class="text-muted">Products</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/products/groups') }}" class="text-muted">Groups</a>
+                            <a href="{{ url('admin-cms/products/categories') }}" class="text-muted">Categories</a>
                         </li>
                     </ul>
                 </div>
@@ -30,7 +30,7 @@
                         <h3 class="card-label">List Group</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{ url('admin-cms/products/groups/create') }}" class="btn btn-primary font-weight-bolder">
+                        <a href="{{ url('admin-cms/products/categories/create') }}" class="btn btn-primary font-weight-bolder">
                             <i class="flaticon2-add icon-md"></i> New Record
                         </a>
                     </div>
@@ -67,7 +67,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ url('admin-cms/products/groups/datatable') }}",
+                    url: "{{ url('admin-cms/products/categories/datatable') }}",
                     type: "POST",
                     data: {
                         "_token": "{{ csrf_token() }}"
@@ -115,7 +115,7 @@
             var status = t.prop('checked') ? 1 : 0;
 
             $.ajax({
-                url: "{{ url('admin-cms/products/groups/change-status') }}",
+                url: "{{ url('admin-cms/products/categories/change-status') }}",
                 type: 'POST',
                 dataType: 'json',
                 data: {

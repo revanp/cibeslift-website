@@ -51,35 +51,140 @@
                                     <label>Thumbnail</label>
                                     <div class="form-group__file">
                                         <div class="file-wrapper">
-                                            <input type="file" name="id_card" class="file-input imageUpload" accept="image/png, image/gif, image/jpeg"/>
+                                            <input type="file" name="thumbnail" class="file-input thumbnailUpload"/>
                                             <div class="file-preview-background">+</div>
-                                            <img src="" id="imagePreview" width="240px" class="file-preview"/>
+                                            <img src="" width="240px" class="file-preview"/>
                                         </div>
                                     </div>
+                                    @error('thumbnail')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group picture_upload col-md-6">
                                     <label>Banner</label>
                                     <div class="form-group__file">
                                         <div class="file-wrapper">
-                                            <input type="file" name="id_card" class="file-input imageUpload" accept="image/png, image/gif, image/jpeg"/>
+                                            <input type="file" name="banner" class="file-input"/>
                                             <div class="file-preview-background">+</div>
-                                            <img src="" id="imagePreview" width="240px" class="file-preview"/>
+                                            <img src="" width="240px" class="file-preview"/>
+                                        </div>
+                                    </div>
+                                    @error('banner')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group picture_upload col-md-6">
+                                    <label>File Icon</label>
+                                    <div class="form-group__file">
+                                        <div class="file-wrapper">
+                                            <input type="file" name="file_icon" class="file-input"/>
+                                            <div class="file-preview-background">+</div>
+                                            <img src="" width="240px" class="file-preview"/>
+                                        </div>
+                                    </div>
+                                    @error('file_icon')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group picture_upload col-md-6">
+                                    <label>Video Thumbnail</label>
+                                    <div class="form-group__file">
+                                        <div class="file-wrapper">
+                                            <input type="file" name="video_thumbnail" class="file-input"/>
+                                            <div class="file-preview-background">+</div>
+                                            <img src="" width="240px" class="file-preview"/>
+                                        </div>
+                                    </div>
+                                    @error('video_thumbnail')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group picture_upload col-md-4">
+                                    <label>Image 1</label>
+                                    <div class="form-group__file">
+                                        <div class="file-wrapper">
+                                            <input type="file" name="image[]" class="file-input"/>
+                                            <div class="file-preview-background">+</div>
+                                            <img src="" width="240px" class="file-preview"/>
+                                        </div>
+                                    </div>
+                                    @error('image')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group picture_upload col-md-4">
+                                    <label>Image 2</label>
+                                    <div class="form-group__file">
+                                        <div class="file-wrapper">
+                                            <input type="file" name="image[]" class="file-input"/>
+                                            <div class="file-preview-background">+</div>
+                                            <img src="" width="240px" class="file-preview"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group picture_upload col-md-4">
+                                    <label>Image 3</label>
+                                    <div class="form-group__file">
+                                        <div class="file-wrapper">
+                                            <input type="file" name="image[]" class="file-input"/>
+                                            <div class="file-preview-background">+</div>
+                                            <img src="" width="240px" class="file-preview"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label>Name</label>
-                                    <input type="text" class="form-control @if($errors->has('input.id.name')) is-invalid @endif" placeholder="Enter name" name="input[id][name]" value="{{ old('input.id.name') }}"/>
-                                    @error('input.id.name')
+                                    <label>Video URL</label>
+                                    <input type="text" class="form-control @if($errors->has('video_url')) is-invalid @endif" placeholder="Enter video URL" name="video_url" value="{{ old('video_url') }}"/>
+                                    @error('video_url')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label>Sort</label>
+                                    <select name="sort" id="" class="form-control @if($errors->has('sort')) is-invalid @endif">
+                                        <option value="">-- LAST ORDER --</option>
+                                        @for($i = 1; $i <= $sort; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                    @error('sort')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-12 col-form-label">
+                                        <div class="checkbox-inline">
+                                            <label class="checkbox checkbox-success">
+                                                <input type="checkbox" name="is_active"/>
+                                                <span></span>
+                                                Active
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-12 col-form-label">
+                                        <div class="checkbox-inline">
+                                            <label class="checkbox checkbox-success">
+                                                <input type="checkbox" name="is_self_design"/>
+                                                <span></span>
+                                                Self Design
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <hr>
+
+                            <div class="separator separator-solid separator-border-3 mb-5"></div>
+
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" role="tab" href="#idTab">Indonesia</a>
@@ -110,6 +215,69 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Post Title</label>
+                                            <input type="text" class="form-control @if($errors->has('input.id.post_title')) is-invalid @endif" placeholder="Enter post title" name="input[id][post_title]" value="{{ old('input.id.post_title') }}"/>
+                                            @error('input.id.post_title')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Post Description</label>
+                                            <textarea name="input[id][post_description]" class="ckeditor-id-post-description @if($errors->has('input.id.post_description')) is-invalid @endif">{{ old('input.id.post_description') }}</textarea>
+                                            @error('input.id.post_description')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="separator separator-dashed separator-border-2"></div>
+
+                                    <h3 class="display-5 mt-5">SEO</h3>
+                                    <div class="row mt-3">
+                                        <div class="form-group col-md-6">
+                                            <label>SEO Title</label>
+                                            <input type="text" class="form-control @if($errors->has('input.id.seo_title')) is-invalid @endif" placeholder="Enter SEO title" name="input[id][seo_title]" value="{{ old('input.id.seo_title') }}"/>
+                                            @error('input.id.seo_title')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>SEO Description</label>
+                                            <textarea name="input[id][seo_description]" rows="3" class="form-control @if($errors->has('input.id.seo_description')) is-invalid @endif">{{ old('input.id.seo_description') }}</textarea>
+                                            @error('input.id.seo_title')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>SEO Keyword</label>
+                                            <input type="text" class="form-control @if($errors->has('input.id.seo_keyword')) is-invalid @endif" placeholder="Enter SEO keyword" name="input[id][seo_keyword]" value="{{ old('input.id.seo_keyword') }}"/>
+                                            @error('input.id.seo_keyword')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>SEO Canonical URL</label>
+                                            <input type="text" class="form-control @if($errors->has('input.id.seo_canonical_url')) is-invalid @endif" placeholder="Enter SEO canonical URL" name="input[id][seo_canonical_url]" value="{{ old('input.id.seo_canonical_url') }}"/>
+                                            @error('input.id.seo_canonical_url')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="enTab" role="tabpanel">
@@ -127,6 +295,69 @@
                                             <label>Description</label>
                                             <textarea name="input[en][description]" class="ckeditor-en-description @if($errors->has('input.en.description')) is-invalid @endif">{{ old('input.en.description') }}</textarea>
                                             @error('input.en.description')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Post Title</label>
+                                            <input type="text" class="form-control @if($errors->has('input.en.post_title')) is-invalid @endif" placeholder="Enter post title" name="input[en][post_title]" value="{{ old('input.en.post_title') }}"/>
+                                            @error('input.en.post_title')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Post Description</label>
+                                            <textarea name="input[en][post_description]" class="ckeditor-en-post-description @if($errors->has('input.en.post_description')) is-invalid @endif">{{ old('input.en.post_description') }}</textarea>
+                                            @error('input.en.post_description')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="separator separator-dashed separator-border-2"></div>
+
+                                    <h3 class="display-5 mt-5">SEO</h3>
+                                    <div class="row mt-3">
+                                        <div class="form-group col-md-6">
+                                            <label>SEO Title</label>
+                                            <input type="text" class="form-control @if($errors->has('input.en.seo_title')) is-invalid @endif" placeholder="Enter SEO title" name="input[en][seo_title]" value="{{ old('input.en.seo_title') }}"/>
+                                            @error('input.en.seo_title')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>SEO Description</label>
+                                            <textarea name="input[en][seo_description]" rows="3" class="form-control @if($errors->has('input.en.seo_description')) is-invalid @endif">{{ old('input.en.seo_description') }}</textarea>
+                                            @error('input.en.seo_title')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>SEO Keyword</label>
+                                            <input type="text" class="form-control @if($errors->has('input.en.seo_keyword')) is-invalid @endif" placeholder="Enter SEO keyword" name="input[en][seo_keyword]" value="{{ old('input.en.seo_keyword') }}"/>
+                                            @error('input.en.seo_keyword')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>SEO Canonical URL</label>
+                                            <input type="text" class="form-control @if($errors->has('input.en.seo_canonical_url')) is-invalid @endif" placeholder="Enter SEO canonical URL" name="input[en][seo_canonical_url]" value="{{ old('input.en.seo_canonical_url') }}"/>
+                                            @error('input.en.seo_canonical_url')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -151,53 +382,11 @@
     <script>
         $(document).ready(function(){
             ClassicEditor.create(document.querySelector('.ckeditor-id-description'));
+            ClassicEditor.create(document.querySelector('.ckeditor-id-post-description'));
 
             ClassicEditor.create(document.querySelector('.ckeditor-en-description'));
-
-            $('.imageUpload').change(function(){
-                readImgUrlAndPreview(this);
-                function readImgUrlAndPreview(input){
-                    if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $('#imagePreview').attr('src', e.target.result);
-                        $('#imagePreview').css('opacity', 1);
-                    }
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
-            });
+            ClassicEditor.create(document.querySelector('.ckeditor-en-post-description'));
         });
-
-        const inputFile = document.querySelector(".picture__input");
-        const pictureImage = document.querySelector(".picture__image");
-        const pictureImageTxt = '<i class="flaticon-upload icon-xxl text-dark-50"></i> <span class="ml-3">Upload File</span>';
-        pictureImage.innerHTML = pictureImageTxt;
-
-        inputFile.addEventListener("change", function (e) {
-        const inputTarget = e.target;
-        const file = inputTarget.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-
-            reader.addEventListener("load", function (e) {
-            const readerTarget = e.target;
-
-            const img = document.createElement("img");
-            img.src = readerTarget.result;
-            img.classList.add("picture__img");
-
-            pictureImage.innerHTML = "";
-            pictureImage.appendChild(img);
-            });
-
-            reader.readAsDataURL(file);
-        } else {
-            pictureImage.innerHTML = pictureImageTxt;
-        }
-        });
-
     </script>
 
     <style>
