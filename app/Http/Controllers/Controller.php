@@ -68,10 +68,14 @@ class Controller extends BaseController
             'size' => $document->getSize(),
         ];
 
-        if ($model->$relation) {
-            $model->$relation()->update($data);
-        } else {
-            $model->$relation()->create($data);
+        if($relation != 'image'){
+            if ($model->$relation) {
+                $insert = $model->$relation()->update($data);
+            } else {
+                $insert = $model->$relation()->create($data);
+            }
+        }else{
+            $insert = $model->$relation()->create($data);
         }
 
         Storage::putFileAs("$path/", $document, $fileName, 'public');

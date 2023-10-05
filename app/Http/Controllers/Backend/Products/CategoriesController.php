@@ -174,7 +174,7 @@ class CategoriesController extends Controller
         $isError = false;
 
         try {
-            DB::beginTransaction();
+            // DB::beginTransaction();
 
             $categoryId = new ProductCategoryId();
 
@@ -258,9 +258,9 @@ class CategoriesController extends Controller
 
             $message = 'Category created successfully';
 
-            DB::commit();
+            // DB::commit();
         } catch (\Illuminate\Database\QueryException $e) {
-            DB::rollBack();
+            // DB::rollBack();
 
             $isError = true;
 
@@ -275,5 +275,28 @@ class CategoriesController extends Controller
             return redirect(url('admin-cms/products/categories'))
                 ->with(['success' => $message]);
         }
+    }
+
+    public function edit($id)
+    {
+        $data = ProductCategoryId::with([
+            'productCategory',
+            'image',
+            'thumbnail',
+            'banner',
+            'fileIcon',
+            'videoThumbnail',
+        ])
+        ->find($id)
+        ->toArray();
+
+        foreach ($data['product_category'] as $key => $val) {
+            $data['product_category'][$val['language_code']] = $val;
+            unset($data['product_category'][$key]);
+        }
+
+        $sort = ProductCategoryId::count() + 1;
+
+        return view('backend.pages.products.categories.edit', compact('data', 'sort'));
     }
 }
