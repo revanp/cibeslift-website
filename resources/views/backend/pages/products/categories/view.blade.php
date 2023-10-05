@@ -41,6 +41,9 @@
                                 </g>
                             </svg></span> Back
                         </a>
+                        <a href="{{ url('admin-cms/products/categories/edit/'.$data['id']) }}" class="btn btn-primary font-weight-bolder ml-3">
+                            <i class="flaticon2-edit icon-md"></i> Edit
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -89,6 +92,18 @@
                                         <a href="{{ $data['video_thumbnail']['path'] }}" target="_BLANK">
                                             <img src="{{ $data['video_thumbnail']['path'] }}" style="max-width: 500px" alt="">
                                         </a>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><strong>Image</strong></td>
+                                <td>
+                                    @if (!empty($data['image']))
+                                        @foreach ($data['image'] as $image)
+                                            <a href="{{ $image['path'] }}" target="_BLANK">
+                                                <img src="{{ $image['path'] }}" style="max-width: 500px" alt="" class="mb-3">
+                                            </a>
+                                        @endforeach
                                     @endif
                                 </td>
                             </tr>
