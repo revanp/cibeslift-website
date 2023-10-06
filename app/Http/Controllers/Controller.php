@@ -6,6 +6,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Media;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class Controller extends BaseController
 {
@@ -79,5 +82,22 @@ class Controller extends BaseController
         }
 
         Storage::putFileAs("$path/", $document, $fileName, 'public');
+    }
+
+    public function deleteMedia($idMedia)
+    {
+        try{
+            DB::beginTransaction();
+
+            $delete = Media::where('id', $idMedia)->delete();
+
+            DB::commit();
+
+            return redirect()->back()->with(['success' => 'Media has been changed successfully deleted']);
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with(['error' => 'Something went wrong']);
+        }
     }
 }

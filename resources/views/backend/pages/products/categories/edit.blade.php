@@ -102,7 +102,16 @@
                             </div>
                             <div class="row">
                                 <div class="form-group picture_upload col-md-4">
-                                    <label>Image 1</label>
+                                    @if (!empty($data['image'][0]))
+                                        @if (count($data['image']) > 1)
+                                            <label>Image 1 <strong><a href="{{ url('admin-cms/delete-media/'.$data['image'][0]['id']) }}" class="text-danger btn-delete-media">Delete</a></strong></label>
+                                        @else
+                                            <label>Image 1</label>
+                                        @endif
+                                    @else
+                                        <label>Image 1</label>
+                                    @endif
+
                                     <div class="form-group__file">
                                         <div class="file-wrapper">
                                             <input type="file" name="image[0]" class="file-input"/>
@@ -118,7 +127,11 @@
                                     @enderror
                                 </div>
                                 <div class="form-group picture_upload col-md-4">
-                                    <label>Image 2</label>
+                                    @if (!empty($data['image'][1]))
+                                        <label>Image 2 <strong><a href="{{ url('admin-cms/delete-media/'.$data['image'][1]['id']) }}" class="text-danger">Delete</a></strong></label>
+                                    @else
+                                        <label>Image 2</label>
+                                    @endif
                                     <div class="form-group__file">
                                         <div class="file-wrapper">
                                             <input type="file" name="image[1]" class="file-input"/>
@@ -131,7 +144,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group picture_upload col-md-4">
-                                    <label>Image 3</label>
+                                    @if (!empty($data['image'][2]))
+                                        <label>Image 3 <strong><a href="{{ url('admin-cms/delete-media/'.$data['image'][2]['id']) }}" class="text-danger">Delete</a></strong></label>
+                                    @else
+                                        <label>Image 3</label>
+                                    @endif
                                     <div class="form-group__file">
                                         <div class="file-wrapper">
                                             <input type="file" name="image[2]" class="file-input"/>

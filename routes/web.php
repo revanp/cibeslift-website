@@ -71,6 +71,7 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                 Route::post('edit/{id}', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'update']);
                 Route::put('change-status', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'changeStatus']);
                 Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'delete']);
+                Route::get('delete-image/{idMedia}', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'deleteMedia']);
             });
         });
 
@@ -111,4 +112,6 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
             });
         });
     });
+
+    Route::get('delete-media/{idMedia}', [App\Http\Controllers\Controller::class, 'deleteMedia']);
 });

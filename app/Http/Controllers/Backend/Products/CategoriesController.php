@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Models\ProductCategoryId;
+use App\Models\Media;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -388,7 +389,11 @@ class CategoriesController extends Controller
             }
 
             if ($request->hasFile('image')) {
-                foreach($request->file('image') as $image){
+                foreach($request->file('image') as $key => $image){
+                    if(!empty($data['image_id'][$key])){
+                        $deleteImage = Media::where('id', $data['image_id'][$key])->delete();
+                    }
+
                     $this->storeFile(
                         $image,
                         $categoryId,
@@ -521,4 +526,29 @@ class CategoriesController extends Controller
             return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
         }
     }
+
+    // public function deleteImage($idMedia)
+    // {
+    //     try{
+    //         DB::beginTransaction();
+
+    //         $delete = Media::where('id', $idMedia)->delete();
+
+    //         DB::commit();
+
+    //         return response([
+    //             'success' => true,
+    //             'code' => 200,
+    //             'message' => 'Media has been changed successfully deleted'
+    //         ]);
+    //     }catch(Exception $e){
+    //         DB::rollBack();
+
+    //         return response([
+    //             'success' => false,
+    //             'code' => 500,
+    //             'message' => 'Something went wrong'
+    //         ]);
+    //     }
+    // }
 }
