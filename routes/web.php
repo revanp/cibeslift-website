@@ -47,6 +47,19 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\Faq\QuestionsController::class, 'delete']);
                 });
             });
+
+            Route::group(['prefix' => 'news'], function(){
+                Route::group(['prefix' => 'categories'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\News\CategoriesController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\News\CategoriesController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\News\CategoriesController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\News\CategoriesController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\News\CategoriesController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\News\CategoriesController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\News\CategoriesController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\News\CategoriesController::class, 'delete']);
+                });
+            });
         });
 
         Route::group(['prefix' => 'products'], function(){
