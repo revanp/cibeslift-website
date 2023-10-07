@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductPropertyId extends Model
+class ProductPropertyValueId extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'product_property_id';
+    protected $table = 'product_property_value_id';
 
     protected $primaryKey = 'id';
 
     public $incrementing = true;
 
     protected $fillable  = [
-        'sort',
-        'is_active',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -25,14 +23,14 @@ class ProductPropertyId extends Model
 
     public $timestamps = true;
 
-    public function productProperty()
+    public function productPropertyValue()
     {
-        return $this->hasMany(ProductProperty::class, 'id_product_property_id', 'id');
+        return $this->hasMany(ProductPropertyValue::class, 'id_product_property_value_id', 'id');
     }
 
-    public function productPropertyValueId()
+    public function productPropertyId()
     {
-        return $this->hasMany(ProductPropertyValueId::class, 'id_product_property_id', 'id');
+        return $this->hasOne(productPropertyId::class, 'id', 'id_product_property_id');
     }
 
     public function image()

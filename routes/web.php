@@ -71,7 +71,18 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                 Route::post('edit/{id}', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'update']);
                 Route::put('change-status', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'changeStatus']);
                 Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'delete']);
-                Route::get('delete-image/{idMedia}', [App\Http\Controllers\Backend\Products\CategoriesController::class, 'deleteMedia']);
+            });
+
+            Route::group(['prefix' => 'properties'], function(){
+                Route::get('', [App\Http\Controllers\Backend\Products\PropertiesController::class, 'index']);
+                Route::post('datatable', [App\Http\Controllers\Backend\Products\PropertiesController::class, 'index']);
+                Route::get('view/{id}', [App\Http\Controllers\Backend\Products\PropertiesController::class, 'view']);
+                Route::get('create', [App\Http\Controllers\Backend\Products\PropertiesController::class, 'create']);
+                Route::post('create', [App\Http\Controllers\Backend\Products\PropertiesController::class, 'store']);
+                Route::get('edit/{id}', [App\Http\Controllers\Backend\Products\PropertiesController::class, 'edit']);
+                Route::post('edit/{id}', [App\Http\Controllers\Backend\Products\PropertiesController::class, 'update']);
+                Route::put('change-status', [App\Http\Controllers\Backend\Products\PropertiesController::class, 'changeStatus']);
+                Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\PropertiesController::class, 'delete']);
             });
         });
 

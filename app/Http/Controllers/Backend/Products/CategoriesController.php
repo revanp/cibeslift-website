@@ -526,29 +526,4 @@ class CategoriesController extends Controller
             return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
         }
     }
-
-    // public function deleteImage($idMedia)
-    // {
-    //     try{
-    //         DB::beginTransaction();
-
-    //         $delete = Media::where('id', $idMedia)->delete();
-
-    //         DB::commit();
-
-    //         return response([
-    //             'success' => true,
-    //             'code' => 200,
-    //             'message' => 'Media has been changed successfully deleted'
-    //         ]);
-    //     }catch(Exception $e){
-    //         DB::rollBack();
-
-    //         return response([
-    //             'success' => false,
-    //             'code' => 500,
-    //             'message' => 'Something went wrong'
-    //         ]);
-    //     }
-    // }
 }
