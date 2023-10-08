@@ -57,26 +57,26 @@ class NewsController extends Controller
         try {
             DB::beginTransaction();
 
-            $newscontrollerId = new NewsControllerId();
+            $newsId = new NewsId();
 
-            $newscontrollerId->fill([
+            $newsId->fill([
                 'is_active' => true
             ])->save();
 
-            $idNewsControllerId = $newsControllerId->id;
+            $idNewsId = $newsId->id;
 
             foreach ($data['input'] as $languageCode => $input) {
-                $newsController = new NewsController();
+                $news = new News();
 
-                $input['id_news_id'] = $idNewsControllerId;
+                $input['id_news_id'] = $idNewsId;
                 $input['language_code'] = $languageCode;
                 $input['created_by'] = $user->id;
                 $input['updated_by'] = $user->id;
                 $input['deleted_by'] = 0;
 
-                $newsController->fill($input)->save();
+                $news->fill($input)->save();
 
-                $idNewsController = $idNewsController->id;
+                $idNewsController = $news->id;
             }
 
             $message = 'News created successfully';
@@ -102,18 +102,18 @@ class NewsController extends Controller
 
     public function edit($id)
     {
-        $newsControllerId = NewsControllerId::find($id);
+        $newsId = NewsId::find($id);
 
-        $newsController = NewsController::where('id_news_id', $id)
+        $news = NewsController::where('id_news_id', $id)
             ->get()
             ->toArray();
 
-        foreach ($newsController as $key => $val) {
-            $newsController[$val['language_code']] = $val;
-            unset($newsController[$key]);
+        foreach ($news as $key => $val) {
+            $news[$val['language_code']] = $val;
+            unset($news[$key]);
         }
 
-        return view('backend.pages.content.news.controller.edit', compact('newsControllerId', 'newsController'));
+        return view('backend.pages.content.news.controller.edit', compact('NewsId', 'newsController'));
     }
 
     public function update($id, Request $request)
@@ -144,18 +144,18 @@ class NewsController extends Controller
         try {
             DB::beginTransaction();
 
-            $newsControllerId = NewsId::find($id);
+            $newsId = NewsId::find($id);
 
-            $newsControllerId->fill([
+            $newsId->fill([
                 'is_active' => true
             ])->save();
 
-            $idNewsControllerId = $newsControllerId->id;
+            $idNewsId = $newsId->id;
 
             foreach ($data['input'] as $languageCode => $input) {
-                $newsController = NewsController::where('id_news_id', $id)->first();
+                $news = NewsController::where('id_news_id', $id)->first();
 
-                $input['id_news_id'] = $idNewsControllerId;
+                $input['id_news_id'] = $idNewsId;
                 $input['language_code'] = $languageCode;
                 $input['created_by'] = $user->id;
                 $input['updated_by'] = $user->id;
