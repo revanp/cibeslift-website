@@ -16,7 +16,7 @@ class CategoriesController extends Controller
 {
     public function index(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $reqDatatable  = $this->requestDatatables($request->input());
 
             $data = NewsCategory::with([
@@ -25,12 +25,12 @@ class CategoriesController extends Controller
 
             if ($reqDatatable['orderable']) {
                 foreach ($reqDatatable['orderable'] as $order) {
-                    if($order['column'] == 'rownum') {
+                    if ($order['column'] == 'rownum') {
                         $data = $data->orderBy('id', $order['dir']);
                     } else {
-                        if(!empty($val['column'])){
+                        if (!empty($val['column'])) {
                             $data = $data->orderBy($order['column'], $order['dir']);
-                        }else{
+                        } else {
                             $data = $data->orderBy('id', 'desc');
                         }
                     }
@@ -55,26 +55,26 @@ class CategoriesController extends Controller
             }
 
             return $datatables
-                ->addColumn('rownum', function() use (&$rownum, $is_increase) {
+                ->addColumn('rownum', function () use (&$rownum, $is_increase) {
                     if ($is_increase == true) {
                         return $rownum++;
                     } else {
                         return $rownum--;
                     }
                 })
-                ->addColumn('is_active', function($data){
+                ->addColumn('is_active', function ($data) {
                     $id = $data->newsCategoryId->id;
                     $isActive = $data->newsCategoryId->is_active;
 
                     return view('backend.pages.content.news.categories.list.active', compact('id', 'isActive'));
                 })
-                ->addColumn('action', function($data){
+                ->addColumn('action', function ($data) {
                     $html = '<div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">';
-                        //* EDIT
-                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/content/news/categories/edit/'.$data->newsCategoryId->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
+                    //* EDIT
+                    $html .= '<li class="nav-item"><a class="nav-link" href="' . url('admin-cms/content/news/categories/edit/' . $data->newsCategoryId->id) . '"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
 
-                        //* DELETE
-                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/content/news/categories/delete/'.$data->newsCategoryId->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
+                    //* DELETE
+                    $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="' . url('admin-cms/content/news/categories/delete/' . $data->newsCategoryId->id) . '"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
                     $html .= '</ul></div></div>';
 
                     return $html;
@@ -116,7 +116,7 @@ class CategoriesController extends Controller
 
         $isError = false;
 
-        try{
+        try {
             DB::beginTransaction();
 
             $newsCategoryId = new NewsCategoryId();
@@ -168,15 +168,15 @@ class CategoriesController extends Controller
         $newsCategoryId = NewsCategoryId::find($id);
 
         $newsCategory = NewsCategory::where('id_news_category_id', $id)
-        ->get()
-        ->toArray();
+            ->get()
+            ->toArray();
 
-    foreach ($newsCategory as $key => $val) {
-        $newsCategory[$val['language_code']] = $val;
-        unset($newsCategory[$key]);
+        foreach ($newsCategory as $key => $val) {
+            $newsCategory[$val['language_code']] = $val;
+            unset($newsCategory[$key]);
+        }
+        return view('backend.pages.content.news.categories.edit', compact('newsCategoryId', 'newsCategory'));
     }
-    return view('backend.pages.content.news.categories.edit', compact('newsCategoryId', 'newsCategory'));
-}
 
     public function update($id, Request $request)
     {
@@ -216,41 +216,41 @@ class CategoriesController extends Controller
                 'deleted_by' => 0,
             ])->save();
 
-        $idNewsCategoryId = $newsCategoryId->id;
+            $idNewsCategoryId = $newsCategoryId->id;
 
-        foreach ($data['input'] as $languageCode => $input) {
-            $newsCategory = NewsCategory::where('language_code', $languageCode)->where('id_news_category_id', $id)->first();
+            foreach ($data['input'] as $languageCode => $input) {
+                $newsCategory = NewsCategory::where('language_code', $languageCode)->where('id_news_category_id', $id)->first();
 
-            $input['id_news_category_id'] = $idNewsCategoryId;
-            $input['language_code'] = $languageCode;
+                $input['id_news_category_id'] = $idNewsCategoryId;
+                $input['language_code'] = $languageCode;
 
-            $newsCategory->fill($input)->save();
+                $newsCategory->fill($input)->save();
 
-            $idNewsCategory = $newsCategory->id;
+                $idNewsCategory = $newsCategory->id;
+            }
+
+            $message = 'News Category updated successfully';
+
+            DB::commit();
+        } catch (\Illuminate\Database\QueryException $e) {
+            DB::rollBack();
+
+            $isError = true;
+
+            $err     = $e->errorInfo;
+
+            $message =  $err[2];
         }
 
-        $message = 'News Category updated successfully';
-
-        DB::commit();
-    } catch (\Illuminate\Database\QueryException $e) {
-        DB::rollBack();
-
-        $isError = true;
-
-        $err     = $e->errorInfo;
-
-        $message =  $err[2];
+        if ($isError == true) {
+            return redirect()->back()->with(['error' => $message]);
+        } else {
+            return redirect(url('admin-cms/content/news/categories'))
+                ->with(['success' => $message]);
+        }
     }
 
-    if ($isError == true) {
-        return redirect()->back()->with(['error' => $message]);
-    } else {
-        return redirect(url('admin-cms/content/news/categories'))
-            ->with(['success' => $message]);
-    }
-}
-
-public function changeStatus(Request $request)
+    public function changeStatus(Request $request)
     {
         $input = $request->all();
         $isAjax = $request->ajax() ? true : false;
@@ -258,7 +258,7 @@ public function changeStatus(Request $request)
 
         unset($input['_token']);
 
-        if($isAjax){
+        if ($isAjax) {
             $id = $input['id'];
             $isError = true;
 
@@ -278,7 +278,7 @@ public function changeStatus(Request $request)
                     'code' => 200,
                     'message' => 'Status has been changed successfully'
                 ]);
-            }catch(Exception $e){
+            } catch (Exception $e) {
                 DB::rollBack();
 
                 return response([
@@ -292,7 +292,7 @@ public function changeStatus(Request $request)
 
     public function delete($id)
     {
-        try{
+        try {
             DB::beginTransaction();
 
             $delete = NewsCategoryId::where('id', $id)->delete();
@@ -302,11 +302,10 @@ public function changeStatus(Request $request)
             DB::commit();
 
             return redirect('admin-cms/content/news/categories')->with(['success' => 'News Category has been deleted successfully']);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
 
             return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
         }
     }
 }
-
