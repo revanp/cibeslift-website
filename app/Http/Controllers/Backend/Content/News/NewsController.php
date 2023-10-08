@@ -29,25 +29,78 @@ class NewsController extends Controller
         return view('backend.pages.content.news.news.create', compact('categories'));
     }
 
+     public function view($id)
+    {
+        $data = NewsId::with([
+            'news',
+            'image',
+            'thumbnail',
+            'banner',
+            'fileIcon',
+            'videoThumbnail',
+        ])
+        ->find($id)
+        ->toArray();
+
+        foreach ($data['news_news'] as $key => $val) {
+            $data['news_news'][$val['language_code']] = $val;
+            unset($data['news_news'][$key]);
+        }
+
+        return view('backend.pages.news.news.view', compact('data'));
+
+    }
+
     public function store(Request $request)
     {
-        $user = Auth ::user();
+        $user = Auth::user();
         $data = $request->post();
 
         unset($data['_token']);
 
-        $rules = [];
+        $rules = [
+            'thumbnail' => ['required', 'file'],
+            'banner' => ['required', 'file'],
+            'file_icon' => ['required', 'file'],
+            'video_thumbnail' => ['required', 'file'],
+            'image' => ['required', 'array'],
+            'image.*' => ['file'],
+            'video_url' => ['required'],
+            'sort' => []
+        ];
 
         $messages = [];
 
-        $attributes = [];
+        $attributes = [
+            'thumbnail' => 'Thumbnail',
+            'banner' => 'Banner',
+            'file_icon' => 'File Icon',
+            'video_thumbnail' => 'Video Thumbnail',
+            'image' => 'Image',
+            'image.*' => 'Image',
+            'video_url' => 'Video URL',
+            'sort' => 'Sort',
+        ];
 
         foreach ($request->input as $lang => $input) {
-            $rules["input.$lang.name"] = ['required'];
+            if($lang == 'id'){
+                $rules["input.$lang.name"] = ['required'];
+                $rules["input.$lang.description"] = [];
+                $rules["input.$lang.post_title"] = ['required'];
+                $rules["input.$lang.post_description"] = [];
+            }else{
+                $rules["input.$lang.name"] = [];
+                $rules["input.$lang.description"] = [];
+                $rules["input.$lang.post_title"] = [];
+                $rules["input.$lang.post_description"] = [];
+            }
 
             $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
             $attributes["input.$lang.name"] = "$lang_name Name";
+            $attributes["input.$lang.description"] = "$lang_name Description";
+            $attributes["input.$lang.post_title"] = "$lang_name Post Title";
+            $attributes["input.$lang.post_description"] = "$lang_name Post Description";
         }
 
         $request->validate($rules, $messages, $attributes);
@@ -59,8 +112,16 @@ class NewsController extends Controller
 
             $newsId = new NewsId();
 
+            $sort = empty($data['sort']) ? NewsId::count() + 1 : $data['sort'];
+
             $newsId->fill([
-                'is_active' => true
+                'sort' => $sort,
+                'is_active' => !empty($data['is_active']) ? true : false,
+                'is_self_design' => !empty($data['is_self_design']) ? true : false,
+                'video_url' => $data['video_url'] ?? null,
+                'created_by' => $user->id,
+                'updated_by' => $user->id,
+                'deleted_by' => 0,
             ])->save();
 
             $idNewsId = $newsId->id;
@@ -68,15 +129,65 @@ class NewsController extends Controller
             foreach ($data['input'] as $languageCode => $input) {
                 $news = new News();
 
-                $input['id_news_id'] = $idNewsId;
+                $input['id_news_news_id'] = $idNewsId;
+                $input['slug'] = Str::slug($input['name']);
                 $input['language_code'] = $languageCode;
-                $input['created_by'] = $user->id;
-                $input['updated_by'] = $user->id;
-                $input['deleted_by'] = 0;
 
                 $news->fill($input)->save();
 
-                $idNewsController = $news->id;
+                $idNews = $news->id;
+            }
+
+            if ($request->hasFile('image')) {
+                foreach($request->file('image') as $image){
+                    $this->storeFile(
+                        $image,
+                        $newsId,
+                        'image',
+                        "images/news/news/image/{$idNewsId}",
+                        'image'
+                    );
+                }
+            }
+
+            if ($request->hasFile('thumbnail')) {
+                $this->storeFile(
+                    $request->file('thumbnail'),
+                    $newsId,
+                    'thumbnail',
+                    "images/news/news/thumbnail/{$idNewsId}",
+                    'thumbnail'
+                );
+            }
+
+            if ($request->hasFile('banner')) {
+                $this->storeFile(
+                    $request->file('banner'),
+                    $newsId,
+                    'banner',
+                    "images/news/news/banner/{$idNewsId}",
+                    'banner'
+                );
+            }
+
+            if ($request->hasFile('file_icon')) {
+                $this->storeFile(
+                    $request->file('file_icon'),
+                    $newsId,
+                    'fileIcon',
+                    "images/news/news/file_icon/{$idNewsId}",
+                    'file_icon'
+                );
+            }
+
+            if ($request->hasFile('video_thumbnail')) {
+                $this->storeFile(
+                    $request->file('video_thumbnail'),
+                    $newsId,
+                    'videoThumbnail',
+                    "images/news/news/video_thumbnail/{$idNewsId}",
+                    'video_thumbnail'
+                );
             }
 
             $message = 'News created successfully';
@@ -95,25 +206,32 @@ class NewsController extends Controller
         if ($isError == true) {
             return redirect()->back()->with(['error' => $message]);
         } else {
-            return redirect(url('admin-cms/content/news/categories'))
+            return redirect(url('admin-cms/news/news'))
                 ->with(['success' => $message]);
         }
     }
 
     public function edit($id)
     {
-        $newsId = NewsId::find($id);
+        $data = NewsId::with([
+            'newsNews',
+            'image',
+            'thumbnail',
+            'banner',
+            'fileIcon',
+            'videoThumbnail',
+        ])
+        ->find($id)
+        ->toArray();
 
-        $news = NewsController::where('id_news_id', $id)
-            ->get()
-            ->toArray();
-
-        foreach ($news as $key => $val) {
-            $news[$val['language_code']] = $val;
-            unset($news[$key]);
+        foreach ($data['news_news'] as $key => $val) {
+            $data['news_news'][$val['language_code']] = $val;
+            unset($data['news_news'][$key]);
         }
 
-        return view('backend.pages.content.news.controller.edit', compact('NewsId', 'newsController'));
+        $sort = NewsId::count() + 1;
+
+        return view('backend.pages.news.news.edit', compact('data', 'sort'));
     }
 
     public function update($id, Request $request)
@@ -123,18 +241,49 @@ class NewsController extends Controller
 
         unset($data['_token']);
 
-        $rules = [];
+        $rules = [
+            'thumbnail' => ['file'],
+            'banner' => ['file'],
+            'file_icon' => ['file'],
+            'video_thumbnail' => ['file'],
+            'image' => ['array'],
+            'image.*' => ['file'],
+            'video_url' => ['required'],
+            'sort' => []
+        ];
 
         $messages = [];
 
-        $attributes = [];
+        $attributes = [
+            'thumbnail' => 'Thumbnail',
+            'banner' => 'Banner',
+            'file_icon' => 'File Icon',
+            'video_thumbnail' => 'Video Thumbnail',
+            'image' => 'Image',
+            'image.*' => 'Image',
+            'video_url' => 'Video URL',
+            'sort' => 'Sort',
+        ];
 
         foreach ($request->input as $lang => $input) {
-            $rules["input.$lang.name"] = ['required'];
+            if($lang == 'id'){
+                $rules["input.$lang.name"] = ['required'];
+                $rules["input.$lang.description"] = [];
+                $rules["input.$lang.post_title"] = ['required'];
+                $rules["input.$lang.post_description"] = [];
+            }else{
+                $rules["input.$lang.name"] = [];
+                $rules["input.$lang.description"] = [];
+                $rules["input.$lang.post_title"] = [];
+                $rules["input.$lang.post_description"] = [];
+            }
 
             $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
             $attributes["input.$lang.name"] = "$lang_name Name";
+            $attributes["input.$lang.description"] = "$lang_name Description";
+            $attributes["input.$lang.post_title"] = "$lang_name Post Title";
+            $attributes["input.$lang.post_description"] = "$lang_name Post Description";
         }
 
         $request->validate($rules, $messages, $attributes);
@@ -146,27 +295,89 @@ class NewsController extends Controller
 
             $newsId = NewsId::find($id);
 
+            $sort = empty($data['sort']) ? NewsId::count() + 1 : $data['sort'];
+
             $newsId->fill([
-                'is_active' => true
+                'sort' => $sort,
+                'is_active' => !empty($data['is_active']) ? true : false,
+                'is_self_design' => !empty($data['is_self_design']) ? true : false,
+                'video_url' => $data['video_url'] ?? null,
+                'created_by' => $user->id,
+                'updated_by' => $user->id,
+                'deleted_by' => 0,
             ])->save();
 
             $idNewsId = $newsId->id;
 
             foreach ($data['input'] as $languageCode => $input) {
-                $news = NewsController::where('id_news_id', $id)->first();
+                $news = News::where('id_news_news_id', $id)->where('language_code', $languageCode)->first();
 
-                $input['id_news_id'] = $idNewsId;
+                $input['id_news_news_id'] = $idNewsId;
+                $input['slug'] = Str::slug($input['name']);
                 $input['language_code'] = $languageCode;
-                $input['created_by'] = $user->id;
-                $input['updated_by'] = $user->id;
-                $input['deleted_by'] = 0;
 
-                $faqCategory->fill($input)->save();
+                $news->fill($input)->save();
 
-                $idFaqCategory = $faqCategory->id;
+                $idNews = $news->id;
             }
 
-            $message = 'Faq Category updated successfully';
+            if ($request->hasFile('image')) {
+                foreach($request->file('image') as $key => $image){
+                    if(!empty($data['image_id'][$key])){
+                        $deleteImage = Media::where('id', $data['image_id'][$key])->delete();
+                    }
+
+                    $this->storeFile(
+                        $image,
+                        $newsId,
+                        'image',
+                        "images/news/news/image/{$idNewsId}",
+                        'image'
+                    );
+                }
+            }
+
+            if ($request->hasFile('thumbnail')) {
+                $this->storeFile(
+                    $request->file('thumbnail'),
+                    $newsId,
+                    'thumbnail',
+                    "images/news/news/thumbnail/{$idNewsId}",
+                    'thumbnail'
+                );
+            }
+
+            if ($request->hasFile('banner')) {
+                $this->storeFile(
+                    $request->file('banner'),
+                    $newsId,
+                    'banner',
+                    "images/news/news/banner/{$idNewsId}",
+                    'banner'
+                );
+            }
+
+            if ($request->hasFile('file_icon')) {
+                $this->storeFile(
+                    $request->file('file_icon'),
+                    $newsId,
+                    'fileIcon',
+                    "images/news/news/file_icon/{$idNewsId}",
+                    'file_icon'
+                );
+            }
+
+            if ($request->hasFile('video_thumbnail')) {
+                $this->storeFile(
+                    $request->file('video_thumbnail'),
+                    $newsId,
+                    'videoThumbnail',
+                    "images/news/news/video_thumbnail/{$idNewsId}",
+                    'video_thumbnail'
+                );
+            }
+
+            $message = 'News created successfully';
 
             DB::commit();
         } catch (\Illuminate\Database\QueryException $e) {
@@ -182,7 +393,7 @@ class NewsController extends Controller
         if ($isError == true) {
             return redirect()->back()->with(['error' => $message]);
         } else {
-            return redirect(url('admin-cms/content/faq/categories'))
+            return redirect(url('admin-cms/news/news'))
                 ->with(['success' => $message]);
         }
     }
@@ -204,7 +415,7 @@ class NewsController extends Controller
             try {
                 DB::beginTransaction();
 
-                $update = FaqCategoryId::where('id', $id)->update([
+                $update = NewsId::where('id', $id)->update([
                     'is_active' => $status
                 ]);
 
@@ -232,13 +443,16 @@ class NewsController extends Controller
         try{
             DB::beginTransaction();
 
-            $delete = FaqCategoryId::where('id', $id)->delete();
+            $delete = NewsId::where('id', $id)->update([
+                'deleted_by' => Auth::user()->id,
+                'deleted_at' => date('Y-m-d H:i:s')
+            ]);
 
-            $deleteChild = FaqCategory::where('id_faq_category_id', $id)->delete();
+            $deleteChild = News::where('id_news_news_id', $id)->delete();
 
             DB::commit();
 
-            return redirect('admin-cms/content/faq/categories')->with(['success' => 'Faq Category has been deleted successfully']);
+            return redirect('admin-cms/news/news')->with(['success' => 'News has been deleted successfully']);
         }catch(Exception $e){
             DB::rollBack();
 
@@ -246,4 +460,6 @@ class NewsController extends Controller
         }
     }
 }
+
+
 
