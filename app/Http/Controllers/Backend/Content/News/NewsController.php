@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\NewsCategoryId;
 use App\Models\NewsCategory;
 use App\Models\NewsId;
+use App\Models\Media;
 use App\Models\News;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +30,7 @@ class NewsController extends Controller
         return view('backend.pages.content.news.news.create', compact('categories'));
     }
 
-     public function view($id)
+    public function view($id)
     {
         $data = NewsId::with([
             'news',
