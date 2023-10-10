@@ -28,4 +28,58 @@ class PropertiesController extends Controller
 
         return view('backend.pages.products.properties.create', compact('sort'));
     }
+
+    public function store(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->post();
+
+        unset($data['_token']);
+
+        $rules = [
+            'image' => ['required', 'array', 'file'],
+            'sort' => []
+        ];
+
+        $messages = [];
+
+        $attributes = [
+            'image' => 'Image',
+            'sort' => 'Sort',
+        ];
+
+        foreach ($request->input as $lang => $input) {
+            if($lang == 'id'){
+                $rules["input.$lang.name"] = ['required'];
+            }else{
+                $rules["input.$lang.name"] = [];
+            }
+
+            $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+
+            $attributes["input.$lang.name"] = "$lang_name Name";
+        }
+
+        foreach ($request->value as $key => $input) {
+            $rules["value.$key.image"] = ['required'];
+
+            $attributes["value.$key.image"] = $key + 1 ." Image";
+
+            foreach ($input as $lang2 => $input2) {
+                if($lang == 'id'){
+                    $rules["value.$key.input.$lang.name"] = ['required'];
+                }else{
+                    $rules["value.$key.input.$lang.name"] = [];
+                }
+
+                $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+
+                $attributes["value.$key.input.$lang.name"] = "$lang_name Name";
+            }
+        }
+
+        $request->validate($rules, $messages, $attributes);
+
+        dd($data);
+    }
 }

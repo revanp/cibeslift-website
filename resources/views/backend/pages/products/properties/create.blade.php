@@ -219,16 +219,17 @@
             e.preventDefault();
 
             var dataCount = $(this).data('count');
+            console.log(dataCount + 1);
             var propertyBox = $('.property-box');
 
-            var html = `<div class="property-item p-5" style="border: 1px dashed #d1d6dd">
+            var html = `<div class="property-item p-5 mt-5" style="border: 1px dashed #d1d6dd">
                 <a href="#" class="btn btn-icon delete-item-value btn-danger btn-xs" style="position: absolute; margin-top:-4vh; margin-left: -30px"><i class="flaticon2-delete"></i></a>
 
                 <div class="form-group col-md-12">
                     <label>Image Value</label>
                     <div class="form-group__file">
                         <div class="file-wrapper">
-                            <input type="file" name="value[0][image]" class="file-input"/>
+                            <input type="file" name="value[`+dataCount+`][image]" class="file-input"/>
                             <div class="file-preview-background">+</div>
                             <img src="" width="240px" class="file-preview"/>
                         </div>
@@ -252,7 +253,7 @@
                         <div class="row mt-5">
                             <div class="form-group col-md-12">
                                 <label>Name Value</label>
-                                <input type="text" class="form-control @if($errors->has('value.*.id.name')) is-invalid @endif" placeholder="Enter name" name="value[0][id][name]" value="{{ old('value.*.id.name') }}"/>
+                                <input type="text" class="form-control @if($errors->has('value.*.id.name')) is-invalid @endif" placeholder="Enter name" name="value[`+dataCount+`][id][name]" value="{{ old('value.*.id.name') }}"/>
                                 @error('value.*.id.name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -265,7 +266,7 @@
                         <div class="row mt-5">
                             <div class="form-group col-md-12">
                                 <label>Name Value</label>
-                                <input type="text" class="form-control @if($errors->has('value.*.en.name')) is-invalid @endif" placeholder="Enter name" name="value[0][en][name]" value="{{ old('value.*.en.name') }}"/>
+                                <input type="text" class="form-control @if($errors->has('value.*.en.name')) is-invalid @endif" placeholder="Enter name" name="value[`+dataCount+`][en][name]" value="{{ old('value.*.en.name') }}"/>
                                 @error('value.*.en.name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -278,6 +279,8 @@
             </div>`;
 
             propertyBox.append(html);
+
+            $(this).data('count', dataCount + 1)
         })
     </script>
 
