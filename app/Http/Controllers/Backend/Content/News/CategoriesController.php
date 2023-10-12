@@ -175,6 +175,7 @@ class CategoriesController extends Controller
             $newsCategory[$val['language_code']] = $val;
             unset($newsCategory[$key]);
         }
+
         return view('backend.pages.content.news.categories.edit', compact('newsCategoryId', 'newsCategory'));
     }
 
