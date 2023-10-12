@@ -93,6 +93,7 @@
                             @error('input.id.description')
                                 <div class="invalid-feedback">
                                     {{ $message }}
+                                <div class="form-control">
                                 </div>
                             @enderror
                         </div>
