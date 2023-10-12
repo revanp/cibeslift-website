@@ -94,7 +94,215 @@
                     </form>
                 </div>
         </div>
+    </div class="col-md-6">
+        <div class="card card-custom">
+            <div class= "card-header">
+                <div class= "card-title">
+                    <h3 class="card-label">News Value</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="property-box">
+                    <div class=property-item p-5" style="border: 1px dashed #d1d6dd">
+                        <a href="#" class="btn btn-icon delete-item-value btn-danger btn-xs" style="position: absolute; margin-top:-4vh; margin-left: -30px"><i class="flaticon2-delete"></i></a>
+
+                                        <div class="form-group col-md-12">
+                                            <label>Image Value</label>
+                                            <div class="form-group__file">
+                                                <div class="file-wrapper">
+                                                    <input type="file" name="value[0][image]" class="file-input"/>
+                                                    <div class="file-preview-background">+</div>
+                                                    <img src="" width="240px" class="file-preview"/>
+                                                </div>
+                                            </div>
+                                            @error('value.*.image')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" role="tab" href="#idValue0Tab">Indonesia</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" role="tab" href="#enValue0Tab">English</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content mb-4" style="display: block !important;">
+                                            <div class="tab-pane active" id="idValue0Tab" role="tabpanel">
+                                                <div class="row mt-5">
+                                                    <div class="form-group col-md-12">
+                                                        <label>Name Value</label>
+                                                        <input type="text" class="form-control @if($errors->has('value.*.id.name')) is-invalid @endif" placeholder="Enter name" name="value[0][id][name]" value="{{ old('value.*.id.name') }}"/>
+                                                        @error('value.*.id.name')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="enValue0Tab" role="tabpanel">
+                                                <div class="row mt-5">
+                                                    <div class="form-group col-md-12">
+                                                        <label>Name Value</label>
+                                                        <input type="text" class="form-control @if($errors->has('value.*.en.name')) is-invalid @endif" placeholder="Enter name" name="value[0][en][name]" value="{{ old('value.*.en.name') }}"/>
+                                                        @error('value.*.en.name')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#" class="btn btn-primary w-100 mt-5 add-item-value" data-count="1"><i class="flaticon2-plus"></i> Add Item</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('public/backend/plugins/custom/ckeditor/ckeditor-classic.bundle.js?v=7.0.6') }}"></script>
+    <script>
+        $('.add-item-value').click(function(e){
+            e.preventDefault();
+
+            var dataCount = $(this).data('count');
+            var propertyBox = $('.property-box');
+
+            var html = `<div class="property-item p-5" style="border: 1px dashed #d1d6dd">
+                <a href="#" class="btn btn-icon delete-item-value btn-danger btn-xs" style="position: absolute; margin-top:-4vh; margin-left: -30px"><i class="flaticon2-delete"></i></a>
+
+                <div class="form-group col-md-12">
+                    <label>Image Value</label>
+                    <div class="form-group__file">
+                        <div class="file-wrapper">
+                            <input type="file" name="value[0][image]" class="file-input"/>
+                            <div class="file-preview-background">+</div>
+                            <img src="" width="240px" class="file-preview"/>
+                        </div>
+                    </div>
+                    @error('value.*.image')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" role="tab" href="#idValue0Tab">Indonesia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" role="tab" href="#enValue0Tab">English</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content mb-4" style="display: block !important;">
+                    <div class="tab-pane active" id="idValue0Tab" role="tabpanel">
+                        <div class="row mt-5">
+                            <div class="form-group col-md-12">
+                                <label>Name Value</label>
+                                <input type="text" class="form-control @if($errors->has('value.*.id.name')) is-invalid @endif" placeholder="Enter name" name="value[0][id][name]" value="{{ old('value.*.id.name') }}"/>
+                                @error('value.*.id.name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="enValue0Tab" role="tabpanel">
+                        <div class="row mt-5">
+                            <div class="form-group col-md-12">
+                                <label>Name Value</label>
+                                <input type="text" class="form-control @if($errors->has('value.*.en.name')) is-invalid @endif" placeholder="Enter name" name="value[0][en][name]" value="{{ old('value.*.en.name') }}"/>
+                                @error('value.*.en.name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+            propertyBox.append(html);
+        })
+    </script>
+
+    <style>
+        .form-group__file {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            width: 100%;
+            min-width: 130px;
+            height: 240px;
+        }
+
+        .file-wrapper {
+            position: relative;
+        }
+
+        .file-label {
+            margin: 10px 0;
+        }
+
+        .file-input {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 240px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .file-preview-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 240px;
+            border: 1px solid #E4E6EF;
+            border-radius: 14px;
+            text-transform: uppercase;
+            font-size: 70px;
+            letter-spacing: 3px;
+            text-align: center;
+            color: #bbb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .file-preview {
+            width: 100%;
+            height: 240px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 10px;
+            z-index: 10;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.4s ease-in;
+        }
+    </style>
+@endsection
+
 @endsection
 
 @section('script')
