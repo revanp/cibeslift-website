@@ -16,6 +16,7 @@ class ProductPropertyValue extends Model
     public $incrementing = true;
 
     protected $fillable  = [
+        'id_product_property_value_id',
         'name',
         'language_code',
     ];

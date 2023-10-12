@@ -177,7 +177,7 @@
                                                 <div class="row mt-5">
                                                     <div class="form-group col-md-12">
                                                         <label>Name Value</label>
-                                                        <input type="text" class="form-control @if($errors->has('value.*.id.name')) is-invalid @endif" placeholder="Enter name" name="value[0][id][name]" value="{{ old('value.*.id.name') }}"/>
+                                                        <input type="text" class="form-control @if($errors->has('value.*.id.name')) is-invalid @endif" placeholder="Enter name" name="value[0][input][id][name]" value="{{ old('value.*.id.name') }}"/>
                                                         @error('value.*.id.name')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -190,7 +190,7 @@
                                                 <div class="row mt-5">
                                                     <div class="form-group col-md-12">
                                                         <label>Name Value</label>
-                                                        <input type="text" class="form-control @if($errors->has('value.*.en.name')) is-invalid @endif" placeholder="Enter name" name="value[0][en][name]" value="{{ old('value.*.en.name') }}"/>
+                                                        <input type="text" class="form-control @if($errors->has('value.*.en.name')) is-invalid @endif" placeholder="Enter name" name="value[0][input][en][name]" value="{{ old('value.*.en.name') }}"/>
                                                         @error('value.*.en.name')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}

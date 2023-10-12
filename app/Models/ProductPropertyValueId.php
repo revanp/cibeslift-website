@@ -16,6 +16,7 @@ class ProductPropertyValueId extends Model
     public $incrementing = true;
 
     protected $fillable  = [
+        'id_product_property_id',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -35,6 +36,6 @@ class ProductPropertyValueId extends Model
 
     public function image()
     {
-        return $this->morphMany('App\Models\Media', 'mediable')->where('content_type', 'image');
+        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'image');
     }
 }

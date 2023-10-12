@@ -37,6 +37,6 @@ class ProductPropertyId extends Model
 
     public function image()
     {
-        return $this->morphMany('App\Models\Media', 'mediable')->where('content_type', 'image');
+        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'image');
     }
 }
