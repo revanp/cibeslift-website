@@ -93,7 +93,6 @@
                             @error('input.id.description')
                                 <div class="invalid-feedback">
                                     {{ $message }}
-                                <div class="form-control">
                                 </div>
                             @enderror
                         </div>
@@ -116,6 +115,7 @@
                                 <label>SEO Description</label>
                                 <textarea name="input[id][seo_description]" rows="3" class="form-control @if($errors->has('input.id.seo_description')) is-invalid @endif">{{ old('input.id.seo_description') }}</textarea>
                                 @error('input.id.seo_title')
+                                <div class="form-control">
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
