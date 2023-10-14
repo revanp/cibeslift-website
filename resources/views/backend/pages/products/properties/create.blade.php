@@ -219,7 +219,6 @@
             e.preventDefault();
 
             var dataCount = $(this).data('count');
-            console.log(dataCount + 1);
             var propertyBox = $('.property-box');
 
             var html = `<div class="property-item p-5 mt-5" style="border: 1px dashed #d1d6dd">
@@ -241,19 +240,19 @@
 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" role="tab" href="#idValue0Tab">Indonesia</a>
+                        <a class="nav-link active" data-toggle="tab" role="tab" href="#idValue`+dataCount+`Tab">Indonesia</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" role="tab" href="#enValue0Tab">English</a>
+                        <a class="nav-link" data-toggle="tab" role="tab" href="#enValue`+dataCount+`Tab">English</a>
                     </li>
                 </ul>
 
                 <div class="tab-content mb-4" style="display: block !important;">
-                    <div class="tab-pane active" id="idValue0Tab" role="tabpanel">
+                    <div class="tab-pane active" id="idValue`+dataCount+`Tab" role="tabpanel">
                         <div class="row mt-5">
                             <div class="form-group col-md-12">
                                 <label>Name Value</label>
-                                <input type="text" class="form-control @if($errors->has('value.*.id.name')) is-invalid @endif" placeholder="Enter name" name="value[`+dataCount+`][id][name]" value="{{ old('value.*.id.name') }}"/>
+                                <input type="text" class="form-control @if($errors->has('value.*.id.name')) is-invalid @endif" placeholder="Enter name" name="value[`+dataCount+`][input][id][name]" value="{{ old('value.*.id.name') }}"/>
                                 @error('value.*.id.name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -262,11 +261,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="enValue0Tab" role="tabpanel">
+                    <div class="tab-pane" id="enValue`+dataCount+`Tab" role="tabpanel">
                         <div class="row mt-5">
                             <div class="form-group col-md-12">
                                 <label>Name Value</label>
-                                <input type="text" class="form-control @if($errors->has('value.*.en.name')) is-invalid @endif" placeholder="Enter name" name="value[`+dataCount+`][en][name]" value="{{ old('value.*.en.name') }}"/>
+                                <input type="text" class="form-control @if($errors->has('value.*.en.name')) is-invalid @endif" placeholder="Enter name" name="value[`+dataCount+`][input][en][name]" value="{{ old('value.*.en.name') }}"/>
                                 @error('value.*.en.name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -281,6 +280,10 @@
             propertyBox.append(html);
 
             $(this).data('count', dataCount + 1)
+        })
+
+        $(document).on('click', '.delete-item-value', function(){
+            $(this).parent().remove();
         })
     </script>
 

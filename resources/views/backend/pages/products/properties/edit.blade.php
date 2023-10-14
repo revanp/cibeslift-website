@@ -225,7 +225,6 @@
             e.preventDefault();
 
             var dataCount = $(this).data('count');
-            console.log(dataCount + 1);
             var propertyBox = $('.property-box');
 
             var html = `<div class="property-item p-5 mt-5" style="border: 1px dashed #d1d6dd">

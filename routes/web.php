@@ -108,6 +108,18 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                 Route::put('change-status', [App\Http\Controllers\Backend\Products\PropertiesController::class, 'changeStatus']);
                 Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\PropertiesController::class, 'delete']);
             });
+
+            Route::group(['prefix' => 'products'], function(){
+                Route::get('', [App\Http\Controllers\Backend\Products\ProductsController::class, 'index']);
+                Route::post('datatable', [App\Http\Controllers\Backend\Products\ProductsController::class, 'index']);
+                Route::get('view/{id}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'view']);
+                Route::get('create', [App\Http\Controllers\Backend\Products\ProductsController::class, 'create']);
+                Route::post('create', [App\Http\Controllers\Backend\Products\ProductsController::class, 'store']);
+                Route::get('edit/{id}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'edit']);
+                Route::post('edit/{id}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'update']);
+                Route::put('change-status', [App\Http\Controllers\Backend\Products\ProductsController::class, 'changeStatus']);
+                Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'delete']);
+            });
         });
 
         Route::group(['prefix' => 'settings'], function(){
