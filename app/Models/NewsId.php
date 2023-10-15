@@ -31,7 +31,7 @@ class NewsId extends Model
 
     public function news()
     {
-        return $this->hasMany(news::class, 'id_news_id', 'id');
+        return $this->hasMany(News::class, 'id_news_id', 'id');
     }
 
     public function newsCategoryId()

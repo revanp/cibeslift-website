@@ -79,7 +79,7 @@ class NewsController extends Controller
                     $id = $data->NewsId->id;
                     $isActive = $data->NewsId->is_active;
 
-                    return view('backend.pages.content.faq.categories.list.active', compact('id', 'isActive'));
+                    return view('backend.pages.content.news.news.list.active', compact('id', 'isActive'));
                 })
                 ->addColumn('action', function($data){
                     $html = '<div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">';
@@ -180,8 +180,6 @@ class NewsController extends Controller
 
             $newsId = new NewsId();
 
-            $sort = empty($data['sort']) ? NewsId::count() + 1 : $data['sort'];
-
             $newsId->fill([
                 'sort' => 0,
                 'id_news_category_id' => $data['id_news_category_id'],
@@ -253,24 +251,20 @@ class NewsController extends Controller
     public function edit($id)
     {
         $data = NewsId::with([
-            'newsNews',
-            'image',
+            'news',
             'thumbnail',
-            'banner',
-            'fileIcon',
-            'videoThumbnail',
         ])
         ->find($id)
         ->toArray();
 
-        foreach ($data['news_news'] as $key => $val) {
-            $data['news_news'][$val['language_code']] = $val;
-            unset($data['news_news'][$key]);
+        foreach ($data['news'] as $key => $val) {
+            $data['news'][$val['language_code']] = $val;
+            unset($data['news'][$key]);
         }
 
-        $sort = NewsId::count() + 1;
+        $categories = NewsCategory::where('language_code', 'id')->get();
 
-        return view('backend.pages.news.news.edit', compact('data', 'sort'));
+        return view('backend.pages.content.news.news.edit', compact('data', 'categories'));
     }
 
     public function update($id, Request $request)
@@ -281,48 +275,40 @@ class NewsController extends Controller
         unset($data['_token']);
 
         $rules = [
+            'id_news_category_id' => ['required'],
             'thumbnail' => ['file'],
-            'banner' => ['file'],
-            'file_icon' => ['file'],
-            'video_thumbnail' => ['file'],
-            'image' => ['array'],
-            'image.*' => ['file'],
-            'video_url' => ['required'],
+            'publish_date' => ['required'],
             'sort' => []
         ];
 
         $messages = [];
 
         $attributes = [
+            'id_news_category_id' => 'News Category',
             'thumbnail' => 'Thumbnail',
-            'banner' => 'Banner',
-            'file_icon' => 'File Icon',
-            'video_thumbnail' => 'Video Thumbnail',
-            'image' => 'Image',
-            'image.*' => 'Image',
-            'video_url' => 'Video URL',
+            'publish_date' => 'Publish Date',
             'sort' => 'Sort',
         ];
 
         foreach ($request->input as $lang => $input) {
             if($lang == 'id'){
-                $rules["input.$lang.name"] = ['required'];
-                $rules["input.$lang.description"] = [];
-                $rules["input.$lang.post_title"] = ['required'];
-                $rules["input.$lang.post_description"] = [];
+                $rules["input.$lang.title"] = ['required'];
+                $rules["input.$lang.description"] = ['required'];
+                $rules["input.$lang.content"] = ['required'];
+                $rules["input.$lang.seo_title"] = ['required'];
             }else{
-                $rules["input.$lang.name"] = [];
+                $rules["input.$lang.title"] = [];
                 $rules["input.$lang.description"] = [];
-                $rules["input.$lang.post_title"] = [];
-                $rules["input.$lang.post_description"] = [];
+                $rules["input.$lang.content"] = [];
+                $rules["input.$lang.seo_title"] = [];
             }
 
             $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
-            $attributes["input.$lang.name"] = "$lang_name Name";
+            $attributes["input.$lang.title"] = "$lang_name Title";
             $attributes["input.$lang.description"] = "$lang_name Description";
-            $attributes["input.$lang.post_title"] = "$lang_name Post Title";
-            $attributes["input.$lang.post_description"] = "$lang_name Post Description";
+            $attributes["input.$lang.content"] = "$lang_name Content";
+            $attributes["input.$lang.seo_title"] = "$lang_name SEO Title";
         }
 
         $request->validate($rules, $messages, $attributes);
@@ -334,13 +320,13 @@ class NewsController extends Controller
 
             $newsId = NewsId::find($id);
 
-            $sort = empty($data['sort']) ? NewsId::count() + 1 : $data['sort'];
-
             $newsId->fill([
-                'sort' => $sort,
+                'sort' => 0,
+                'id_news_category_id' => $data['id_news_category_id'],
                 'is_active' => !empty($data['is_active']) ? true : false,
-                'is_self_design' => !empty($data['is_self_design']) ? true : false,
-                'video_url' => $data['video_url'] ?? null,
+                'is_top' => !empty($data['is_top']) ? true : false,
+                'is_home' => !empty($data['is_home']) ? true : false,
+                'publish_date' => $data['publish_date'],
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
                 'deleted_by' => 0,
@@ -349,31 +335,26 @@ class NewsController extends Controller
             $idNewsId = $newsId->id;
 
             foreach ($data['input'] as $languageCode => $input) {
-                $news = News::where('id_news_news_id', $id)->where('language_code', $languageCode)->first();
+                $news = News::where('id_news_id', $id)->where('language_code', $languageCode)->first();
 
-                $input['id_news_news_id'] = $idNewsId;
-                $input['slug'] = Str::slug($input['name']);
+                $input['id_news_id'] = $idNewsId;
                 $input['language_code'] = $languageCode;
+
+                if($languageCode != 'id'){
+                    $input['title'] = $data['input']['en']['title'] ?? $data['input']['id']['title'];
+                    $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
+                    $input['content'] = $data['input']['en']['content'] ?? $data['input']['id']['content'];
+                    $input['seo_title'] = $data['input']['en']['seo_title'] ?? $data['input']['id']['seo_title'];
+                    $input['seo_description'] = $data['input']['en']['seo_description'] ?? $data['input']['id']['seo_description'];
+                    $input['seo_keyword'] = $data['input']['en']['seo_keyword'] ?? $data['input']['id']['seo_keyword'];
+                    $input['seo_canonical_url'] = $data['input']['en']['seo_canonical_url'] ?? $data['input']['id']['seo_canonical_url'];
+                }
+
+                $input['slug'] = Str::slug($input['title']);
 
                 $news->fill($input)->save();
 
                 $idNews = $news->id;
-            }
-
-            if ($request->hasFile('image')) {
-                foreach($request->file('image') as $key => $image){
-                    if(!empty($data['image_id'][$key])){
-                        $deleteImage = Media::where('id', $data['image_id'][$key])->delete();
-                    }
-
-                    $this->storeFile(
-                        $image,
-                        $newsId,
-                        'image',
-                        "images/news/news/image/{$idNewsId}",
-                        'image'
-                    );
-                }
             }
 
             if ($request->hasFile('thumbnail')) {
@@ -386,37 +367,7 @@ class NewsController extends Controller
                 );
             }
 
-            if ($request->hasFile('banner')) {
-                $this->storeFile(
-                    $request->file('banner'),
-                    $newsId,
-                    'banner',
-                    "images/news/news/banner/{$idNewsId}",
-                    'banner'
-                );
-            }
-
-            if ($request->hasFile('file_icon')) {
-                $this->storeFile(
-                    $request->file('file_icon'),
-                    $newsId,
-                    'fileIcon',
-                    "images/news/news/file_icon/{$idNewsId}",
-                    'file_icon'
-                );
-            }
-
-            if ($request->hasFile('video_thumbnail')) {
-                $this->storeFile(
-                    $request->file('video_thumbnail'),
-                    $newsId,
-                    'videoThumbnail',
-                    "images/news/news/video_thumbnail/{$idNewsId}",
-                    'video_thumbnail'
-                );
-            }
-
-            $message = 'News created successfully';
+            $message = 'News updated successfully';
 
             DB::commit();
         } catch (\Illuminate\Database\QueryException $e) {
@@ -432,7 +383,7 @@ class NewsController extends Controller
         if ($isError == true) {
             return redirect()->back()->with(['error' => $message]);
         } else {
-            return redirect(url('admin-cms/news/news'))
+            return redirect(url('admin-cms/content/news/news'))
                 ->with(['success' => $message]);
         }
     }
