@@ -46,6 +46,7 @@
                                     <th>No.</th>
                                     <th>Category</th>
                                     <th>Title</th>
+                                    <th>Publish Date</th>
                                     <th>Status</th>
                                     <th>#</th>
                                 </tr>
@@ -78,7 +79,9 @@
                 },
                 columns: [
                     {data: 'rownum'},
-                    {data: 'name'},
+                    {data: 'category'},
+                    {data: 'title'},
+                    {data: 'publish_date'},
                     {data: 'is_active', searchable: false, orderable: false},
                     {data: 'action', searchable: false, orderable: false},
                 ]
