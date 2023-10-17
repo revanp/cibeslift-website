@@ -100,11 +100,11 @@
                             </a>
                             <div class="menu-submenu menu-submenu-classic menu-submenu-left" >
                                 <ul class="menu-subnav">
-                                    {{-- <li class="menu-item {{ (request()->is('admin-cms/products/groups/*') || request()->is('admin-cms/products/groups')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ url('admin-cms/products/groups') }}" class="menu-link ">
-                                            <span class="menu-text">Groups</span>
+                                    <li class="menu-item {{ (request()->is('admin-cms/products/technologies/*') || request()->is('admin-cms/products/technologies')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ url('admin-cms/products/technologies') }}" class="menu-link ">
+                                            <span class="menu-text">Technologies</span>
                                         </a>
-                                    </li> --}}
+                                    </li>
                                     <li class="menu-item {{ (request()->is('admin-cms/products/categories/*') || request()->is('admin-cms/products/categories')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/products/categories') }}" class="menu-link ">
                                             <span class="menu-text">Categories</span>

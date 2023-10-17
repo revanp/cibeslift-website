@@ -6,7 +6,7 @@
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <div class="d-flex align-items-baseline flex-wrap mr-5">
                     <h5 class="text-dark font-weight-bold my-1 mr-5">
-                        Categories
+                        Technologies
                     </h5>
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -14,7 +14,7 @@
                             <a href="#" class="text-muted">Products</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/products/categories') }}" class="text-muted">Categories</a>
+                            <a href="{{ url('admin-cms/products/technologies') }}" class="text-muted">Technologies</a>
                         </li>
                     </ul>
                 </div>
@@ -27,10 +27,10 @@
             <div class="card card-custom">
                 <div class="card-header">
                     <div class="card-title">
-                        <h3 class="card-label">List Category</h3>
+                        <h3 class="card-label">List Technology</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{ url('admin-cms/products/categories/create') }}" class="btn btn-primary font-weight-bolder">
+                        <a href="{{ url('admin-cms/products/technologies/create') }}" class="btn btn-primary font-weight-bolder">
                             <i class="flaticon2-add icon-md"></i> New Record
                         </a>
                     </div>
@@ -42,7 +42,6 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Name</th>
-                                    <th>Slug</th>
                                     <th>Status</th>
                                     <th>#</th>
                                 </tr>
@@ -67,7 +66,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ url('admin-cms/products/categories/datatable') }}",
+                    url: "{{ url('admin-cms/products/technologies/datatable') }}",
                     type: "POST",
                     data: {
                         "_token": "{{ csrf_token() }}"
@@ -76,7 +75,6 @@
                 columns: [
                     {data: 'rownum'},
                     {data: 'name'},
-                    {data: 'slug'},
                     {data: 'is_active', searchable: false, orderable: false},
                     {data: 'action', searchable: false, orderable: false},
                 ]
@@ -115,7 +113,7 @@
             var status = t.prop('checked') ? 1 : 0;
 
             $.ajax({
-                url: "{{ url('admin-cms/products/categories/change-status') }}",
+                url: "{{ url('admin-cms/products/technologies/change-status') }}",
                 type: 'POST',
                 dataType: 'json',
                 data: {

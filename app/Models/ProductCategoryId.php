@@ -16,10 +16,9 @@ class ProductCategoryId extends Model
     public $incrementing = true;
 
     protected $fillable  = [
+        'product_summary_type',
         'sort',
-        'video_url',
         'is_active',
-        'is_self_design',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -32,14 +31,9 @@ class ProductCategoryId extends Model
         return $this->hasMany(ProductCategory::class, 'id_product_category_id', 'id');
     }
 
-    public function image()
+    public function productCategoryIdHasProductTechnologyId()
     {
-        return $this->morphMany('App\Models\Media', 'mediable')->where('content_type', 'image');
-    }
-
-    public function thumbnail()
-    {
-        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'thumbnail');
+        return $this->hasMany(ProductCategoryIdHasProductTechnologyId::class, 'id_product_category_id', 'id');
     }
 
     public function banner()
@@ -47,13 +41,13 @@ class ProductCategoryId extends Model
         return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'banner');
     }
 
-    public function fileIcon()
+    public function menuIcon()
     {
-        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'file_icon');
+        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'menu_icon');
     }
 
-    public function videoThumbnail()
+    public function productSummaryImage()
     {
-        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'video_thumbnail');
+        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'product_summary_image');
     }
 }

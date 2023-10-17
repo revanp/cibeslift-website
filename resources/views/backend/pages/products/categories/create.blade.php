@@ -47,19 +47,6 @@
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label>Thumbnail</label>
-                                    <div class="form-group__file">
-                                        <div class="file-wrapper">
-                                            <input type="file" name="thumbnail" class="file-input thumbnailUpload"/>
-                                            <div class="file-preview-background">+</div>
-                                            <img src="" width="240px" class="file-preview"/>
-                                        </div>
-                                    </div>
-                                    @error('thumbnail')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
                                 <div class="form-group picture_upload col-md-6">
                                     <label>Banner</label>
                                     <div class="form-group__file">
@@ -74,72 +61,54 @@
                                     @enderror
                                 </div>
                                 <div class="form-group picture_upload col-md-6">
-                                    <label>File Icon</label>
+                                    <label>Menu Icon</label>
                                     <div class="form-group__file">
                                         <div class="file-wrapper">
-                                            <input type="file" name="file_icon" class="file-input"/>
+                                            <input type="file" name="menu_icon" class="file-input"/>
                                             <div class="file-preview-background">+</div>
                                             <img src="" width="240px" class="file-preview"/>
                                         </div>
                                     </div>
-                                    @error('file_icon')
+                                    @error('menu_icon')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group picture_upload col-md-6">
-                                    <label>Video Thumbnail</label>
+                                <div class="form-group picture_upload col-md-12">
+                                    <label>Product Summary Image</label>
                                     <div class="form-group__file">
                                         <div class="file-wrapper">
-                                            <input type="file" name="video_thumbnail" class="file-input"/>
+                                            <input type="file" name="product_summary_image" class="file-input"/>
                                             <div class="file-preview-background">+</div>
                                             <img src="" width="240px" class="file-preview"/>
                                         </div>
                                     </div>
-                                    @error('video_thumbnail')
+                                    @error('product_summary_image')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group picture_upload col-md-4">
-                                    <label>Image 1</label>
-                                    <div class="form-group__file">
-                                        <div class="file-wrapper">
-                                            <input type="file" name="image[]" class="file-input"/>
-                                            <div class="file-preview-background">+</div>
-                                            <img src="" width="240px" class="file-preview"/>
-                                        </div>
-                                    </div>
-                                    @error('image')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group picture_upload col-md-4">
-                                    <label>Image 2</label>
-                                    <div class="form-group__file">
-                                        <div class="file-wrapper">
-                                            <input type="file" name="image[]" class="file-input"/>
-                                            <div class="file-preview-background">+</div>
-                                            <img src="" width="240px" class="file-preview"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group picture_upload col-md-4">
-                                    <label>Image 3</label>
-                                    <div class="form-group__file">
-                                        <div class="file-wrapper">
-                                            <input type="file" name="image[]" class="file-input"/>
-                                            <div class="file-preview-background">+</div>
-                                            <img src="" width="240px" class="file-preview"/>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label>Video URL</label>
-                                    <input type="text" class="form-control @if($errors->has('video_url')) is-invalid @endif" placeholder="Enter video URL" name="video_url" value="{{ old('video_url') }}"/>
-                                    @error('video_url')
+                                    <label>Technologies</label>
+                                    <select name="technologies[]" multiple class="select2 form-control @if($errors->has('technologies')) is-invalid @endif">
+                                        @foreach ($technologies as $key => $val)
+                                            <option value="{{ $val->id_product_technology_id }}">{{ $val->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Product Summary Type</label>
+                                    <select name="product_summary_type" class="form-control @if($errors->has('product_summary_type')) is-invalid @endif">
+                                        @php
+                                            $productSummaryTypeData = !empty(old('product_summary_type')) ? old('product_summary_type') : '';
+                                        @endphp
+                                        <option value="">-- SELECT PRODUCT SUMMARY TYPE --</option>
+                                        <option value="0" {{ $productSummaryTypeData == '0' ? 'selected' : '' }}>List Product</option>
+                                        <option value="1" {{ $productSummaryTypeData == '1' ? 'selected' : '' }}>Big Banner With Text on The Left</option>
+                                        <option value="2" {{ $productSummaryTypeData == '2' ? 'selected' : '' }}>Big Banner With Overlay and Center Text</option>
+                                        <option value="3" {{ $productSummaryTypeData == '3' ? 'selected' : '' }}>Big Banner Without Overlay and Black Text</option>
+                                    </select>
+                                    @error('product_summary_type')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -170,201 +139,109 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <div class="col-12 col-form-label">
-                                        <div class="checkbox-inline">
-                                            <label class="checkbox checkbox-success">
-                                                <input type="checkbox" name="is_self_design"/>
-                                                <span></span>
-                                                Self Design
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="separator separator-solid separator-border-3 mb-5"></div>
 
+                            @php
+                                $lang = ['id' => 'Indonesia', 'en' => 'English'];
+                            @endphp
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" role="tab" href="#idTab">Indonesia</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" role="tab" href="#enTab">English</a>
-                                </li>
+                                @foreach ($lang as $key => $val)
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $key == 'id' ? 'active' : '' }}" data-toggle="tab" role="tab" href="#{{ $key }}Tab">{{ $val }}</a>
+                                    </li>
+                                @endforeach
                             </ul>
 
                             <div class="tab-content mb-4" style="display: block !important;">
-                                <div class="tab-pane active" id="idTab" role="tabpanel">
-                                    <div class="row mt-5">
-                                        <div class="form-group col-md-6">
-                                            <label>Name</label>
-                                            <input type="text" class="form-control @if($errors->has('input.id.name')) is-invalid @endif" placeholder="Enter name" name="input[id][name]" value="{{ old('input.id.name') }}"/>
-                                            @error('input.id.name')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                @foreach ($lang as $key => $val)
+                                    <div class="tab-pane {{ $key == 'id' ? 'active' : '' }}" id="{{ $key }}Tab" role="tabpanel">
+                                        <div class="row mt-5">
+                                            <div class="form-group col-md-6">
+                                                <label>Name</label>
+                                                <input type="text" class="form-control @if($errors->has('input.'.$key.'.name')) is-invalid @endif" placeholder="Enter name" name="input[{{ $key }}][name]" value="{{ old('input.'.$key.'.name') }}"/>
+                                                @error('input.'.$key.'.name')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Page Title</label>
+                                                <input type="text" class="form-control @if($errors->has('input.'.$key.'.page_title')) is-invalid @endif" placeholder="Enter post title" name="input[{{ $key }}][page_title]" value="{{ old('input.'.$key.'.page_title') }}"/>
+                                                @error('input.'.$key.'.page_title')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Short Description</label>
+                                                <textarea name="input[{{ $key }}][short_description]" class="form-control @if($errors->has('input.'.$key.'.short_description')) is-invalid @endif">{{ old('input.'.$key.'.short_description') }}</textarea>
+                                                @error('input.'.$key.'.short_description')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Description</label>
+                                                <textarea name="input[{{ $key }}][description]" rows="5" class="form-control @if($errors->has('input.'.$key.'.description')) is-invalid @endif">{{ old('input.'.$key.'.description') }}</textarea>
+                                                @error('input.'.$key.'.description')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
                                         </div>
-                                        <div class="form-group col-md-12">
-                                            <label>Description</label>
-                                            <textarea name="input[id][description]" class="ckeditor-id-description @if($errors->has('input.id.description')) is-invalid @endif">{{ old('input.id.description') }}</textarea>
-                                            @error('input.id.description')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label>Post Title</label>
-                                            <input type="text" class="form-control @if($errors->has('input.id.post_title')) is-invalid @endif" placeholder="Enter post title" name="input[id][post_title]" value="{{ old('input.id.post_title') }}"/>
-                                            @error('input.id.post_title')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <label>Post Description</label>
-                                            <textarea name="input[id][post_description]" class="ckeditor-id-post-description @if($errors->has('input.id.post_description')) is-invalid @endif">{{ old('input.id.post_description') }}</textarea>
-                                            @error('input.id.post_description')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+
+                                        <div class="separator separator-dashed separator-border-2"></div>
+
+                                        <h3 class="display-5 mt-5">SEO</h3>
+                                        <div class="row mt-3">
+                                            <div class="form-group col-md-6">
+                                                <label>SEO Title</label>
+                                                <input type="text" class="form-control @if($errors->has('input.'.$key.'.seo_title')) is-invalid @endif" placeholder="Enter SEO title" name="input[{{ $key }}][seo_title]" value="{{ old('input.'.$key.'.seo_title') }}"/>
+                                                @error('input.'.$key.'.seo_title')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label>SEO Description</label>
+                                                <textarea name="input[{{ $key }}][seo_description]" rows="3" class="form-control @if($errors->has('input.'.$key.'.seo_description')) is-invalid @endif">{{ old('input.'.$key.'.seo_description') }}</textarea>
+                                                @error('input.'.$key.'.seo_title')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label>SEO Keyword</label>
+                                                <input type="text" class="form-control @if($errors->has('input.'.$key.'.seo_keyword')) is-invalid @endif" placeholder="Enter SEO keyword" name="input[{{ $key }}][seo_keyword]" value="{{ old('input.'.$key.'.seo_keyword') }}"/>
+                                                @error('input.'.$key.'.seo_keyword')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label>SEO Canonical URL</label>
+                                                <input type="text" class="form-control @if($errors->has('input.'.$key.'.seo_canonical_url')) is-invalid @endif" placeholder="Enter SEO canonical URL" name="input[{{ $key }}][seo_canonical_url]" value="{{ old('input.'.$key.'.seo_canonical_url') }}"/>
+                                                @error('input.'.$key.'.seo_canonical_url')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div class="separator separator-dashed separator-border-2"></div>
-
-                                    <h3 class="display-5 mt-5">SEO</h3>
-                                    <div class="row mt-3">
-                                        <div class="form-group col-md-6">
-                                            <label>SEO Title</label>
-                                            <input type="text" class="form-control @if($errors->has('input.id.seo_title')) is-invalid @endif" placeholder="Enter SEO title" name="input[id][seo_title]" value="{{ old('input.id.seo_title') }}"/>
-                                            @error('input.id.seo_title')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <label>SEO Description</label>
-                                            <textarea name="input[id][seo_description]" rows="3" class="form-control @if($errors->has('input.id.seo_description')) is-invalid @endif">{{ old('input.id.seo_description') }}</textarea>
-                                            @error('input.id.seo_title')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <label>SEO Keyword</label>
-                                            <input type="text" class="form-control @if($errors->has('input.id.seo_keyword')) is-invalid @endif" placeholder="Enter SEO keyword" name="input[id][seo_keyword]" value="{{ old('input.id.seo_keyword') }}"/>
-                                            @error('input.id.seo_keyword')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <label>SEO Canonical URL</label>
-                                            <input type="text" class="form-control @if($errors->has('input.id.seo_canonical_url')) is-invalid @endif" placeholder="Enter SEO canonical URL" name="input[id][seo_canonical_url]" value="{{ old('input.id.seo_canonical_url') }}"/>
-                                            @error('input.id.seo_canonical_url')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="enTab" role="tabpanel">
-                                    <div class="row mt-5">
-                                        <div class="form-group col-md-6">
-                                            <label>Name</label>
-                                            <input type="text" class="form-control @if($errors->has('input.en.name')) is-invalid @endif" placeholder="Enter name" name="input[en][name]" value="{{ old('input.en.name') }}"/>
-                                            @error('input.en.name')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <label>Description</label>
-                                            <textarea name="input[en][description]" class="ckeditor-en-description @if($errors->has('input.en.description')) is-invalid @endif">{{ old('input.en.description') }}</textarea>
-                                            @error('input.en.description')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label>Post Title</label>
-                                            <input type="text" class="form-control @if($errors->has('input.en.post_title')) is-invalid @endif" placeholder="Enter post title" name="input[en][post_title]" value="{{ old('input.en.post_title') }}"/>
-                                            @error('input.en.post_title')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <label>Post Description</label>
-                                            <textarea name="input[en][post_description]" class="ckeditor-en-post-description @if($errors->has('input.en.post_description')) is-invalid @endif">{{ old('input.en.post_description') }}</textarea>
-                                            @error('input.en.post_description')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="separator separator-dashed separator-border-2"></div>
-
-                                    <h3 class="display-5 mt-5">SEO</h3>
-                                    <div class="row mt-3">
-                                        <div class="form-group col-md-6">
-                                            <label>SEO Title</label>
-                                            <input type="text" class="form-control @if($errors->has('input.en.seo_title')) is-invalid @endif" placeholder="Enter SEO title" name="input[en][seo_title]" value="{{ old('input.en.seo_title') }}"/>
-                                            @error('input.en.seo_title')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <label>SEO Description</label>
-                                            <textarea name="input[en][seo_description]" rows="3" class="form-control @if($errors->has('input.en.seo_description')) is-invalid @endif">{{ old('input.en.seo_description') }}</textarea>
-                                            @error('input.en.seo_title')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <label>SEO Keyword</label>
-                                            <input type="text" class="form-control @if($errors->has('input.en.seo_keyword')) is-invalid @endif" placeholder="Enter SEO keyword" name="input[en][seo_keyword]" value="{{ old('input.en.seo_keyword') }}"/>
-                                            @error('input.en.seo_keyword')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <label>SEO Canonical URL</label>
-                                            <input type="text" class="form-control @if($errors->has('input.en.seo_canonical_url')) is-invalid @endif" placeholder="Enter SEO canonical URL" name="input[en][seo_canonical_url]" value="{{ old('input.en.seo_canonical_url') }}"/>
-                                            @error('input.en.seo_canonical_url')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="card-footer">
@@ -378,14 +255,5 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('public/backend/plugins/custom/ckeditor/ckeditor-classic.bundle.js?v=7.0.6') }}"></script>
-    <script>
-        $(document).ready(function(){
-            ClassicEditor.create(document.querySelector('.ckeditor-id-description'));
-            ClassicEditor.create(document.querySelector('.ckeditor-id-post-description'));
 
-            ClassicEditor.create(document.querySelector('.ckeditor-en-description'));
-            ClassicEditor.create(document.querySelector('.ckeditor-en-post-description'));
-        });
-    </script>
 @endsection

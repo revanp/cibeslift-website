@@ -5,28 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductGroup extends Model
+class ProductTechnology extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'product_group';
+    protected $table = 'product_technology';
 
     protected $primaryKey = 'id';
 
     public $incrementing = true;
 
     protected $fillable  = [
-        'id_product_group_id',
+        'id_product_technology_id',
         'name',
-        'slug',
         'description',
         'language_code',
     ];
 
     public $timestamps = true;
 
-    public function productGroupId()
+    public function productTechnologyId()
     {
-        return $this->hasOne(ProductGroupId::class, 'id', 'id_product_group_id');
+        return $this->hasOne(ProductTechnologyId::class, 'id', 'id_product_technology_id');
     }
 }

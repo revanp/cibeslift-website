@@ -159,6 +159,8 @@
         <script src="{{ asset('public/backend/plugins/custom/datatables/datatables.bundle.js?v=7.0.6') }}"></script>
         <script>
             $(document).ready(function() {
+                $('.select2').select2();
+
                 $(document).on('change', '.file-input', function(){
                     readImgUrlAndPreview(this);
                     function readImgUrlAndPreview(input){

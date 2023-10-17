@@ -74,15 +74,15 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
         });
 
         Route::group(['prefix' => 'products'], function(){
-            Route::group(['prefix' => 'groups'], function(){
-                Route::get('', [App\Http\Controllers\Backend\Products\GroupsController::class, 'index']);
-                Route::post('datatable', [App\Http\Controllers\Backend\Products\GroupsController::class, 'index']);
-                Route::get('create', [App\Http\Controllers\Backend\Products\GroupsController::class, 'create']);
-                Route::post('create', [App\Http\Controllers\Backend\Products\GroupsController::class, 'store']);
-                Route::get('edit/{id}', [App\Http\Controllers\Backend\Products\GroupsController::class, 'edit']);
-                Route::post('edit/{id}', [App\Http\Controllers\Backend\Products\GroupsController::class, 'update']);
-                Route::put('change-status', [App\Http\Controllers\Backend\Products\GroupsController::class, 'changeStatus']);
-                Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\GroupsController::class, 'delete']);
+            Route::group(['prefix' => 'technologies'], function(){
+                Route::get('', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'index']);
+                Route::post('datatable', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'index']);
+                Route::get('create', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'create']);
+                Route::post('create', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'store']);
+                Route::get('edit/{id}', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'edit']);
+                Route::post('edit/{id}', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'update']);
+                Route::put('change-status', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'changeStatus']);
+                Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'delete']);
             });
 
             Route::group(['prefix' => 'categories'], function(){

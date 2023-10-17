@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Models\ProductCategoryId;
+use App\Models\ProductTechnologyId;
+use App\Models\ProductTechnology;
+use App\Models\ProductCategoryIdHasProductTechnologyId;
 use App\Models\Media;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -71,6 +74,15 @@ class CategoriesController extends Controller
                 })
                 ->addColumn('action', function($data){
                     $html = '<div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">';
+                        //* USP
+                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/products/categories/usp/'.$data->productCategoryId->id) .'"><i class="flaticon2-photograph nav-icon"></i><span class="nav-text">USP</span></a></li>';
+
+                        //* CUSTOMIZATION
+                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/products/categories/customization/'.$data->productCategoryId->id) .'"><i class="flaticon2-cube-1 nav-icon"></i><span class="nav-text">Customization</span></a></li>';
+
+                        //* FEATURE
+                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/products/categories/feature/'.$data->productCategoryId->id) .'"><i class="flaticon2-graph nav-icon"></i><span class="nav-text">feature</span></a></li>';
+
                         //* VIEW
                         $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/products/categories/view/'.$data->productCategoryId->id) .'"><i class="flaticon-eye nav-icon"></i><span class="nav-text">View</span></a></li>';
 
@@ -94,11 +106,9 @@ class CategoriesController extends Controller
     {
         $data = ProductCategoryId::with([
             'productCategory',
-            'image',
-            'thumbnail',
             'banner',
-            'fileIcon',
-            'videoThumbnail',
+            'menuIcon',
+            'productSummaryImage',
         ])
         ->find($id)
         ->toArray();
@@ -113,9 +123,12 @@ class CategoriesController extends Controller
 
     public function create()
     {
+        $technologies = ProductTechnology::with('productTechnologyId')->where('language_code', '=', 'id')->whereHas('productTechnologyId', function($query){
+            $query->where('is_active', 1);
+        })->get();
         $sort = ProductCategoryId::count() + 1;
 
-        return view('backend.pages.products.categories.create', compact('sort'));
+        return view('backend.pages.products.categories.create', compact('sort', 'technologies'));
     }
 
     public function store(Request $request)
@@ -126,48 +139,42 @@ class CategoriesController extends Controller
         unset($data['_token']);
 
         $rules = [
-            'thumbnail' => ['required', 'file'],
             'banner' => ['required', 'file'],
-            'file_icon' => ['required', 'file'],
-            'video_thumbnail' => ['required', 'file'],
-            'image' => ['required', 'array'],
-            'image.*' => ['file'],
-            'video_url' => ['required'],
+            'menu_icon' => ['required', 'file'],
+            'product_summary_image' => ['file'],
+            'product_summary_type' => ['required'],
             'sort' => []
         ];
 
         $messages = [];
 
         $attributes = [
-            'thumbnail' => 'Thumbnail',
             'banner' => 'Banner',
-            'file_icon' => 'File Icon',
-            'video_thumbnail' => 'Video Thumbnail',
-            'image' => 'Image',
-            'image.*' => 'Image',
-            'video_url' => 'Video URL',
+            'menu_icon' => 'Menu Icon',
+            'product_summary_image' => 'Product Summary Image',
+            'product_summary_type' => 'Product Summary Type',
             'sort' => 'Sort',
         ];
 
         foreach ($request->input as $lang => $input) {
             if($lang == 'id'){
                 $rules["input.$lang.name"] = ['required'];
+                $rules["input.$lang.short_description"] = ['required'];
                 $rules["input.$lang.description"] = [];
-                $rules["input.$lang.post_title"] = ['required'];
-                $rules["input.$lang.post_description"] = [];
+                $rules["input.$lang.page_title"] = ['required'];
             }else{
                 $rules["input.$lang.name"] = [];
+                $rules["input.$lang.short_description"] = [];
                 $rules["input.$lang.description"] = [];
-                $rules["input.$lang.post_title"] = [];
-                $rules["input.$lang.post_description"] = [];
+                $rules["input.$lang.page_title"] = [];
             }
 
             $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
             $attributes["input.$lang.name"] = "$lang_name Name";
+            $attributes["input.$lang.short_description"] = "$lang_name Short Description";
             $attributes["input.$lang.description"] = "$lang_name Description";
-            $attributes["input.$lang.post_title"] = "$lang_name Post Title";
-            $attributes["input.$lang.post_description"] = "$lang_name Post Description";
+            $attributes["input.$lang.page_title"] = "$lang_name Page Title";
         }
 
         $request->validate($rules, $messages, $attributes);
@@ -184,8 +191,7 @@ class CategoriesController extends Controller
             $categoryId->fill([
                 'sort' => $sort,
                 'is_active' => !empty($data['is_active']) ? true : false,
-                'is_self_design' => !empty($data['is_self_design']) ? true : false,
-                'video_url' => $data['video_url'] ?? null,
+                'product_summary_type' => $data['product_summary_type'] ?? null,
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
                 'deleted_by' => 0,
@@ -197,34 +203,32 @@ class CategoriesController extends Controller
                 $category = new ProductCategory();
 
                 $input['id_product_category_id'] = $idCategoryId;
-                $input['slug'] = Str::slug($input['name']);
                 $input['language_code'] = $languageCode;
+
+                if($languageCode != 'id'){
+                    $input['name'] = $data['input']['en']['name'] ?? $data['input']['id']['name'];
+                    $input['short_description'] = $data['input']['en']['short_description'] ?? $data['input']['id']['short_description'];
+                    $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
+                    $input['page_title'] = $data['input']['en']['page_title'] ?? $data['input']['id']['page_title'];
+                    $input['seo_title'] = $data['input']['en']['seo_title'] ?? $data['input']['id']['seo_title'];
+                    $input['seo_description'] = $data['input']['en']['seo_description'] ?? $data['input']['id']['seo_description'];
+                    $input['seo_keyword'] = $data['input']['en']['seo_keyword'] ?? $data['input']['id']['seo_keyword'];
+                    $input['seo_canonical_url'] = $data['input']['en']['seo_canonical_url'] ?? $data['input']['id']['seo_canonical_url'];
+                }
+
+                $input['slug'] = Str::slug($input['name']);
 
                 $category->fill($input)->save();
 
                 $idCategory = $category->id;
             }
 
-            if ($request->hasFile('image')) {
-                foreach($request->file('image') as $image){
-                    $this->storeFile(
-                        $image,
-                        $categoryId,
-                        'image',
-                        "images/products/categories/image/{$idCategoryId}",
-                        'image'
-                    );
-                }
-            }
-
-            if ($request->hasFile('thumbnail')) {
-                $this->storeFile(
-                    $request->file('thumbnail'),
-                    $categoryId,
-                    'thumbnail',
-                    "images/products/categories/thumbnail/{$idCategoryId}",
-                    'thumbnail'
-                );
+            foreach($data['technologies'] as $key => $val){
+                $productCategoryIdHasProductTechnologyId = new ProductCategoryIdHasProductTechnologyId();
+                $productCategoryIdHasProductTechnologyId->fill([
+                    'id_product_technology_id' => $val,
+                    'id_product_category_id' => $idCategoryId,
+                ])->save();
             }
 
             if ($request->hasFile('banner')) {
@@ -237,23 +241,23 @@ class CategoriesController extends Controller
                 );
             }
 
-            if ($request->hasFile('file_icon')) {
+            if ($request->hasFile('menu_icon')) {
                 $this->storeFile(
-                    $request->file('file_icon'),
+                    $request->file('menu_icon'),
                     $categoryId,
-                    'fileIcon',
-                    "images/products/categories/file_icon/{$idCategoryId}",
-                    'file_icon'
+                    'menuIcon',
+                    "images/products/categories/menu_icon/{$idCategoryId}",
+                    'menu_icon'
                 );
             }
 
-            if ($request->hasFile('video_thumbnail')) {
+            if ($request->hasFile('product_summary_image')) {
                 $this->storeFile(
-                    $request->file('video_thumbnail'),
+                    $request->file('product_summary_image'),
                     $categoryId,
-                    'videoThumbnail',
-                    "images/products/categories/video_thumbnail/{$idCategoryId}",
-                    'video_thumbnail'
+                    'productSummaryImage',
+                    "images/products/categories/product_summary_image/{$idCategoryId}",
+                    'product_summary_image'
                 );
             }
 
@@ -282,11 +286,10 @@ class CategoriesController extends Controller
     {
         $data = ProductCategoryId::with([
             'productCategory',
-            'image',
-            'thumbnail',
+            'productCategoryIdHasProductTechnologyId',
             'banner',
-            'fileIcon',
-            'videoThumbnail',
+            'menuIcon',
+            'productSummaryImage',
         ])
         ->find($id)
         ->toArray();
@@ -296,9 +299,19 @@ class CategoriesController extends Controller
             unset($data['product_category'][$key]);
         }
 
+        $productCategoryIdHasProductTechnologyId = $data['product_category_id_has_product_technology_id'];
+        unset($data['product_category_id_has_product_technology_id']);
+        foreach($productCategoryIdHasProductTechnologyId as $key => $val){
+            $data['product_category_id_has_product_technology_id'][$key] = $val['id_product_technology_id'];
+        }
+
+        $technologies = ProductTechnology::with('productTechnologyId')->where('language_code', '=', 'id')->whereHas('productTechnologyId', function($query){
+            $query->where('is_active', 1);
+        })->get();
+
         $sort = ProductCategoryId::count() + 1;
 
-        return view('backend.pages.products.categories.edit', compact('data', 'sort'));
+        return view('backend.pages.products.categories.edit', compact('data', 'sort', 'technologies'));
     }
 
     public function update($id, Request $request)
@@ -309,48 +322,42 @@ class CategoriesController extends Controller
         unset($data['_token']);
 
         $rules = [
-            'thumbnail' => ['file'],
             'banner' => ['file'],
-            'file_icon' => ['file'],
-            'video_thumbnail' => ['file'],
-            'image' => ['array'],
-            'image.*' => ['file'],
-            'video_url' => ['required'],
+            'menu_icon' => ['file'],
+            'product_summary_image' => ['file'],
+            'product_summary_type' => ['required'],
             'sort' => []
         ];
 
         $messages = [];
 
         $attributes = [
-            'thumbnail' => 'Thumbnail',
             'banner' => 'Banner',
-            'file_icon' => 'File Icon',
-            'video_thumbnail' => 'Video Thumbnail',
-            'image' => 'Image',
-            'image.*' => 'Image',
-            'video_url' => 'Video URL',
+            'menu_icon' => 'Menu Icon',
+            'product_summary_image' => 'Product Summary Image',
+            'product_summary_type' => 'Product Summary Type',
             'sort' => 'Sort',
         ];
 
         foreach ($request->input as $lang => $input) {
             if($lang == 'id'){
                 $rules["input.$lang.name"] = ['required'];
+                $rules["input.$lang.short_description"] = ['required'];
                 $rules["input.$lang.description"] = [];
-                $rules["input.$lang.post_title"] = ['required'];
-                $rules["input.$lang.post_description"] = [];
+                $rules["input.$lang.page_title"] = ['required'];
             }else{
                 $rules["input.$lang.name"] = [];
+                $rules["input.$lang.short_description"] = [];
                 $rules["input.$lang.description"] = [];
-                $rules["input.$lang.post_title"] = [];
-                $rules["input.$lang.post_description"] = [];
+                $rules["input.$lang.page_title"] = [];
             }
 
             $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
             $attributes["input.$lang.name"] = "$lang_name Name";
+            $attributes["input.$lang.short_description"] = "$lang_name Short Description";
             $attributes["input.$lang.description"] = "$lang_name Description";
-            $attributes["input.$lang.post_title"] = "$lang_name Post Title";
-            $attributes["input.$lang.post_description"] = "$lang_name Post Description";
+            $attributes["input.$lang.page_title"] = "$lang_name Page Title";
         }
 
         $request->validate($rules, $messages, $attributes);
@@ -367,8 +374,7 @@ class CategoriesController extends Controller
             $categoryId->fill([
                 'sort' => $sort,
                 'is_active' => !empty($data['is_active']) ? true : false,
-                'is_self_design' => !empty($data['is_self_design']) ? true : false,
-                'video_url' => $data['video_url'] ?? null,
+                'product_summary_type' => $data['product_summary_type'] ?? null,
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
                 'deleted_by' => 0,
@@ -377,41 +383,36 @@ class CategoriesController extends Controller
             $idCategoryId = $categoryId->id;
 
             foreach ($data['input'] as $languageCode => $input) {
-                $category = ProductCategory::where('id_product_category_id', $id)->where('language_code', $languageCode)->first();
+                $category = ProductCategory::where('language_code', $languageCode)->where('id_product_category_id', $id)->first();
 
                 $input['id_product_category_id'] = $idCategoryId;
-                $input['slug'] = Str::slug($input['name']);
                 $input['language_code'] = $languageCode;
+
+                if($languageCode != 'id'){
+                    $input['name'] = $data['input']['en']['name'] ?? $data['input']['id']['name'];
+                    $input['short_description'] = $data['input']['en']['short_description'] ?? $data['input']['id']['short_description'];
+                    $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
+                    $input['page_title'] = $data['input']['en']['page_title'] ?? $data['input']['id']['page_title'];
+                    $input['seo_title'] = $data['input']['en']['seo_title'] ?? $data['input']['id']['seo_title'];
+                    $input['seo_description'] = $data['input']['en']['seo_description'] ?? $data['input']['id']['seo_description'];
+                    $input['seo_keyword'] = $data['input']['en']['seo_keyword'] ?? $data['input']['id']['seo_keyword'];
+                    $input['seo_canonical_url'] = $data['input']['en']['seo_canonical_url'] ?? $data['input']['id']['seo_canonical_url'];
+                }
+
+                $input['slug'] = Str::slug($input['name']);
 
                 $category->fill($input)->save();
 
                 $idCategory = $category->id;
             }
 
-            if ($request->hasFile('image')) {
-                foreach($request->file('image') as $key => $image){
-                    if(!empty($data['image_id'][$key])){
-                        $deleteImage = Media::where('id', $data['image_id'][$key])->delete();
-                    }
-
-                    $this->storeFile(
-                        $image,
-                        $categoryId,
-                        'image',
-                        "images/products/categories/image/{$idCategoryId}",
-                        'image'
-                    );
-                }
-            }
-
-            if ($request->hasFile('thumbnail')) {
-                $this->storeFile(
-                    $request->file('thumbnail'),
-                    $categoryId,
-                    'thumbnail',
-                    "images/products/categories/thumbnail/{$idCategoryId}",
-                    'thumbnail'
-                );
+            ProductCategoryIdHasProductTechnologyId::where('id_product_category_id', $id)->delete();
+            foreach($data['technologies'] as $key => $val){
+                $productCategoryIdHasProductTechnologyId = new ProductCategoryIdHasProductTechnologyId();
+                $productCategoryIdHasProductTechnologyId->fill([
+                    'id_product_technology_id' => $val,
+                    'id_product_category_id' => $idCategoryId,
+                ])->save();
             }
 
             if ($request->hasFile('banner')) {
@@ -424,27 +425,27 @@ class CategoriesController extends Controller
                 );
             }
 
-            if ($request->hasFile('file_icon')) {
+            if ($request->hasFile('menu_icon')) {
                 $this->storeFile(
-                    $request->file('file_icon'),
+                    $request->file('menu_icon'),
                     $categoryId,
-                    'fileIcon',
-                    "images/products/categories/file_icon/{$idCategoryId}",
-                    'file_icon'
+                    'menuIcon',
+                    "images/products/categories/menu_icon/{$idCategoryId}",
+                    'menu_icon'
                 );
             }
 
-            if ($request->hasFile('video_thumbnail')) {
+            if ($request->hasFile('product_summary_image')) {
                 $this->storeFile(
-                    $request->file('video_thumbnail'),
+                    $request->file('product_summary_image'),
                     $categoryId,
-                    'videoThumbnail',
-                    "images/products/categories/video_thumbnail/{$idCategoryId}",
-                    'video_thumbnail'
+                    'productSummaryImage',
+                    "images/products/categories/product_summary_image/{$idCategoryId}",
+                    'product_summary_image'
                 );
             }
 
-            $message = 'Category created successfully';
+            $message = 'Category updated successfully';
 
             DB::commit();
         } catch (\Illuminate\Database\QueryException $e) {
