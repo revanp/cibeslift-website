@@ -15,6 +15,6 @@ Route::group(['prefix' => '{locale}', 'as' => '', 'middleware' => ['setLocale']]
     Route::get('/blog/detail', [App\Http\Controllers\Frontend\BlogController::class, 'detail'])->name('detail');
     Route::get('/faq', [App\Http\Controllers\Frontend\FaqController::class, 'index'])->name('index');
 
-    Route::get('/product', [App\Http\Controllers\Frontend\ProductController::class, 'product'])->name('product');
+    Route::get('/product/{categorySlug}', [App\Http\Controllers\Frontend\ProductController::class, 'product'])->name('product');
     Route::get('/product/detail', [App\Http\Controllers\Frontend\ProductController::class, 'detail'])->name('detail');
 });

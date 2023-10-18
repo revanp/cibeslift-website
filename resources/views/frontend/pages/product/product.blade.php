@@ -2,13 +2,13 @@
 
 @section('content')
 
-    <div class="banner" style="background-image: url('{{ asset('public/frontend/images/Homepage_Image 1.jpg') }}');">
+    <div class="banner" style="background-image: url('{{ $category->productCategoryId->banner->path ?? '#' }}');">
         <div class="container h-100">
             <div class="row h-100 justify-content-center">
                 <div class="col-12 col-md-8">
                     <div class="flex-center">
                         <span class="banner-contain">
-                            <h1 class="mb-4">CIBES V-SERIES</h1>
+                            <h1 class="mb-4">{{ $category->name }}</h1>
                         </span>
                     </div>
                 </div>
