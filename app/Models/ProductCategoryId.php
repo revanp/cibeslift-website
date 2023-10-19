@@ -31,6 +31,21 @@ class ProductCategoryId extends Model
         return $this->hasMany(ProductCategory::class, 'id_product_category_id', 'id');
     }
 
+    public function productCategoryFeatureId()
+    {
+        return $this->hasMany(ProductCategoryFeatureId::class, 'id_product_category_id', 'id');
+    }
+
+    public function productCategoryUspId()
+    {
+        return $this->hasMany(ProductCategoryUspId::class, 'id_product_category_id', 'id');
+    }
+
+    public function productCategoryCustomizationId()
+    {
+        return $this->hasMany(ProductCategoryCustomizationId::class, 'id_product_category_id', 'id');
+    }
+
     public function productCategoryIdHasProductTechnologyId()
     {
         return $this->hasMany(ProductCategoryIdHasProductTechnologyId::class, 'id_product_category_id', 'id');

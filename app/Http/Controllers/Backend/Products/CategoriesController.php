@@ -78,7 +78,7 @@ class CategoriesController extends Controller
                         $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/products/categories/usp/'.$data->productCategoryId->id) .'"><i class="flaticon2-photograph nav-icon"></i><span class="nav-text">USP</span></a></li>';
 
                         //* CUSTOMIZATION
-                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/products/categories/customization/'.$data->productCategoryId->id) .'"><i class="flaticon2-cube-1 nav-icon"></i><span class="nav-text">Customization</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/products/categories/customizations/'.$data->productCategoryId->id) .'"><i class="flaticon2-cube-1 nav-icon"></i><span class="nav-text">Customization</span></a></li>';
 
                         //* FEATURE
                         $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/products/categories/features/'.$data->productCategoryId->id) .'"><i class="flaticon2-graph nav-icon"></i><span class="nav-text">Feature</span></a></li>';

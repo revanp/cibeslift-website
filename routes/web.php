@@ -115,6 +115,16 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     Route::put('change-status', [App\Http\Controllers\Backend\Products\Categories\FeaturesController::class, 'changeStatus']);
                     Route::get('delete/{idFeature}', [App\Http\Controllers\Backend\Products\Categories\FeaturesController::class, 'delete']);
                 });
+
+                Route::group(['prefix' => 'customizations/{id}'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Products\Categories\CustomizationsController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Products\Categories\CustomizationsController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Products\Categories\CustomizationsController::class, 'store']);
+                    Route::get('edit/{idCustomization}', [App\Http\Controllers\Backend\Products\Categories\CustomizationsController::class, 'edit']);
+                    Route::post('edit/{idCustomization}', [App\Http\Controllers\Backend\Products\Categories\CustomizationsController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Products\Categories\CustomizationsController::class, 'changeStatus']);
+                    Route::get('delete/{idCustomization}', [App\Http\Controllers\Backend\Products\Categories\CustomizationsController::class, 'delete']);
+                });
             });
 
             Route::group(['prefix' => 'properties'], function(){
