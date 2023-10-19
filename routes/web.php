@@ -106,14 +106,14 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     Route::get('delete/{idUsp}', [App\Http\Controllers\Backend\Products\Categories\UspController::class, 'delete']);
                 });
 
-                Route::group(['prefix' => 'usp/{id}'], function(){
-                    Route::get('', [App\Http\Controllers\Backend\Products\Categories\UspController::class, 'index']);
-                    Route::get('create', [App\Http\Controllers\Backend\Products\Categories\UspController::class, 'create']);
-                    Route::post('create', [App\Http\Controllers\Backend\Products\Categories\UspController::class, 'store']);
-                    Route::get('edit/{idUsp}', [App\Http\Controllers\Backend\Products\Categories\UspController::class, 'edit']);
-                    Route::post('edit/{idUsp}', [App\Http\Controllers\Backend\Products\Categories\UspController::class, 'update']);
-                    Route::put('change-status', [App\Http\Controllers\Backend\Products\Categories\UspController::class, 'changeStatus']);
-                    Route::get('delete/{idUsp}', [App\Http\Controllers\Backend\Products\Categories\UspController::class, 'delete']);
+                Route::group(['prefix' => 'features/{id}'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Products\Categories\FeaturesController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Products\Categories\FeaturesController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Products\Categories\FeaturesController::class, 'store']);
+                    Route::get('edit/{idFeature}', [App\Http\Controllers\Backend\Products\Categories\FeaturesController::class, 'edit']);
+                    Route::post('edit/{idFeature}', [App\Http\Controllers\Backend\Products\Categories\FeaturesController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Products\Categories\FeaturesController::class, 'changeStatus']);
+                    Route::get('delete/{idFeature}', [App\Http\Controllers\Backend\Products\Categories\FeaturesController::class, 'delete']);
                 });
             });
 
