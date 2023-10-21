@@ -9,6 +9,11 @@ use App\Models\ProductCategory;
 
 class ProductController extends Controller
 {
+    public function index()
+    {
+        return view('frontend.pages.product.index');
+    }
+
     public function product($lang, $slug)
     {
         $category = ProductCategory::with([
