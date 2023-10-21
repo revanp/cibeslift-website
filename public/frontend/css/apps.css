@@ -18,6 +18,9 @@ body {
 .c-white {
     color: white !important;
 }
+.c-black {
+    color: black !important;
+}
 .menu {
     padding: 0;
     margin: 0;
@@ -49,7 +52,7 @@ body {
     font-style: normal;
     font-weight: 700;
     border-radius: 50px;
-    padding: 0 14px;
+    padding: 0 24px;
     text-decoration: none;
 }
 .button-orange:hover {
@@ -65,7 +68,7 @@ body {
     font-style: normal;
     font-weight: 700;
     border-radius: 50px;
-    padding: 0 14px;
+    padding: 0 24px;
     text-decoration: none;
 }
 .button-primary_square {
@@ -109,6 +112,12 @@ body {
     height: 100%;
 }
 
+.title-100-bold {
+    font-size: 100px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
 .title-50-bold {
     color: #000;
     font-size: 50px;
@@ -137,6 +146,12 @@ body {
     font-weight: 400;
     line-height: normal;
 }
+.title-18-reguler {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
 
 .section {
     padding: 100px 0;
@@ -156,6 +171,37 @@ body {
     background-repeat: no-repeat;
     width: 100%;
 }
+.card-bg-img {
+    height: 660px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+.has-overlay:before {
+    content: '';
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.card-bg-img-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+.bg-image {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 .card-standard_img {
     min-height: 400px;
 }
@@ -173,6 +219,11 @@ body {
 
 .card-standard_content {
     padding: 24px;
+}
+.card-standard_img_float_bottom_left span {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
 }
 
 .card-slider {
