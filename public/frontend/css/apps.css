@@ -12,6 +12,9 @@ body {
     right: 0;
     z-index: 99;
 }
+.c-orange {
+    color: #F89828 !important;
+}
 .c-white {
     color: white !important;
 }
@@ -383,4 +386,40 @@ a:hover {
 }
 .accordion-item {
     border: 0;
+}
+.footer {
+    background: #0F1F2A;
+    padding-top: 80px;
+    padding-bottom: 20px;
+    color: white;
+}
+.footer h3, .footer p {
+    color: white;
+}
+.footer ul {
+    padding: 0;
+}
+.footer ul li {
+    list-style: none;
+}
+.footer ul li a {
+    color: white;
+}
+.list-inline li {
+    display: inline-block;
+}
+.hr-orange {
+    background-color: #F89828;
+    opacity: 1;
+}
+.list-social li {
+    display: inline-block;
+    padding: 0 8px;
+}
+.list-social li a {
+    
+}
+.list-social li a img {
+    width: 40px;
+    height: 40px;
 }
