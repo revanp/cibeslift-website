@@ -110,11 +110,6 @@
                                             <span class="menu-text">Categories</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item {{ (request()->is('admin-cms/products/properties/*') || request()->is('admin-cms/products/properties')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ url('admin-cms/products/properties') }}" class="menu-link ">
-                                            <span class="menu-text">Properties</span>
-                                        </a>
-                                    </li>
                                     <li class="menu-item {{ (request()->is('admin-cms/products/products/*') || request()->is('admin-cms/products/products')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/products/products') }}" class="menu-link ">
                                             <span class="menu-text">Products</span>
