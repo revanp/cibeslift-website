@@ -17,7 +17,8 @@ class ProductImage extends Model
 
     protected $fillable  = [
         'id_product_image_id',
-        'name'
+        'name',
+        'language_code'
     ];
 
     public $timestamps = true;

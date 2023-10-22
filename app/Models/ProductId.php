@@ -31,6 +31,11 @@ class ProductId extends Model
         return $this->hasOne(ProductCategoryId::class, 'id', 'id_product_category_id');
     }
 
+    public function productSpecification()
+    {
+        return $this->hasOne(ProductSpecification::class, 'id_product_id', 'id');
+    }
+
     public function product()
     {
         return $this->hasMany(Product::class, 'id_product_id', 'id');
