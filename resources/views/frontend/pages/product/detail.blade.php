@@ -2,87 +2,78 @@
 
 @section('content')
 
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center mb-5">
-                    <h3 class="title-50-bold">Cibes V-Series</h3>
-                    <p class="title-22-bold">Lift Valing Oke</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray mb-4">
-                        <div class="card-standard_img card-standard_img_float">
-                            <span>
-                                <h4>Cibes Air Series</h4>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray mb-4">
-                        <div class="card-standard_img card-standard_img_float">
-                            <span>
-                                <h4>Cibes Air Series</h4>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray mb-4">
-                        <div class="card-standard_img card-standard_img_float">
-                            <span>
-                                <h4>Cibes Air Series</h4>
-                            </span>
-                        </div>
+    <div class="banner" style="background-image: url('{{ asset('public/frontend/images/Banner---Homepage-Website.jpg') }}');">
+        <div class="container h-100">
+            <div class="row h-100 justify-content-center">
+                <div class="col-12 col-md-8">
+                    <div class="flex-middle">
+                        <span class="banner-contain">
+                            <h1 class="mb-4">CIBES V90</h1>
+                            <p>Lift rumah dengan teknologi baru</p>
+                        </span>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 text-center">
-                    <a href="#" class="button-orange">Learn More</a>
+        </div>
+        <div class="absolute-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-4 text-center"><a href="#" class="button-orange">Features</a></div>
+                    <div class="col-12 col-md-4 text-center"><a href="#" class="button-orange">Specifications</a></div>
+                    <div class="col-12 col-md-4 text-center"><a href="#" class="button-orange">Installation</a></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
-        <hr>
-    </div>
-
     <div class="section">
         <div class="container">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-12 col-md-6">
                     <div class="flex-middle">
                         <span>
-                            <h4 class="title-50-bold">Cibes Air Series</h4>
-                            <p class="mb-5">Mengalir Seperti Air</p>
-                            <a href="#" class="button-orange">Learn More</a>
+                            <h4 class="title-50-bold">Cibes V90: Lift Rumah Full Cabin with Shaft</h4>
                         </span>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <div class="text-center">
-                        <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" class="d-inline-block" alt="">
-                    </div>
+                    <p>Demi keamanan dan kenyamanan Anda,  bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.</p>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <div class="card-banner">
-                        <div class="flex-center text-center">
-                            <span>
-                                <h5 class="c-white title-50-bold">Cibes Classics</h5>
-                                <p class="c-white mb-5">Old But Gold</p>
-                                <a href="" class="button-orange">Learn More</a>
-                            </span>
+                <div class="col-12 col-md-3">
+                    <div class="card card-usp">
+                        <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
+                        <div class="d-block">
+                            <h5 class="title-30-bold">Infinity Glass</h5>
+                            <p>Integrated Shaft</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card card-usp">
+                        <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
+                        <div class="d-block">
+                            <h5 class="title-30-bold">Infinity Glass</h5>
+                            <p>Integrated Shaft</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card card-usp">
+                        <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
+                        <div class="d-block">
+                            <h5 class="title-30-bold">Infinity Glass</h5>
+                            <p>Integrated Shaft</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card card-usp">
+                        <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
+                        <div class="d-block">
+                            <h5 class="title-30-bold">Infinity Glass</h5>
+                            <p>Integrated Shaft</p>
                         </div>
                     </div>
                 </div>
@@ -93,49 +84,152 @@
     <div class="section">
         <div class="container">
             <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="h-100 flex-middle">
+                        <span>
+                            <h5 class="title-50-bold">Compare Lift Model</h5>
+                            <p>Lift Rumah Cibes dapat dikustomisasi sesuai dengan selera Anda. Kami memiliki banyak pilihan warna, material, maupun fitur. </p>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="h-100 flex-middle">
+                        <span>
+                            <h5 class="title-50-bold">Customize Your Lift</h5>
+                            <p>Lift Rumah Cibes dapat dipasang dengan mudah. Karena tidak memerlukan pit dan ruang mesin, dan juga sudah dilengkapi dengan shaft bawaan.</p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="h-100 flex-middle">
+                        <span>
+                            <h5 class="title-50-bold">Compare Lift Model</h5>
+                            <p>Lift Rumah Cibes dapat dikustomisasi sesuai dengan selera Anda. Kami memiliki banyak pilihan warna, material, maupun fitur. </p>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="h-100 flex-middle">
+                        <span>
+                            <h5 class="title-50-bold">Customize Your Lift</h5>
+                            <p>Lift Rumah Cibes dapat dipasang dengan mudah. Karena tidak memerlukan pit dan ruang mesin, dan juga sudah dilengkapi dengan shaft bawaan.</p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="container">
+            <div class="row">
                 <div class="col-12 text-center mb-5">
-                    <h3 class="title-50-bold">Teknologi Lift Cibes</h3>
+                    <h3 class="title-50-bold">3 Tier Customization</h3>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="row">
-                        <div class="col-12 col-md-4 text-center mb-5">
-                            <div class="icon-rounded"></div>
-                            <span>
-                                <h5 class="title-30-bold">Screwdrive</h5>
+                        <div class="col-12 col-md-4 text-center mb-4">
+                            <div class="position-relative">
+                                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
+                                <div class="position-middle title-30-bold">V90 ELEGANCE</div>
+                            </div>
+                            <span class="d-block mt-5">
+                                <a href="#" class="button-orange">Learn More</a>
                             </span>
                         </div>
-                        <div class="col-12 col-md-4 text-center mb-5">
-                            <div class="icon-rounded"></div>
-                            <span>
-                                <h5 class="title-30-bold">Screwdrive</h5>
+                        <div class="col-12 col-md-4 text-center mb-4">
+                            <div class="position-relative">
+                                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
+                                <div class="position-middle title-30-bold">V90 ELEGANCE</div>
+                            </div>
+                            <span class="d-block mt-5">
+                                <a href="#" class="button-orange">Learn More</a>
                             </span>
                         </div>
-                        <div class="col-12 col-md-4 text-center mb-5">
-                            <div class="icon-rounded"></div>
-                            <span>
-                                <h5 class="title-30-bold">Screwdrive</h5>
+                        <div class="col-12 col-md-4 text-center mb-4">
+                            <div class="position-relative">
+                                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
+                                <div class="position-middle title-30-bold">V90 ELEGANCE</div>
+                            </div>
+                            <span class="d-block mt-5">
+                                <a href="#" class="button-orange">Learn More</a>
                             </span>
                         </div>
-                        <div class="col-12 col-md-4 text-center mb-5">
-                            <div class="icon-rounded"></div>
-                            <span>
-                                <h5 class="title-30-bold">Screwdrive</h5>
-                            </span>
-                        </div>
-                        <div class="col-12 col-md-4 text-center mb-5">
-                            <div class="icon-rounded"></div>
-                            <span>
-                                <h5 class="title-30-bold">Screwdrive</h5>
-                            </span>
-                        </div>
-                        <div class="col-12 col-md-4 text-center mb-5">
-                            <div class="icon-rounded"></div>
-                            <span>
-                                <h5 class="title-30-bold">Screwdrive</h5>
-                            </span>
-                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container position-relative">
+            <div class="row">
+                <div class="col-12 col-md-6 pe-5">
+                    <p class="title-25"><b>Installation</b> Indoor/Outdoor</p>
+
+                    <p class="title-25"><b>Power supply 1</b> × 230 VAC/3 × 230 VAC/3 × 400 VAC, 50 Hz, 16 A, 3 × 2,5 mm²</p>
+
+                    <p class="title-25"><b>Min Headroom</b> 2300 mm (full-height door)</p>
+
+                    <p class="title-25"><b>Drive system</b> Screw and nut</p>
+
+                    <p class="title-25"><b>Max number of stops</b> 6 Stops</p>
+
+                    <p class="title-25"><b>Door configuration</b> Single access, open-through, adjacent</p>
+
+                    <p class="title-25"><b>Rated Load</b> 500kg</p>
+
+                    <p class="title-25"><b>Speed Max</b> 0.25 m/s</p>
+
+                    <p class="title-25"><b>Lift Pit</b> 1200mm or 0mm with ramp</p>
+
+                    <p class="title-25"><b>Max. Travel</b> 20m</p>
+
+                    <p class="title-25"><b>Motor Power</b> 2.2kw</p>
+                </div>
+                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" class="img-floating" alt="">
+                <div class="col-12 col-md-6 ps-5">
+                    <div class="flex-center h-100">
+                        <span>
+                            <h4 class="title-30-bold">V90 Sizes</h4>
+                            <p class="title-20-regular">Provided in 41 size options bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                            <a href="#" class="button-orange">Get Full Size Here</a>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -146,52 +240,49 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center mb-5">
-                    <h3 class="title-50-bold">European Standard</h3>
-                    <p>Keamanan Lift Cibes Sudah Sesuai dengan Standar Keamanan Eropa</p>
+                    <h3 class="title-50-bold">Cibes V90 Installation</h3>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray text-center">
-                        <div class="card-standard_img"></div>
-                        <div class="card-standard_content">
-                            <h5 class="title-30-bold">Safety Level Integrity 3</h5>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem distinctio illum mollitia necessitatibus obcaecati voluptas perspiciatis.</p>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 col-md-3 text-center mb-4">
+                            <div class="card-slider">
+                                <span class="tag">Voyager</span>
+                            </div>
+                            <span>
+                                <h5 class="title-30-bold">Garansi 5, 5, 15 Tahun</h5>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-3 text-center mb-4">
+                            <div class="card-slider">
+                                <span class="tag">Voyager</span>
+                            </div>
+                            <span>
+                                <h5 class="title-30-bold">Garansi 5, 5, 15 Tahun</h5>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-3 text-center mb-4">
+                            <div class="card-slider">
+                                <span class="tag">Voyager</span>
+                            </div>
+                            <span>
+                                <h5 class="title-30-bold">Garansi 5, 5, 15 Tahun</h5>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-3 text-center mb-4">
+                            <div class="card-slider">
+                                <span class="tag">Voyager</span>
+                            </div>
+                            <span>
+                                <h5 class="title-30-bold">Garansi 5, 5, 15 Tahun</h5>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            </span>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray text-center">
-                        <div class="card-standard_img"></div>
-                        <div class="card-standard_content">
-                            <h5 class="title-30-bold">ISO 9001</h5>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem distinctio illum mollitia necessitatibus obcaecati voluptas perspiciatis.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray text-center">
-                        <div class="card-standard_img"></div>
-                        <div class="card-standard_content">
-                            <h5 class="title-30-bold">Energy Efficiency</h5>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem distinctio illum mollitia necessitatibus obcaecati voluptas perspiciatis.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <h5 class="title-50-bold">Compare Lift Model</h5>
-                    <p>Lift Rumah Cibes dapat dikustomisasi sesuai dengan selera Anda. Kami memiliki banyak pilihan warna, material, maupun fitur. </p>
-                    <a href="#" class="button-orange">Compare Model</a>
-                </div>
-                <div class="col-12 col-md-6">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
                 </div>
             </div>
         </div>
@@ -201,12 +292,24 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-6">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
+                    <div class="card-standard bg-gray mb-4 bg-image" style="background-image: url('{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}');">
+                        <div class="card-standard_img card-standard_img_float_bottom_left position-relative">
+                            <span>
+                                <h4 class="c-white title-30-bold mb-4">Desain Cibes V90 Anda</h4>
+                                <a href="#" class="button-orange">Design Here</a>
+                            </span>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <h5 class="title-50-bold">Customize Your Lift</h5>
-                    <p>Lift Rumah Cibes dapat dipasang dengan mudah. Karena tidak memerlukan pit dan ruang mesin, dan juga sudah dilengkapi dengan shaft bawaan.</p>
-                    <a href="#" class="button-orange">Desain Lift Saya</a>
+                    <div class="card-standard bg-gray mb-4 bg-image" style="background-image: url('{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}');">
+                        <div class="card-standard_img card-standard_img_float_bottom_left position-relative">
+                            <span>
+                                <h4 class="c-white title-30-bold mb-4">Compare with Other Product</h4>
+                                <a href="#" class="button-orange">Compare Here</a>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -216,22 +319,40 @@
         <div class="container">
             <div class="row mb-5">
                 <div class="col-12 text-center">
-                    <h5 class="title-50-bold">More Detailed About Cibes Lift</h5>
+                    <h5 class="title-50-bold">Ketahui Produk Lainnya</h5>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="card-standard bg-gray mb-4">
-                        <div class="card-standard_img card-standard_img_float">
+                <div class="col-12 col-md-3">
+                    <div class="card-standard card-standard-small bg-gray mb-4">
+                        <div class="card-standard_img card-standard_img_float text-center">
                             <span>
                                 <h4>Full Size Options</h4>
                             </span>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6">
-                    <div class="card-standard bg-gray mb-4">
-                        <div class="card-standard_img card-standard_img_float">
+                <div class="col-12 col-md-3">
+                    <div class="card-standard card-standard-small bg-gray mb-4">
+                        <div class="card-standard_img card-standard_img_float text-center">
+                            <span>
+                                <h4>Complete Specifications</h4>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card-standard card-standard-small bg-gray mb-4">
+                        <div class="card-standard_img card-standard_img_float text-center">
+                            <span>
+                                <h4>Complete Specifications</h4>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card-standard card-standard-small bg-gray mb-4">
+                        <div class="card-standard_img card-standard_img_float text-center">
                             <span>
                                 <h4>Complete Specifications</h4>
                             </span>
@@ -244,44 +365,10 @@
 
     <div class="section">
         <div class="container">
-            <div class="row mb-5">
-                <div class="col-12 text-center">
-                    <h5 class="title-50-bold">F.A.Q</h5>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-8">
-                    <div class="accordion">
-                        <div class="accordion-item">
-                          <button id="accordion-button-1" aria-expanded="false"><span class="accordion-title">Why is the moon sometimes out during the day?</span><span class="icon" aria-hidden="true"></span></button>
-                          <div class="accordion-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-                          </div>
-                        </div>
-                        <div class="accordion-item">
-                          <button id="accordion-button-2" aria-expanded="false"><span class="accordion-title">Why is the sky blue?</span><span class="icon" aria-hidden="true"></span></button>
-                          <div class="accordion-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-                          </div>
-                        </div>
-                        <div class="accordion-item">
-                          <button id="accordion-button-3" aria-expanded="false"><span class="accordion-title">Will we ever discover aliens?</span><span class="icon" aria-hidden="true"></span></button>
-                          <div class="accordion-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <span class="text-center">
-                        <h5 class="title-50-bold">Punya Pertanyaan Seputar Lift Rumah?</h5>
+                        <h5 class="title-50-bold">Punya Pertanyaan Seputar Cibes V90?</h5>
                         <p class="mb-4">Isi form berikut ini dan Lift Consultant Kami Siap Membantu!</p>
                     </span>
                     <div class="card-form">
