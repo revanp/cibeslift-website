@@ -390,10 +390,19 @@
                             <div class="tab-content mb-4" style="display: block !important;">
                                 <div class="tab-pane active" id="idImage0Tab" role="tabpanel">
                                     <div class="row mt-5">
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6">
                                             <label>Name</label>
                                             <input type="text" class="form-control @if($errors->has('image.*.id.name')) is-invalid @endif" placeholder="Enter name" name="image[0][input][id][name]" value="{{ old('image.*.id.name') }}"/>
                                             @error('image.*.id.name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control @if($errors->has('image.*.id.description')) is-invalid @endif" placeholder="Enter description" name="image[0][input][id][description]" value="{{ old('image.*.id.description') }}"/>
+                                            @error('image.*.id.description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -403,10 +412,19 @@
                                 </div>
                                 <div class="tab-pane" id="enImage0Tab" role="tabpanel">
                                     <div class="row mt-5">
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6">
                                             <label>Name</label>
                                             <input type="text" class="form-control @if($errors->has('image.*.en.name')) is-invalid @endif" placeholder="Enter name" name="image[0][input][en][name]" value="{{ old('image.*.en.name') }}"/>
                                             @error('image.*.en.name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control @if($errors->has('image.*.en.description')) is-invalid @endif" placeholder="Enter description" name="image[0][input][en][description]" value="{{ old('image.*.en.description') }}"/>
+                                            @error('image.*.en.description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -468,10 +486,19 @@
                 <div class="tab-content mb-4" style="display: block !important;">
                     <div class="tab-pane active" id="idImage`+dataCount+`Tab" role="tabpanel">
                         <div class="row mt-5">
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label>Name</label>
                                 <input type="text" class="form-control @if($errors->has('image.*.id.name')) is-invalid @endif" placeholder="Enter name" name="image[`+dataCount+`][input][id][name]" value="{{ old('image.*.id.name') }}"/>
                                 @error('image.*.id.name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Description</label>
+                                <input type="text" class="form-control @if($errors->has('image.*.id.description')) is-invalid @endif" placeholder="Enter description" name="image[`+dataCount+`][input][id][description]" value="{{ old('image.*.id.description') }}"/>
+                                @error('image.*.id.description')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -481,10 +508,19 @@
                     </div>
                     <div class="tab-pane" id="enImage`+dataCount+`Tab" role="tabpanel">
                         <div class="row mt-5">
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label>Name</label>
                                 <input type="text" class="form-control @if($errors->has('image.*.en.name')) is-invalid @endif" placeholder="Enter name" name="image[`+dataCount+`][input][en][name]" value="{{ old('image.*.en.name') }}"/>
                                 @error('image.*.en.name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Description</label>
+                                <input type="text" class="form-control @if($errors->has('image.*.en.description')) is-invalid @endif" placeholder="Enter description" name="image[`+dataCount+`][input][en][description]" value="{{ old('image.*.en.description') }}"/>
+                                @error('image.*.en.description')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

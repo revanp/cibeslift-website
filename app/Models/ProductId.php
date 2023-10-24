@@ -41,9 +41,9 @@ class ProductId extends Model
         return $this->hasMany(Product::class, 'id_product_id', 'id');
     }
 
-    public function productImageId()
+    public function productUspId()
     {
-        return $this->hasMany(ProductImageId::class, 'id_product_id', 'id');
+        return $this->hasMany(ProductUspId::class, 'id_product_id', 'id');
     }
 
     public function banner()

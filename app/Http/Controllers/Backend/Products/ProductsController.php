@@ -8,8 +8,8 @@ use App\Models\ProductCategory;
 use App\Models\ProductCategoryId;
 use App\Models\Product;
 use App\Models\ProductId;
-use App\Models\ProductImage;
-use App\Models\ProductImageId;
+use App\Models\ProductUsp;
+use App\Models\ProductUspId;
 use App\Models\ProductSpecification;
 use App\Models\Media;
 use Illuminate\Support\Facades\Auth;
@@ -266,7 +266,7 @@ class ProductsController extends Controller
             $specification->fill($data['specification'])->save();
 
             foreach($data['image'] as $key => $val){
-                $imageId = new ProductImageId();
+                $imageId = new ProductUspId();
 
                 $imageId->fill([
                     'id_product_id' => $idProductId
@@ -279,21 +279,23 @@ class ProductsController extends Controller
                         $request->file('image.'.$key.'.image'),
                         $imageId,
                         'image',
-                        "images/products/products/image/{$idImageId}",
+                        "images/products/products/usp/{$idImageId}",
                         'image'
                     );
                 }
 
                 foreach($val['input'] as $languageCode2 => $val2){
-                    $image = new ProductImage();
+                    $image = new ProductUsp();
 
-                    $dataImage['id_product_image_id'] = $idImageId;
+                    $dataImage['id_product_usp_id'] = $idImageId;
                     $dataImage['language_code'] = $languageCode2;
 
                     if($languageCode2 != 'id'){
                         $dataImage['name'] = $data['image'][$key]['input']['en']['name'] ?? $data['image'][$key]['input']['id']['name'];
+                        $dataImage['description'] = $data['image'][$key]['input']['en']['description'] ?? $data['image'][$key]['input']['id']['description'];
                     }else{
                         $dataImage['name'] = $val2['name'];
+                        $dataImage['description'] = $val2['description'];
                     }
 
                     $image->fill($dataImage)->save();
