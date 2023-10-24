@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductImageId extends Model
+class ProductUspId extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'product_image_id';
+    protected $table = 'product_usp_id';
 
     protected $primaryKey = 'id';
 
@@ -26,9 +26,9 @@ class ProductImageId extends Model
         return $this->hasOne(ProductId::class, 'id', 'id_product_id');
     }
 
-    public function productImage()
+    public function productUsp()
     {
-        return $this->hasMany(ProductImage::class, 'id_product_image_id', 'id');
+        return $this->hasMany(ProductUsp::class, 'id_product_usp_id', 'id');
     }
 
     public function image()

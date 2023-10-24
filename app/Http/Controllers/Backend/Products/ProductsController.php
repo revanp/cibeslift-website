@@ -8,8 +8,8 @@ use App\Models\ProductCategory;
 use App\Models\ProductCategoryId;
 use App\Models\Product;
 use App\Models\ProductId;
-use App\Models\ProductImage;
-use App\Models\ProductImageId;
+use App\Models\ProductUsp;
+use App\Models\ProductUspId;
 use App\Models\ProductSpecification;
 use App\Models\Media;
 use Illuminate\Support\Facades\Auth;
@@ -266,7 +266,7 @@ class ProductsController extends Controller
             $specification->fill($data['specification'])->save();
 
             foreach($data['image'] as $key => $val){
-                $imageId = new ProductImageId();
+                $imageId = new ProductUspId();
 
                 $imageId->fill([
                     'id_product_id' => $idProductId
@@ -279,21 +279,23 @@ class ProductsController extends Controller
                         $request->file('image.'.$key.'.image'),
                         $imageId,
                         'image',
-                        "images/products/products/image/{$idImageId}",
+                        "images/products/products/usp/{$idImageId}",
                         'image'
                     );
                 }
 
                 foreach($val['input'] as $languageCode2 => $val2){
-                    $image = new ProductImage();
+                    $image = new ProductUsp();
 
-                    $dataImage['id_product_image_id'] = $idImageId;
+                    $dataImage['id_product_usp_id'] = $idImageId;
                     $dataImage['language_code'] = $languageCode2;
 
                     if($languageCode2 != 'id'){
                         $dataImage['name'] = $data['image'][$key]['input']['en']['name'] ?? $data['image'][$key]['input']['id']['name'];
+                        $dataImage['description'] = $data['image'][$key]['input']['en']['description'] ?? $data['image'][$key]['input']['id']['description'];
                     }else{
                         $dataImage['name'] = $val2['name'];
+                        $dataImage['description'] = $val2['description'];
                     }
 
                     $image->fill($dataImage)->save();
@@ -359,9 +361,9 @@ class ProductsController extends Controller
             'banner',
             'spesificationImage',
             'thumbnail',
-            'productImageId',
-            'productImageId.image',
-            'productImageId.productImage',
+            'productUspId',
+            'productUspId.image',
+            'productUspId.productUsp',
         ])
         ->find($id)
         ->toArray();
@@ -371,10 +373,10 @@ class ProductsController extends Controller
             unset($data['product'][$key]);
         }
 
-        foreach ($data['product_image_id'] as $key => $val) {
-            foreach ($val['product_image'] as $key2 => $val2) {
-                $data['product_image_id'][$key]['product_image'][$val2['language_code']] = $val2;
-                unset($data['product_image_id'][$key]['product_image'][$key2]);
+        foreach ($data['product_usp_id'] as $key => $val) {
+            foreach ($val['product_usp'] as $key2 => $val2) {
+                $data['product_usp_id'][$key]['product_usp'][$val2['language_code']] = $val2;
+                unset($data['product_usp_id'][$key]['product_usp'][$key2]);
             }
         }
 
@@ -543,14 +545,14 @@ class ProductsController extends Controller
             }
 
             if(empty($imageIdOld)){
-                ProductImageId::where('id_product_id', $id)->delete();
+                ProductUspId::where('id_product_id', $id)->delete();
             }
 
             foreach($data['image'] as $key => $val){
                 if(!empty($val['id'])){
-                    $imageId = ProductImageId::find($val['id']);
+                    $imageId = ProductUspId::find($val['id']);
                 }else{
-                    $imageId = new ProductImageId();
+                    $imageId = new ProductUspId();
                 }
 
                 $imageId->fill([
@@ -570,15 +572,21 @@ class ProductsController extends Controller
                 }
 
                 foreach($val['input'] as $languageCode2 => $val2){
-                    $image = new ProductImage();
+                    if(!empty($val['id'])){
+                        $image = ProductUsp::where('language_code', $languageCode2)->where('id_product_usp_id', $val['id'])->first();
+                    }else{
+                        $image = new ProductUsp();
+                    }
 
-                    $dataImage['id_product_image_id'] = $idImageId;
+                    $dataImage['id_product_usp_id'] = $idImageId;
                     $dataImage['language_code'] = $languageCode2;
 
                     if($languageCode2 != 'id'){
                         $dataImage['name'] = $data['image'][$key]['input']['en']['name'] ?? $data['image'][$key]['input']['id']['name'];
+                        $dataImage['description'] = $data['image'][$key]['input']['en']['description'] ?? $data['image'][$key]['input']['id']['description'];
                     }else{
                         $dataImage['name'] = $val2['name'];
+                        $dataImage['description'] = $val2['description'];
                     }
 
                     $image->fill($dataImage)->save();
