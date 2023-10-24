@@ -361,9 +361,9 @@ class ProductsController extends Controller
             'banner',
             'spesificationImage',
             'thumbnail',
-            'productImageId',
-            'productImageId.image',
-            'productImageId.productImage',
+            'productUspId',
+            'productUspId.image',
+            'productUspId.productUsp',
         ])
         ->find($id)
         ->toArray();
@@ -373,10 +373,10 @@ class ProductsController extends Controller
             unset($data['product'][$key]);
         }
 
-        foreach ($data['product_image_id'] as $key => $val) {
-            foreach ($val['product_image'] as $key2 => $val2) {
-                $data['product_image_id'][$key]['product_image'][$val2['language_code']] = $val2;
-                unset($data['product_image_id'][$key]['product_image'][$key2]);
+        foreach ($data['product_usp_id'] as $key => $val) {
+            foreach ($val['product_usp'] as $key2 => $val2) {
+                $data['product_usp_id'][$key]['product_usp'][$val2['language_code']] = $val2;
+                unset($data['product_usp_id'][$key]['product_usp'][$key2]);
             }
         }
 
@@ -545,14 +545,14 @@ class ProductsController extends Controller
             }
 
             if(empty($imageIdOld)){
-                ProductImageId::where('id_product_id', $id)->delete();
+                ProductUspId::where('id_product_id', $id)->delete();
             }
 
             foreach($data['image'] as $key => $val){
                 if(!empty($val['id'])){
-                    $imageId = ProductImageId::find($val['id']);
+                    $imageId = ProductUspId::find($val['id']);
                 }else{
-                    $imageId = new ProductImageId();
+                    $imageId = new ProductUspId();
                 }
 
                 $imageId->fill([
@@ -572,9 +572,9 @@ class ProductsController extends Controller
                 }
 
                 foreach($val['input'] as $languageCode2 => $val2){
-                    $image = new ProductImage();
+                    $image = new ProductUsp();
 
-                    $dataImage['id_product_image_id'] = $idImageId;
+                    $dataImage['id_product_usp_id'] = $idImageId;
                     $dataImage['language_code'] = $languageCode2;
 
                     if($languageCode2 != 'id'){
