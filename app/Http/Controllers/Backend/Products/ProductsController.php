@@ -572,15 +572,21 @@ class ProductsController extends Controller
                 }
 
                 foreach($val['input'] as $languageCode2 => $val2){
-                    $image = new ProductUsp();
+                    if(!empty($val['id'])){
+                        $image = ProductUsp::where('language_code', $languageCode2)->where('id_product_usp_id', $val['id'])->first();
+                    }else{
+                        $image = new ProductUsp();
+                    }
 
                     $dataImage['id_product_usp_id'] = $idImageId;
                     $dataImage['language_code'] = $languageCode2;
 
                     if($languageCode2 != 'id'){
                         $dataImage['name'] = $data['image'][$key]['input']['en']['name'] ?? $data['image'][$key]['input']['id']['name'];
+                        $dataImage['description'] = $data['image'][$key]['input']['en']['description'] ?? $data['image'][$key]['input']['id']['description'];
                     }else{
                         $dataImage['name'] = $val2['name'];
+                        $dataImage['description'] = $val2['description'];
                     }
 
                     $image->fill($dataImage)->save();
