@@ -137,6 +137,16 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                 Route::post('edit/{id}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'update']);
                 Route::put('change-status', [App\Http\Controllers\Backend\Products\ProductsController::class, 'changeStatus']);
                 Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'delete']);
+
+                Route::group(['prefix' => 'features/{id}'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Products\Products\FeaturesController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Products\Products\FeaturesController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Products\Products\FeaturesController::class, 'store']);
+                    Route::get('edit/{idFeature}', [App\Http\Controllers\Backend\Products\Products\FeaturesController::class, 'edit']);
+                    Route::post('edit/{idFeature}', [App\Http\Controllers\Backend\Products\Products\FeaturesController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Products\Products\FeaturesController::class, 'changeStatus']);
+                    Route::get('delete/{idFeature}', [App\Http\Controllers\Backend\Products\Products\FeaturesController::class, 'delete']);
+                });
             });
         });
 
