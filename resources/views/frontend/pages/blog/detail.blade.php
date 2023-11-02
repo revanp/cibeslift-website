@@ -6,23 +6,18 @@
         <div class="container">
             <div class="row justify-content-center mb-5">
                 <div class="col-12 text-center mb-4">
-                    <div class="article-image mb-5"></div>
-
-                    <h2 class="title-50-bold">Beli Lift Cibes, Jangan Kreativ!</h2>
+                    @php
+                        $image = $data->newsId->thumbnail 
+                                ? $data->newsId->thumbnail->path : '';
+                    @endphp
+                    <div class="article-image mb-5" stle="background-image: url('{{ $image }}');"></div>
+                    <h2 class="title-50-bold">{{ $data->title }}</h2>
                 </div>
                 <div class="col-12 col-md-8">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100 my-3" alt="">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis animi ratione laboriosam sapiente non excepturi obcaecati accusamus vitae! Quam expedita earum veritatis numquam facilis veniam velit quisquam odio at saepe!</p>
+                    {!! $data->content !!}
                 </div>
             </div>
-            <div class="row">
+            <div class="row d-none">
                 <div class="col-12">
 
                     <div class="row">
