@@ -51,6 +51,11 @@ class ProductCategoryId extends Model
         return $this->hasMany(ProductCategoryIdHasProductTechnologyId::class, 'id_product_category_id', 'id');
     }
 
+    public function productId()
+    {
+        return $this->hasMany(ProductId::class, 'id_product_category_id', 'id');
+    }
+
     public function banner()
     {
         return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'banner');

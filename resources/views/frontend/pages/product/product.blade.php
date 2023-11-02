@@ -16,74 +16,81 @@
         </div>
     </div>
 
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <h5 class="title-50-bold">Kustomisasi Lift Rumah Anda</h5>
-                    <p>Lift Rumah Cibes dapat dikustomisasi sesuai dengan selera Anda. Kami memiliki banyak pilihan warna, material, maupun fitur. </p>
-                </div>
-                <div class="col-12 col-md-6">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
-                </div>
-                <div class="col-12 col-md-6">
-                    <h5 class="title-50-bold">Lift Rumah dengan Teknologi Terbaru</h5>
-                    <p>Lift Rumah Cibes dapat dipasang dengan mudah. Karena tidak memerlukan pit dan ruang mesin, dan juga sudah dilengkapi dengan shaft bawaan.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-4 text-center">
-                    <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
-                    <p class="title-20-bold mt-3">Cibes V90 Galaxy</p>
-                </div>
-                <div class="col-12 col-md-8">
-                    <div class="flex-center">
-                        <span>
-                            <h4 class="title-50-bold">Lift Rumah Platform Cibes V-Series</h4>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi ipsam quam possimus perferendis laboriosam repudiandae voluptates voluptas, adipisci modi eligendi natus ab tenetur dolorem exercitationem quod eos rem cupiditate deleniti.</p>
-                            <a href="#" class="button-orange">Cibes V80</a>
-                        </span>
+    @foreach ($category->productCategoryId->productCategoryUspId as $key => $val)
+        @if ($key % 2 == 0)
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <h5 class="title-50-bold">{{ $val->productCategoryUsp[0]->name }}</h5>
+                            <p>{{ $val->productCategoryUsp[0]->description }}</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <img src="{{ $val->image->path ?? '#' }}" class="w-100" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="flex-center">
-                        <span>
-                            <h4 class="title-50-bold">Lift Rumah Platform Cibes V-Series</h4>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi ipsam quam possimus perferendis laboriosam repudiandae voluptates voluptas, adipisci modi eligendi natus ab tenetur dolorem exercitationem quod eos rem cupiditate deleniti.</p>
-                            <a href="#" class="button-orange">Cibes V80</a>
-                        </span>
+        @else
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <img src="{{ $val->image->path ?? '#' }}" class="w-100" alt="">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <h5 class="title-50-bold">{{ $val->productCategoryUsp[0]->name }}</h5>
+                            <p>{{ $val->productCategoryUsp[0]->description }}</p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-4 text-center">
-                    <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
-                    <p class="title-20-bold mt-3">Cibes V90 Galaxy</p>
+            </div>
+        @endif
+    @endforeach
+
+    @foreach ($category->productCategoryId->productId as $key => $val)
+        @if ($key % 2 == 0)
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-4 text-center">
+                            <img src="{{ $val->spesificationImage->path ?? '#' }}" alt="">
+                            <p class="title-20-bold mt-3">{{ $val->product[0]->name }}</p>
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <div class="flex-center">
+                                <span>
+                                    <h4 class="title-50-bold">{{ $val->product[0]->page_title }}</h4>
+                                    <p>{{ $val->product[0]->description }}</p>
+                                    <a href="#" class="button-orange">{{ $val->product[0]->name }}</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        @else
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-8">
+                            <div class="flex-center">
+                                <span>
+                                    <h4 class="title-50-bold">{{ $val->product[0]->page_title }}</h4>
+                                    <p>{{ $val->product[0]->description }}</p>
+                                    <a href="#" class="button-orange">{{ $val->product[0]->name }}</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 text-center">
+                            <img src="{{ $val->spesificationImage->path ?? '#' }}" alt="">
+                            <p class="title-20-bold mt-3">{{ $val->product[0]->name }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endforeach
 
     <div class="section">
         <div class="container">

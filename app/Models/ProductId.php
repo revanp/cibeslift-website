@@ -16,7 +16,10 @@ class ProductId extends Model
     public $incrementing = true;
 
     protected $fillable  = [
-        'id_product_category_id',
+        'parent_id',
+        'product_summary_type',
+        'level',
+        'have_a_child',
         'sort',
         'is_active',
         'created_by',
@@ -25,11 +28,6 @@ class ProductId extends Model
     ];
 
     public $timestamps = true;
-
-    public function productCategoryId()
-    {
-        return $this->hasOne(ProductCategoryId::class, 'id', 'id_product_category_id');
-    }
 
     public function productSpecification()
     {
@@ -54,6 +52,16 @@ class ProductId extends Model
     public function thumbnail()
     {
         return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'thumbnail');
+    }
+
+    public function menuIcon()
+    {
+        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'menu_icon');
+    }
+
+    public function productSummaryImage()
+    {
+        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'product_summary_image');
     }
 
     public function spesificationImage()

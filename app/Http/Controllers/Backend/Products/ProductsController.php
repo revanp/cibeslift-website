@@ -11,6 +11,7 @@ use App\Models\ProductId;
 use App\Models\ProductUsp;
 use App\Models\ProductUspId;
 use App\Models\ProductSpecification;
+use App\Models\ProductTechnology;
 use App\Models\Media;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,10 +28,6 @@ class ProductsController extends Controller
 
             $data = Product::with([
                 'productId',
-                'productId.productCategoryId',
-                'productId.productCategoryId.productCategory' => function($query){
-                    $query->where('language_code', 'id');
-                },
             ])->where('language_code', 'id');
 
             if ($reqDatatable['orderable']) {
@@ -72,9 +69,6 @@ class ProductsController extends Controller
                         return $rownum--;
                     }
                 })
-                ->addColumn('category', function($data){
-                    return $data->productId->productCategoryId->productCategory[0]->name;
-                })
                 ->addColumn('is_active', function($data){
                     $id = $data->productId->id;
                     $isActive = $data->productId->is_active;
@@ -110,16 +104,21 @@ class ProductsController extends Controller
 
     public function create()
     {
-        $categories = ProductCategory::with('productCategoryId')
-            ->where('language_code', '=', 'id')
-            ->whereHas('productCategoryId', function($query){
-                $query->where('is_active', 1);
+        $technologies = ProductTechnology::with('productTechnologyId')->where('language_code', '=', 'id')->whereHas('productTechnologyId', function($query){
+            $query->where('is_active', 1);
+        })->get();
+
+        $parents = Product::with(['productId'])
+            ->where('language_code', 'en')
+            ->whereHas('productId', function($query){
+                $query->where('level', 1);
+                $query->where('have_a_child', true);
             })
             ->get();
 
         $sort = ProductId::count() + 1;
 
-        return view('backend.pages.products.products.create', compact('sort', 'categories'));
+        return view('backend.pages.products.products.create', compact('sort', 'technologies', 'parents'));
     }
 
     public function store(Request $request)
@@ -131,24 +130,22 @@ class ProductsController extends Controller
 
         $rules = [
             'banner' => ['required', 'file'],
-            'thumbnail' => ['required', 'file'],
-            'spesification_image' => ['required', 'file'],
-            'id_product_category_id' => ['required'],
+            'thumbnail' => ['file'],
+            'specification_image' => ['file'],
             'sort' => [],
-            'image' => ['required', 'array'],
-            'specification.size' => ['required'],
-            'specification.installation' => ['required'],
-            'specification.power_supply' => ['required'],
-            'specification.min_headroom' => ['required'],
-            'specification.drive_system' => ['required'],
-            'specification.max_number_of_stops' => ['required'],
-            'specification.door_configuration' => ['required'],
-            'specification.rated_load' => ['required'],
-            'specification.speed_max' => ['required'],
-            'specification.lift_pit' => ['required'],
-            'specification.max_travel' => ['required'],
-            'specification.motor_power' => ['required'],
-
+            // 'image' => ['array'],
+            // 'specification.size' => ['required'],
+            // 'specification.installation' => ['required'],
+            // 'specification.power_supply' => ['required'],
+            // 'specification.min_headroom' => ['required'],
+            // 'specification.drive_system' => ['required'],
+            // 'specification.max_number_of_stops' => ['required'],
+            // 'specification.door_configuration' => ['required'],
+            // 'specification.rated_load' => ['required'],
+            // 'specification.speed_max' => ['required'],
+            // 'specification.lift_pit' => ['required'],
+            // 'specification.max_travel' => ['required'],
+            // 'specification.motor_power' => ['required'],
         ];
 
         $messages = [];
@@ -157,22 +154,20 @@ class ProductsController extends Controller
             'banner' => 'Banner',
             'thumbnail' => 'Thumbnail',
             'spesification_image' => 'Spesification Image',
-            'id_product_category_id' => 'Product Category',
             'sort' => 'Sort',
-            'image' => 'Image',
-            'specification.size' => 'Size',
-            'specification.installation' => 'Installation',
-            'specification.power_supply' => 'Power Supply',
-            'specification.min_headroom' => 'Min. Headroom',
-            'specification.drive_system' => 'Drive System',
-            'specification.max_number_of_stops' => 'Max. Number Of Stops',
-            'specification.door_configuration' => 'Doors configuration',
-            'specification.rated_load' => 'Rated Load',
-            'specification.speed_max' => 'Speed Max',
-            'specification.lift_pit' => 'Lift Pit',
-            'specification.max_travel' => 'Max Travel',
-            'specification.motor_power' => 'Motor Power',
-
+            // 'image' => 'Image',
+            // 'specification.size' => 'Size',
+            // 'specification.installation' => 'Installation',
+            // 'specification.power_supply' => 'Power Supply',
+            // 'specification.min_headroom' => 'Min. Headroom',
+            // 'specification.drive_system' => 'Drive System',
+            // 'specification.max_number_of_stops' => 'Max. Number Of Stops',
+            // 'specification.door_configuration' => 'Doors configuration',
+            // 'specification.rated_load' => 'Rated Load',
+            // 'specification.speed_max' => 'Speed Max',
+            // 'specification.lift_pit' => 'Lift Pit',
+            // 'specification.max_travel' => 'Max Travel',
+            // 'specification.motor_power' => 'Motor Power',
         ];
 
         foreach ($request->input as $lang => $input) {
@@ -196,23 +191,23 @@ class ProductsController extends Controller
             $attributes["input.$lang.page_title"] = "$lang_name Page Title";
         }
 
-        foreach ($request->image as $key => $image) {
-            $rules["image.$key.image"] = ['required', 'image'];
+        // foreach ($request->image as $key => $image) {
+        //     $rules["image.$key.image"] = ['required', 'image'];
 
-            $attributes["image.$key.image"] = "Image ".$key+1;
+        //     $attributes["image.$key.image"] = "Image ".$key+1;
 
-            foreach ($image['input'] as $lang => $input) {
-                if($lang == 'id'){
-                    $rules["image.$key.input.$lang.name"] = ['required'];
-                }else{
-                    $rules["image.$key.input.$lang.name"] = [];
-                }
+        //     foreach ($image['input'] as $lang => $input) {
+        //         if($lang == 'id'){
+        //             $rules["image.$key.input.$lang.name"] = ['required'];
+        //         }else{
+        //             $rules["image.$key.input.$lang.name"] = [];
+        //         }
 
-                $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+        //         $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
-                $attributes["image.$key.input.$lang.name"] = "$lang_name Name";
-            }
-        }
+        //         $attributes["image.$key.input.$lang.name"] = "$lang_name Name";
+        //     }
+        // }
 
         $request->validate($rules, $messages, $attributes);
 
@@ -227,7 +222,10 @@ class ProductsController extends Controller
 
             $productId->fill([
                 'sort' => $sort,
-                'id_product_category_id' => $data['id_product_category_id'],
+                'product_summary_type' => $data['product_summary_type'],
+                'level' => !empty($data['parent_id']) ? 2 : 1,
+                'parent_id' => $data['parent_id'],
+                'have_a_child' => !empty($data['have_a_child']) ? true : false,
                 'is_active' => !empty($data['is_active']) ? true : false,
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
@@ -260,47 +258,47 @@ class ProductsController extends Controller
                 $idProduct = $product->id;
             }
 
-            $specification = new ProductSpecification();
-            $data['specification']['id_product_id'] = $idProductId;
+            // $specification = new ProductSpecification();
+            // $data['specification']['id_product_id'] = $idProductId;
 
-            $specification->fill($data['specification'])->save();
+            // $specification->fill($data['specification'])->save();
 
-            foreach($data['image'] as $key => $val){
-                $imageId = new ProductUspId();
+            // foreach($data['image'] as $key => $val){
+            //     $imageId = new ProductUspId();
 
-                $imageId->fill([
-                    'id_product_id' => $idProductId
-                ])->save();
+            //     $imageId->fill([
+            //         'id_product_id' => $idProductId
+            //     ])->save();
 
-                $idImageId = $imageId->id;
+            //     $idImageId = $imageId->id;
 
-                if ($request->hasFile('image.'.$key.'.image')) {
-                    $this->storeFile(
-                        $request->file('image.'.$key.'.image'),
-                        $imageId,
-                        'image',
-                        "images/products/products/usp/{$idImageId}",
-                        'image'
-                    );
-                }
+            //     if ($request->hasFile('image.'.$key.'.image')) {
+            //         $this->storeFile(
+            //             $request->file('image.'.$key.'.image'),
+            //             $imageId,
+            //             'image',
+            //             "images/products/products/usp/{$idImageId}",
+            //             'image'
+            //         );
+            //     }
 
-                foreach($val['input'] as $languageCode2 => $val2){
-                    $image = new ProductUsp();
+            //     foreach($val['input'] as $languageCode2 => $val2){
+            //         $image = new ProductUsp();
 
-                    $dataImage['id_product_usp_id'] = $idImageId;
-                    $dataImage['language_code'] = $languageCode2;
+            //         $dataImage['id_product_usp_id'] = $idImageId;
+            //         $dataImage['language_code'] = $languageCode2;
 
-                    if($languageCode2 != 'id'){
-                        $dataImage['name'] = $data['image'][$key]['input']['en']['name'] ?? $data['image'][$key]['input']['id']['name'];
-                        $dataImage['description'] = $data['image'][$key]['input']['en']['description'] ?? $data['image'][$key]['input']['id']['description'];
-                    }else{
-                        $dataImage['name'] = $val2['name'];
-                        $dataImage['description'] = $val2['description'];
-                    }
+            //         if($languageCode2 != 'id'){
+            //             $dataImage['name'] = $data['image'][$key]['input']['en']['name'] ?? $data['image'][$key]['input']['id']['name'];
+            //             $dataImage['description'] = $data['image'][$key]['input']['en']['description'] ?? $data['image'][$key]['input']['id']['description'];
+            //         }else{
+            //             $dataImage['name'] = $val2['name'];
+            //             $dataImage['description'] = $val2['description'];
+            //         }
 
-                    $image->fill($dataImage)->save();
-                }
-            }
+            //         $image->fill($dataImage)->save();
+            //     }
+            // }
 
             if ($request->hasFile('banner')) {
                 $this->storeFile(
@@ -322,13 +320,33 @@ class ProductsController extends Controller
                 );
             }
 
-            if ($request->hasFile('spesification_image')) {
+            if ($request->hasFile('specification_image')) {
                 $this->storeFile(
-                    $request->file('spesification_image'),
+                    $request->file('specification_image'),
                     $productId,
                     'spesificationImage',
                     "images/products/products/spesification-image/{$idProductId}",
-                    'spesification_image'
+                    'specification_image'
+                );
+            }
+
+            if ($request->hasFile('menu_icon')) {
+                $this->storeFile(
+                    $request->file('menu_icon'),
+                    $productId,
+                    'menuIcon',
+                    "images/products/products/menu-icon/{$idProductId}",
+                    'menu_icon'
+                );
+            }
+
+            if ($request->hasFile('product_summary_image')) {
+                $this->storeFile(
+                    $request->file('product_summary_image'),
+                    $productId,
+                    'productSummaryImage',
+                    "images/products/products/product-summary-image/{$idProductId}",
+                    'product_summary_image'
                 );
             }
 

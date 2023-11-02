@@ -41,7 +41,6 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Category</th>
                                     <th>Name</th>
                                     <th>Slug</th>
                                     <th>Status</th>
@@ -76,7 +75,6 @@
                 },
                 columns: [
                     {data: 'rownum'},
-                    {data: 'category'},
                     {data: 'name'},
                     {data: 'slug'},
                     {data: 'is_active', searchable: false, orderable: false},

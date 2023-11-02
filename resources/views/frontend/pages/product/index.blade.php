@@ -2,50 +2,54 @@
 
 @section('content')
 
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center mb-5">
-                    <h3 class="title-50-bold">Cibes V-Series</h3>
-                    <p class="title-22-bold">Lift Valing Oke</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray mb-4">
-                        <div class="card-standard_img card-standard_img_float text-center">
-                            <span>
-                                <h4>Cibes Air Series</h4>
-                            </span>
+    @foreach ($products as $key => $val)
+        @if ($val->productId->product_summary_type == 0)
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center mb-5">
+                            <h3 class="title-50-bold">{{ $val->name }}</h3>
+                            <p class="title-22-bold">{{ $val->short_description }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="card-standard bg-gray mb-4">
+                                <div class="card-standard_img card-standard_img_float text-center">
+                                    <span>
+                                        <h4>Cibes Air Series</h4>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card-standard bg-gray mb-4">
+                                <div class="card-standard_img card-standard_img_float text-center">
+                                    <span>
+                                        <h4>Cibes Air Series</h4>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card-standard bg-gray mb-4">
+                                <div class="card-standard_img card-standard_img_float text-center">
+                                    <span>
+                                        <h4>Cibes Air Series</h4>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <a href="#" class="button-orange">Learn More</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray mb-4">
-                        <div class="card-standard_img card-standard_img_float text-center">
-                            <span>
-                                <h4>Cibes Air Series</h4>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray mb-4">
-                        <div class="card-standard_img card-standard_img_float text-center">
-                            <span>
-                                <h4>Cibes Air Series</h4>
-                            </span>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <div class="row">
-                <div class="col-12 text-center">
-                    <a href="#" class="button-orange">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </div>
+        @endif
+    @endforeach
 
     <div class="section">
         <div class="container">
@@ -254,7 +258,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="section">
         <div class="container">
             <div class="row">
