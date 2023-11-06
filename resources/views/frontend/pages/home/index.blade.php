@@ -11,7 +11,7 @@
                         <h1 class="mb-4">LIFT RUMAH MEWAH</h1>
                         <p>Lift rumah dengan teknologi baru: screw-drive sehingga lebih mudah untuk dipasang karena tidak perlu menggali lubang maupun membangun struktur.</p>
                         <p>Berpusat di Swedia, kami telah berdiri selama 75 tahun untuk membantu Anda mendapatkan lift rumah mewah yang sesuai dengan kustomisasi Anda.</p>
-                        <a href="#" class="button-primary button-primary_square mt-5">Pasang Lift Rumah</a>
+                        <a href="#" class="button-primary mt-5">Pasang Lift Rumah</a>
                     </span>
                 </div>
             </div>
@@ -55,10 +55,10 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="card-standard text-center">
-                    <div class="card-standard_img"></div>
+                    <div class="card-standard_img" style="background-image: url('');"></div>
                     <div class="card-standard_content">
                         <h5 class="title-50-bold">Cibes Classic</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem distinctio illum mollitia necessitatibus obcaecati voluptas perspiciatis.</p>
+                        <p>Lift rumah best seller di Indonesia, dikenal karena kemudahan instalasi dan fleksibilitasnya. Sesuai untuk rumah pribadi maupun bangunan komersial.</p>
                         <a href="#" class="button-orange">Lebih Lengkap</a>
                     </div>
                 </div>
