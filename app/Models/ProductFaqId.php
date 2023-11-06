@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductIdHasProductTechnologyId extends Model
+class ProductFaqId extends Model
 {
-    protected $table = 'product_id_has_product_technology_id';
+    use SoftDeletes;
+
+    protected $table = 'product_faq_id';
 
     protected $primaryKey = 'id';
 
@@ -14,18 +17,18 @@ class ProductIdHasProductTechnologyId extends Model
 
     protected $fillable  = [
         'id_product_id',
-        'id_product_technology_id',
+        'is_active'
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function productId()
     {
         return $this->hasOne(ProductId::class, 'id', 'id_product_id');
     }
 
-    public function productTechnologyId()
+    public function productFaq()
     {
-        return $this->hasOne(ProductTechnologyId::class, 'id', 'id_product_technology_id');
+        return $this->hasMany(ProductFaq::class, 'id_product_faq_id', 'id');
     }
 }

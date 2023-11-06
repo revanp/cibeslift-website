@@ -29,9 +29,9 @@ class ProductTechnologyId extends Model
         return $this->hasMany(ProductTechnology::class, 'id_product_technology_id', 'id');
     }
 
-    public function productCategoryIdHasProductTechnologyId()
+    public function productIdHasProductTechnologyId()
     {
-        return $this->hasMany(ProductCategoryIdHasProductTechnologyId::class, 'id_product_technology_id', 'id');
+        return $this->hasMany(ProductIdHasProductTechnologyId::class, 'id_product_technology_id', 'id');
     }
 
     public function image()

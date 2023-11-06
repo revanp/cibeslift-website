@@ -16,17 +16,17 @@
         </div>
     </div>
 
-    {{-- @foreach ($category->productCategoryId->productCategoryUspId as $key => $val)
+    @foreach ($product['product_id']['product_usp_id'] as $key => $val)
         @if ($key % 2 == 0)
             <div class="section">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-6">
-                            <h5 class="title-50-bold">{{ $val->productCategoryUsp[0]->name }}</h5>
-                            <p>{{ $val->productCategoryUsp[0]->description }}</p>
+                            <h5 class="title-50-bold">{{ $val['product_usp'][0]['name'] }}</h5>
+                            <p>{{ $val['product_usp'][0]['description'] ?? '' }}</p>
                         </div>
                         <div class="col-12 col-md-6">
-                            <img src="{{ $val->image->path ?? '#' }}" class="w-100" alt="">
+                            <img src="{{ $val['image']['path'] ?? '#' }}" class="w-100" alt="">
                         </div>
                     </div>
                 </div>
@@ -36,17 +36,17 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-6">
-                            <img src="{{ $val->image->path ?? '#' }}" class="w-100" alt="">
+                            <img src="{{ $val['image']['path'] ?? '#' }}" class="w-100" alt="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <h5 class="title-50-bold">{{ $val->productCategoryUsp[0]->name }}</h5>
-                            <p>{{ $val->productCategoryUsp[0]->description }}</p>
+                            <h5 class="title-50-bold">{{ $val['product_usp'][0]['name'] }}</h5>
+                            <p>{{ $val['product_usp'][0]['description'] ?? '' }}</p>
                         </div>
                     </div>
                 </div>
             </div>
         @endif
-    @endforeach --}}
+    @endforeach
 
     {{-- @foreach ($category->productCategoryId->productId as $key => $val)
         @if ($key % 2 == 0)
@@ -127,129 +127,79 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard bg-gray mb-4">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold">Screw Drive Technology</h5>
+                @foreach ($product['product_id']['product_id_has_product_technology_id'] as $key => $val)
+                    <div class="col-6 col-md-4">
+                        <a href="">
+                            <div class="card-standard bg-gray mb-4">
+                                <div class="card-standard_img">
+                                    <img src="{{ $val['product_technology_id']['image']['path'] ?? '#' }}" alt="">
+                                </div>
+                                <div class="card-standard_content">
+                                    <h5 class="title-20-bold">{{ $val['product_technology_id']['product_technology'][0]['name'] }}</h5>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard bg-gray mb-4">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold">European Standard Certified</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard bg-gray mb-4">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold">European Standard Certified</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard bg-gray mb-4">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold">European Standard Certified</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard bg-gray mb-4">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold">European Standard Certified</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard bg-gray mb-4">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold">European Standard Certified</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
 
-    <div class="section background-default" style="background-image: url('{{ asset('public/frontend/images/Banner---Homepage-Website.jpg') }}');"> 
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <h5 class="title-50-bold">Smart Control Panel</h5>
-                    <p>Lift Rumah Cibes dapat dikustomisasi sesuai dengan selera Anda. Kami memiliki banyak pilihan warna, material, maupun fitur. </p>
-                </div>
-                <div class="col-12 col-md-6">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section background-default" style="background-image: url('{{ asset('public/frontend/images/Banner---Homepage-Website.jpg') }}');"> 
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                </div>
-                <div class="col-12 col-md-6">
-                    <h5 class="title-50-bold">Smart Control Panel+</h5>
-                    <p>Lift Rumah Cibes dapat dipasang dengan mudah. Karena tidak memerlukan pit dan ruang mesin, dan juga sudah dilengkapi dengan shaft bawaan.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-12 text-center">
-                    <h5 class="title-50-bold">F.A.Q</h5>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-8">
-                    <div class="accordion">
-                        <div class="accordion-item">
-                          <button id="accordion-button-1" aria-expanded="false"><span class="accordion-title">Why is the moon sometimes out during the day?</span><span class="icon" aria-hidden="true"></span></button>
-                          <div class="accordion-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-                          </div>
+    @foreach ($product['product_id']['product_feature_id'] as $key => $val)
+        @if ($key % 2 == 0)
+            <div class="section background-default" style="background-image: url('{{ $val['image']['path'] ?? '#' }}');">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <h5 class="title-50-bold">{{ $val['product_feature'][0]['name'] }}</h5>
+                            <p>{{ $val['product_feature'][0]['description'] }}</p>
                         </div>
-                        <div class="accordion-item">
-                          <button id="accordion-button-2" aria-expanded="false"><span class="accordion-title">Why is the sky blue?</span><span class="icon" aria-hidden="true"></span></button>
-                          <div class="accordion-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-                          </div>
+                        <div class="col-12 col-md-6">
                         </div>
-                        <div class="accordion-item">
-                          <button id="accordion-button-3" aria-expanded="false"><span class="accordion-title">Will we ever discover aliens?</span><span class="icon" aria-hidden="true"></span></button>
-                          <div class="accordion-content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-                          </div>
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="section background-default" style="background-image: url('{{ $val['image']['path'] ?? '#' }}');">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <h5 class="title-50-bold">{{ $val['product_feature'][0]['name'] }}</h5>
+                            <p>{{ $val['product_feature'][0]['description'] }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endforeach
+
+    @if (!empty($product['product_id']['product_faq_id']))
+        <div class="section">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-12 text-center">
+                        <h5 class="title-50-bold">F.A.Q</h5>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8">
+                        <div class="accordion">
+                            @foreach ($product['product_id']['product_faq_id'] as $key => $val)
+                                <div class="accordion-item">
+                                    <button id="accordion-button-{{ $key }}" aria-expanded="false"><span class="accordion-title">{{ $val['product_faq'][0]['title'] }}</span><span class="icon" aria-hidden="true"></span></button>
+                                    <div class="accordion-content">
+                                        <p>{{ $val['product_faq'][0]['description'] }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <div class="container">
         <hr>
