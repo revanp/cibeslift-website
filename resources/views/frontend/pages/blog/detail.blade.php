@@ -47,7 +47,7 @@
                                     <a href="#" class="link">Read More <i class="fi fi-rr-arrow-small-right"></i></a>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="col-4">
                             <div class="card-hero mb-5">
                                 <div class="card-hero-thumbnail small-thumbnail"></div>

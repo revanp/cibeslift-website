@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-6">
-                <a href="#">
+                <a href="{{ urlLocale('/') }}">
                     <img src="{{ asset('public/frontend/images/cibes_logo.svg') }}" alt="">
                 </a>
             </div>
