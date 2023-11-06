@@ -2,13 +2,13 @@
 
 @section('content')
 
-    <div class="banner" style="background-image: url('{{ $category->productCategoryId->banner->path ?? '#' }}');">
+    <div class="banner" style="background-image: url('{{ $product['product_id']['banner']['path'] ?? '#' }}');">
         <div class="container h-100">
             <div class="row h-100 justify-content-center">
                 <div class="col-12 col-md-8">
                     <div class="flex-center">
                         <span class="banner-contain">
-                            <h1 class="mb-4">{{ $category->name }}</h1>
+                            <h1 class="mb-4">{{ $product['name'] }}</h1>
                         </span>
                     </div>
                 </div>
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    @foreach ($category->productCategoryId->productCategoryUspId as $key => $val)
+    {{-- @foreach ($category->productCategoryId->productCategoryUspId as $key => $val)
         @if ($key % 2 == 0)
             <div class="section">
                 <div class="container">
@@ -46,9 +46,9 @@
                 </div>
             </div>
         @endif
-    @endforeach
+    @endforeach --}}
 
-    @foreach ($category->productCategoryId->productId as $key => $val)
+    {{-- @foreach ($category->productCategoryId->productId as $key => $val)
         @if ($key % 2 == 0)
             <div class="section">
                 <div class="container">
@@ -90,7 +90,7 @@
                 </div>
             </div>
         @endif
-    @endforeach
+    @endforeach --}}
 
     <div class="section">
         <div class="container">

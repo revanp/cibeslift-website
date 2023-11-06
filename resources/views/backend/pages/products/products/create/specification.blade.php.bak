@@ -38,9 +38,27 @@
                 @enderror
             </div>
             <div class="form-group col-md-6">
+                <label>Rated Load</label>
+                <input type="text" class="form-control @if($errors->has('specification.rated_load')) is-invalid @endif" placeholder="Enter rated load" name="specification[rated_load]" value="{{ old('specification.rated_load') }}"/>
+                @error('specification.rated_load')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group col-md-6">
                 <label>Power Supply</label>
                 <input type="text" class="form-control @if($errors->has('specification.power_supply')) is-invalid @endif" placeholder="Enter power supply" name="specification[power_supply]" value="{{ old('specification.power_supply') }}"/>
                 @error('specification.power_supply')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group col-md-6">
+                <label>Speed</label>
+                <input type="text" class="form-control @if($errors->has('specification.speed')) is-invalid @endif" placeholder="Enter speed" name="specification[speed]" value="{{ old('specification.speed') }}"/>
+                @error('specification.speed')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -56,54 +74,18 @@
                 @enderror
             </div>
             <div class="form-group col-md-6">
-                <label>Drive System</label>
-                <input type="text" class="form-control @if($errors->has('specification.drive_system')) is-invalid @endif" placeholder="Enter drive system" name="specification[drive_system]" value="{{ old('specification.drive_system') }}"/>
-                @error('specification.drive_system')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <div class="form-group col-md-6">
-                <label>Max. Number of Stops</label>
-                <input type="text" class="form-control @if($errors->has('specification.max_number_of_stops')) is-invalid @endif" placeholder="Enter max. number of stops" name="specification[max_number_of_stops]" value="{{ old('specification.max_number_of_stops') }}"/>
-                @error('specification.max_number_of_stops')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <div class="form-group col-md-6">
-                <label>Door Configuration</label>
-                <input type="text" class="form-control @if($errors->has('specification.door_configuration')) is-invalid @endif" placeholder="Enter door configuration" name="specification[door_configuration]" value="{{ old('specification.door_configuration') }}"/>
-                @error('specification.door_configuration')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <div class="form-group col-md-6">
-                <label>Rated Load</label>
-                <input type="text" class="form-control @if($errors->has('specification.rated_load')) is-invalid @endif" placeholder="Enter rated load" name="specification[rated_load]" value="{{ old('specification.rated_load') }}"/>
-                @error('specification.rated_load')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <div class="form-group col-md-6">
-                <label>Speed Max.</label>
-                <input type="text" class="form-control @if($errors->has('specification.speed_max')) is-invalid @endif" placeholder="Enter speed max." name="specification[speed_max]" value="{{ old('specification.speed_max') }}"/>
-                @error('specification.speed_max')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <div class="form-group col-md-6">
                 <label>Lift Pit</label>
                 <input type="text" class="form-control @if($errors->has('specification.lift_pit')) is-invalid @endif" placeholder="Enter lift pit" name="specification[lift_pit]" value="{{ old('specification.lift_pit') }}"/>
                 @error('specification.lift_pit')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group col-md-6">
+                <label>Drive System</label>
+                <input type="text" class="form-control @if($errors->has('specification.drive_system')) is-invalid @endif" placeholder="Enter drive system" name="specification[drive_system]" value="{{ old('specification.drive_system') }}"/>
+                @error('specification.drive_system')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -119,9 +101,54 @@
                 @enderror
             </div>
             <div class="form-group col-md-6">
+                <label>Max. Number of Stops</label>
+                <input type="text" class="form-control @if($errors->has('specification.max_number_of_stops')) is-invalid @endif" placeholder="Enter max. number of stops" name="specification[max_number_of_stops]" value="{{ old('specification.max_number_of_stops') }}"/>
+                @error('specification.max_number_of_stops')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group col-md-6">
+                <label>Lift Controls</label>
+                <input type="text" class="form-control @if($errors->has('specification.lift_controls')) is-invalid @endif" placeholder="Enter lift controls" name="specification[lift_controls]" value="{{ old('specification.lift_controls') }}"/>
+                @error('specification.lift_controls')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group col-md-6">
                 <label>Motor Power</label>
                 <input type="text" class="form-control @if($errors->has('specification.motor_power')) is-invalid @endif" placeholder="Enter motor power" name="specification[motor_power]" value="{{ old('specification.motor_power') }}"/>
                 @error('specification.motor_power')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group col-md-6">
+                <label>Machine Room</label>
+                <input type="text" class="form-control @if($errors->has('specification.machine_room')) is-invalid @endif" placeholder="Enter machine room" name="specification[machine_room]" value="{{ old('specification.machine_room') }}"/>
+                @error('specification.machine_room')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group col-md-6">
+                <label>Door Configuration</label>
+                <input type="text" class="form-control @if($errors->has('specification.door_configuration')) is-invalid @endif" placeholder="Enter door configuration" name="specification[door_configuration]" value="{{ old('specification.door_configuration') }}"/>
+                @error('specification.door_configuration')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group col-md-6">
+                <label>Directive and Standards</label>
+                <input type="text" class="form-control @if($errors->has('specification.directive_and_standards')) is-invalid @endif" placeholder="Enter directive and standards" name="specification[directive_and_standards]" value="{{ old('specification.directive_and_standards') }}"/>
+                @error('specification.directive_and_standards')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

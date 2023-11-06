@@ -25,31 +25,24 @@ class ProductController extends Controller
         return view('frontend.pages.product.index', compact('products'));
     }
 
-    public function product($lang, $categorySlug)
+    public function product($lang, $slug)
     {
-        $category = ProductCategory::with([
-            'productCategoryId',
-            'productCategoryId.banner',
-            'productCategoryId.productCategoryUspId',
-            'productCategoryId.productCategoryUspId.productCategoryUsp' => function($query){
-                $query->where('language_code', getLocale());
-            },
-            'productCategoryId.productCategoryUspId.image',
-            'productCategoryId.productId',
-            'productCategoryId.productId.product' => function($query){
-                $query->where('language_code', getLocale());
-            },
-            'productCategoryId.productId.spesificationImage',
+        $product = Product::with([
+            'productId',
+            'productId.banner',
+            'productId.child'
         ])
-        ->where('slug', $categorySlug)
+        ->where('slug', $slug)
         ->where('language_code', getLocale())
         ->first();
 
-        if(empty($category)){
+        if(empty($product)){
             abort(404);
         }
 
-        return view('frontend.pages.product.product', compact('category'));
+        $product = $product->toArray();
+
+        return view('frontend.pages.product.product', compact('product'));
     }
 
     public function detail($lang, $categorySlug, $productSlug)
