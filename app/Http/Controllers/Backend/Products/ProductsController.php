@@ -4,8 +4,15 @@ namespace App\Http\Controllers\Backend\Products;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ProductCategory;
-use App\Models\ProductCategoryId;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
+use Exception;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+
+# MODELS
+use App\Models\Faq;
 use App\Models\Product;
 use App\Models\ProductId;
 use App\Models\ProductUsp;
@@ -13,15 +20,9 @@ use App\Models\ProductUspId;
 use App\Models\ProductSpecification;
 use App\Models\ProductTechnology;
 use App\Models\ProductIdHasProductTechnologyId;
-use App\Models\Media;
+use App\Models\ProductIdHasFaqId;
 use App\Models\ProductFeature;
 use App\Models\ProductFeatureId;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\DataTables;
-use Exception;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
@@ -84,9 +85,6 @@ class ProductsController extends Controller
                         //* CUSTOMIZATION
                         $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/products/products/customizations/'.$data->productId->id) .'"><i class="flaticon2-cube-1 nav-icon"></i><span class="nav-text">Customization</span></a></li>';
 
-                        //* CUSTOMIZATION
-                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/products/products/faq/'.$data->productId->id) .'"><i class="flaticon-questions-circular-button nav-icon"></i><span class="nav-text">FAQ</span></a></li>';
-
                         //* VIEW
                         $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/products/products/view/'.$data->productId->id) .'"><i class="flaticon-eye nav-icon"></i><span class="nav-text">View</span></a></li>';
 
@@ -112,6 +110,12 @@ class ProductsController extends Controller
             $query->where('is_active', 1);
         })->get();
 
+        $faqs = Faq::with('faqId')
+            ->where('language_code', '=', 'id')->whereHas('faqId', function($query){
+                $query->where('is_active', 1);
+            })
+            ->get();
+
         $parents = Product::with(['productId'])
             ->where('language_code', 'en')
             ->whereHas('productId', function($query){
@@ -122,7 +126,7 @@ class ProductsController extends Controller
 
         $sort = ProductId::count() + 1;
 
-        return view('backend.pages.products.products.create', compact('sort', 'technologies', 'parents'));
+        return view('backend.pages.products.products.create', compact('sort', 'technologies', 'parents', 'faqs'));
     }
 
     public function validation(Request $request)
@@ -135,7 +139,7 @@ class ProductsController extends Controller
                 'banner' => ['required', 'file'],
                 'thumbnail' => ['file'],
                 'specification_image' => ['file'],
-                'product_summary_type' => ['required'],
+                // 'product_summary_type' => ['required'],
                 'sort' => [],
                 'technologies' => ['required', 'array']
             ];
@@ -408,6 +412,7 @@ class ProductsController extends Controller
                 'product_summary_type' => $data['product_summary_type'],
                 'level' => !empty($data['parent_id']) ? 2 : 1,
                 'parent_id' => $data['parent_id'] ?? null,
+                'video_url' => $data['video_url'] ?? null,
                 'have_a_child' => !empty($data['have_a_child']) ? true : false,
                 'is_active' => !empty($data['is_active']) ? true : false,
                 'created_by' => $user->id,
@@ -427,6 +432,7 @@ class ProductsController extends Controller
                     $input['name'] = $data['input']['en']['name'] ?? $data['input']['id']['name'];
                     $input['short_description'] = $data['input']['en']['short_description'] ?? $data['input']['id']['short_description'];
                     $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
+                    $input['video_description'] = $data['input']['en']['video_description'] ?? $data['input']['id']['video_description'];
                     $input['page_title'] = $data['input']['en']['page_title'] ?? $data['input']['id']['page_title'];
                     $input['seo_title'] = $data['input']['en']['seo_title'] ?? $data['input']['id']['seo_title'];
                     $input['seo_description'] = $data['input']['en']['seo_description'] ?? $data['input']['id']['seo_description'];
@@ -445,6 +451,14 @@ class ProductsController extends Controller
                 $productIdHasProductTechnologyId = new ProductIdHasProductTechnologyId();
                 $productIdHasProductTechnologyId->fill([
                     'id_product_technology_id' => $val,
+                    'id_product_id' => $idProductId,
+                ])->save();
+            }
+
+            foreach($data['faqs'] as $key => $val){
+                $productIdHasFaqId = new ProductIdHasFaqId();
+                $productIdHasFaqId->fill([
+                    'id_faq_id' => $val,
                     'id_product_id' => $idProductId,
                 ])->save();
             }

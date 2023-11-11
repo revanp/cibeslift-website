@@ -14,13 +14,21 @@ class ProductController extends Controller
     {
         $products = Product::with([
             'productId',
-            // 'productId.productChild'
+            'productId.child',
+            'productId.child.product' => function($query) use($lang){
+                $query->where('language_code', $lang);
+            },
+            'productId.child.thumbnail'
         ])
         ->where('language_code', $lang)
         ->whereHas('productId', function($query){
             $query->where('level', 1);
         })
         ->get();
+
+        if(!empty($products)){
+            $products = $products->toArray();
+        }
 
         return view('frontend.pages.product.index', compact('products'));
     }

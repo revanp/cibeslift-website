@@ -21,6 +21,7 @@ class Product extends Model
         'slug',
         'short_description',
         'description',
+        'video_description',
         'page_title',
         'seo_title',
         'seo_description',

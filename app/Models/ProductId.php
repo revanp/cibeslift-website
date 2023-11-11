@@ -21,6 +21,7 @@ class ProductId extends Model
         'level',
         'have_a_child',
         'sort',
+        'video_url',
         'is_active',
         'created_by',
         'updated_by',
@@ -67,6 +68,11 @@ class ProductId extends Model
     public function productIdHasProductTechnologyId()
     {
         return $this->hasMany(ProductIdHasProductTechnologyId::class, 'id_product_id', 'id');
+    }
+
+    public function productIdHasFaqId()
+    {
+        return $this->hasMany(ProductIdHasFaqId::class, 'id_product_id', 'id');
     }
 
     public function banner()

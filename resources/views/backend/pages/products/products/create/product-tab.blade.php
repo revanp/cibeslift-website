@@ -67,6 +67,23 @@
                 @enderror
             </div>
             <div class="form-group col-md-6">
+                <label>Technologies</label>
+                <select name="technologies[]" multiple class="select2 form-control @if($errors->has('technologies')) is-invalid @endif">
+                    @foreach ($technologies as $key => $val)
+                        <option value="{{ $val->id_product_technology_id }}">{{ $val->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Faq</label>
+                <select name="faqs[]" multiple class="select2 form-control @if($errors->has('faqs')) is-invalid @endif">
+                    @foreach ($faqs as $key => $val)
+                        <option value="{{ $val->id_faq_id }}">{{ $val->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
                 <label>Sort</label>
                 <select name="sort" id="" class="form-control @if($errors->has('sort')) is-invalid @endif">
                     <option value="">-- LAST ORDER --</option>
@@ -79,14 +96,6 @@
                         {{ $message }}
                     </div>
                 @enderror
-            </div>
-            <div class="form-group col-md-6">
-                <label>Technologies</label>
-                <select name="technologies[]" multiple class="select2 form-control @if($errors->has('technologies')) is-invalid @endif">
-                    @foreach ($technologies as $key => $val)
-                        <option value="{{ $val->id_product_technology_id }}">{{ $val->name }}</option>
-                    @endforeach
-                </select>
             </div>
         </div>
 
