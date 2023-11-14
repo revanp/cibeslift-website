@@ -60,11 +60,6 @@ class ProductId extends Model
         return $this->hasMany(ProductFeatureId::class, 'id_product_id', 'id');
     }
 
-    public function productFaqId()
-    {
-        return $this->hasMany(ProductFaqId::class, 'id_product_id', 'id');
-    }
-
     public function productIdHasProductTechnologyId()
     {
         return $this->hasMany(ProductIdHasProductTechnologyId::class, 'id_product_id', 'id');
@@ -73,6 +68,11 @@ class ProductId extends Model
     public function productIdHasFaqId()
     {
         return $this->hasMany(ProductIdHasFaqId::class, 'id_product_id', 'id');
+    }
+
+    public function productCustomizationId()
+    {
+        return $this->hasMany(ProductCustomizationId::class, 'id_product_id', 'id');
     }
 
     public function banner()
@@ -95,8 +95,8 @@ class ProductId extends Model
         return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'product_summary_image');
     }
 
-    public function spesificationImage()
+    public function specificationImage()
     {
-        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'spesification_image');
+        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'specification_image');
     }
 }

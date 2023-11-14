@@ -48,21 +48,21 @@
         @endif
     @endforeach
 
-    {{-- @foreach ($category->productCategoryId->productId as $key => $val)
+    @foreach ($product['product_id']['child'] as $key => $val)
         @if ($key % 2 == 0)
             <div class="section">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-4 text-center">
-                            <img src="{{ $val->spesificationImage->path ?? '#' }}" alt="">
-                            <p class="title-20-bold mt-3">{{ $val->product[0]->name }}</p>
+                            <img src="{{ $val['specification_image']['path'] ?? '#' }}" alt="">
+                            <p class="title-20-bold mt-3">{{ $val['product'][0]['name'] }}</p>
                         </div>
                         <div class="col-12 col-md-8">
                             <div class="flex-center">
                                 <span>
-                                    <h4 class="title-50-bold">{{ $val->product[0]->page_title }}</h4>
-                                    <p>{{ $val->product[0]->description }}</p>
-                                    <a href="#" class="button-orange">{{ $val->product[0]->name }}</a>
+                                    <h4 class="title-50-bold">{{ $val['product'][0]['page_title'] }}</h4>
+                                    <p>{{ $val['product'][0]['description'] }}</p>
+                                    <a href="#" class="button-orange">{{ $val['product'][0]['name'] }}</a>
                                 </span>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                 </div>
             </div>
         @endif
-    @endforeach --}}
+    @endforeach
 
     <div class="section">
         <div class="container">
@@ -175,7 +175,7 @@
         @endif
     @endforeach
 
-    @if (!empty($product['product_id']['product_faq_id']))
+    @if (!empty($product['product_id']['product_id_has_faq_id']))
         <div class="section">
             <div class="container">
                 <div class="row mb-5">
@@ -186,11 +186,11 @@
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-8">
                         <div class="accordion">
-                            @foreach ($product['product_id']['product_faq_id'] as $key => $val)
+                            @foreach ($product['product_id']['product_id_has_faq_id'] as $key => $val)
                                 <div class="accordion-item">
-                                    <button id="accordion-button-{{ $key }}" aria-expanded="false"><span class="accordion-title">{{ $val['product_faq'][0]['title'] }}</span><span class="icon" aria-hidden="true"></span></button>
+                                    <button id="accordion-button-{{ $key }}" aria-expanded="false"><span class="accordion-title">{{ $val['faq_id']['faq'][0]['title'] }}</span><span class="icon" aria-hidden="true"></span></button>
                                     <div class="accordion-content">
-                                        <p>{{ $val['product_faq'][0]['description'] }}</p>
+                                        <p>{{ $val['faq_id']['faq'][0]['description'] }}</p>
                                     </div>
                                 </div>
                             @endforeach
