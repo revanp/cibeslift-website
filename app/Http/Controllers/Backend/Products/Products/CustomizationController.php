@@ -32,6 +32,9 @@ class CustomizationController extends Controller
     {
         $datas = ProductCustomization::with(['productCustomizationId'])
             ->where('language_code', 'id')
+            ->whereHas('productCustomizationId', function($query) use($id){
+                $query->where('id_product_id', $id);
+            })
             ->get();
 
         return view('backend.pages.products.products.customizations.index', compact('id', 'datas'));
@@ -106,28 +109,30 @@ class CustomizationController extends Controller
             }
 
             foreach ($data['feature'] as $key => $val) {
-                $featureId = new ProductCustomizationFeatureId();
+                if ($request->hasFile('feature.'.$key.'.image')) {
+                    $featureId = new ProductCustomizationFeatureId();
 
-                $featureId->fill([
-                    'id_product_customization_id' => $idCustomizationId
-                ])->save();
+                    $featureId->fill([
+                        'id_product_customization_id' => $idCustomizationId
+                    ])->save();
 
-                $idFeatureId = $featureId->id;
+                    $idFeatureId = $featureId->id;
 
-                foreach ($val['input'] as $languageCode => $inputFeature) {
-                    $feature = new ProductCustomizationFeature();
+                    foreach ($val['input'] as $languageCode => $inputFeature) {
+                        $feature = new ProductCustomizationFeature();
 
-                    $inputFeature['id_product_customization_feature_id'] = $idFeatureId;
-                    $inputFeature['language_code'] = $languageCode;
+                        $inputFeature['id_product_customization_feature_id'] = $idFeatureId;
+                        $inputFeature['language_code'] = $languageCode;
 
-                    if($languageCode != 'id'){
-                        $inputFeature['name'] = $data['feature'][$key]['input']['en']['name'] ?? $data['feature'][$key]['input']['id']['name'];
-                        $inputFeature['description'] = $data['feature'][$key]['input']['en']['description'] ?? $data['feature'][$key]['input']['id']['description'];
+                        if($languageCode != 'id'){
+                            $inputFeature['name'] = $data['feature'][$key]['input']['en']['name'] ?? $data['feature'][$key]['input']['id']['name'];
+                            $inputFeature['description'] = $data['feature'][$key]['input']['en']['description'] ?? $data['feature'][$key]['input']['id']['description'];
+                        }
+
+                        $feature->fill($inputFeature)->save();
+
+                        $idFeature = $feature->id;
                     }
-
-                    $feature->fill($inputFeature)->save();
-
-                    $idFeature = $feature->id;
                 }
 
                 if ($request->hasFile('feature.'.$key.'.image')) {
