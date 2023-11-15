@@ -566,7 +566,7 @@ class ProductsController extends Controller
                 $this->storeFile(
                     $request->file('specification_image'),
                     $productId,
-                    'spesificationImage',
+                    'specificationImage',
                     "images/products/products/spesification-image/{$idProductId}",
                     'specification_image'
                 );

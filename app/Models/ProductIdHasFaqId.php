@@ -26,6 +26,6 @@ class ProductIdHasFaqId extends Model
 
     public function faqId()
     {
-        return $this->hasOne(faqId::class, 'id', 'id_faq_id');
+        return $this->hasOne(FaqId::class, 'id', 'id_faq_id');
     }
 }
