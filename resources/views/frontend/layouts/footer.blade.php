@@ -1,29 +1,49 @@
 <footer class="footer">
     <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-3">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
                 <a href="#">
-                    <img src="{{ asset('public/frontend/images/cibes-logo.svg') }}" alt="">
+                    <img src="{{ asset('public/frontend/images/Cibes_logo_neg 1.png') }}" class="pb-3" alt="">
+                    <p class="footer-logo-text d-block">SWEDISH PREMIUM HOME LIFT SINCE 1947</p>
                 </a>
             </div>
-            <div class="col-12 col-md-9">
+        </div>
+        <div class="row">
+            <div class="col-12">
                 <div class="row">
-                    <div class="col-12 col-md-4">
+                    <div class="col">
                         <a href="">
-                            <h3>Cibes HQ Showroom</h3>
-                            <p>Kensington Commercial B05 Jl. Boulevard Raya, Kelapa Gading Jakarta Utara</p>
+                            <h3>Cibes Lift Indonesia Headquarter</h3>
+                            <p>Kensington Commercial B05 Jl. Boulevard Raya Kelapa Gading, Jakarta Utara</p>
+                            <a href="#" class="link-map">See on Maps</a>
                         </a>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col">
                         <a href="">
-                            <h3>Cibes Flagship Showroom</h3>
+                            <h3>Cibes Lift Indonesia Flagship Showroom</h3>
                             <p>Pondok Indah Plaza II BA 18 Jl. Metro Pondok Indah No. 19 Kebayoran Lama, Jakarta Selatan</p>
+                            <a href="#" class="link-map">See on Maps</a>
                         </a>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col">
                         <a href="">
-                            <h3>Cibes Surabaya</h3>
-                            <p>GRAHA SIP, Jl. Nias No. 68, Gubeng, Surabaya Jawa Timur</p>
+                            <h3>Cibes Lift Indonesia Surabaya Showroom</h3>
+                            <p>GRAHA SIP Lt. 5 Jl. Nias No. 68 Gubeng, Surabaya</p>
+                            <a href="#" class="link-map">See on Maps</a>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="">
+                            <h3>Cibes Lift Indonesia Bali Showroom</h3>
+                            <p>Jl. Bypass Ngurah Rai No.225 Sesetan, Denpasar Selatan, Kota Denpasar, Bali</p>
+                            <a href="#" class="link-map">See on Maps</a>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="">
+                            <h3>Cibes Lift Indonesia Medan Showroom</h3>
+                            <p>Jl. Boulevard Barat Daya Kav 01 Gama City Medan Blok R10 No. 1 Percut Sei Tuan, Medan</p>
+                            <a href="#" class="link-map">See on Maps</a>
                         </a>
                     </div>
                 </div>

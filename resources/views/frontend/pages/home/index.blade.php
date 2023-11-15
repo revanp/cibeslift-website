@@ -242,14 +242,11 @@
     </div>
 </div>
 
-<div class="section">
+<div class="section banner-background" style="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_010_030_01_0001.png') }}">
     <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-4 text-center">
-                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
-            </div>
+        <div class="row justify-content-center">
             <div class="col-12 col-md-8">
-                <h5 class="title-50-bold">Punya Pertanyaan Seputar Lift Rumah?</h5>
+                <h5 class="title-50-bold">Punya Pertanyaan Seputar Cibes V80?</h5>
                 <p class="mb-4">Isi form berikut ini dan Lift Consultant Kami Siap Membantu!</p>
                 <div class="card-form">
                     <form action="">

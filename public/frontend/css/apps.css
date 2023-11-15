@@ -9,7 +9,7 @@ body {
 }
 
 .header {
-    background-color: #002855;
+    background-color: #0F1F2A;
     height: 80px;
     line-height: 80px;
     position: fixed;
@@ -99,6 +99,11 @@ body {
     font-size: 22px;
     font-weight: 400;
     line-height: normal;
+}
+.banner-background {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .main {
     margin-top: 80px;
@@ -480,10 +485,31 @@ a:hover {
     border: 0;
 }
 .footer {
-    background: #002855;
+    background: #0F1F2A;
     padding-top: 80px;
     padding-bottom: 20px;
     color: white;
+}
+.footer h3 {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.footer p {
+    color: #FFF;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.footer .link-map {
+    color: #FFF;
+    font-family: Arimo;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 .footer h3, .footer p {
     color: white;
@@ -520,4 +546,14 @@ a:hover {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+.footer-logo-text {
+    color: #FFF;
+    text-align: center;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 7.5px;
 }
