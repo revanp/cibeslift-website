@@ -33,7 +33,12 @@ class ProductsController extends Controller
 
             $data = Product::with([
                 'productId',
-            ])->where('language_code', 'id');
+                'productId.parent',
+                'productId.parent.product' => function($query){
+                    $query->where('language_code', 'id');
+                },
+            ])
+            ->where('language_code', 'id');
 
             if ($reqDatatable['orderable']) {
                 foreach ($reqDatatable['orderable'] as $order) {
@@ -72,6 +77,13 @@ class ProductsController extends Controller
                         return $rownum++;
                     } else {
                         return $rownum--;
+                    }
+                })
+                ->addColumn('parent', function($data){
+                    if(!empty($data->productId->parent)){
+                        return $data->productId->parent->product[0]->name;
+                    }else{
+                        return '';
                     }
                 })
                 ->addColumn('is_active', function($data){

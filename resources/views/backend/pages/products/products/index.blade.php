@@ -41,6 +41,7 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
+                                    <th>Parent</th>
                                     <th>Name</th>
                                     <th>Slug</th>
                                     <th>Status</th>
@@ -75,6 +76,7 @@
                 },
                 columns: [
                     {data: 'rownum'},
+                    {data: 'parent'},
                     {data: 'name'},
                     {data: 'slug'},
                     {data: 'is_active', searchable: false, orderable: false},

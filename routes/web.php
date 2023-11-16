@@ -147,6 +147,16 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     Route::post('edit/{idCustomization}', [App\Http\Controllers\Backend\Products\Products\CustomizationController::class, 'update']);
                     Route::put('change-status', [App\Http\Controllers\Backend\Products\Products\CustomizationController::class, 'changeStatus']);
                     Route::get('delete/{idCustomization}', [App\Http\Controllers\Backend\Products\Products\CustomizationController::class, 'delete']);
+
+                    Route::group(['prefix' => 'options/{idCustomization}'], function(){
+                        Route::get('', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'index']);
+                        Route::get('create', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'create']);
+                        Route::post('create', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'store']);
+                        Route::get('edit/{idOption}', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'edit']);
+                        Route::post('edit/{idOption}', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'update']);
+                        Route::put('change-status', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'changeStatus']);
+                        Route::get('delete/{idOption}', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'delete']);
+                    });
                 });
             });
         });

@@ -47,7 +47,7 @@ class ProductId extends Model
 
     public function parent()
     {
-        return $this->hasMany(ProductId::class, 'id', 'parent_id');
+        return $this->hasOne(ProductId::class, 'id', 'parent_id');
     }
 
     public function productUspId()
