@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('id_product_customization_id');
             $table->bigInteger('parent_id')->nullable();
+            $table->boolean('have_a_child');
+            $table->integer('level');
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
         });

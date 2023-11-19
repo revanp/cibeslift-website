@@ -18,6 +18,8 @@ class ProductCustomizationOptionId extends Model
     protected $fillable  = [
         'id_product_customization_id',
         'parent_id',
+        'have_a_child',
+        'level',
     ];
 
     public $timestamps = true;
@@ -35,5 +37,10 @@ class ProductCustomizationOptionId extends Model
     public function productCustomizationOption()
     {
         return $this->hasMany(ProductCustomizationOption::class, 'id_product_customization_option_id', 'id');
+    }
+
+    public function productCustomizationOptionVariationId()
+    {
+        return $this->hasMany(ProductCustomizationOptionVariationId::class, 'id_product_customization_option_id', 'id');
     }
 }

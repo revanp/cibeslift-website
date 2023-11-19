@@ -52,6 +52,36 @@
                 <form action="{{ url('admin-cms/products/products/customizations/'.$id.'/options/'.$idCustomization.'/create') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
+                        <div class="form-group col-md-3">
+                            <div class="col-12 col-form-label">
+                                <div class="checkbox-inline">
+                                    <label class="checkbox checkbox-success">
+                                        <input type="checkbox" name="have_a_child"/>
+                                        <span></span>
+                                        Have a child product?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6 hide-have-a-child">
+                            <label>Parent Option</label>
+                            <select name="parent_id" class="form-control @if($errors->has('parent_id')) is-invalid @endif">
+                                @php
+                                    $parentIdData = !empty(old('parent_id')) ? old('parent_id') : '';
+                                @endphp
+                                <option value="">-- SELECT PARENT OPTION --</option>
+                                @foreach ($parents as $key => $val)
+                                    <option value="{{ $val->productCustomizationOptionId->id }}" {{ $parentIdData == '0' ? 'selected' : '' }}>{{ $val->name }}</option>
+                                @endforeach
+                            </select>
+                            <span class="form-text text-muted">Empty this field if option is standalone.</span>
+                            @error('parent_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                         @php
                             $lang = ['id' => 'Indonesia', 'en' => 'English'];
                         @endphp
@@ -67,19 +97,10 @@
                             @foreach ($lang as $key => $val)
                                 <div class="tab-pane {{ $key == 'id' ? 'active' : '' }}" id="{{ $key }}Tab" role="tabpanel">
                                     <div class="row mt-5">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label>Name</label>
                                             <input type="text" class="form-control @if($errors->has('input.'.$key.'.name')) is-invalid @endif" placeholder="Enter name" name="input[{{ $key }}][name]" value="{{ old('input.'.$key.'.name') }}"/>
                                             @error('input.'.$key.'.name')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label>Description</label>
-                                            <textarea name="input[{{ $key }}][description]" rows="5" class="form-control @if($errors->has('input.'.$key.'.description')) is-invalid @endif">{{ old('input.'.$key.'.description') }}</textarea>
-                                            @error('input.'.$key.'.description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -92,39 +113,35 @@
 
                         <hr>
 
-                        <div class="feature-box mt-5">
-                            <div class="feature-item">
+                        <div class="variation-box mt-5 hide-have-a-child">
+                            <div class="variation-item">
                                 <div class="row">
                                     <div class="form-group picture_upload col-md-6">
-                                        <label>Feature Image</label>
+                                        <label>Variation Image</label>
                                         <div class="form-group__file">
                                             <div class="file-wrapper">
-                                                <input type="file" name="feature[0][image]" class="file-input"/>
+                                                <input type="file" name="variation[0][image]" class="file-input"/>
                                                 <div class="file-preview-background">+</div>
                                                 <img src="" width="240px" class="file-preview"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <ul class="nav nav-tabs" id="featureTab" role="tablist">
+                                        <ul class="nav nav-tabs" id="variationTab" role="tablist">
                                             @foreach ($lang as $key => $val)
                                                 <li class="nav-item">
-                                                    <a class="nav-link {{ $key == 'id' ? 'active' : '' }}" data-toggle="tab" role="tab" href="#{{ $key }}FeatureTab">{{ $val }}</a>
+                                                    <a class="nav-link {{ $key == 'id' ? 'active' : '' }}" data-toggle="tab" role="tab" href="#{{ $key }}0VariationTab">{{ $val }}</a>
                                                 </li>
                                             @endforeach
                                         </ul>
 
                                         <div class="tab-content mb-4" style="display: block !important;">
                                             @foreach ($lang as $key => $val)
-                                                <div class="tab-pane {{ $key == 'id' ? 'active' : '' }}" id="{{ $key }}FeatureTab" role="tabpanel">
+                                                <div class="tab-pane {{ $key == 'id' ? 'active' : '' }}" id="{{ $key }}0VariationTab" role="tabpanel">
                                                     <div class="row mt-5">
                                                         <div class="form-group col-md-12">
                                                             <label>Name</label>
-                                                            <input type="text" class="form-control" placeholder="Enter name" name="feature[0][input][{{ $key }}][name]" value=""/>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Description</label>
-                                                            <textarea name="feature[0][input][{{ $key }}][description]" class="form-control"></textarea>
+                                                            <input type="text" class="form-control" placeholder="Enter name" name="variation[0][input][{{ $key }}][name]" value=""/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -134,8 +151,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row justify-content-center">
-                            <a href="#" class="btn btn-primary w-20 mt-5 add-item-feature" data-count="1"><i class="flaticon2-plus"></i> Add Another Feature</a>
+                        <div class="row justify-content-center hide-have-a-child">
+                            <a href="#" class="btn btn-primary w-20 mt-5 add-item-variation" data-count="1"><i class="flaticon2-plus"></i> Add Another Variation</a>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -150,19 +167,77 @@
 
 @section('script')
 <script>
-    $('.add-item-feature').click(function(e){
+    $('form').submit(function(e){
+        e.preventDefault();
+
+        var action = $(this).attr('action');
+
+        var formData = new FormData(this);
+
+        // $.ajax({
+        //     url: "{{ url('admin-cms/products/products/validation') }}",
+        //     type: 'POST',
+        //     data: formData,
+        //     processData: false,
+        //     contentType: false,
+        //     cache: false,
+        //     success: function(data){
+
+        //     },
+        //     error: function(data){
+        //         var result = data.responseJSON;
+
+        //         $.each(result.data, function(key, value){
+        //             toastr.error(value[0]);
+        //         })
+        //     }
+        // })
+
+        $.ajax({
+            url: action,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function(data){
+                if(data.redirect != null){
+                    window.location.replace(data.redirect);
+                }
+            },
+            error: function(data){
+                var result = data.responseJSON;
+
+                $.each(result.data, function(key, value){
+                    toastr.error(value[0]);
+                })
+            }
+        })
+    });
+
+    $('input[name="have_a_child"]').on('change', function(){
+        var checked = $('input[name="have_a_child"]:checked').length;
+
+        if (checked == 0) {
+            $('.hide-have-a-child').removeClass('d-none');
+        } else {
+            $('.hide-have-a-child').addClass('d-none');
+        }
+    });
+
+    $('.add-item-variation').click(function(e){
         e.preventDefault();
 
         var dataCount = $(this).data('count');
-        var listBox = $('.feature-box');
+        var listBox = $('.variation-box');
 
-        var html = `<div class="feature-item mt-5">
+        var html = `<div class="variation-item mt-5">
             <div class="row">
                 <div class="form-group picture_upload col-md-6">
-                    <label>Feature Image</label>
+                    <label>Variation Image</label>
                     <div class="form-group__file">
                         <div class="file-wrapper">
-                            <input type="file" name="feature[`+dataCount+`][image]" class="file-input">
+                            <input type="file" name="variation[`+dataCount+`][image]" class="file-input">
                             <div class="file-preview-background">+</div>
                             <img src="" width="240px" class="file-preview">
                         </div>
@@ -171,35 +246,27 @@
                 <div class="col-md-6">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                         <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" role="tab" href="#idTab">Indonesia</a>
+                                <a class="nav-link active" data-toggle="tab" role="tab" href="#id`+dataCount+`VariationTab">Indonesia</a>
                             </li>
                                                         <li class="nav-item">
-                                <a class="nav-link " data-toggle="tab" role="tab" href="#enTab">English</a>
+                                <a class="nav-link " data-toggle="tab" role="tab" href="#en`+dataCount+`VariationTab">English</a>
                             </li>
                                                 </ul>
 
                     <div class="tab-content mb-4" style="display: block !important;">
-                                                        <div class="tab-pane active" id="idTab" role="tabpanel">
+                                                        <div class="tab-pane active" id="id`+dataCount+`VariationTab" role="tabpanel">
                                 <div class="row mt-5">
                                     <div class="form-group col-md-12">
                                         <label>Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter name" name="feature[`+dataCount+`][input][id][name]" value="">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label>Description</label>
-                                        <textarea name="feature[`+dataCount+`][input][id][description]" class="form-control"></textarea>
+                                        <input type="text" class="form-control" placeholder="Enter name" name="variation[`+dataCount+`][input][id][name]" value="">
                                     </div>
                                 </div>
                             </div>
-                                                        <div class="tab-pane " id="enTab" role="tabpanel">
+                                                        <div class="tab-pane " id="en`+dataCount+`VariationTab" role="tabpanel">
                                 <div class="row mt-5">
                                     <div class="form-group col-md-12">
                                         <label>Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter name" name="feature[`+dataCount+`][input][en][name]" value="">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label>Description</label>
-                                        <textarea name="feature[`+dataCount+`][input][en][description]" class="form-control"></textarea>
+                                        <input type="text" class="form-control" placeholder="Enter name" name="variation[`+dataCount+`][input][en][name]" value="">
                                     </div>
                                 </div>
                             </div>
