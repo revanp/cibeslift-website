@@ -60,8 +60,8 @@
                                         <td class="align-middle">{{ $val->name }}</td>
                                         <td class="align-middle">
                                             <div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">
-                                                <li class="nav-item"><a class="nav-link" href="{{ url('admin-cms/products/products/customizations/'.$id.'/options/'.$idCustomization.'/edit/'.$val->productCustomizationId->id) }}"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>
-                                                <li class="nav-item"><a class="nav-link btn-delete" href="{{ url('admin-cms/products/products/customizations/'.$id.'/options/'.$idCustomization.'/delete/'.$val->productCustomizationId->id) }}"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>
+                                                <li class="nav-item"><a class="nav-link" href="{{ url('admin-cms/products/products/customizations/'.$id.'/options/'.$idCustomization.'/edit/'.$val->productCustomizationOptionId->id) }}"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>
+                                                <li class="nav-item"><a class="nav-link btn-delete" href="{{ url('admin-cms/products/products/customizations/'.$id.'/options/'.$idCustomization.'/delete/'.$val->productCustomizationOptionId->id) }}"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>
                                             </ul></div>
                                         </td>
                                     </tr>
