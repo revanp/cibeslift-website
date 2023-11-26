@@ -6,7 +6,7 @@
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <div class="d-flex align-items-baseline flex-wrap mr-5">
                     <h5 class="text-dark font-weight-bold my-1 mr-5">
-                        View Category
+                        View Product
                     </h5>
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -14,10 +14,10 @@
                             <a href="#" class="text-muted">Products</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ url('admin-cms/products/categories') }}" class="text-muted">Categories</a>
+                            <a href="{{ url('admin-cms/products/products') }}" class="text-muted">Products</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/products/categories/view/'.$data['id']) }}" class="text-muted">View Category</a>
+                            <a href="{{ url('admin-cms/products/products/view/'.$data['id']) }}" class="text-muted">View Product</a>
                         </li>
                     </ul>
                 </div>
@@ -30,10 +30,10 @@
             <div class="card card-custom">
                 <div class="card-header">
                     <div class="card-title">
-                        <h3 class="card-label">View Category</h3>
+                        <h3 class="card-label">View Product</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{ url('admin-cms/products/categories') }}" class="btn btn-danger font-weight-bolder">
+                        <a href="{{ url('admin-cms/products/products') }}" class="btn btn-danger font-weight-bolder">
                             <span class="svg-icon svg-icon-md"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <polygon points="0 0 24 0 24 24 0 24"/>
@@ -41,7 +41,7 @@
                                 </g>
                             </svg></span> Back
                         </a>
-                        <a href="{{ url('admin-cms/products/categories/edit/'.$data['id']) }}" class="btn btn-primary font-weight-bolder ml-3">
+                        <a href="{{ url('admin-cms/products/products/edit/'.$data['id']) }}" class="btn btn-primary font-weight-bolder ml-3">
                             <i class="flaticon2-edit icon-md"></i> Edit
                         </a>
                     </div>
@@ -56,136 +56,14 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="text-center"><strong>Thumbnail</strong></td>
+                                <td class="text-center">
+                                    <strong>Have a Child Product?</strong>
+                                </td>
                                 <td>
-                                    @if (!empty($data['thumbnail']))
-                                        <a href="{{ $data['thumbnail']['path'] }}" target="_BLANK">
-                                            <img src="{{ $data['thumbnail']['path'] }}" style="max-width: 500px" alt="">
-                                        </a>
-                                    @endif
+                                    {!! $data['have_a_child'] == '1' ? '<span class="label label-lg font-weight-bolder label-rounded label-success label-inline">Yes</span>' : '<span class="label label-lg font-weight-bolder label-rounded label-danger label-inline">No</span>' !!}
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="text-center"><strong>Banner</strong></td>
-                                <td>
-                                    @if (!empty($data['banner']))
-                                        <a href="{{ $data['banner']['path'] }}" target="_BLANK">
-                                            <img src="{{ $data['banner']['path'] }}" style="max-width: 500px" alt="">
-                                        </a>
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>File Icon</strong></td>
-                                <td>
-                                    @if (!empty($data['file_icon']))
-                                        <a href="{{ $data['file_icon']['path'] }}" target="_BLANK">
-                                            <img src="{{ $data['file_icon']['path'] }}" style="max-width: 500px" alt="">
-                                        </a>
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Video Thumbnail</strong></td>
-                                <td>
-                                    @if (!empty($data['video_thumbnail']))
-                                        <a href="{{ $data['video_thumbnail']['path'] }}" target="_BLANK">
-                                            <img src="{{ $data['video_thumbnail']['path'] }}" style="max-width: 500px" alt="">
-                                        </a>
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Image</strong></td>
-                                <td>
-                                    @if (!empty($data['image']))
-                                        @foreach ($data['image'] as $image)
-                                            <a href="{{ $image['path'] }}" target="_BLANK">
-                                                <img src="{{ $image['path'] }}" style="max-width: 500px" alt="" class="mb-3">
-                                            </a>
-                                        @endforeach
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Video URL</strong></td>
-                                <td>{{ $data['video_url'] ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Sort</strong></td>
-                                <td>{{ $data['sort'] ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Is Active</strong></td>
-                                <td>{{ $data['is_active'] == 1 ? '✅' : '❌' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Is Self Design</strong></td>
-                                <td>{{ $data['is_self_design'] == 1 ? '✅' : '❌' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Created At</strong></td>
-                                <td>{{ date('Y-m-d H:i:s', strtotime($data['created_at'])) ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Updated At</strong></td>
-                                <td>{{ date('Y-m-d H:i:s', strtotime($data['updated_at'])) ?? '' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="separator separator-solid separator-border-3 mb-5"></div>
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th width="20%" class="text-center">#</th>
-                                <th>Indonesia</th>
-                                <th>English</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center"><strong>Name</strong></td>
-                                <td>{{ $data['product_category']['id']['name'] ?? '' }}</td>
-                                <td>{{ $data['product_category']['en']['name'] ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Description</strong></td>
-                                <td>{!! $data['product_category']['id']['description'] ?? '' !!}</td>
-                                <td>{!! $data['product_category']['en']['description'] ?? '' !!}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Post Title</strong></td>
-                                <td>{{ $data['product_category']['id']['post_title'] ?? '' }}</td>
-                                <td>{{ $data['product_category']['en']['post_title'] ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>Post Description</strong></td>
-                                <td>{!! $data['product_category']['id']['post_description'] ?? '' !!}</td>
-                                <td>{!! $data['product_category']['en']['post_description'] ?? '' !!}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center" colspan="3"><strong>---- SEO ----</strong></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>SEO Title</strong></td>
-                                <td>{{ $data['product_category']['id']['seo_title'] ?? '' }}</td>
-                                <td>{{ $data['product_category']['en']['seo_title'] ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>SEO Description</strong></td>
-                                <td>{{ $data['product_category']['id']['seo_description'] ?? '' }}</td>
-                                <td>{{ $data['product_category']['en']['seo_description'] ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>SEO Keyword</strong></td>
-                                <td>{{ $data['product_category']['id']['seo_keyword'] ?? '' }}</td>
-                                <td>{{ $data['product_category']['en']['seo_keyword'] ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><strong>SEO Canonical URL</strong></td>
-                                <td>{{ $data['product_category']['id']['seo_canonical_url'] ?? '' }}</td>
-                                <td>{{ $data['product_category']['en']['seo_canonical_url'] ?? '' }}</td>
-                            </tr>
+                            <tr></tr>
                         </tbody>
                     </table>
                 </div>

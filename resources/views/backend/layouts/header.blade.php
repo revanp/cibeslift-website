@@ -105,11 +105,6 @@
                                             <span class="menu-text">Technologies</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item {{ (request()->is('admin-cms/products/categories/*') || request()->is('admin-cms/products/categories')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ url('admin-cms/products/categories') }}" class="menu-link ">
-                                            <span class="menu-text">Categories</span>
-                                        </a>
-                                    </li>
                                     <li class="menu-item {{ (request()->is('admin-cms/products/products/*') || request()->is('admin-cms/products/products')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/products/products') }}" class="menu-link ">
                                             <span class="menu-text">Products</span>

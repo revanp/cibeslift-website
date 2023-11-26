@@ -43,6 +43,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" role="tab" href="#productDetailTab">Product Detail</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" role="tab" href="#additionalInformationtab">Additional Information</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -54,6 +57,10 @@
 
                     <div class="tab-pane" id="productDetailTab" role="tabpanel">
                         @include('backend.pages.products.products.edit.product-detail-tab')
+                    </div>
+
+                    <div class="tab-pane" id="additionalInformationtab" role="tabpanel">
+                        @include('backend.pages.products.products.edit.additional-information-tab')
                     </div>
                 </div>
 

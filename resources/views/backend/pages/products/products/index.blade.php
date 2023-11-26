@@ -42,6 +42,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Parent</th>
+                                    <th>Level</th>
                                     <th>Name</th>
                                     <th>Slug</th>
                                     <th>Status</th>
@@ -67,6 +68,7 @@
                 searchDelay: 500,
                 processing: true,
                 serverSide: true,
+                ordering: false,
                 ajax: {
                     url: "{{ url('admin-cms/products/products/datatable') }}",
                     type: "POST",
@@ -77,6 +79,7 @@
                 columns: [
                     {data: 'rownum'},
                     {data: 'parent'},
+                    {data: 'level'},
                     {data: 'name'},
                     {data: 'slug'},
                     {data: 'is_active', searchable: false, orderable: false},

@@ -10,7 +10,8 @@
                 <div class="col-12 col-form-label">
                     <div class="checkbox-inline">
                         <label class="checkbox checkbox-success checkbox-disabled">
-                            <input type="checkbox" name="have_a_child" readonly {{ $data['have_a_child'] ? 'checked' : '' }}/>
+                            <input type="checkbox" name="have_a_child" readonly {{ $data['have_a_child'] ? 'checked' : '' }} disabled/>
+                            <input type="hidden" name="have_a_child" value="{{ $data['have_a_child'] ? 'on' : '' }}">
                             <span></span>
                             Have a child product?
                         </label>
@@ -70,6 +71,23 @@
                 @enderror
             </div>
             <div class="form-group col-md-6">
+                <label>Technologies</label>
+                <select name="technologies[]" multiple class="select2 form-control @if($errors->has('technologies')) is-invalid @endif">
+                    @foreach ($technologies as $key => $val)
+                        <option value="{{ $val->id_product_technology_id }}" {{ in_array($val->id_product_technology_id, $data['product_id_has_product_technology_id']) ? 'selected' : '' }}>{{ $val->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Faq</label>
+                <select name="faqs[]" multiple class="select2 form-control @if($errors->has('faqs')) is-invalid @endif">
+                    @foreach ($faqs as $key => $val)
+                        <option value="{{ $val->id_faq_id }}" {{ in_array($val->id_faq_id, $data['product_id_has_faq_id']) ? 'selected' : '' }}>{{ $val->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
                 <label>Sort</label>
                 <select name="sort" id="" class="form-control @if($errors->has('sort')) is-invalid @endif">
                     @php
@@ -84,14 +102,6 @@
                         {{ $message }}
                     </div>
                 @enderror
-            </div>
-            <div class="form-group col-md-6">
-                <label>Technologies</label>
-                <select name="technologies[]" multiple class="select2 form-control @if($errors->has('technologies')) is-invalid @endif">
-                    @foreach ($technologies as $key => $val)
-                        <option value="{{ $val->id_product_technology_id }}" {{ in_array($val->id_product_technology_id, $data['product_id_has_product_technology_id']) ? 'selected' : '' }}>{{ $val->name }}</option>
-                    @endforeach
-                </select>
             </div>
         </div>
 

@@ -53,7 +53,7 @@ class ProductsController extends Controller
                     }
                 }
             } else {
-                $data = $data->orderBy('id', 'desc');
+                $data = $data->orderBy('id', 'asc');
             }
 
             $datatables = DataTables::of($data);
@@ -78,6 +78,9 @@ class ProductsController extends Controller
                     } else {
                         return $rownum--;
                     }
+                })
+                ->addColumn('level', function($data){
+                    return '<span class="label label-rounded">'.$data->productId->level.'</span>';
                 })
                 ->addColumn('parent', function($data){
                     if(!empty($data->productId->parent)){
@@ -109,11 +112,63 @@ class ProductsController extends Controller
 
                     return $html;
                 })
-                ->rawColumns(['image', 'action'])
+                ->rawColumns(['level', 'image', 'action'])
                 ->toJson(true);
         }
 
         return view('backend.pages.products.products.index');
+    }
+
+    public function view($id)
+    {
+        $data = ProductId::with([
+            'product',
+            'productSpecification',
+            'banner',
+            'specificationImage',
+            'thumbnail',
+            'menuIcon',
+            'productSummaryImage',
+            'productUspId',
+            'productUspId.image',
+            'productUspId.productUsp',
+            'productFeatureId',
+            'productFeatureId.image',
+            'productFeatureId.productFeature',
+            'productIdHasProductTechnologyId',
+            'productIdHasProductTechnologyId.productTechnologyId',
+            'productIdHasProductTechnologyId.productTechnologyId.productTechnology' => function($query){
+                $query->where('language_code', 'id');
+            },
+            'productIdHasFaqId',
+            'productIdHasFaqId.faqId',
+            'productIdHasFaqId.faqId.faq' => function($query){
+                $query->where('language_code', 'id');
+            }
+        ])
+        ->find($id)
+        ->toArray();
+
+        foreach ($data['product'] as $key => $val) {
+            $data['product'][$val['language_code']] = $val;
+            unset($data['product'][$key]);
+        }
+
+        foreach ($data['product_usp_id'] as $key => $val) {
+            foreach ($val['product_usp'] as $key2 => $val2) {
+                $data['product_usp_id'][$key]['product_usp'][$val2['language_code']] = $val2;
+                unset($data['product_usp_id'][$key]['product_usp'][$key2]);
+            }
+        }
+
+        foreach ($data['product_feature_id'] as $key => $val) {
+            foreach ($val['product_feature'] as $key2 => $val2) {
+                $data['product_feature_id'][$key]['product_feature'][$val2['language_code']] = $val2;
+                unset($data['product_feature_id'][$key]['product_feature'][$key2]);
+            }
+        }
+
+        return view('backend.pages.products.products.view', compact('data'));
     }
 
     public function create()
@@ -268,7 +323,7 @@ class ProductsController extends Controller
                 'banner' => ['file'],
                 'thumbnail' => ['file'],
                 'specification_image' => ['file'],
-                'product_summary_type' => ['required'],
+                // 'product_summary_type' => ['required'],
                 'sort' => [],
                 'technologies' => ['required', 'array']
             ];
@@ -646,7 +701,7 @@ class ProductsController extends Controller
             'product',
             'productSpecification',
             'banner',
-            'spesificationImage',
+            'specificationImage',
             'thumbnail',
             'menuIcon',
             'productSummaryImage',
@@ -656,7 +711,8 @@ class ProductsController extends Controller
             'productFeatureId',
             'productFeatureId.image',
             'productFeatureId.productFeature',
-            'productIdHasProductTechnologyId'
+            'productIdHasProductTechnologyId',
+            'productIdHasFaqId'
         ])
         ->find($id)
         ->toArray();
@@ -686,9 +742,21 @@ class ProductsController extends Controller
             $data['product_id_has_product_technology_id'][$key] = $val['id_product_technology_id'];
         }
 
+        $productIdHasProductTechnologyId = $data['product_id_has_faq_id'];
+        unset($data['product_id_has_faq_id']);
+        foreach($productIdHasProductTechnologyId as $key => $val){
+            $data['product_id_has_faq_id'][$key] = $val['id_faq_id'];
+        }
+
         $technologies = ProductTechnology::with('productTechnologyId')->where('language_code', '=', 'id')->whereHas('productTechnologyId', function($query){
             $query->where('is_active', 1);
         })->get();
+
+        $faqs = Faq::with('faqId')
+        ->where('language_code', '=', 'id')->whereHas('faqId', function($query){
+            $query->where('is_active', 1);
+        })
+        ->get();
 
         $parents = Product::with(['productId'])
             ->where('language_code', 'en')
@@ -700,7 +768,7 @@ class ProductsController extends Controller
 
         $sort = ProductId::count() + 1;
 
-        return view('backend.pages.products.products.edit', compact('data', 'sort', 'parents', 'technologies'));
+        return view('backend.pages.products.products.edit', compact('data', 'sort', 'parents', 'technologies', 'faqs'));
     }
 
     public function update($id, Request $request)
@@ -724,6 +792,7 @@ class ProductsController extends Controller
                 'product_summary_type' => $data['product_summary_type'],
                 'level' => !empty($data['parent_id']) ? 2 : 1,
                 'parent_id' => $data['parent_id'] ?? null,
+                'video_url' => $data['video_url'] ?? null,
                 'have_a_child' => !empty($data['have_a_child']) ? true : false,
                 'is_active' => !empty($data['is_active']) ? true : false,
                 'created_by' => $user->id,
@@ -743,6 +812,7 @@ class ProductsController extends Controller
                     $input['name'] = $data['input']['en']['name'] ?? $data['input']['id']['name'];
                     $input['short_description'] = $data['input']['en']['short_description'] ?? $data['input']['id']['short_description'];
                     $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
+                    $input['video_description'] = $data['input']['en']['video_description'] ?? $data['input']['id']['video_description'];
                     $input['page_title'] = $data['input']['en']['page_title'] ?? $data['input']['id']['page_title'];
                     $input['seo_title'] = $data['input']['en']['seo_title'] ?? $data['input']['id']['seo_title'];
                     $input['seo_description'] = $data['input']['en']['seo_description'] ?? $data['input']['id']['seo_description'];
@@ -762,6 +832,15 @@ class ProductsController extends Controller
                 $productIdHasProductTechnologyId = new ProductIdHasProductTechnologyId();
                 $productIdHasProductTechnologyId->fill([
                     'id_product_technology_id' => $val,
+                    'id_product_id' => $idProductId,
+                ])->save();
+            }
+
+            ProductIdHasFaqId::where('id_product_id', $idProductId)->delete();
+            foreach($data['faqs'] as $key => $val){
+                $productIdHasFaqId = new ProductIdHasFaqId();
+                $productIdHasFaqId->fill([
+                    'id_faq_id' => $val,
                     'id_product_id' => $idProductId,
                 ])->save();
             }
