@@ -63,7 +63,177 @@
                                     {!! $data['have_a_child'] == '1' ? '<span class="label label-lg font-weight-bolder label-rounded label-success label-inline">Yes</span>' : '<span class="label label-lg font-weight-bolder label-rounded label-danger label-inline">No</span>' !!}
                                 </td>
                             </tr>
-                            <tr></tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong>Level</strong>
+                                </td>
+                                <td>
+                                    <span class="label label-rounded">{{ $data['level'] }}</span>
+                                </td>
+                            </tr>
+                            @if ($data['level'] == 1)
+                                <tr>
+                                    <td class="text-center">
+                                        <strong>Product Summary Type</strong>
+                                    </td>
+                                    <td>
+                                        @if ($data['product_summary_type'] == '0')
+                                            <span class="label label-lg font-weight-bolder label-rounded label-light-warning label-inline">List Product</span>
+                                        @elseif ($data['product_summary_type'] == '1')
+                                            <span class="label label-lg font-weight-bolder label-rounded label-light-success label-inline">Big Banner With Text on The Left</span>
+                                        @elseif ($data['product_summary_type'] == '2')
+                                            <span class="label label-lg font-weight-bolder label-rounded label-light-primary label-inline">Big Banner With Overlay and Center Text</span>
+                                        @elseif ($data['product_summary_type'] == '3')
+                                            <span class="label label-lg font-weight-bolder label-rounded label-light-primary label-inline">Big Banner Without Overlay and Black Text</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endif
+                            @if (!empty($data['banner']))
+                                <tr>
+                                    <td class="text-center">
+                                        <strong>Banner</strong>
+                                    </td>
+                                    <td>
+                                        <a href="{{ $data['banner']['path'] }}" target="_BLANK"><img src="{{ $data['banner']['path'] }}" alt="" style="width:500px;"></a>
+                                    </td>
+                                </tr>
+                            @endif
+                            @if (!empty($data['menu_icon']))
+                                <tr>
+                                    <td class="text-center">
+                                        <strong>Menu Icon</strong>
+                                    </td>
+                                    <td>
+                                        <a href="{{ $data['menu_icon']['path'] }}" target="_BLANK"><img src="{{ $data['menu_icon']['path'] }}" alt="" style="width:500px;"></a>
+                                    </td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card card-custom mt-5">
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="20%" class="text-center">#</th>
+                                <th>English</th>
+                                <th>Indonesia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">
+                                    <strong>Name</strong>
+                                </td>
+                                <td>
+                                    {{ $data['product']['en']['name'] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $data['product']['id']['name'] ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong>Slug</strong>
+                                </td>
+                                <td>
+                                    {{ $data['product']['en']['slug'] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $data['product']['id']['slug'] ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong>Short Description</strong>
+                                </td>
+                                <td>
+                                    {{ $data['product']['en']['short_description'] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $data['product']['id']['short_description'] ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong>Page Title</strong>
+                                </td>
+                                <td>
+                                    {{ $data['product']['en']['page_title'] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $data['product']['id']['page_title'] ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong>Description</strong>
+                                </td>
+                                <td>
+                                    {{ $data['product']['en']['description'] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $data['product']['id']['description'] ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong>Video Description</strong>
+                                </td>
+                                <td>
+                                    {{ $data['product']['en']['video_description'] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $data['product']['id']['video_description'] ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong>SEO Title</strong>
+                                </td>
+                                <td>
+                                    {{ $data['product']['en']['seo_title'] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $data['product']['id']['seo_title'] ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong>SEO Description</strong>
+                                </td>
+                                <td>
+                                    {{ $data['product']['en']['seo_description'] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $data['product']['id']['seo_description'] ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong>SEO Keyword</strong>
+                                </td>
+                                <td>
+                                    {{ $data['product']['en']['seo_keyword'] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $data['product']['id']['seo_keyword'] ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong>SEO Canonical URL</strong>
+                                </td>
+                                <td>
+                                    {{ $data['product']['en']['seo_canonical_url'] ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $data['product']['id']['seo_canonical_url'] ?? '' }}
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
