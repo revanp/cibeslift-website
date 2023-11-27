@@ -34,6 +34,11 @@ class ProductCustomizationOptionId extends Model
         return $this->hasOne(ProductCustomizationOptionId::class, 'id', 'parent_id');
     }
 
+    public function child()
+    {
+        return $this->hasMany(ProductCustomizationOptionId::class, 'parent_id', 'id');
+    }
+
     public function productCustomizationOption()
     {
         return $this->hasMany(ProductCustomizationOption::class, 'id_product_customization_option_id', 'id');

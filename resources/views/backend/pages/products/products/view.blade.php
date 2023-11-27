@@ -99,6 +99,16 @@
                                     </td>
                                 </tr>
                             @endif
+                            @if (!empty($data['thumbnail']))
+                                <tr>
+                                    <td class="text-center">
+                                        <strong>Thumbnail</strong>
+                                    </td>
+                                    <td>
+                                        <a href="{{ $data['thumbnail']['path'] }}" target="_BLANK"><img src="{{ $data['thumbnail']['path'] }}" alt="" style="width:500px;"></a>
+                                    </td>
+                                </tr>
+                            @endif
                             @if (!empty($data['menu_icon']))
                                 <tr>
                                     <td class="text-center">
@@ -109,11 +119,44 @@
                                     </td>
                                 </tr>
                             @endif
+                            @if (!empty($data['product_summary_image']))
+                                <tr>
+                                    <td class="text-center">
+                                        <strong>Product Summary Image</strong>
+                                    </td>
+                                    <td>
+                                        <a href="{{ $data['product_summary_image']['path'] }}" target="_BLANK"><img src="{{ $data['product_summary_image']['path'] }}" alt="" style="width:500px;"></a>
+                                    </td>
+                                </tr>
+                            @endif
+                            @if (!empty($data['specification_image']))
+                                <tr>
+                                    <td class="text-center">
+                                        <strong>Specification Image</strong>
+                                    </td>
+                                    <td>
+                                        <a href="{{ $data['specification_image']['path'] }}" target="_BLANK"><img src="{{ $data['specification_image']['path'] }}" alt="" style="max-width:500px; max-height: 400px"></a>
+                                    </td>
+                                </tr>
+                            @endif
+                            <tr>
+                                <td class="text-center">
+                                    <strong>Active</strong>
+                                </td>
+                                <td>
+                                    {!! $data['is_active'] == '1' ? '<span class="label label-lg font-weight-bolder label-rounded label-success label-inline">Active</span>' : '<span class="label label-lg font-weight-bolder label-rounded label-danger label-inline">Not Active</span>' !!}
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="card card-custom mt-5">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">Product Identity</h3>
+                    </div>
+                </div>
                 <div class="card-body">
                     <table class="table table-bordered table-striped">
                         <thead>
@@ -236,6 +279,207 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            @if ($data['have_a_child'] != '1')
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-custom mt-5">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h3 class="card-label">Product Specification</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%" class="text-center">#</th>
+                                            <th>Data</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">Size</td>
+                                            <td>{!! $data['product_specification']['size'] ?? '' !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Installation</td>
+                                            <td>{{ $data['product_specification']['installation'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Rated Load</td>
+                                            <td>{{ $data['product_specification']['rated_load'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Power Supply</td>
+                                            <td>{{ $data['product_specification']['power_supply'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Speed</td>
+                                            <td>{{ $data['product_specification']['speed'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Min. Headroom</td>
+                                            <td>{{ $data['product_specification']['min_headroom'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Lift Pit</td>
+                                            <td>{{ $data['product_specification']['lift_pit'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Drive System</td>
+                                            <td>{{ $data['product_specification']['drive_system'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Max. Travel</td>
+                                            <td>{{ $data['product_specification']['max_travel'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Max. Number of Stops</td>
+                                            <td>{{ $data['product_specification']['max_number_of_stops'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Lift Controls</td>
+                                            <td>{{ $data['product_specification']['lift_controls'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Motor Power</td>
+                                            <td>{{ $data['product_specification']['motor_power'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Machine Room</td>
+                                            <td>{{ $data['product_specification']['machine_room'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Door Configuration</td>
+                                            <td>{{ $data['product_specification']['door_configuration'] ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Directive and Standards</td>
+                                            <td>{{ $data['product_specification']['directive_and_standards'] ?? '' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-custom mt-5">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3 class="card-label">Product Faq</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>No. </th>
+                                        <th>Question</th>
+                                        <th>Answer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data['product_id_has_faq_id'] as $key => $val)
+                                        <tr>
+                                            <td class="text-center">{{ $key + 1 }}</td>
+                                            <td>{{ $val['faq_id']['faq'][0]['title'] }}</td>
+                                            <td>{{ $val['faq_id']['faq'][0]['description'] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card card-custom mt-5">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3 class="card-label">Product Tech</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>No. </th>
+                                        <th>Tech</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data['product_id_has_product_technology_id'] as $key => $val)
+                                        <tr>
+                                            <td class="text-center">{{ $key + 1 }}</td>
+                                            <td>{{ $val['product_technology_id']['product_technology'][0]['name'] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-custom mt-5">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3 class="card-label">Product Customization</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>No. </th>
+                                        <th width="30%">Name</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data['product_customization_id'] as $key => $val)
+                                        <tr class="bg-gray-100">
+                                            <td class="text-center">{{ $key + 1 }}</td>
+                                            <td>{{ $val['product_customization'][0]['name'] }}</td>
+                                            <td>{{ $val['product_customization'][0]['description'] }}</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary btn-sm" href="{{ url('admin-cms/products/products/customizations/'.$data['id']) }}"><i class="flaticon-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                        @foreach ($val['product_customization_option_id'] as $key2 => $val2)
+                                        <tr class="bg-gray-200">
+                                                <td class="text-center">{{ $key + 1 }}.{{ $key2 + 1 }}</td>
+                                                <td>{{ $val2['product_customization_option'][0]['name'] }}</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                            @foreach ($val2['product_customization_option_variation_id'] as $key3 => $val3)
+                                            <tr class="bg-gray-300">
+                                                    <td class="text-center">{{ $key + 1 }}.{{ $key2 + 1 }}.{{ $key3 + 1 }}</td>
+                                                    <td>{{ $val3['product_customization_option_variation'][0]['name'] }}</td>
+                                                    <td>
+                                                        <img src="{{ $val3['image']['path'] }}" alt="">
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            @endforeach
+                                        @endforeach
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

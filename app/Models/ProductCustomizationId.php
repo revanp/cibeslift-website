@@ -36,6 +36,11 @@ class ProductCustomizationId extends Model
         return $this->hasMany(ProductCustomizationFeatureId::class, 'id_product_customization_id', 'id');
     }
 
+    public function productCustomizationOptionId()
+    {
+        return $this->hasMany(ProductCustomizationOptionId::class, 'id_product_customization_id', 'id');
+    }
+
     public function image()
     {
         return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'image');

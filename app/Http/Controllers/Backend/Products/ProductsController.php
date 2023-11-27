@@ -144,7 +144,24 @@ class ProductsController extends Controller
             'productIdHasFaqId.faqId',
             'productIdHasFaqId.faqId.faq' => function($query){
                 $query->where('language_code', 'id');
-            }
+            },
+            'productCustomizationId',
+            'productCustomizationId.productCustomization' => function($query){
+                $query->where('language_code', 'id');
+            },
+            'productCustomizationId.productCustomizationFeatureId',
+            'productCustomizationId.productCustomizationFeatureId.productCustomizationFeature' => function($query){
+                $query->where('language_code', 'id');
+            },
+            'productCustomizationId.productCustomizationOptionId',
+            'productCustomizationId.productCustomizationOptionId.productCustomizationOption' => function($query){
+                $query->where('language_code', 'id');
+            },
+            'productCustomizationId.productCustomizationOptionId.productCustomizationOptionVariationId',
+            'productCustomizationId.productCustomizationOptionId.productCustomizationOptionVariationId.productCustomizationOptionVariation' => function($query){
+                $query->where('language_code', 'id');
+            },
+            'productCustomizationId.productCustomizationOptionId.productCustomizationOptionVariationId.image'
         ])
         ->find($id)
         ->toArray();
