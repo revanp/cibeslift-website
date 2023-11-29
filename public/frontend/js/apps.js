@@ -39,3 +39,7 @@ function toggleAccordion() {
 }
 
 items.forEach(item => item.addEventListener('click', toggleAccordion));
+
+$('#sidebarToggle').on('click', function() {
+    $('.sidebar').toggleClass('active');
+});
