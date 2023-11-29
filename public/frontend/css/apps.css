@@ -186,10 +186,18 @@ body {
 .section {
     padding: 75px 0;
 }
+.section--large {
+    padding: 150px 0;
+}
 .background-img {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+.card-custom {
+    background: #B7B7B7;
+    padding: 30px 50px;
+    border-radius: 20px;
 }
 .card-background {
     background-position: center;
@@ -663,5 +671,15 @@ a:hover {
 }
 
 .header-dropdown {
-    
+
+}
+.page-link {
+    background: transparent !important;
+    border: 0 !important;
+    color: #000;
+}
+.form-select {
+    border: 1px solid #000;
+    height: 50px;
+    border-radius: 50px;   
 }

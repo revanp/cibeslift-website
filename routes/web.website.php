@@ -19,4 +19,9 @@ Route::group(['prefix' => '{locale}', 'as' => '', 'middleware' => ['setLocale']]
     // Route::get('/product/{categorySlug}/{productSlug}', [App\Http\Controllers\Frontend\ProductController::class, 'detail'])->name('detail');
     Route::get('/blog', [App\Http\Controllers\Frontend\BlogController::class, 'index'])->name('index');
     Route::get('/blog/{slug}', [App\Http\Controllers\Frontend\BlogController::class, 'detail'])->name('detail');
+
+    Route::get('/installation', [\App\Http\Controllers\Frontend\InstallationController::class, 'index'])->name('index');
+    Route::get('/installation/archive', [\App\Http\Controllers\Frontend\InstallationController::class, 'archive'])->name('archive');
+    Route::get('/installation/detail', [\App\Http\Controllers\Frontend\InstallationController::class, 'detail'])->name('detail');
 });
+
