@@ -3,7 +3,7 @@
         <div class=" container ">
 			<div class="d-none d-lg-flex align-items-center mr-3">
 				<a href="{{ url('admin-cms') }}" class="mr-10">
-					<img alt="Logo" src="{{ asset('public/backend/media/logos/cibes_logo.svg') }}" class="max-h-35px"/>
+					{{-- <img alt="Logo" src="{{ asset('public/backend/media/logos/cibes_logo.svg') }}" class="max-h-35px"/> --}}
 				</a>
             </div>
 
@@ -109,6 +109,19 @@
                                         <a href="{{ url('admin-cms/products/products') }}" class="menu-link ">
                                             <span class="menu-text">Products</span>
                                         </a>
+                                    </li>
+                                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                                        <a href="javascript:;" class="menu-link menu-toggle">
+                                            <span class="menu-text">Installations</span><i class="menu-arrow"></i>
+                                        </a>
+
+                                        <div class="menu-submenu menu-submenu-classic menu-submenu-right" data-hor-direction="menu-submenu-right">
+                                            <ul class="menu-subnav">
+                                                <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/products/installations/master') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Master Data</span></a></li>
+
+                                                <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/products/installations/installations') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Installations</span></a></li>
+                                            </ul>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
