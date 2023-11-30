@@ -37,6 +37,26 @@ class MasterController extends Controller
                     'productInstallationSizeId'
                 ])
                 ->where('language_code', 'id');
+            }else if($category == 'floor_size'){
+                $data = ProductInstallationFloorSize::with([
+                    'productInstallationFloorSizeId'
+                ])
+                ->where('language_code', 'id');
+            }else if($category == 'area'){
+                $data = ProductInstallationArea::with([
+                    'productInstallationAreaId'
+                ])
+                ->where('language_code', 'id');
+            }else if($category == 'location'){
+                $data = ProductInstallationLocation::with([
+                    'productInstallationLocationId'
+                ])
+                ->where('language_code', 'id');
+            }else if($category == 'color'){
+                $data = ProductInstallationColor::with([
+                    'productInstallationColorId'
+                ])
+                ->where('language_code', 'id');
             }
 
             if ($reqDatatable['orderable']) {
@@ -96,7 +116,7 @@ class MasterController extends Controller
                         $html .= '<li class="nav-item"><a class="nav-link btn-edit" href="'. url('admin-cms/products/installations/master/edit/'.$id) .'" data-category="'.$category.'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
 
                         //* DELETE
-                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/products/installations/master/delete/'.$id) .'" data-category="'.$category.'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link btn-delete-master" href="'. url('admin-cms/products/installations/master/delete/'.$id) .'" data-category="'.$category.'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
                     $html .= '</ul></div></div>';
 
                     return $html;

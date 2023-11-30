@@ -88,22 +88,74 @@
 
                         {{-- FLOOR SIZE --}}
                         <div class="tab-pane fade" id="floorSizeTab" role="tabpanel">
-                            bs
+                            <div class="table-responsive">
+                                <table class="table table-separate table-head-custom table-checkable text-center" id="floorSizeTable">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Name</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                         {{-- AREA --}}
                         <div class="tab-pane fade" id="areaTab" role="tabpanel">
-                            bs
+                            <div class="table-responsive">
+                                <table class="table table-separate table-head-custom table-checkable text-center" id="areaTable">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Name</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                         {{-- LOCATION --}}
                         <div class="tab-pane fade" id="locationTab" role="tabpanel">
-                            bs
+                            <div class="table-responsive">
+                                <table class="table table-separate table-head-custom table-checkable text-center" id="locationTable">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Name</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                         {{-- COLOR --}}
                         <div class="tab-pane fade" id="colorTab" role="tabpanel">
-                            bs
+                            <div class="table-responsive">
+                                <table class="table table-separate table-head-custom table-checkable text-center" id="colorTable">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Name</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -263,6 +315,98 @@
                     {data: 'action', searchable: false, orderable: false},
                 ]
             });
+
+            setTimeout(() => {
+                $('#floorSizeTable').DataTable({
+                    responsive: true,
+                    searchDelay: 500,
+                    processing: true,
+                    serverSide: true,
+                    ordering: false,
+                    ajax: {
+                        url: "{{ url('admin-cms/products/installations/master/datatable') }}",
+                        type: "POST",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "category": "floor_size"
+                        }
+                    },
+                    columns: [
+                        {data: 'rownum'},
+                        {data: 'name'},
+                        {data: 'action', searchable: false, orderable: false},
+                    ]
+                });
+            }, 500);
+
+            setTimeout(() => {
+                $('#areaTable').DataTable({
+                    responsive: true,
+                    searchDelay: 500,
+                    processing: true,
+                    serverSide: true,
+                    ordering: false,
+                    ajax: {
+                        url: "{{ url('admin-cms/products/installations/master/datatable') }}",
+                        type: "POST",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "category": "area"
+                        }
+                    },
+                    columns: [
+                        {data: 'rownum'},
+                        {data: 'name'},
+                        {data: 'action', searchable: false, orderable: false},
+                    ]
+                });
+            }, 1000);
+
+            setTimeout(() => {
+                $('#locationTable').DataTable({
+                    responsive: true,
+                    searchDelay: 500,
+                    processing: true,
+                    serverSide: true,
+                    ordering: false,
+                    ajax: {
+                        url: "{{ url('admin-cms/products/installations/master/datatable') }}",
+                        type: "POST",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "category": "location"
+                        }
+                    },
+                    columns: [
+                        {data: 'rownum'},
+                        {data: 'name'},
+                        {data: 'action', searchable: false, orderable: false},
+                    ]
+                });
+            }, 1500);
+
+            setTimeout(() => {
+                $('#colorTable').DataTable({
+                    responsive: true,
+                    searchDelay: 500,
+                    processing: true,
+                    serverSide: true,
+                    ordering: false,
+                    ajax: {
+                        url: "{{ url('admin-cms/products/installations/master/datatable') }}",
+                        type: "POST",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "category": "color"
+                        }
+                    },
+                    columns: [
+                        {data: 'rownum'},
+                        {data: 'name'},
+                        {data: 'action', searchable: false, orderable: false},
+                    ]
+                });
+            }, 1500);
         });
 
         $('.createForm').on('submit', function(e){
@@ -354,5 +498,30 @@
                 }
             })
         })
+
+        // $(document).on('click', '.btn-delete-master', function(e){
+        //     e.preventDefault();
+
+        //     var category =
+        //     var href = $(this).attr('href');
+
+        //     Swal.fire({
+        //         title: "Are you sure you want to delete this?",
+        //         text: "This will delete this data permanently. You cannot undo this action",
+        //         icon: "info",
+        //         buttonsStyling: false,
+        //         confirmButtonText: "<i class='la la-thumbs-up'></i> Yes!",
+        //         showCancelButton: true,
+        //         cancelButtonText: "<i class='la la-thumbs-down'></i> No, thanks",
+        //         customClass: {
+        //             confirmButton: "btn btn-danger",
+        //             cancelButton: "btn btn-default"
+        //         }
+        //     }).then(function(isConfirm) {
+        //         if(isConfirm.isConfirmed){
+        //             window.location.href = href;
+        //         }
+        //     });
+        // })
     </script>
 @endsection
