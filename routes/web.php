@@ -117,6 +117,16 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     });
                 });
             });
+
+            Route::group(['prefix' => 'installations'], function(){
+                Route::group(['prefix' => 'master'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Products\Installations\MasterController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Products\Installations\MasterController::class, 'index']);
+                    Route::post('create', [App\Http\Controllers\Backend\Products\Installations\MasterController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Products\Installations\MasterController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Products\Installations\MasterController::class, 'update']);
+                });
+            });
         });
 
         Route::group(['prefix' => 'settings'], function(){

@@ -3,7 +3,7 @@
         <div class=" container ">
 			<div class="d-none d-lg-flex align-items-center mr-3">
 				<a href="{{ url('admin-cms') }}" class="mr-10">
-					{{-- <img alt="Logo" src="{{ asset('public/backend/media/logos/cibes_logo.svg') }}" class="max-h-35px"/> --}}
+					<img alt="Logo" src="{{ asset('public/backend/media/logos/cibes_logo.svg') }}" class="max-h-35px"/>
 				</a>
             </div>
 
