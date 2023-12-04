@@ -116,7 +116,7 @@ class MasterController extends Controller
                         $html .= '<li class="nav-item"><a class="nav-link btn-edit" href="'. url('admin-cms/products/installations/master/edit/'.$id) .'" data-category="'.$category.'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
 
                         //* DELETE
-                        $html .= '<li class="nav-item"><a class="nav-link btn-delete-master" href="'. url('admin-cms/products/installations/master/delete/'.$id) .'" data-category="'.$category.'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/products/installations/master/delete/'. $category .'/'.$id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
                     $html .= '</ul></div></div>';
 
                     return $html;
@@ -462,6 +462,39 @@ class MasterController extends Controller
             ], 200)->withHeaders([
                 'Content-Type' => 'application/json'
             ]);
+        }
+    }
+
+    public function delete($category, $id)
+    {
+        try{
+            DB::beginTransaction();
+
+            if($category == 'size'){
+                $parent = ProductInstallationSizeId::where('id', $id)->delete();
+                $child = ProductInstallationSize::where('id_product_installation_size_id', $id)->delete();
+            }else if($category == 'floor_size'){
+                $parent = ProductInstallationFloorSizeId::where('id', $id)->delete();
+                $child = ProductInstallationFloorSize::where('id_product_installation_floor_size_id', $id)->delete();
+            }else if($category == 'area'){
+                $parent = ProductInstallationAreaId::where('id', $id)->delete();
+                $child = ProductInstallationArea::where('id_product_installation_area_id', $id)->delete();
+            }else if($category == 'location'){
+                $parent = ProductInstallationLocationId::where('id', $id)->delete();
+                $child = ProductInstallationLocation::where('id_product_installation_location_id', $id)->delete();
+            }else if($category == 'color'){
+                $parent = ProductInstallationColorId::where('id', $id)->delete();
+                $child = ProductInstallationColor::where('id_product_installation_color_id', $id)->delete();
+            }
+
+            DB::commit();
+
+            return redirect('admin-cms/products/installations/master')->with(['success' => 'Master Data has been deleted successfully']);
+        }catch(Exception $e){
+            DB::rollBack();
+            dd($e->getMessage());
+
+            return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
         }
     }
 }

@@ -498,30 +498,5 @@
                 }
             })
         })
-
-        // $(document).on('click', '.btn-delete-master', function(e){
-        //     e.preventDefault();
-
-        //     var category =
-        //     var href = $(this).attr('href');
-
-        //     Swal.fire({
-        //         title: "Are you sure you want to delete this?",
-        //         text: "This will delete this data permanently. You cannot undo this action",
-        //         icon: "info",
-        //         buttonsStyling: false,
-        //         confirmButtonText: "<i class='la la-thumbs-up'></i> Yes!",
-        //         showCancelButton: true,
-        //         cancelButtonText: "<i class='la la-thumbs-down'></i> No, thanks",
-        //         customClass: {
-        //             confirmButton: "btn btn-danger",
-        //             cancelButton: "btn btn-default"
-        //         }
-        //     }).then(function(isConfirm) {
-        //         if(isConfirm.isConfirmed){
-        //             window.location.href = href;
-        //         }
-        //     });
-        // })
     </script>
 @endsection
