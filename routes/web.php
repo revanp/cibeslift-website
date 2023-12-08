@@ -131,6 +131,7 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                 Route::group(['prefix' => 'installations'], function(){
                     Route::get('', [App\Http\Controllers\Backend\Products\Installations\InstallationsController::class, 'index']);
                     Route::post('datatable', [App\Http\Controllers\Backend\Products\Installations\InstallationsController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Products\Installations\InstallationsController::class, 'create']);
                     Route::post('create', [App\Http\Controllers\Backend\Products\Installations\InstallationsController::class, 'store']);
                     Route::get('edit/{id}', [App\Http\Controllers\Backend\Products\Installations\InstallationsController::class, 'edit']);
                     Route::put('edit/{id}', [App\Http\Controllers\Backend\Products\Installations\InstallationsController::class, 'update']);

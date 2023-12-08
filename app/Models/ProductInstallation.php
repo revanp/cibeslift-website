@@ -18,6 +18,7 @@ class ProductInstallation extends Model
     protected $fillable  = [
         'id_product_installation_id',
         'name',
+        'slug',
         'description',
         'language_code',
     ];

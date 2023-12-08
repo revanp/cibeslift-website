@@ -188,7 +188,7 @@ class MasterController extends Controller
                 $foreignKey = 'id_product_installation_area_id';
             }else if($category == 'location'){
                 $masterId = new ProductInstallationLocationId();
-                $foreignKey = 'id_product_installation_locatiom_id';
+                $foreignKey = 'id_product_installation_location_id';
             }else if($category == 'color'){
                 $masterId = new ProductInstallationColorId();
                 $foreignKey = 'id_product_installation_color_id';
@@ -392,7 +392,7 @@ class MasterController extends Controller
                 $foreignKey = 'id_product_installation_area_id';
             }else if($category == 'location'){
                 $masterId = ProductInstallationLocationId::find($id);
-                $foreignKey = 'id_product_installation_locatiom_id';
+                $foreignKey = 'id_product_installation_location_id';
             }else if($category == 'color'){
                 $masterId = ProductInstallationColorId::find($id);
                 $foreignKey = 'id_product_installation_color_id';
