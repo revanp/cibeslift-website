@@ -203,5 +203,101 @@ class InstallationsController extends Controller
                     'Content-Type' => 'application/json'
                 ]);
         }
+
+        $isError = false;
+
+        try{
+            DB::beginTransaction();
+
+            $installationId = new ProductInstallationId();
+
+            $installationId->fill([
+                'id_product_id' => $data['id_product_id'],
+                'id_product_installation_size_id' => $data['id_product_installation_size_id'],
+                'id_product_installation_floor_size_id' => $data['id_product_installation_floor_size_id'],
+                'id_product_installation_area_id' => $data['id_product_installation_area_id'],
+                'id_product_installation_location_id' => $data['id_product_installation_location_id'],
+                'id_product_installation_color_id' => $data['id_product_installation_color_id'],
+                'location' => $data['location'] ?? null,
+                'number_of_stops' => $data['number_of_stops'] ?? null,
+                'installation_date' => $data['installation_date'] ?? null,
+            ])->save();
+
+            $idInstallationId = $installationId->id;
+
+            foreach ($data['input'] as $languageCode => $input) {
+                $installation = new ProductInstallation();
+
+                $input['id_product_installation_id'] = $idInstallationId;
+                $input['language_code'] = $languageCode;
+
+                if($languageCode != 'id'){
+                    $input['name'] = $data['input']['en']['name'] ?? $data['input']['id']['name'];
+                    $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
+                }
+
+                $input['slug'] = Str::slug($input['name']);
+
+                $installation->fill($input)->save();
+
+                $idInstallation = $installation->id;
+            }
+
+            if ($request->hasFile('thumbnail')) {
+                $this->storeFile(
+                    $request->file('thumbnail'),
+                    $installationId,
+                    'thumbnail',
+                    "images/products/installations/installations/thumbnail/{$idInstallationId}",
+                    'thumbnail'
+                );
+            }
+
+            foreach($data['image'] as $key => $val){
+                if ($request->hasFile('image.'.$key)) {
+                    $this->storeFile(
+                        $request->file('image.'.$key),
+                        $installationId,
+                        'image',
+                        "images/products/installations/installations/image/{$idInstallationId}",
+                        'image'
+                    );
+                }
+            }
+
+            $message = 'Installation created successfully';
+
+            DB::commit();
+        }catch (\Illuminate\Database\QueryException $e) {
+            DB::rollBack();
+
+            $isError = true;
+
+            $err     = $e->errorInfo;
+
+            $message =  $err[2];
+        }
+
+        if ($isError == true) {
+            return response()->json([
+                'code' => 500,
+                'success' => false,
+                'message' => $message
+            ], 500)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }else{
+            session()->flash('success', $message);
+
+            return response()->json([
+                'code' => 200,
+                'success' => true,
+                'message' => $message,
+                'redirect' => url('admin-cms/products/installations/installations')
+            ], 200)->withHeaders([
+                'Content-Type' => 'application/json'
+            ]);
+        }
     }
 }

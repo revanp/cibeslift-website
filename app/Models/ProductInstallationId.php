@@ -69,4 +69,9 @@ class ProductInstallationId extends Model
     {
         return $this->hasOne(ProductInstallationSizeId::class, 'id', 'id_product_installation_size_id');
     }
+
+    public function productId()
+    {
+        return $this->hasOne(ProductId::class, 'id', 'id_product_id');
+    }
 }

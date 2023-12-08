@@ -66,7 +66,26 @@
     <script>
         $(document).ready(function(){
             $('#table').DataTable({
-
+                responsive: true,
+                searchDelay: 500,
+                processing: true,
+                serverSide: true,
+                ordering: false,
+                ajax: {
+                    url: "{{ url('admin-cms/products/installations/installations/datatable') }}",
+                    type: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    }
+                },
+                columns: [
+                    {data: 'rownum'},
+                    {data: 'product'},
+                    {data: 'name'},
+                    {data: 'slug'},
+                    {data: 'is_active', searchable: false, orderable: false},
+                    {data: 'action', searchable: false, orderable: false},
+                ]
             });
         });
     </script>
