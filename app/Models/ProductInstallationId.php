@@ -22,6 +22,9 @@ class ProductInstallationId extends Model
         'id_product_installation_area_id',
         'id_product_installation_location_id',
         'id_product_installation_color_id',
+        'location',
+        'number_of_stops',
+        'is_active',
         'installation_date',
     ];
 

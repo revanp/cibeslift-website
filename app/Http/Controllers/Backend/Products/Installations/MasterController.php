@@ -492,7 +492,6 @@ class MasterController extends Controller
             return redirect('admin-cms/products/installations/master')->with(['success' => 'Master Data has been deleted successfully']);
         }catch(Exception $e){
             DB::rollBack();
-            dd($e->getMessage());
 
             return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
         }

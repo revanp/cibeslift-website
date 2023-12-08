@@ -8,6 +8,10 @@ Route::get('/', function(){
     return redirect(url('id'));
 });
 
+Route::get('phpxinfo', function(){
+    return phpinfo();
+});
+
 Route::group(['prefix' => '{locale}', 'as' => '', 'middleware' => ['setLocale']], function(){
     Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
     Route::get('/about-us', [App\Http\Controllers\Frontend\AboutController::class, 'index'])->name('index');
