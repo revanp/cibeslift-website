@@ -20,11 +20,13 @@
     </div>
 @endif
 
-<div class="section pt-0">
-    <div style="height: 1000vh;">
-        <div id="scrolly-video"></div>
+@if (!empty($video))
+    <div class="section pt-0">
+        <div style="height: 1000vh;">
+            <div id="scrolly-video"></div>
+        </div>
     </div>
-</div>
+@endif
 
 <div class="section">
     <div class="container">
@@ -372,10 +374,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/scrolly-video@latest/dist/scrolly-video.js"></script>
 <script>
-    new ScrollyVideo({
-        scrollyVideoContainer: "scrolly-video",
-        src: "{{ asset('public/frontend/video/Cibes-V90.mp4') }}"
-    });
+    @if (!empty($video))
+        new ScrollyVideo({
+            scrollyVideoContainer: "scrolly-video",
+            src: "{{ $video->video->path ?? '#' }}",
+        });
+    @endif
 </script>
 
 @endpush
