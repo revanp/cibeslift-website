@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Content;
+namespace App\Http\Controllers\Backend\Content\Home;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -69,15 +69,15 @@ class HeaderBannerController extends Controller
                     $id = $data->headerBannerId->id;
                     $isActive = $data->headerBannerId->is_active;
 
-                    return view('backend.pages.content.header-banner.list.active', compact('id', 'isActive'));
+                    return view('backend.pages.content.home.header-banner.list.active', compact('id', 'isActive'));
                 })
                 ->addColumn('action', function($data){
                     $html = '<div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">';
                         //* EDIT
-                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/content/header-banner/edit/'.$data->headerBannerId->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/content/home/header-banner/edit/'.$data->headerBannerId->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
 
                         //* DELETE
-                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/content/header-banner/delete/'.$data->headerBannerId->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/content/home/header-banner/delete/'.$data->headerBannerId->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
                     $html .= '</ul></div></div>';
 
                     return $html;
@@ -86,12 +86,12 @@ class HeaderBannerController extends Controller
                 ->toJson(true);
         }
 
-        return view('backend.pages.content.header-banner.index');
+        return view('backend.pages.content.home.header-banner.index');
     }
 
     public function create()
     {
-        return view('backend.pages.content.header-banner.create');
+        return view('backend.pages.content.home.header-banner.create');
     }
 
     public function store(Request $request)
@@ -180,7 +180,7 @@ class HeaderBannerController extends Controller
         if ($isError == true) {
             return redirect()->back()->with(['error' => $message]);
         } else {
-            return redirect(url('admin-cms/content/header-banner'))
+            return redirect(url('admin-cms/content/home/header-banner'))
                 ->with(['success' => $message]);
         }
     }
@@ -200,7 +200,7 @@ class HeaderBannerController extends Controller
             unset($headerBanner[$key]);
         }
 
-        return view('backend.pages.content.header-banner.edit', compact('headerBannerId', 'imagePath', 'headerBanner'));
+        return view('backend.pages.content.home.header-banner.edit', compact('headerBannerId', 'imagePath', 'headerBanner'));
     }
 
     public function update($id, Request $request)
@@ -292,7 +292,7 @@ class HeaderBannerController extends Controller
         if ($isError == true) {
             return redirect()->back()->with(['error' => $message]);
         } else {
-            return redirect(url('admin-cms/content/header-banner'))
+            return redirect(url('admin-cms/content/home/header-banner'))
                 ->with(['success' => $message]);
         }
     }
@@ -348,7 +348,7 @@ class HeaderBannerController extends Controller
 
             DB::commit();
 
-            return redirect('admin-cms/content/header-banner')->with(['success' => 'Header Banner has been deleted successfully']);
+            return redirect('admin-cms/content/home/header-banner')->with(['success' => 'Header Banner has been deleted successfully']);
         }catch(Exception $e){
             DB::rollBack();
 

@@ -13,15 +13,22 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
         Route::get('', [App\Http\Controllers\Backend\DashboardController::class, 'index']);
 
         Route::group(['prefix' => 'content'], function(){
-            Route::group(['prefix' => 'header-banner'], function(){
-                Route::get('', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'index']);
-                Route::post('datatable', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'index']);
-                Route::get('create', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'create']);
-                Route::post('create', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'store']);
-                Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'edit']);
-                Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'update']);
-                Route::put('change-status', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'changeStatus']);
-                Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\HeaderBannerController::class, 'delete']);
+            Route::group(['prefix' => 'home'], function(){
+                Route::group(['prefix' => 'header-banner'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\Home\HeaderBannerController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\Home\HeaderBannerController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\Home\HeaderBannerController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\Home\HeaderBannerController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\Home\HeaderBannerController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\Home\HeaderBannerController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\Home\HeaderBannerController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\Home\HeaderBannerController::class, 'delete']);
+                });
+
+                Route::group(['prefix' => 'video'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\Home\VideoController::class, 'index']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\Home\VideoController::class, 'store']);
+                });
             });
 
             Route::group(['prefix' => 'faq'], function(){

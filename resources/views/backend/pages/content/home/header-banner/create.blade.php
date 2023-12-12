@@ -6,18 +6,18 @@
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <div class="d-flex align-items-baseline flex-wrap mr-5">
                     <h5 class="text-dark font-weight-bold my-1 mr-5">
-                        Edit Group
+                        Create Header Banner
                     </h5>
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                         <li class="breadcrumb-item">
-                            <a href="#" class="text-muted">Products</a>
+                            <a href="#" class="text-muted">Content</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ url('admin-cms/products/groups') }}" class="text-muted">Group</a>
+                            <a href="{{ url('admin-cms/content/home/header-banner') }}" class="text-muted">Header Banner</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/products/groups/edit/'.$productGroupId->id) }}" class="text-muted">Edit Group</a>
+                            <a href="{{ url('admin-cms/content/home/header-banner/create') }}" class="text-muted">Create Header Banner</a>
                         </li>
                     </ul>
                 </div>
@@ -30,10 +30,11 @@
                 <div class="card card-custom">
                     <div class="card-header">
                         <div class="card-title">
-                            <h3 class="card-label">Edit Group</h3>
+                            <span class="card-icon"><i class="flaticon2-analytics-2"></i></span>
+                            <h3 class="card-label">Create Header Banner</h3>
                         </div>
                         <div class="card-toolbar">
-                            <a href="{{ url('admin-cms/products/groups') }}" class="btn btn-danger font-weight-bolder">
+                            <a href="{{ url('admin-cms/content/home/header-banner') }}" class="btn btn-danger font-weight-bolder">
                                 <span class="svg-icon svg-icon-md"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <polygon points="0 0 24 0 24 24 0 24"/>
@@ -43,9 +44,26 @@
                             </a>
                         </div>
                     </div>
-                    <form action="{{ url('admin-cms/products/groups/edit/'.$productGroupId->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ url('admin-cms/content/home/header-banner/create') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label>Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="image" class="custom-file-input  @if($errors->has('image')) is-invalid @endif" id="customFile"/>
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                    @error('image')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <hr>
+
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" role="tab" href="#idTab">Indonesia</a>
@@ -59,21 +77,35 @@
                                 <div class="tab-pane active" id="idTab" role="tabpanel">
                                     <div class="row mt-5">
                                         <div class="form-group col-md-6">
-                                            <label>Name</label>
-                                            <input type="text" class="form-control @if($errors->has('input.id.name')) is-invalid @endif" placeholder="Enter name" name="input[id][name]" value="{{ !empty(old('input.id.name')) ? old('input.id.name') : $productGroup['id']['name'] }}"/>
-                                            @error('input.id.name')
+                                            <label>Title</label>
+                                            <input type="text" class="form-control @if($errors->has('input.id.title')) is-invalid @endif" placeholder="Enter title" name="input[id][title]" value="{{ old('input.id.title') }}"/>
+                                            @error('input.id.title')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>Slug</label>
-                                            <input type="text" disabled class="form-control" value="{{ $productGroup['id']['slug'] }}"/>
+                                            <label>Call to Action</label>
+                                            <input type="text" class="form-control @if($errors->has('input.id.cta')) is-invalid @endif" placeholder="Enter call to action" name="input[id][cta]" value="{{ old('input.id.cta') }}"/>
+                                            @error('input.id.cta')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <label>Link</label>
+                                            <input type="text" class="form-control @if($errors->has('input.id.link')) is-invalid @endif" placeholder="Enter link" name="input[id][link]" value="{{ old('input.id.link') }}"/>
+                                            @error('input.id.link')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
                                             <label>Description</label>
-                                            <textarea name="input[id][description]" class="ckeditor-id-description @if($errors->has('input.id.description')) is-invalid @endif">{{ !empty(old('input.id.description')) ? old('input.id.description') : $productGroup['id']['description'] }}</textarea>
+                                            <textarea name="input[id][description]" id="" rows="5" class="form-control @if($errors->has('input.id.description')) is-invalid @endif">{{ old('input.id.description') }}</textarea>
                                             @error('input.id.description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -85,21 +117,35 @@
                                 <div class="tab-pane" id="enTab" role="tabpanel">
                                     <div class="row mt-5">
                                         <div class="form-group col-md-6">
-                                            <label>Name</label>
-                                            <input type="text" class="form-control @if($errors->has('input.en.name')) is-invalid @endif" placeholder="Enter name" name="input[en][name]" value="{{ !empty(old('input.en.name')) ? old('input.en.name') : $productGroup['en']['name'] }}"/>
-                                            @error('input.en.name')
+                                            <label>Title</label>
+                                            <input type="text" class="form-control @if($errors->has('input.en.title')) is-invalid @endif" placeholder="Enter title" name="input[en][title]" value="{{ old('input.en.title') }}"/>
+                                            @error('input.en.title')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>Slug</label>
-                                            <input type="text" disabled class="form-control" value="{{ $productGroup['en']['slug'] }}"/>
+                                            <label>Call to Action</label>
+                                            <input type="text" class="form-control @if($errors->has('input.en.cta')) is-invalid @endif" placeholder="Enter call to action" name="input[en][cta]" value="{{ old('input.en.cta') }}"/>
+                                            @error('input.en.cta')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <label>Link</label>
+                                            <input type="text" class="form-control @if($errors->has('input.en.link')) is-invalid @endif" placeholder="Enter link" name="input[en][link]" value="{{ old('input.en.link') }}"/>
+                                            @error('input.en.link')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
                                             <label>Description</label>
-                                            <textarea name="input[en][description]" class="ckeditor-en-description @if($errors->has('input.en.description')) is-invalid @endif">{{ !empty(old('input.en.description')) ? old('input.en.description') : $productGroup['en']['description'] }}</textarea>
+                                            <textarea name="input[en][description]" id="" rows="5" class="form-control @if($errors->has('input.en.description')) is-invalid @endif">{{ old('input.en.description') }}</textarea>
                                             @error('input.en.description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -121,12 +167,9 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('public/backend/plugins/custom/ckeditor/ckeditor-classic.bundle.js?v=7.0.6') }}"></script>
     <script>
         $(document).ready(function(){
-            ClassicEditor.create(document.querySelector('.ckeditor-id-description'));
 
-            ClassicEditor.create(document.querySelector('.ckeditor-en-description'));
         });
     </script>
 @endsection

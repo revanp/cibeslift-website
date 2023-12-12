@@ -14,10 +14,10 @@
                             <a href="#" class="text-muted">Content</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ url('admin-cms/content/header-banner') }}" class="text-muted">Header Banner</a>
+                            <a href="{{ url('admin-cms/content/home/header-banner') }}" class="text-muted">Header Banner</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/content/header-banner/edit/'.$headerBannerId->id) }}" class="text-muted">Edit Header Banner</a>
+                            <a href="{{ url('admin-cms/content/home/header-banner/edit/'.$headerBannerId->id) }}" class="text-muted">Edit Header Banner</a>
                         </li>
                     </ul>
                 </div>
@@ -34,7 +34,7 @@
                         <h3 class="card-label">Edit Header Banner</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{ url('admin-cms/content/header-banner') }}" class="btn btn-danger font-weight-bolder">
+                        <a href="{{ url('admin-cms/content/home/header-banner') }}" class="btn btn-danger font-weight-bolder">
                             <span class="svg-icon svg-icon-md"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <polygon points="0 0 24 0 24 24 0 24"/>
@@ -44,7 +44,7 @@
                         </a>
                     </div>
                 </div>
-                <form action="{{ url('admin-cms/content/header-banner/edit/'.$headerBannerId->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('admin-cms/content/home/header-banner/edit/'.$headerBannerId->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card-body">

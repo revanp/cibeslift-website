@@ -50,19 +50,32 @@
                         <li class="menu-item {{ request()->is('admin-cms') ? 'menu-item-active' : '' }}"  aria-haspopup="true"><a  href="{{ url('admin-cms') }}" class="menu-link "><span class="menu-text">Dashboard</span></a></li>
 
                         <li class="menu-item menu-item-submenu menu-item-rel {{ request()->is('admin-cms/content/*') ? 'menu-item-active' : '' }}" data-menu-toggle="click" aria-haspopup="true"><a  href="javascript:;" class="menu-link menu-toggle">
+                            <i class="flaticon2-analytics-2 menu-icon"></i>
                             <span class="menu-text">Content</span><span class="menu-desc"></span><i class="menu-arrow"></i></a>
                             <div class="menu-submenu menu-submenu-classic menu-submenu-left" >
                                 <ul class="menu-subnav">
-                                    <li class="menu-item {{ (request()->is('admin-cms/content/header-banner/*') || request()->is('admin-cms/content/header-banner')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ url('admin-cms/content/header-banner') }}" class="menu-link ">
-                                            <i class="flaticon2-analytics-2 menu-icon"></i>
+                                    {{-- <li class="menu-item {{ (request()->is('admin-cms/content/home/header-banner/*') || request()->is('admin-cms/content/home/header-banner')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ url('admin-cms/content/home/header-banner') }}" class="menu-link ">
                                             <span class="menu-text">Header Banner</span>
                                         </a>
+                                    </li> --}}
+
+                                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                                        <a href="javascript:;" class="menu-link menu-toggle">
+                                            <span class="menu-text">Home</span><i class="menu-arrow"></i>
+                                        </a>
+
+                                        <div class="menu-submenu menu-submenu-classic menu-submenu-right" data-hor-direction="menu-submenu-right">
+                                            <ul class="menu-subnav">
+                                                <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/header-banner') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Header Banner</span></a></li>
+
+                                                <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/video') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Video</span></a></li>
+                                            </ul>
+                                        </div>
                                     </li>
 
                                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                                         <a href="javascript:;" class="menu-link menu-toggle">
-                                            <i class="flaticon2-information menu-icon"></i>
                                             <span class="menu-text">Faq</span><i class="menu-arrow"></i>
                                         </a>
 
