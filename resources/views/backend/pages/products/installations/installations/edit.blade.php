@@ -10,7 +10,7 @@
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <div class="d-flex align-items-baseline flex-wrap mr-5">
                     <h5 class="text-dark font-weight-bold my-1 mr-5">
-                        Create Installation
+                        Edit Installation
                     </h5>
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -24,7 +24,7 @@
                             <a href="{{ url('admin-cms/products/installations/installations') }}" class="text-muted">Installations</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/products/installations/installations/create') }}" class="text-muted">Create Installation</a>
+                            <a href="{{ url('admin-cms/products/installations/installations/edit/'.$data['id']) }}" class="text-muted">Edit Installation</a>
                         </li>
                     </ul>
                 </div>
@@ -37,7 +37,7 @@
             <div class="card card-custom">
                 <div class="card-header">
                     <div class="card-title">
-                        <h3 class="card-label">Create Installation</h3>
+                        <h3 class="card-label">Edit Installation</h3>
                     </div>
                     <div class="card-toolbar">
                         <a href="{{ url('admin-cms/products/installations/installations') }}" class="btn btn-danger font-weight-bolder">
@@ -51,8 +51,9 @@
                     </div>
                 </div>
 
-                <form action="{{ url('admin-cms/products/installations/installations/create') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('admin-cms/products/installations/installations/edit/'.$data['id']) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method("PUT")
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group picture_upload col-md-12">
@@ -61,12 +62,16 @@
                                     <div class="file-wrapper">
                                         <input type="file" name="thumbnail" class="file-input"/>
                                         <div class="file-preview-background">+</div>
-                                        <img src="" width="240px" class="file-preview"/>
+                                        @if (!empty($data['thumbnail']))
+                                            <img src="{{ $data['thumbnail']['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                                        @else
+                                            <img src="" width="240px" class="file-preview"/>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
-                                <label>Images (<a href="javascript:;" data-count="3" class="add-item-image">Add More</a>)</label>
+                                <label>Images (<a href="javascript:;" data-count="{{ count($data['image']) <= 3 ? 3 : count($data['image']) }}" class="add-item-image">Add More</a>)</label>
                                 <div class="image-box row">
                                     <div class="image-item col-md-4">
                                         <div class="form-group picture_upload">
@@ -74,7 +79,12 @@
                                                 <div class="file-wrapper">
                                                     <input type="file" name="image[0]" class="file-input"/>
                                                     <div class="file-preview-background">+</div>
-                                                    <img src="" width="240px" class="file-preview"/>
+                                                    @if (!empty($data['image'][0]))
+                                                        <img src="{{ $data['image'][0]['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                                                        <input type="text" name="image_id[0]" value="{{ $data['image'][0]['id'] }}">
+                                                    @else
+                                                        <img src="" width="240px" class="file-preview"/>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -85,7 +95,12 @@
                                                 <div class="file-wrapper">
                                                     <input type="file" name="image[1]" class="file-input"/>
                                                     <div class="file-preview-background">+</div>
-                                                    <img src="" width="240px" class="file-preview"/>
+                                                    @if (!empty($data['image'][1]))
+                                                        <img src="{{ $data['image'][1]['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                                                        <input type="text" name="image_id[1]" value="{{ $data['image'][1]['id'] }}">
+                                                    @else
+                                                        <img src="" width="240px" class="file-preview"/>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -96,11 +111,36 @@
                                                 <div class="file-wrapper">
                                                     <input type="file" name="image[2]" class="file-input"/>
                                                     <div class="file-preview-background">+</div>
-                                                    <img src="" width="240px" class="file-preview"/>
+                                                    @if (!empty($data['image'][2]))
+                                                        <img src="{{ $data['image'][2]['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                                                        <input type="text" name="image_id[2]" value="{{ $data['image'][2]['id'] }}">
+                                                    @else
+                                                        <img src="" width="240px" class="file-preview"/>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    @foreach ($data['image'] as $key => $val)
+                                        @if ($key >= 4)
+                                            <div class="image-item col-md-4">
+                                                <div class="form-group picture_upload">
+                                                    <div class="form-group__file">
+                                                        <div class="file-wrapper">
+                                                            <input type="file" name="image[{{ $key }}]" class="file-input"/>
+                                                            <div class="file-preview-background">+</div>
+                                                            @if (!empty($data['image'][$key]))
+                                                                <img src="{{ $data['image'][$key]['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                                                                <input type="text" name="image_id[{{ $key }}]" value="{{ $data['image'][$key]['id'] }}">
+                                                            @else
+                                                                <img src="" width="240px" class="file-preview"/>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -110,7 +150,7 @@
                                 <select name="id_product_id" class="form-control">
                                     <option value="" selected disabled>-- SELECT PRODUCT --</option>
                                     @foreach ($products as $key => $val)
-                                        <option value="{{ $val->id_product_id }}">{{ $val->name }}</option>
+                                        <option value="{{ $val->id_product_id }}" {{ $data['id_product_id'] == $val->id_product_id ? 'selected' : '' }}>{{ $val->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -120,7 +160,7 @@
                                 <select name="id_product_installation_size_id" class="form-control">
                                     <option value="" selected disabled>-- SELECT SIZE --</option>
                                     @foreach ($size as $key => $val)
-                                        <option value="{{ $val->id_product_installation_size_id }}">{{ $val->name }}</option>
+                                        <option value="{{ $val->id_product_installation_size_id }}"{{ $data['id_product_installation_size_id'] == $val->id_product_installation_size_id ? 'selected' : '' }}>{{ $val->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -130,7 +170,7 @@
                                 <select name="id_product_installation_floor_size_id" class="form-control">
                                     <option value="" selected disabled>-- SELECT FLOOR SIZE --</option>
                                     @foreach ($floorSize as $key => $val)
-                                        <option value="{{ $val->id_product_installation_floor_size_id }}">{{ $val->name }}</option>
+                                        <option value="{{ $val->id_product_installation_floor_size_id }}" {{ $data['id_product_installation_floor_size_id'] == $val->id_product_installation_floor_size_id ? 'selected' : '' }}>{{ $val->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -140,7 +180,7 @@
                                 <select name="id_product_installation_area_id" class="form-control">
                                     <option value="" selected disabled>-- SELECT AREA --</option>
                                     @foreach ($area as $key => $val)
-                                        <option value="{{ $val->id_product_installation_area_id }}">{{ $val->name }}</option>
+                                        <option value="{{ $val->id_product_installation_area_id }}" {{ $data['id_product_installation_area_id'] == $val->id_product_installation_area_id ? 'selected' : '' }}>{{ $val->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -150,7 +190,7 @@
                                 <select name="id_product_installation_location_id" class="form-control">
                                     <option value="" selected disabled>-- SELECT LOCATION --</option>
                                     @foreach ($location as $key => $val)
-                                        <option value="{{ $val->id_product_installation_location_id }}">{{ $val->name }}</option>
+                                        <option value="{{ $val->id_product_installation_location_id }}" {{ $data['id_product_installation_location_id'] == $val->id_product_installation_location_id ? 'selected' : '' }}>{{ $val->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -160,24 +200,24 @@
                                 <select name="id_product_installation_color_id" class="form-control">
                                     <option value="" selected disabled>-- SELECT COLOR --</option>
                                     @foreach ($color as $key => $val)
-                                        <option value="{{ $val->id_product_installation_color_id }}">{{ $val->name }}</option>
+                                        <option value="{{ $val->id_product_installation_color_id }}" {{ $data['id_product_installation_color_id'] == $val->id_product_installation_color_id ? 'selected' : '' }}>{{ $val->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label>Location (City)</label>
-                                <input type="text" class="form-control" name="location" placeholder="Enter location">
+                                <input type="text" class="form-control" name="location" placeholder="Enter location" value="{{ $data['location'] ?? '' }}">
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label>Number of Stops</label>
-                                <input type="text" class="form-control" name="number_of_stops" placeholder="Enter number of stops">
+                                <input type="text" class="form-control" name="number_of_stops" placeholder="Enter number of stops" value="{{ $data['number_of_stops'] ?? '' }}">
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label>Installation Date</label>
-                                <input type="text" class="form-control datepicker w-100" name="installation_date" placeholder="Enter installation date" readonly>
+                                <input type="text" class="form-control datepicker w-100" name="installation_date" placeholder="Enter installation date" readonly value="{{ $data['installation_date'] ?? '' }}">
                             </div>
                         </div>
                         <div class="row">
@@ -185,7 +225,7 @@
                                 <div class="col-12 col-form-label">
                                     <div class="checkbox-inline">
                                         <label class="checkbox checkbox-success">
-                                            <input type="checkbox" name="is_active"/>
+                                            <input type="checkbox" name="is_active" {{ $data['is_active'] ? 'checked' : '' }}/>
                                             <span></span>
                                             Active
                                         </label>
@@ -210,11 +250,11 @@
                                     <div class="row mt-5">
                                         <div class="form-group col-md-6">
                                             <label>Name</label>
-                                            <input type="text" class="form-control" placeholder="Enter name" name="input[{{ $key }}][name]"/>
+                                            <input type="text" class="form-control" placeholder="Enter name" name="input[{{ $key }}][name]" value="{{ $data['product_installation'][$key]['name'] ?? '' }}"/>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Description</label>
-                                            <textarea name="input[{{ $key }}][description]" class="form-control" placeholder="Enter description"></textarea>
+                                            <textarea name="input[{{ $key }}][description]" class="form-control" placeholder="Enter description">{{ $data['product_installation'][$key]['description'] ?? '' }}</textarea>
                                         </div>
                                     </div>
                                 </div>

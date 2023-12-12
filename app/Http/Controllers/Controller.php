@@ -71,12 +71,34 @@ class Controller extends BaseController
             'size' => $document->getSize(),
         ];
 
-        if($relation != 'image'){
-            if ($model->$relation) {
-                $insert = $model->$relation()->update($data);
-            } else {
-                $insert = $model->$relation()->create($data);
-            }
+        if ($model->$relation) {
+            $insert = $model->$relation()->update($data);
+        } else {
+            $insert = $model->$relation()->create($data);
+        }
+
+        Storage::putFileAs("$path/", $document, $fileName, 'public');
+    }
+
+    protected function storeFileHasMany($file, $model, $relation, $path, $content_type = null, $id = null)
+    {
+        $document = $file;
+        $fileName = $document->hashName();
+
+        $data = [
+            'content_type' => $content_type,
+            'name' => $document->getClientOriginalName(),
+            'path' => $path,
+            'file_name' => $fileName,
+            'type' => $document->getClientOriginalExtension() === 'pdf' ? 'pdf' : 'image',
+            'mime_type' => $document->getMimeType(),
+            'disk' => config('filesystems.default'),
+            'extension' => $document->getClientOriginalExtension(),
+            'size' => $document->getSize(),
+        ];
+
+        if(!empty($id)){
+            $insert = DB::table('media')->find($id)->update($data);
         }else{
             $insert = $model->$relation()->create($data);
         }

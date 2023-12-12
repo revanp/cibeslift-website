@@ -2,22 +2,23 @@
 
 @section('content')
 
-<div class="banner" style="background-image: url('{{ asset('public/frontend/images/Banner---Homepage-Website.jpg') }}');">
-    <div class="container h-100">
-        <div class="row h-100 justify-content-center">
-            <div class="col-12 col-md-8">
-                <div class="flex-center">
-                    <span class="banner-contain">
-                        <h1 class="mb-4">LIFT RUMAH MEWAH</h1>
-                        <p>Lift rumah dengan teknologi baru: screw-drive sehingga lebih mudah untuk dipasang karena tidak perlu menggali lubang maupun membangun struktur.</p>
-                        <p>Berpusat di Swedia, kami telah berdiri selama 75 tahun untuk membantu Anda mendapatkan lift rumah mewah yang sesuai dengan kustomisasi Anda.</p>
-                        <a href="#" class="button-primary mt-5">Pasang Lift Rumah</a>
-                    </span>
+@if (!empty($headerBanner))
+    <div class="banner" style="background-image: url('{{ $headerBanner->headerBannerId->image->path ?? '#' }}');">
+        <div class="container h-100">
+            <div class="row h-100 justify-content-center">
+                <div class="col-12 col-md-8">
+                    <div class="flex-center">
+                        <span class="banner-contain">
+                            <h1 class="mb-4">{{ $headerBanner->title }}</h1>
+                            <p>{{ $headerBanner->description }}</p>
+                            <a href="{{ $headerBanner->link }}" class="button-primary mt-5">{{ $headerBanner->cta }}</a>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+@endif
 
 <div class="section pt-0">
     <div style="height: 1000vh;">

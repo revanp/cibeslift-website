@@ -3,26 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\HeaderBanner;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        return view('home');
+        $headerBanner = HeaderBanner::with([
+            'headerBannerId',
+            'headerBannerId.image',
+        ])
+        ->where('language_code', getLocale())
+        ->first();
+
+        return view('home', compact('headerBanner'));
     }
 }

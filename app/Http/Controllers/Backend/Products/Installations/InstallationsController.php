@@ -300,4 +300,220 @@ class InstallationsController extends Controller
             ]);
         }
     }
+
+    public function edit($id)
+    {
+        $data = ProductInstallationId::with([
+            'productInstallation',
+            'thumbnail',
+            'image',
+        ])
+        ->find($id)
+        ->toArray();
+
+        foreach ($data['product_installation'] as $key => $val) {
+            $data['product_installation'][$val['language_code']] = $val;
+            unset($data['product_installation'][$key]);
+        }
+
+        $products = Product::with([
+            'productId'
+        ])
+        ->whereHas('productId', function($query){
+            $query->where('have_a_child', false);
+        })
+        ->where('language_code', 'id')
+        ->get();
+
+        $size = ProductInstallationSize::where('language_code', 'id')
+        ->get();
+
+        $floorSize = ProductInstallationFloorSize::where('language_code', 'id')
+        ->get();
+
+        $area = ProductInstallationArea::where('language_code', 'id')
+        ->get();
+
+        $location = ProductInstallationLocation::where('language_code', 'id')
+        ->get();
+
+        $color = ProductInstallationColor::where('language_code', 'id')
+        ->get();
+
+        return view('backend.pages.products.installations.installations.edit', compact('data', 'products', 'size', 'floorSize', 'area', 'location', 'color'));
+    }
+
+    public function update($id, Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->all();
+
+        unset($data['_token']);
+
+        $rules = [
+            'thumbnail' => [],
+            'id_product_id' => ['required'],
+            'id_product_installation_size_id' => ['required'],
+            'id_product_installation_floor_size_id' => ['required'],
+            'id_product_installation_area_id' => ['required'],
+            'id_product_installation_location_id' => ['required'],
+            'id_product_installation_color_id' => ['required'],
+            'location' => [],
+            'number_of_stops' => [],
+            'installation_date' => ['required']
+        ];
+
+        $messages = [];
+
+        $attributes = [
+            'thumbnail' => 'Thumbnail',
+            'id_product_id' => 'Product',
+            'id_product_installation_size_id' => 'Size',
+            'id_product_installation_floor_size_id' => 'Floor Size',
+            'id_product_installation_area_id' => 'Area',
+            'id_product_installation_location_id' => 'Location',
+            'id_product_installation_color_id' => 'Color',
+            'location' => 'Location (City)',
+            'number_of_stops' => 'Number of Stops',
+            'installation_date' => 'Installation Date',
+        ];
+
+        foreach ($request->input as $lang => $input) {
+            if($lang == 'id'){
+                $rules["input.$lang.name"] = ['required'];
+                $rules["input.$lang.description"] = ['required'];
+            }else{
+                $rules["input.$lang.name"] = [];
+                $rules["input.$lang.description"] = [];
+            }
+
+            $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+
+            $attributes["input.$lang.name"] = "$lang_name Name";
+            $attributes["input.$lang.description"] = "$lang_name Description";
+        }
+
+        $validator = Validator::make($data, $rules, $messages, $attributes);
+
+        if($validator->fails()){
+            return response()->json([
+                'code' => 422,
+                'success' => false,
+                'message' => 'Validation error!',
+                'data' => $validator->errors()
+            ], 422)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }
+
+        $isError = false;
+
+        try{
+            DB::beginTransaction();
+
+            $installationId = ProductInstallationId::find($id);
+
+            $installationId->fill([
+                'id_product_id' => $data['id_product_id'],
+                'id_product_installation_size_id' => $data['id_product_installation_size_id'],
+                'id_product_installation_floor_size_id' => $data['id_product_installation_floor_size_id'],
+                'id_product_installation_area_id' => $data['id_product_installation_area_id'],
+                'id_product_installation_location_id' => $data['id_product_installation_location_id'],
+                'id_product_installation_color_id' => $data['id_product_installation_color_id'],
+                'location' => $data['location'] ?? null,
+                'number_of_stops' => $data['number_of_stops'] ?? null,
+                'installation_date' => $data['installation_date'] ?? null,
+            ])->save();
+
+            $idInstallationId = $installationId->id;
+
+            foreach ($data['input'] as $languageCode => $input) {
+                $installation = ProductInstallation::where('language_code', $languageCode)->where('id_product_installation_id', $id)->first();
+
+                $input['id_product_installation_id'] = $idInstallationId;
+                $input['language_code'] = $languageCode;
+
+                if($languageCode != 'id'){
+                    $input['name'] = $data['input']['en']['name'] ?? $data['input']['id']['name'];
+                    $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
+                }
+
+                $input['slug'] = Str::slug($input['name']);
+
+                $installation->fill($input)->save();
+
+                $idInstallation = $installation->id;
+            }
+
+            if ($request->hasFile('thumbnail')) {
+                $this->storeFile(
+                    $request->file('thumbnail'),
+                    $installationId,
+                    'thumbnail',
+                    "images/products/installations/installations/thumbnail/{$idInstallationId}",
+                    'thumbnail'
+                );
+            }
+
+            if(!empty($data['image'])){
+                foreach($data['image'] as $key => $val){
+                    if ($request->hasFile('image.'.$key)) {
+                        if(!empty($data['image_id'][$key])){
+                            $this->storeFileHasMany(
+                                $request->file('image.'.$key),
+                                $installationId,
+                                'image',
+                                "images/products/installations/installations/image/{$idInstallationId}",
+                                'image',
+                                $data['image_id'][$key]
+                            );
+                        }else{
+                            $this->storeFileHasMany(
+                                $request->file('image.'.$key),
+                                $installationId,
+                                'image',
+                                "images/products/installations/installations/image/{$idInstallationId}",
+                                'image'
+                            );
+                        }
+                    }
+                }
+            }
+
+            $message = 'Installation updated successfully';
+
+            DB::commit();
+        }catch (\Illuminate\Database\QueryException $e) {
+            DB::rollBack();
+
+            $isError = true;
+
+            $err     = $e->errorInfo;
+
+            $message =  $err[2];
+        }
+
+        if ($isError == true) {
+            return response()->json([
+                'code' => 500,
+                'success' => false,
+                'message' => $message
+            ], 500)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }else{
+            session()->flash('success', $message);
+
+            return response()->json([
+                'code' => 200,
+                'success' => true,
+                'message' => $message,
+                'redirect' => url('admin-cms/products/installations/installations')
+            ], 200)->withHeaders([
+                'Content-Type' => 'application/json'
+            ]);
+        }
+    }
 }
