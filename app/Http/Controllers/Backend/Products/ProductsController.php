@@ -1093,7 +1093,7 @@ class ProductsController extends Controller
                 'deleted_at' => date('Y-m-d H:i:s')
             ]);
 
-            $deleteChild = Product::where('id_product_od', $id)->delete();
+            $deleteChild = Product::where('id_product_id', $id)->delete();
 
             DB::commit();
 

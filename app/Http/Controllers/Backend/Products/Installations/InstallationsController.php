@@ -516,4 +516,22 @@ class InstallationsController extends Controller
             ]);
         }
     }
+
+    public function delete($id)
+    {
+        try{
+            DB::beginTransaction();
+
+            $delete = ProductInstallationId::where('id', $id)->delete();
+            $deleteChild = ProductInstallation::where('id_product_installation_id', $id)->delete();
+
+            DB::commit();
+
+            return redirect('admin-cms/products/installations/installations')->with(['success' => 'Installation has been deleted successfully']);
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
+        }
+    }
 }
