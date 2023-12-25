@@ -55,13 +55,26 @@
                     @method('PUT')
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group picture_upload col-md-6">
-                                <label>Image</label>
-                                <div class="form-group__file">
-                                    <div class="file-wrapper">
-                                        <input type="file" name="image" class="file-input"/>
-                                        <div class="file-preview-background">+</div>
-                                        <img src="{{ $data['image']['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                            <div class="col-md-6">
+                                <div class="form-group picture_upload">
+                                    <label>Image</label>
+                                    <div class="form-group__file">
+                                        <div class="file-wrapper">
+                                            <input type="file" name="image" class="file-input"/>
+                                            <div class="file-preview-background">+</div>
+                                            <img src="{{ $data['image']['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group picture_upload">
+                                    <label>National Flag</label>
+                                    <div class="form-group__file">
+                                        <div class="file-wrapper">
+                                            <input type="file" name="nation_flag" class="file-input"/>
+                                            <div class="file-preview-background">+</div>
+                                            <img src="{{ $data['nation_flag']['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

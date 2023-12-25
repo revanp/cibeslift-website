@@ -10,7 +10,7 @@
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <div class="d-flex align-items-baseline flex-wrap mr-5">
                     <h5 class="text-dark font-weight-bold my-1 mr-5">
-                        Manufacture
+                        Highlight
                     </h5>
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -21,10 +21,10 @@
                             <a href="#" class="text-muted">About Us</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ url('admin-cms/content/about-us/manufacture') }}" class="text-muted">Manufacture</a>
+                            <a href="{{ url('admin-cms/content/about-us/highlight') }}" class="text-muted">Highlight</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/content/about-us/manufacture/create') }}" class="text-muted">Create</a>
+                            <a href="{{ url('admin-cms/content/about-us/highlight/create') }}" class="text-muted">Create</a>
                         </li>
                     </ul>
                 </div>
@@ -40,7 +40,7 @@
                         <h3 class="card-label">Create</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{ url('admin-cms/content/about-us/manufacture') }}" class="btn btn-danger font-weight-bolder">
+                        <a href="{{ url('admin-cms/content/about-us/highlight') }}" class="btn btn-danger font-weight-bolder">
                             <span class="svg-icon svg-icon-md"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <polygon points="0 0 24 0 24 24 0 24"/>
@@ -50,26 +50,16 @@
                         </a>
                     </div>
                 </div>
-                <form action="{{ url('admin-cms/content/about-us/manufacture/create') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('admin-cms/content/about-us/highlight/create') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group picture_upload ">
-                                    <label>Image</label>
+                                    <label>Icon</label>
                                     <div class="form-group__file">
                                         <div class="file-wrapper">
-                                            <input type="file" name="image" class="file-input"/>
-                                            <div class="file-preview-background">+</div>
-                                            <img src="" width="240px" class="file-preview"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group picture_upload ">
-                                    <label>National Flag</label>
-                                    <div class="form-group__file">
-                                        <div class="file-wrapper">
-                                            <input type="file" name="nation_flag" class="file-input"/>
+                                            <input type="file" name="icon" class="file-input"/>
                                             <div class="file-preview-background">+</div>
                                             <img src="" width="240px" class="file-preview"/>
                                         </div>
@@ -77,14 +67,6 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Product</label>
-                                    <select name="products[]" multiple class="select2 form-control">
-                                        @foreach ($products as $key => $val)
-                                            <option value="{{ $val->id_product_id }}">{{ $val->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                                 <div class="form-group">
                                     <label>Sort</label>
                                     <select name="sort" id="" class="form-control">
@@ -95,19 +77,6 @@
                                     </select>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="col-12 col-form-label">
-                                                <div class="checkbox-inline">
-                                                    <label class="checkbox checkbox-success">
-                                                        <input type="checkbox" name="is_coming_soon"/>
-                                                        <span></span>
-                                                        Coming Soon?
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="col-12 col-form-label">

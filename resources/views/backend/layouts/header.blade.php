@@ -86,6 +86,8 @@
                                                 <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/nation') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Nation</span></a></li>
 
                                                 <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/manufacture') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Manufacture</span></a></li>
+
+                                                <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/highlight') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Highlight</span></a></li>
                                             </ul>
                                         </div>
                                     </li>

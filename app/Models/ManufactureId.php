@@ -39,4 +39,9 @@ class ManufactureId extends Model
     {
         return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'image');
     }
+
+    public function nationFlag()
+    {
+        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'nation_flag');
+    }
 }

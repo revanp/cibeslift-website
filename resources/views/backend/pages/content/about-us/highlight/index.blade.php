@@ -6,7 +6,7 @@
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <div class="d-flex align-items-baseline flex-wrap mr-5">
                     <h5 class="text-dark font-weight-bold my-1 mr-5">
-                        Manufacture
+                        Highlight
                     </h5>
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -17,7 +17,7 @@
                             <a href="#" class="text-muted">About Us</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/content/about-us/manufacture') }}" class="text-muted">Manufacture</a>
+                            <a href="{{ url('admin-cms/content/about-us/highlight') }}" class="text-muted">Highlight</a>
                         </li>
                     </ul>
                 </div>
@@ -27,13 +27,43 @@
 
     <div class="d-flex flex-column-fluid">
 		<div class=" container ">
+            <div class="card card-custom mb-5">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">Highlight Image</h3>
+                    </div>
+                </div>
+                <form action="{{ url('admin-cms/content/about-us/highlight/create-image') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="card-body">
+                        <div class="form-group picture_upload">
+                            <label>Image</label>
+                            <div class="form-group__file">
+                                <div class="file-wrapper">
+                                    <input type="file" name="image" class="file-input"/>
+                                    <div class="file-preview-background">+</div>
+                                    @if (!empty($image))
+                                        <img src="{{ $image['image']['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                                    @else
+                                        <img src="" width="240px" class="file-preview"/>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    </div>
+                </form>
+            </div>
+
             <div class="card card-custom">
                 <div class="card-header">
                     <div class="card-title">
-                        <h3 class="card-label">List Manufacture</h3>
+                        <h3 class="card-label">List Highlight</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{ url('admin-cms/content/about-us/manufacture/create') }}" class="btn btn-primary font-weight-bolder">
+                        <a href="{{ url('admin-cms/content/about-us/highlight/create') }}" class="btn btn-primary font-weight-bolder">
                             <i class="flaticon2-add icon-md"></i> New Record
                         </a>
                     </div>
@@ -44,8 +74,7 @@
                             <thead>
                                 <tr>
                                     <th>Sort</th>
-                                    <th>National Flag</th>
-                                    <th>Image</th>
+                                    <th>Icon</th>
                                     <th>Name</th>
                                     <th>Status</th>
                                     <th>#</th>
@@ -71,7 +100,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ url('admin-cms/content/about-us/manufacture/datatable') }}",
+                    url: "{{ url('admin-cms/content/about-us/highlight/datatable') }}",
                     type: "POST",
                     data: {
                         "_token": "{{ csrf_token() }}"
@@ -79,8 +108,7 @@
                 },
                 columns: [
                     {data: 'sort'},
-                    {data: 'national_flag', searchable: false, orderable: false},
-                    {data: 'image', searchable: false, orderable: false},
+                    {data: 'icon', searchable: false, orderable: false},
                     {data: 'name'},
                     {data: 'is_active', searchable: false, orderable: false},
                     {data: 'action', searchable: false, orderable: false},
@@ -96,7 +124,7 @@
             var status = t.prop('checked') ? 1 : 0;
 
             $.ajax({
-                url: "{{ url('admin-cms/content/about-us/manufacture/change-status') }}",
+                url: "{{ url('admin-cms/content/about-us/highlight/change-status') }}",
                 type: 'POST',
                 dataType: 'json',
                 data: {
@@ -116,6 +144,35 @@
             .fail(function(err) {
                 toastr.error(res.message);
             });
+        });
+
+        $('form').submit(function(e){
+            e.preventDefault();
+
+            var action = $(this).attr('action');
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: action,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data){
+                    if(data.redirect != null){
+                        window.location.replace(data.redirect);
+                    }
+                },
+                error: function(data){
+                    var result = data.responseJSON;
+
+                    $.each(result.data, function(key, value){
+                        toastr.error(value[0]);
+                    })
+                }
+            })
         });
     </script>
 @endsection

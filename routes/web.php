@@ -64,6 +64,18 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     Route::put('change-status', [App\Http\Controllers\Backend\Content\AboutUs\ManufactureController::class, 'changeStatus']);
                     Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\AboutUs\ManufactureController::class, 'delete']);
                 });
+
+                Route::group(['prefix' => 'highlight'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\AboutUs\HighlightController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\AboutUs\HighlightController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\AboutUs\HighlightController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\AboutUs\HighlightController::class, 'store']);
+                    Route::post('create-image', [App\Http\Controllers\Backend\Content\AboutUs\HighlightController::class, 'storeImage']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\HighlightController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\HighlightController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\AboutUs\HighlightController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\AboutUs\HighlightController::class, 'delete']);
+                });
             });
 
             Route::group(['prefix' => 'faq'], function(){

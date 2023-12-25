@@ -4,27 +4,25 @@ namespace App\Http\Controllers\Backend\Content\AboutUs;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ManufactureId;
-use App\Models\Manufacture;
-use App\Models\ManufactureIdHasProductId;
-use App\Models\Product;
+use App\Models\AboutUsHighlightId;
+use App\Models\AboutUsHighlight;
+use App\Models\AboutUsHighlightImage;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class ManufactureController extends Controller
+class HighlightController extends Controller
 {
     public function index(Request $request)
     {
         if($request->ajax()){
             $reqDatatable  = $this->requestDatatables($request->input());
 
-            $data = Manufacture::with([
-                'manufactureId',
-                'manufactureId.image',
-                'manufactureId.nationFlag'
+            $data = AboutUsHighlight::with([
+                'aboutUsHighlightId',
+                'aboutUsHighlightId.icon',
             ])->where('language_code', 'id');
 
             if ($reqDatatable['orderable']) {
@@ -66,60 +64,140 @@ class ManufactureController extends Controller
                         return $rownum--;
                     }
                 })
-                ->addColumn('image', function($data){
-                    return '<a href="'. $data->manufactureId->image->path .'" target="_BLANK"><img src="'.$data->manufactureId->image->path.'" style="width:200px;"></a>';
-                })
-                ->addColumn('national_flag', function($data){
-                    return '<a href="'. $data->manufactureId->nationFlag->path .'" target="_BLANK"><img src="'.$data->manufactureId->nationFlag->path.'" style="width:200px;"></a>';
+                ->addColumn('icon', function($data){
+                    return '<a href="'. $data->aboutUsHighlightId->icon->path .'" target="_BLANK"><img src="'.$data->aboutUsHighlightId->icon->path.'" style="width:200px;"></a>';
                 })
                 ->addColumn('sort', function($data){
-                    return $data->manufactureId->sort;
-                })
-                ->addColumn('year', function($data){
-                    return $data->manufactureId->year;
+                    return $data->aboutUsHighlightId->sort;
                 })
                 ->addColumn('is_active', function($data){
-                    $id = $data->manufactureId->id;
-                    $isActive = $data->manufactureId->is_active;
+                    $id = $data->aboutUsHighlightId->id;
+                    $isActive = $data->aboutUsHighlightId->is_active;
 
                     return view('backend.layouts.active', compact('id', 'isActive'));
                 })
                 ->addColumn('action', function($data){
                     $html = '<div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">';
                         //* EDIT
-                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/content/about-us/manufacture/edit/'.$data->manufactureId->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/content/about-us/highlight/edit/'.$data->aboutUsHighlightId->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
 
                         //* DELETE
-                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/content/about-us/manufacture/delete/'.$data->manufactureId->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/content/about-us/highlight/delete/'.$data->aboutUsHighlightId->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
                     $html .= '</ul></div></div>';
 
                     return $html;
                 })
-                ->rawColumns(['national_flag', 'image', 'action'])
+                ->rawColumns(['icon', 'is_active', 'action'])
                 ->toJson(true);
         }
 
-        return view('backend.pages.content.about-us.manufacture.index');
+        $image = AboutUsHighlightImage::with([
+            'image'
+        ])->first();
+
+        return view('backend.pages.content.about-us.highlight.index', compact('image'));
+    }
+
+    public function storeImage(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->all();
+
+        unset($data['_token']);
+
+        $rules = [
+            'image' => ['required'],
+        ];
+
+        $messages = [];
+
+        $attributes = [
+            'image' => 'Image',
+        ];
+
+        $validator = Validator::make($data, $rules, $messages, $attributes);
+
+        if($validator->fails()){
+            return response()->json([
+                'code' => 422,
+                'success' => false,
+                'message' => 'Validation error!',
+                'data' => $validator->errors()
+            ], 422)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }
+
+        $isError = false;
+
+        try{
+            DB::beginTransaction();
+
+            $image = AboutUsHighlightImage::first();
+
+            if(empty($image)){
+                $image = new AboutUsHighlightImage();
+            }
+
+            $image->fill([])->save();
+
+            $idImage = $image->id;
+
+            if ($request->hasFile('image')) {
+                $this->storeFile(
+                    $request->file('image'),
+                    $image,
+                    'image',
+                    "images/about-us/highlight/image/{$idImage}",
+                    'image'
+                );
+            }
+
+            $message = 'Image created successfully';
+
+            DB::commit();
+        }catch (\Illuminate\Database\QueryException $e) {
+            DB::rollBack();
+
+            $isError = true;
+
+            $err     = $e->errorInfo;
+
+            $message =  $err[2];
+        }
+
+        if ($isError == true) {
+            return response()->json([
+                'code' => 500,
+                'success' => false,
+                'message' => $message
+            ], 500)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }else{
+            session()->flash('success', $message);
+
+            return response()->json([
+                'code' => 200,
+                'success' => true,
+                'message' => $message,
+                'redirect' => url('admin-cms/content/about-us/highlight')
+            ], 200)->withHeaders([
+                'Content-Type' => 'application/json'
+            ]);
+        }
     }
 
     public function create()
     {
-        $sort = ManufactureId::select('sort')->orderBy('sort', 'desc')->first();
-
+        $sort = AboutUsHighlightId::select('sort')->orderBy('sort', 'desc')->first();
         if(!empty($sort)){
             $sort = $sort->sort;
         }
 
-        $products = Product::with([
-            'productId'
-        ])
-        ->where('language_code', 'id')
-        ->whereHas('productId', function($query){
-            $query->where('level', 1);
-        })
-        ->get();
-
-        return view('backend.pages.content.about-us.manufacture.create', compact('sort', 'products'));
+        return view('backend.pages.content.about-us.highlight.create', compact('sort'));
     }
 
     public function store(Request $request)
@@ -130,15 +208,13 @@ class ManufactureController extends Controller
         unset($data['_token']);
 
         $rules = [
-            'image' => ['required'],
-            'nation_flag' => ['required']
+            'icon' => ['required'],
         ];
 
         $messages = [];
 
         $attributes = [
-            'image' => 'Image',
-            'nation_flag' => 'National Flag',
+            'icon' => 'Icon',
         ];
 
         foreach ($request->input as $lang => $input) {
@@ -175,22 +251,21 @@ class ManufactureController extends Controller
         try{
             DB::beginTransaction();
 
-            $manufactureId = new ManufactureId();
+            $highlightId = new AboutUsHighlightId();
 
-            $sort = empty($data['sort']) ? ManufactureId::count() + 1 : $data['sort'];
+            $sort = empty($data['sort']) ? AboutUsHighlightId::count() + 1 : $data['sort'];
 
-            $manufactureId->fill([
-                'is_coming_soon' => !empty($data['is_coming_soon']) ? true : false,
+            $highlightId->fill([
                 'is_active' => !empty($data['is_active']) ? true : false,
                 'sort' => $sort,
             ])->save();
 
-            $idManufactureId = $manufactureId->id;
+            $idHighlightId = $highlightId->id;
 
             foreach ($data['input'] as $languageCode => $input) {
-                $manufacture = new Manufacture();
+                $highlight = new AboutUsHighlight();
 
-                $input['id_manufacture_id'] = $idManufactureId;
+                $input['id_about_us_highlight_id'] = $idHighlightId;
                 $input['language_code'] = $languageCode;
 
                 if($languageCode != 'id'){
@@ -198,40 +273,20 @@ class ManufactureController extends Controller
                     $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
                 }
 
-                $manufacture->fill($input)->save();
-
-                $idManufacture = $manufacture->id;
+                $highlight->fill($input)->save();
             }
 
-            foreach($data['products'] as $key => $val){
-                $manufactureIdHasProductId = new ManufactureIdHasProductId();
-                $manufactureIdHasProductId->fill([
-                    'id_manufacture_id' => $idManufactureId,
-                    'id_product_id' => $val,
-                ])->save();
-            }
-
-            if ($request->hasFile('image')) {
+            if ($request->hasFile('icon')) {
                 $this->storeFile(
-                    $request->file('image'),
-                    $manufactureId,
-                    'image',
-                    "images/about-us/manufacture/image/{$idManufactureId}",
-                    'image'
+                    $request->file('icon'),
+                    $highlightId,
+                    'icon',
+                    "images/about-us/highlight/icon/{$idHighlightId}",
+                    'icon'
                 );
             }
 
-            if ($request->hasFile('nation_flag')) {
-                $this->storeFile(
-                    $request->file('nation_flag'),
-                    $manufactureId,
-                    'nationFlag',
-                    "images/about-us/manufacture/nation-flag/{$idManufactureId}",
-                    'nation_flag'
-                );
-            }
-
-            $message = 'Manufacture created successfully';
+            $message = 'Highlight created successfully';
 
             DB::commit();
         }catch (\Illuminate\Database\QueryException $e) {
@@ -260,7 +315,7 @@ class ManufactureController extends Controller
                 'code' => 200,
                 'success' => true,
                 'message' => $message,
-                'redirect' => url('admin-cms/content/about-us/manufacture')
+                'redirect' => url('admin-cms/content/about-us/highlight')
             ], 200)->withHeaders([
                 'Content-Type' => 'application/json'
             ]);
@@ -269,39 +324,22 @@ class ManufactureController extends Controller
 
     public function edit($id)
     {
-        $data = ManufactureId::with([
-            'image',
-            'nationFlag',
-            'manufactureIdHasProductId',
-            'manufacture'
+        $data = AboutUsHighlightId::with([
+            'icon',
+            'aboutUsHighlight'
         ])
         ->find($id)
         ->toArray();
 
-        foreach ($data['manufacture'] as $key => $val) {
-            $data['manufacture'][$val['language_code']] = $val;
-            unset($data['manufacture'][$key]);
+        foreach ($data['about_us_highlight'] as $key => $val) {
+            $data['about_us_highlight'][$val['language_code']] = $val;
+            unset($data['about_us_highlight'][$key]);
         }
 
-        $productIdHasProductTechnologyId = $data['manufacture_id_has_product_id'];
-        unset($data['manufacture_id_has_product_id']);
-        foreach($productIdHasProductTechnologyId as $key => $val){
-            $data['manufacture_id_has_product_id'][$key] = $val['id_product_id'];
-        }
-
-        $sort = ManufactureId::select('sort')->orderBy('sort', 'desc')->first();
+        $sort = AboutUsHighlightId::select('sort')->orderBy('sort', 'desc')->first();
         $sort = $sort->sort;
 
-        $products = Product::with([
-            'productId'
-        ])
-        ->where('language_code', 'id')
-        ->whereHas('productId', function($query){
-            $query->where('level', 1);
-        })
-        ->get();
-
-        return view('backend.pages.content.about-us.manufacture.edit', compact('data', 'sort', 'products'));
+        return view('backend.pages.content.about-us.highlight.edit', compact('data', 'sort'));
     }
 
     public function update($id, Request $request)
@@ -312,13 +350,13 @@ class ManufactureController extends Controller
         unset($data['_token']);
 
         $rules = [
-            'image' => [],
+            'icon' => [],
         ];
 
         $messages = [];
 
         $attributes = [
-            'image' => 'Image',
+            'icon' => 'Icon',
         ];
 
         foreach ($request->input as $lang => $input) {
@@ -355,22 +393,21 @@ class ManufactureController extends Controller
         try{
             DB::beginTransaction();
 
-            $manufactureId = ManufactureId::find($id);
+            $highlightId = AboutUsHighlightId::find($id);
 
-            $sort = empty($data['sort']) ? ManufactureId::count() + 1 : $data['sort'];
+            $sort = empty($data['sort']) ? AboutUsHighlightId::count() + 1 : $data['sort'];
 
-            $manufactureId->fill([
-                'is_coming_soon' => !empty($data['is_coming_soon']) ? true : false,
+            $highlightId->fill([
                 'is_active' => !empty($data['is_active']) ? true : false,
                 'sort' => $sort,
             ])->save();
 
-            $idManufactureId = $manufactureId->id;
+            $idHighlightId = $highlightId->id;
 
             foreach ($data['input'] as $languageCode => $input) {
-                $manufacture = Manufacture::where('language_code', $languageCode)->where('id_manufacture_id', $id)->first();
+                $highlight = AboutUsHighlight::where('language_code', $languageCode)->where('id_about_us_highlight_id', $id)->first();
 
-                $input['id_manufacture_id'] = $idManufactureId;
+                $input['id_about_us_highlight_id'] = $idHighlightId;
                 $input['language_code'] = $languageCode;
 
                 if($languageCode != 'id'){
@@ -378,41 +415,20 @@ class ManufactureController extends Controller
                     $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
                 }
 
-                $manufacture->fill($input)->save();
-
-                $idManufacture = $manufacture->id;
+                $highlight->fill($input)->save();
             }
 
-            ManufactureIdHasProductId::where('id_manufacture_id', $id)->delete();
-            foreach($data['products'] as $key => $val){
-                $manufactureIdHasProductId = new ManufactureIdHasProductId();
-                $manufactureIdHasProductId->fill([
-                    'id_manufacture_id' => $idManufactureId,
-                    'id_product_id' => $val,
-                ])->save();
-            }
-
-            if ($request->hasFile('image')) {
+            if ($request->hasFile('icon')) {
                 $this->storeFile(
-                    $request->file('image'),
-                    $manufactureId,
-                    'image',
-                    "images/about-us/manufacture/image/{$idManufactureId}",
-                    'image'
+                    $request->file('icon'),
+                    $highlightId,
+                    'icon',
+                    "images/about-us/highlight/icon/{$idHighlightId}",
+                    'icon'
                 );
             }
 
-            if ($request->hasFile('nation_flag')) {
-                $this->storeFile(
-                    $request->file('nation_flag'),
-                    $manufactureId,
-                    'nationFlag',
-                    "images/about-us/manufacture/nation-flag/{$idManufactureId}",
-                    'nation_flag'
-                );
-            }
-
-            $message = 'Manufacture updated successfully';
+            $message = 'Highlight updated successfully';
 
             DB::commit();
         }catch (\Illuminate\Database\QueryException $e) {
@@ -441,7 +457,7 @@ class ManufactureController extends Controller
                 'code' => 200,
                 'success' => true,
                 'message' => $message,
-                'redirect' => url('admin-cms/content/about-us/manufacture')
+                'redirect' => url('admin-cms/content/about-us/highlight')
             ], 200)->withHeaders([
                 'Content-Type' => 'application/json'
             ]);
@@ -465,7 +481,7 @@ class ManufactureController extends Controller
             try {
                 DB::beginTransaction();
 
-                $update = ManufactureId::where('id', $id)->update([
+                $update = AboutUsHighlightId::where('id', $id)->update([
                     'is_active' => $status
                 ]);
 
@@ -493,13 +509,12 @@ class ManufactureController extends Controller
         try{
             DB::beginTransaction();
 
-            $delete = ManufactureId::where('id', $id)->delete();
-            $deleteChild = Manufacture::where('id_manufacture_id', $id)->delete();
-            $deleteChild2 = ManufactureIdHasProductId::where('id_manufacture_id', $id)->delete();
+            $delete = AboutUsHighlightId::where('id', $id)->delete();
+            $deleteChild = AboutUsHighlight::where('id_about_us_highlight_id', $id)->delete();
 
             DB::commit();
 
-            return redirect('admin-cms/content/about-us/manufacture')->with(['success' => 'Manufacture has been deleted successfully']);
+            return redirect('admin-cms/content/about-us/highlight')->with(['success' => 'Highlight has been deleted successfully']);
         }catch(Exception $e){
             DB::rollBack();
 
