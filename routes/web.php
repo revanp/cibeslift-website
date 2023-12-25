@@ -31,6 +31,41 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                 });
             });
 
+            Route::group(['prefix' => 'about-us'], function(){
+                Route::group(['prefix' => 'history'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\AboutUs\HistoryController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\AboutUs\HistoryController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\AboutUs\HistoryController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\AboutUs\HistoryController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\HistoryController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\HistoryController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\AboutUs\HistoryController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\AboutUs\HistoryController::class, 'delete']);
+                });
+
+                Route::group(['prefix' => 'nation'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\AboutUs\NationController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\AboutUs\NationController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\AboutUs\NationController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\AboutUs\NationController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\NationController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\NationController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\AboutUs\NationController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\AboutUs\NationController::class, 'delete']);
+                });
+
+                Route::group(['prefix' => 'manufacture'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\AboutUs\ManufactureController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\AboutUs\ManufactureController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\AboutUs\ManufactureController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\AboutUs\ManufactureController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\ManufactureController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\ManufactureController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\AboutUs\ManufactureController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\AboutUs\ManufactureController::class, 'delete']);
+                });
+            });
+
             Route::group(['prefix' => 'faq'], function(){
                 Route::group(['prefix' => 'categories'], function(){
                     Route::get('', [App\Http\Controllers\Backend\Content\Faq\CategoriesController::class, 'index']);

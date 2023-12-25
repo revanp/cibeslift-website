@@ -76,6 +76,22 @@
 
                                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                                         <a href="javascript:;" class="menu-link menu-toggle">
+                                            <span class="menu-text">About Us</span><i class="menu-arrow"></i>
+                                        </a>
+
+                                        <div class="menu-submenu menu-submenu-classic menu-submenu-right" data-hor-direction="menu-submenu-right">
+                                            <ul class="menu-subnav">
+                                                <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/history') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">History</span></a></li>
+
+                                                <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/nation') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Nation</span></a></li>
+
+                                                <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/manufacture') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Manufacture</span></a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                                        <a href="javascript:;" class="menu-link menu-toggle">
                                             <span class="menu-text">Faq</span><i class="menu-arrow"></i>
                                         </a>
 
