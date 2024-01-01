@@ -61,6 +61,16 @@ return [
             'throw' => false,
         ],
 
+        'sftp' => [
+            'driver' => 'sftp',
+            'host' => env('SFTP_HOST'),
+            'username' => env('SFTP_USERNAME'),
+            'password' => env('SFTP_PASSWORD'),
+            'root' => env('SFTP_ROOT','/home/superdtx/media/'),
+            'url' => env('SFTP_URL','https://media.cibeslift-id-dev.site/'),
+            'visibility' => 'private', // `private` = 0600, `public` = 0644
+            'directory_visibility' => 'private',
+        ]
     ],
 
     /*

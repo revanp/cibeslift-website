@@ -13,55 +13,17 @@
             <div class="row">
                 <div class="col-12">
                     <div class="slider-history">
-                        <div>
-                            <div class="slider-history_card"></div>
-                            <span class="slider-history_content">
-                                <h5 class="title-30-bold mb-4">1981 - 2010</h5>
-                                <p class="title-20-reguler">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                            </span>
-                        </div>
-                        <div>
-                            <div class="slider-history_card"></div>
-                            <span class="slider-history_content">
-                                <h5 class="title-30-bold mb-4">1981 - 2010</h5>
-                                <p class="title-20-reguler">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                            </span>
-                        </div>
-                        <div>
-                            <div class="slider-history_card"></div>
-                            <span class="slider-history_content">
-                                <h5 class="title-30-bold mb-4">1981 - 2010</h5>
-                                <p class="title-20-reguler">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                            </span>
-                        </div>
-                        <div>
-                            <div class="slider-history_card"></div>
-                            <span class="slider-history_content">
-                                <h5 class="title-30-bold mb-4">1981 - 2010</h5>
-                                <p class="title-20-reguler">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                            </span>
-                        </div>
-                        <div>
-                            <div class="slider-history_card"></div>
-                            <span class="slider-history_content">
-                                <h5 class="title-30-bold mb-4">1981 - 2010</h5>
-                                <p class="title-20-reguler">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                            </span>
-                        </div>
-                        <div>
-                            <div class="slider-history_card"></div>
-                            <span class="slider-history_content">
-                                <h5 class="title-30-bold mb-4">1981 - 2010</h5>
-                                <p class="title-20-reguler">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                            </span>
-                        </div>
-                        <div>
-                            <div class="slider-history_card"></div>
-                            <span class="slider-history_content">
-                                <h5 class="title-30-bold mb-4">1981 - 2010</h5>
-                                <p class="title-20-reguler">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                            </span>
-                        </div>
+                        @foreach ($history as $key => $val)
+                            <div>
+                                <div class="slider-history_card">
+                                    <img src="{{ $val->image->path }}" alt="" class="w-100">
+                                </div>
+                                <span class="slider-history_content">
+                                    <h5 class="title-30-bold mb-4">{{ $val->year }}</h5>
+                                    <p class="title-20-reguler">{{ $val->history[0]->description }}</p>
+                                </span>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -79,103 +41,14 @@
             <div class="row">
                 <div class="col-12">
                     <ul class="list-standard">
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://www.countryflags.com/wp-content/uploads/indonesia-flag-png-large.png');"></div>
-                                <label class="title-20-bold">Indonesia</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://www.countryflags.com/wp-content/uploads/philippines-flag-png-large.png');"></div>
-                                <label class="title-20-bold">Filipina</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://www.countryflags.com/wp-content/uploads/vietnam-flag-png-large.png');"></div>
-                                <label class="title-20-bold">Vietnam</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://www.countryflags.com/wp-content/uploads/thailand-flag-png-large.png');"></div>
-                                <label class="title-20-bold">Thailand</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://www.countryflags.com/wp-content/uploads/china-flag-png-large.png');"></div>
-                                <label class="title-20-bold">China</label>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://cdn.countryflags.com/thumbs/sweden/flag-square-250.png');"></div>
-                                <label class="title-20-bold">Swedia</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://cdn.countryflags.com/thumbs/united-arab-emirates/flag-square-250.png');"></div>
-                                <label class="title-20-bold">UEA</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://cdn.countryflags.com/thumbs/norway/flag-square-250.png');"></div>
-                                <label class="title-20-bold">Norwegia</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://www.countryflags.com/wp-content/uploads/united-kingdom-flag-png-large.png');"></div>
-                                <label class="title-20-bold">Inggris</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://www.countryflags.com/wp-content/uploads/france-flag-png-large.png');"></div>
-                                <label class="title-20-bold">Prancis</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://www.countryflags.com/wp-content/uploads/spain-flag-png-large.png');"></div>
-                                <label class="title-20-bold">Spanyol</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://www.countryflags.com/wp-content/uploads/germany-flag-png-large.png');"></div>
-                                <label class="title-20-bold">Jerman</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://cdn.countryflags.com/thumbs/austria/flag-square-250.png');"></div>
-                                <label class="title-20-bold">Austria</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://cdn.countryflags.com/thumbs/belgium/flag-square-250.png');"></div>
-                                <label class="title-20-bold">Belgia</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://cdn.countryflags.com/thumbs/netherlands/flag-square-250.png');"></div>
-                                <label class="title-20-bold">Belanda</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <div class="circle-flag" style="background-image: url('https://www.countryflags.com/wp-content/uploads/india-flag-png-large.png');"></div>
-                                <label class="title-20-bold">India</label>
-                            </a>
-                        </li>
+                        @foreach ($nation as $key => $val)
+                            <li>
+                                <a href="#" target="_blank">
+                                    <div class="circle-flag" style="background-image: url('{{ $val->image->path }}');"></div>
+                                    <label class="title-20-bold">{{ $val->nation[0]->name }}</label>
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -190,38 +63,19 @@
                     <p>Cibes Lift memiliki 3 pabrik untuk memproduksi unit lift Anda.</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10s.jpg') }}');">
-                        <div class="card-standard_img"></div>
-                        <div class="card-standard_content">
-                            <h5 class="title-30-bold c-white">Gavle, Swedia</h5>
-                            <p class="c-white">Dibuka pada tahun 2012, Gavle PU berfungsi sebagai unit pusat produksi dan merupakan Kantor Pusat yang berperan penting dalam aktivitas penjualan internasional kami.</p>
-                            <a href="#" class="button-orange">Lebih Lengkap</a>
+            <div class="row justify-content-center">
+                @foreach ($manufacture as $key => $val)
+                    <div class="col-12 col-md-4">
+                        <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ $val->image->path }}');">
+                            <div class="card-standard_img"></div>
+                            <div class="card-standard_content">
+                                <h5 class="title-30-bold c-white">{{ $val->manufacture[0]->name }}</h5>
+                                <p class="c-white">{{ $val->manufacture[0]->description }}</p>
+                                <a href="#" class="button-orange">Lebih Lengkap</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/Rectangle 8.jpg') }}');">
-                        <div class="card-standard_img"></div>
-                        <div class="card-standard_content">
-                            <h5 class="title-30-bold c-white">Jiaxing, China</h5>
-                            <p class="c-white">Dibuka pada tahun 2020, Jiaxing PU adalah PU home-driven tercanggih kami, dibangun untuk memenuhi tingkat kustomisasi tertinggi.</p>
-                            <br>
-                            <a href="#" class="button-orange">Lebih Lengkap</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/Rectangle 9.jpg') }}');">
-                        <div class="card-standard_img"></div>
-                        <div class="card-standard_content">
-                            <h5 class="title-30-bold c-white">ROANOKE, USA</h5>
-                            <p class="c-white">Didirikan pada tahun 2014, Roanoke PU memproduksi lift yang dirancang untuk pasar AS dan Amerika Latin yang mengikuti standar ASME.</p>
-                            <a href="#" class="button-orange">Lebih Lengkap</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -233,39 +87,25 @@
                     <h5 class="title-50-bold">Cibes Lift Indonesia</h5>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card-image-banner" style="background-image: url('{{ asset('public/frontend/images/t3qtafw.png') }}');"></div>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card card-usp">
-                        <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
-                        <div class="d-block">
-                            <h5 class="title-30-bold">Infinity Glass</h5>
-                            <p>Integrated Shaft</p>
-                        </div>
+            @if (!empty($highlightImage))
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card-image-banner" style="background-image: url('{{ $highlightImage->image->path }}');"></div>
                     </div>
                 </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card card-usp">
-                        <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
-                        <div class="d-block">
-                            <h5 class="title-30-bold">Infinity Glass</h5>
-                            <p>Integrated Shaft</p>
+            @endif
+            <div class="row mt-4 justify-content-center">
+                @foreach ($highlight as $key => $val)
+                    <div class="col-12 col-md-4 mb-4">
+                        <div class="card card-usp">
+                            <img src="{{ $val->icon->path }}" width="50px" class="mb-3" alt="">
+                            <div class="d-block">
+                                <h5 class="title-30-bold">{{ $val->aboutUsHighlight[0]->name }}</h5>
+                                <p>{{ $val->aboutUsHighlight[0]->description }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card card-usp">
-                        <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
-                        <div class="d-block">
-                            <h5 class="title-30-bold">Infinity Glass</h5>
-                            <p>Integrated Shaft</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

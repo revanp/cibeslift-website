@@ -792,6 +792,7 @@ class ProductsController extends Controller
     {
         $user = Auth::user();
         $data = $request->post();
+        dd($data);
 
         unset($data['_token']);
 

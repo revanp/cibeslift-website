@@ -36,11 +36,11 @@
                     <label>Parent Product</label>
                     <select name="parent_id" class="form-control @if($errors->has('parent_id')) is-invalid @endif">
                         @php
-                            $parentIdData = !empty(old('parent_id')) ? old('parent_id') : '';
+                            $parentIdData = $data['parent_id'];
                         @endphp
                         <option value="">-- SELECT PARENT PRODUCT --</option>
                         @foreach ($parents as $key => $val)
-                            <option value="{{ $val->productId->id }}" {{ $parentIdData == '0' ? 'selected' : '' }}>{{ $val->name }}</option>
+                            <option value="{{ $val->productId->id }}" {{ $parentIdData == $val->productId->id ? 'selected' : '' }}>{{ $val->name }}</option>
                         @endforeach
                     </select>
                     <span class="form-text text-muted">Empty this field if product is standalone.</span>
@@ -52,7 +52,7 @@
                 </div>
             @endif
 
-            <div class="form-group col-md-6 hide-parent-not-null">
+            <div class="form-group col-md-6 hide-parent-not-null {{ (!empty($data['parent_id']) && !$data['have_a_child']) ? 'd-none' : '' }}">
                 <label>*Product Summary Type</label>
                 <select name="product_summary_type" class="form-control @if($errors->has('product_summary_type')) is-invalid @endif">
                     @php
