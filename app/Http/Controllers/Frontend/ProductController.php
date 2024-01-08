@@ -81,7 +81,7 @@ class ProductController extends Controller
         return view('frontend.pages.product.product', compact('product'));
     }
 
-    public function detail($lang, $categorySlug, $productSlug)
+    public function detail()
     {
         return view('frontend.pages.product.detail');
     }

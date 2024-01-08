@@ -683,3 +683,45 @@ a:hover {
     height: 50px;
     border-radius: 50px;   
 }
+
+@media screen and (max-width: 768px) {
+ 
+    .card-background {
+        height: 300px;
+        margin-bottom: 12px;
+    }
+    .button-primary {
+        font-size: 14px;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 12px;
+        font-weight: 600;
+    }
+    #sidebarToggle img {
+        width: 40px;
+    }
+    .main-menu {
+        position: fixed;
+        top: 0;
+        left: auto;
+        right: -100%;
+        bottom: 0;
+        width: 100%;
+        background: white;
+    }
+    .title-50-bold {
+        font-size: 32px;
+    }
+    .sidebar {
+        width: 100%;
+        padding: 60px 12px;
+    }
+    .sidebar-info {
+        left: 12px;
+        right: 12px;
+    }
+    .footer .col {
+        flex: auto;
+        margin-bottom: 34px;
+    }
+}

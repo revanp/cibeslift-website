@@ -169,7 +169,7 @@
                                 <div class="position-middle title-30-bold">V90 ELEGANCE</div>
                             </div>
                             <span class="d-block mt-5">
-                                <a href="#" class="button-orange">Learn More</a>
+                                <a data-fancybox data-src="#hidden-content" href="javascript:;" class="button-orange">Learn More</a>
                             </span>
                         </div>
                         <div class="col-12 col-md-4 text-center mb-4">
@@ -178,7 +178,7 @@
                                 <div class="position-middle title-30-bold">V90 ELEGANCE</div>
                             </div>
                             <span class="d-block mt-5">
-                                <a href="#" class="button-orange">Learn More</a>
+                                <a data-fancybox data-src="#hidden-content" href="javascript:;" class="button-orange">Learn More</a>
                             </span>
                         </div>
                         <div class="col-12 col-md-4 text-center mb-4">
@@ -187,10 +187,30 @@
                                 <div class="position-middle title-30-bold">V90 ELEGANCE</div>
                             </div>
                             <span class="d-block mt-5">
-                                <a href="#" class="button-orange">Learn More</a>
+                                <a data-fancybox data-src="#hidden-content" href="javascript:;" class="button-orange">Learn More</a>
                             </span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none;" id="hidden-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        <h3>3 Tier Customization</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4"></div>
+                <div class="col-12 col-md-8">
+                    <h5>V90 Galaxy</h5>
+                    <p>Screwdrive bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                    
                 </div>
             </div>
         </div>

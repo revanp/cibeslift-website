@@ -1,14 +1,14 @@
 <div class="header">
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-4 col-md-6">
                 <a href="{{ urlLocale('/') }}">
                     <img src="{{ asset('public/frontend/images/cibes_logo.svg') }}" alt="">
                 </a>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-8 col-md-6">
                 <div class="text-end">
-                    <ul class="menu">
+                    <ul class="menu main-menu">
                         <li>
                             <a href="#">{{ __('title.product') }}</a>
                             {{-- <div class="header-dropdown">
@@ -68,12 +68,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <div class="alert alert-light" role="alert">
                     0812 2196 9005
                 </div>                  
             </div>
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <div class="alert alert-light" role="alert">
                     indo@cibeslift.com
                 </div>                  
