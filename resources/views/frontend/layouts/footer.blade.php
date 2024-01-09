@@ -87,7 +87,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-4 text-end">
+            <div class="col-12 col-md-4 text-center text-md-end">
                 <ul class="list-social mb-3">
                     <li><a href="#"><img src="{{ asset('public/frontend/images/instagram.png') }}" alt=""></a></li>
                     <li><a href="#"><img src="{{ asset('public/frontend/images/facebook.png') }}" alt=""></a></li>
@@ -103,7 +103,7 @@
         </div>
         <hr class="hr-orange">
         <div class="row">
-            <div class="col-12 text-end">
+            <div class="col-12 text-center text-md-end">
                 <ul class="list-inline mb-0">
                     <li class="mx-2"><a href="">Privacy Policy</a></li>
                     <li class="mx-2"><a href="">Terms of Use</a></li>

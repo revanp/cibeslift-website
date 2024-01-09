@@ -96,7 +96,7 @@
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-8 pe-5">
+            <div class="col-12 col-md-8 pe-0 pe-md-5">
                 <div class="row">
                     <div class="col-12 mb-5">
                         <h3 class="title-50-bold mb-2">Mengapa Memilih Cibes Lift?</h3>
@@ -174,7 +174,7 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="text-center">
-                    <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V90LXPlus_02_110_010_0001 1.png') }}" alt="">
+                    <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V90LXPlus_02_110_010_0001 1.png') }}" class="w-100" alt="">
                 </div>
             </div>
         </div>
@@ -184,7 +184,7 @@
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 mb-4">
                 <div class="flex-middle h-100">
                     <span>
                         <h5 class="title-50-bold">Bringing People Together</h5>
@@ -193,8 +193,8 @@
                     </span>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
-                <img src="{{ asset('public/frontend/images/Rectangle 9.png') }}" alt="">
+            <div class="col-12 col-md-6 mb-4">
+                <img src="{{ asset('public/frontend/images/Rectangle 9.png') }}" class="w-100" alt="">
             </div>
         </div>
     </div>
@@ -203,10 +203,10 @@
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-6">
-                <img src="{{ asset('public/frontend/images/Rectangle 11.png') }}" alt="">
+            <div class="col-12 col-md-6 mb-4">
+                <img src="{{ asset('public/frontend/images/Rectangle 11.png') }}" class="w-100" alt="">
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 mb-4">
                 <div class="flex-middle h-100">
                     <span>
                         <h5 class="title-50-bold">Worldwide Sales Network</h5>
@@ -223,12 +223,12 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4 text-center">
-                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
+                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" class="w-100" alt="">
                 <p class="title-20-bold mt-3">Cibes V90 Galaxy</p>
             </div>
             <div class="col-12 col-md-8">
                 <div class="mb-4">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" alt="">
+                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
                 </div>
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi ipsam quam possimus perferendis laboriosam repudiandae voluptates voluptas, adipisci modi eligendi natus ab tenetur dolorem exercitationem quod eos rem cupiditate deleniti.</p>
                 <label class="title-20-bold">Ghani, Jakarta Timur</label>
@@ -301,18 +301,18 @@
                 <div class="card-form">
                     <form action="">
                         <div class="row mb-4">
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6 mb-4 mb-md-0">
                                 <input class="form-control" type="text" placeholder="Name">
                             </div>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12">
                                 <input class="form-control" type="text" placeholder="Telepon">
                             </div>
                         </div>
                         <div class="row mb-4">
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6 mb-4 mb-md-0">
                                 <input class="form-control" type="text" placeholder="Email">
                             </div>
-                            <div class="col-12 col-md-3">
+                            <div class="col-12 col-md-3 mb-4 mb-md-0">
                                 <input class="form-control" type="text" placeholder="Kota">
                             </div>
                             <div class="col-12 col-md-3">
