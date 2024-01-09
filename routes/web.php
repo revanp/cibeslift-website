@@ -29,6 +29,17 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     Route::get('', [App\Http\Controllers\Backend\Content\Home\VideoController::class, 'index']);
                     Route::post('create', [App\Http\Controllers\Backend\Content\Home\VideoController::class, 'store']);
                 });
+
+                Route::group(['prefix' => 'home-menu-section'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\Home\HomeMenuSectionController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\Home\HomeMenuSectionController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\Home\HomeMenuSectionController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\Home\HomeMenuSectionController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\Home\HomeMenuSectionController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\Home\HomeMenuSectionController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\Home\HomeMenuSectionController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\Home\HomeMenuSectionController::class, 'delete']);
+                });
             });
 
             Route::group(['prefix' => 'about-us'], function(){
