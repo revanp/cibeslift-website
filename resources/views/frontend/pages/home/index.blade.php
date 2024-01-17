@@ -97,93 +97,41 @@
     @endif
 @endforeach
 
+@if (!empty($whyCibesTitle))
 <div class="section">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-8 pe-0 pe-md-5">
                 <div class="row">
                     <div class="col-12 mb-5">
-                        <h3 class="title-50-bold mb-2">Mengapa Memilih Cibes Lift?</h3>
-                        <p>Cibes Lift menjadi pilihan menarik untuk semua orang karena bla bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla la bla bla </p>
+                        <h3 class="title-50-bold mb-2">{{ $whyCibesTitle->title ?? '' }}</h3>
+                        <p>{{ $whyCibesTitle->description ?? '' }}</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-6 mb-4">
-                        <div class="card card-usp">
-                            <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
-                            <div class="d-block">
-                                <h5 class="title-30-bold">Infinity Glass</h5>
-                                <p>Integrated Shaft</p>
+                    @foreach ($whyCibesUsp as $key => $val)
+                        <div class="col-12 col-md-6 mb-4">
+                            <div class="card card-usp">
+                                <img src="{{ $val->image->path ?? '' }}" width="50px" class="mb-3" alt="">
+                                <div class="d-block">
+                                    <h5 class="title-30-bold">{{ $val->whyCibesUsp[0]->title ?? '' }}</h5>
+                                    <p>{{ $val->whyCibesUsp[0]->subtitle ?? '' }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-6 mb-4">
-                        <div class="card card-usp">
-                            <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
-                            <div class="d-block">
-                                <h5 class="title-30-bold">Infinity Glass</h5>
-                                <p>Integrated Shaft</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 mb-4">
-                        <div class="card card-usp">
-                            <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
-                            <div class="d-block">
-                                <h5 class="title-30-bold">Infinity Glass</h5>
-                                <p>Integrated Shaft</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 mb-4">
-                        <div class="card card-usp">
-                            <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
-                            <div class="d-block">
-                                <h5 class="title-30-bold">Infinity Glass</h5>
-                                <p>Integrated Shaft</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-none">
-                    <div class="col-12 col-md-6 text-center mb-4">
-                        <div class="icon-rounded"></div>
-                        <span>
-                            <h5 class="title-30-bold">Garansi 5, 5, 15 Tahun</h5>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                        </span>
-                    </div>
-                    <div class="col-12 col-md-6 text-center mb-4">
-                        <div class="icon-rounded"></div>
-                        <span>
-                            <h5 class="title-30-bold">Garansi 5, 5, 15 Tahun</h5>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                        </span>
-                    </div>
-                    <div class="col-12 col-md-6 text-center mb-4">
-                        <div class="icon-rounded"></div>
-                        <span>
-                            <h5 class="title-30-bold">Garansi 5, 5, 15 Tahun</h5>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                        </span>
-                    </div>
-                    <div class="col-12 col-md-6 text-center mb-4">
-                        <div class="icon-rounded"></div>
-                        <span>
-                            <h5 class="title-30-bold">Garansi 5, 5, 15 Tahun</h5>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                        </span>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="text-center">
-                    <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V90LXPlus_02_110_010_0001 1.png') }}" class="w-100" alt="">
+                    <img src="{{ $whyCibesTitle->image->path ?? '' }}" class="w-100" alt="">
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@endif
 
 <div class="section">
     <div class="container">

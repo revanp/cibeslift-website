@@ -9,6 +9,8 @@ use App\Models\HeaderBanner;
 use App\Models\HomeVideo;
 use App\Models\Product;
 use App\Models\HomeMenuSection;
+use App\Models\WhyCibesTitle;
+use App\Models\WhyCibesUspId;
 
 class HomeController extends Controller
 {
@@ -47,6 +49,22 @@ class HomeController extends Controller
         })
         ->get();
 
-        return view('frontend.pages.home.index', compact('headerBanner', 'video', 'products', 'menuSection'));
+        $whyCibesTitle = WhyCibesTitle::with([
+            'image'
+        ])
+        ->where('language_code', getLocale())
+        ->first();
+
+        $whyCibesUsp = WhyCibesUspId::with([
+            'image',
+            'whyCibesUsp' => function($query){
+                $query->where('language_code', getLocale());
+            }
+        ])
+        ->where('is_active', 1)
+        ->orderBy('sort')
+        ->get();
+
+        return view('frontend.pages.home.index', compact('headerBanner', 'video', 'products', 'menuSection', 'whyCibesTitle', 'whyCibesUsp'));
     }
 }
