@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\App;
 use App\Models\HeaderBanner;
 use App\Models\HomeVideo;
 use App\Models\Product;
+use App\Models\HomeMenuSection;
 
 class HomeController extends Controller
 {
@@ -36,6 +37,16 @@ class HomeController extends Controller
         })
         ->get();
 
-        return view('frontend.pages.home.index', compact('headerBanner', 'video', 'products'));
+        $menuSection = HomeMenuSection::with([
+            'homeMenuSectionId',
+            'homeMenuSectionId.image'
+        ])
+        ->where('language_code', getLocale())
+        ->whereHas('homeMenuSectionId', function($query){
+            $query->where('is_active', true);
+        })
+        ->get();
+
+        return view('frontend.pages.home.index', compact('headerBanner', 'video', 'products', 'menuSection'));
     }
 }

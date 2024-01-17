@@ -40,6 +40,18 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     Route::put('change-status', [App\Http\Controllers\Backend\Content\Home\HomeMenuSectionController::class, 'changeStatus']);
                     Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\Home\HomeMenuSectionController::class, 'delete']);
                 });
+
+                Route::group(['prefix' => 'why-cibes'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\Home\WhyCibesController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\Home\WhyCibesController::class, 'index']);
+                    Route::post('create-title', [App\Http\Controllers\Backend\Content\Home\WhyCibesController::class, 'storeTitle']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\Home\WhyCibesController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\Home\WhyCibesController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\Home\WhyCibesController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\Home\WhyCibesController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\Home\WhyCibesController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\Home\WhyCibesController::class, 'delete']);
+                });
             });
 
             Route::group(['prefix' => 'about-us'], function(){

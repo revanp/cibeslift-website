@@ -65,33 +65,37 @@
     </div>
 </div>
 
-<div class="section background-img" style="background-image: url('{{ asset('public/frontend/images/Rectangle 6.jpg') }}');">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6">
-                <h5 class="title-50-bold c-white">Kustomisasi Lift Rumah Anda</h5>
-                <p class="c-white mb-4">Lift Rumah Cibes dapat dikustomisasi sesuai dengan selera Anda. Kami memiliki banyak pilihan warna, material, maupun fitur. </p>
-                <a href="#" class="button-orange">Desain Lift Rumah Saya Sendiri</a>
-            </div>
-            <div class="col-12 col-md-6">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="section background-img" style="background-image: url('{{ asset('public/frontend/images/Rectangle 7.png') }}');">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6">
-            </div>
-            <div class="col-12 col-md-6">
-                <h5 class="title-50-bold c-white">Lift Rumah dengan Teknologi Terbaru</h5>
-                <p class="c-white mb-4">Lift Rumah Cibes dapat dipasang dengan mudah. Karena tidak memerlukan pit dan ruang mesin, dan juga sudah dilengkapi dengan shaft bawaan.</p>
-                <a href="#" class="button-orange">Teknologi Cibes Lift</a>
+@foreach ($menuSection as $key => $val)
+    @if ($key % 2 == 0)
+        <div class="section background-img" style="background-image: url('{{ $val->homeMenuSectionId->image->path }}');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <h5 class="title-50-bold c-white">{{ $val->title }}</h5>
+                        <p class="c-white mb-4">{{ $val->description }}</p>
+                        <a href="{{ $val->homeMenuSectionId->url }}" class="button-orange">{{ $val->cta }}</a>
+                    </div>
+                    <div class="col-12 col-md-6">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    @else
+        <div class="section background-img" style="background-image: url('{{ $val->homeMenuSectionId->image->path }}');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <h5 class="title-50-bold c-white">{{ $val->title }}</h5>
+                        <p class="c-white mb-4">{{ $val->description }}</p>
+                        <a href="{{ $val->homeMenuSectionId->url }}" class="button-orange">{{ $val->cta }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+@endforeach
 
 <div class="section">
     <div class="container">

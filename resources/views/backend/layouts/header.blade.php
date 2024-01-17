@@ -66,6 +66,8 @@
                                                 <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/video') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Video</span></a></li>
 
                                                 <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/home-menu-section') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Menu Section</span></a></li>
+
+                                                <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/why-cibes') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Why Cibes</span></a></li>
                                             </ul>
                                         </div>
                                     </li>
