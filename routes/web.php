@@ -52,6 +52,17 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     Route::put('change-status', [App\Http\Controllers\Backend\Content\Home\WhyCibesController::class, 'changeStatus']);
                     Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\Home\WhyCibesController::class, 'delete']);
                 });
+
+                Route::group(['prefix' => 'company-vision'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\Home\CompanyVisionController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\Home\CompanyVisionController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\Home\CompanyVisionController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\Home\CompanyVisionController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\Home\CompanyVisionController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\Home\CompanyVisionController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\Home\CompanyVisionController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\Home\CompanyVisionController::class, 'delete']);
+                });
             });
 
             Route::group(['prefix' => 'about-us'], function(){

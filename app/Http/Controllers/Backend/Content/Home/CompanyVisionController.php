@@ -4,25 +4,24 @@ namespace App\Http\Controllers\Backend\Content\Home;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\WhyCibesTitle;
-use App\Models\WhyCibesUsp;
-use App\Models\WhyCibesUspId;
+use App\Models\CompanyVisionId;
+use App\Models\CompanyVision;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class WhyCibesController extends Controller
+class CompanyVisionController extends Controller
 {
     public function index(Request $request)
     {
         if($request->ajax()){
             $reqDatatable  = $this->requestDatatables($request->input());
 
-            $data = WhyCibesUsp::with([
-                'whyCibesUspId',
-                'whyCibesUspId.image'
+            $data = CompanyVision::with([
+                'companyVisionId',
+                'companyVisionId.image'
             ])->where('language_code', 'id');
 
             if ($reqDatatable['orderable']) {
@@ -65,24 +64,24 @@ class WhyCibesController extends Controller
                     }
                 })
                 ->addColumn('image', function($data){
-                    return '<a href="'. $data->whyCibesUspId->image->path .'" target="_BLANK"><img src="'.$data->whyCibesUspId->image->path.'" style="width:200px;"></a>';
+                    return '<a href="'. $data->companyVisionId->image->path .'" target="_BLANK"><img src="'.$data->companyVisionId->image->path.'" style="width:200px;"></a>';
                 })
                 ->addColumn('is_active', function($data){
-                    $id = $data->whyCibesUspId->id;
-                    $isActive = $data->whyCibesUspId->is_active;
+                    $id = $data->companyVisionId->id;
+                    $isActive = $data->companyVisionId->is_active;
 
-                    return view('backend.pages.content.home.why-cibes.list.active', compact('id', 'isActive'));
+                    return view('backend.pages.content.home.company-vision.list.active', compact('id', 'isActive'));
                 })
                 ->addColumn('url', function($data){
-                    return $data->whyCibesUspId->url;
+                    return $data->companyVisionId->url;
                 })
                 ->addColumn('action', function($data){
                     $html = '<div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">';
                         //* EDIT
-                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/content/home/why-cibes/edit/'.$data->whyCibesUspId->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link" href="'. url('admin-cms/content/home/company-vision/edit/'.$data->companyVisionId->id) .'"><i class="flaticon2-edit nav-icon"></i><span class="nav-text">Edit</span></a></li>';
 
                         //* DELETE
-                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/content/home/why-cibes/delete/'.$data->whyCibesUspId->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
+                        $html .= '<li class="nav-item"><a class="nav-link btn-delete" href="'. url('admin-cms/content/home/company-vision/delete/'.$data->companyVisionId->id) .'"><i class="flaticon2-delete nav-icon"></i><span class="nav-text">Delete</span></a></li>';
                     $html .= '</ul></div></div>';
 
                     return $html;
@@ -91,53 +90,54 @@ class WhyCibesController extends Controller
                 ->toJson(true);
         }
 
-        $title = WhyCibesTitle::with(['image'])->get()->toArray();
-
-        foreach ($title as $key => $val) {
-            $title[$val['language_code']] = $val;
-            unset($title[$key]);
-        }
-
-        return view('backend.pages.content.home.why-cibes.index', compact('title'));
+        return view('backend.pages.content.home.company-vision.index');
     }
 
-    public function storeTitle(Request $request)
+    public function create()
+    {
+        $sort = CompanyVisionId::select('sort')->orderBy('sort', 'desc')->first();
+
+        if(!empty($sort)){
+            $sort = $sort->sort;
+        }
+
+        return view('backend.pages.content.home.company-vision.create', compact('sort'));
+    }
+
+    public function store(Request $request)
     {
         $user = Auth::user();
         $data = $request->all();
 
         unset($data['_token']);
 
-        $check = WhyCibesTitle::first();
-
-        if(!empty($check)){
-            $rules = [
-                'image' => [],
-            ];
-        }else{
-            $rules = [
-                'image' => ['required'],
-            ];
-        }
+        $rules = [
+            'image' => ['required'],
+            'url' => ['required'],
+        ];
 
         $messages = [];
 
         $attributes = [
             'image' => 'Image',
+            'url' => 'URL',
         ];
 
         foreach ($request->input as $lang => $input) {
             if($lang == 'id'){
                 $rules["input.$lang.title"] = ['required'];
+                $rules["input.$lang.cta"] = ['required'];
                 $rules["input.$lang.description"] = ['required'];
             }else{
                 $rules["input.$lang.title"] = [];
+                $rules["input.$lang.cta"] = [];
                 $rules["input.$lang.description"] = [];
             }
 
             $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
             $attributes["input.$lang.title"] = "$lang_name Title";
+            $attributes["input.$lang.cta"] = "$lang_name Call to Action";
             $attributes["input.$lang.description"] = "$lang_name Description";
         }
 
@@ -160,171 +160,46 @@ class WhyCibesController extends Controller
         try{
             DB::beginTransaction();
 
-            foreach ($data['input'] as $languageCode => $input) {
-                $title = WhyCibesTitle::where('language_code', $languageCode)->first();
+            $menuSectionId = new CompanyVisionId();
 
-                if(empty($title)){
-                    $title = new WhyCibesTitle();
-                }
+            $sort = empty($data['sort']) ? CompanyVisionId::count() + 1 : $data['sort'];
 
-                $input['language_code'] = $languageCode;
-
-                if($languageCode != 'id'){
-                    $input['title'] = $data['input']['en']['title'] ?? $data['input']['id']['title'];
-                    $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
-                }
-
-                $title->fill($input)->save();
-
-                $idTitle = $title->id;
-
-                if ($request->hasFile('image')) {
-                    $this->storeFile(
-                        $request->file('image'),
-                        $title,
-                        'image',
-                        "images/home/why-cibes/title/image/{$idTitle}",
-                        'image'
-                    );
-                }
-            }
-
-            $message = 'Why Cibes Title created/updated successfully';
-
-            DB::commit();
-        }catch (\Illuminate\Database\QueryException $e) {
-            DB::rollBack();
-
-            $isError = true;
-
-            $err     = $e->errorInfo;
-
-            $message =  $err[2];
-        }
-
-        if ($isError == true) {
-            return response()->json([
-                'code' => 500,
-                'success' => false,
-                'message' => $message
-            ], 500)
-                ->withHeaders([
-                    'Content-Type' => 'application/json'
-                ]);
-        }else{
-            session()->flash('success', $message);
-
-            return response()->json([
-                'code' => 200,
-                'success' => true,
-                'message' => $message,
-                'redirect' => url('admin-cms/content/home/why-cibes')
-            ], 200)->withHeaders([
-                'Content-Type' => 'application/json'
-            ]);
-        }
-    }
-
-    public function create()
-    {
-        $sort = WhyCibesUspId::select('sort')->orderBy('sort', 'desc')->first();
-
-        if(!empty($sort)){
-            $sort = $sort->sort;
-        }
-
-        return view('backend.pages.content.home.why-cibes.create', compact('sort'));
-    }
-
-    public function store(Request $request)
-    {
-        $user = Auth::user();
-        $data = $request->all();
-
-        unset($data['_token']);
-
-        $rules = [
-            'image' => ['required'],
-        ];
-
-        $messages = [];
-
-        $attributes = [
-            'image' => 'Image',
-        ];
-
-        foreach ($request->input as $lang => $input) {
-            if($lang == 'id'){
-                $rules["input.$lang.title"] = ['required'];
-                $rules["input.$lang.subtitle"] = ['required'];
-            }else{
-                $rules["input.$lang.title"] = [];
-                $rules["input.$lang.subtitle"] = [];
-            }
-
-            $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
-
-            $attributes["input.$lang.title"] = "$lang_name Title";
-            $attributes["input.$lang.subtitle"] = "$lang_name Subtitle";
-        }
-
-        $validator = Validator::make($data, $rules, $messages, $attributes);
-
-        if($validator->fails()){
-            return response()->json([
-                'code' => 422,
-                'success' => false,
-                'message' => 'Validation error!',
-                'data' => $validator->errors()
-            ], 422)
-                ->withHeaders([
-                    'Content-Type' => 'application/json'
-                ]);
-        }
-
-        $isError = false;
-
-        try{
-            DB::beginTransaction();
-
-            $uspId = new WhyCibesUspId();
-
-            $sort = empty($data['sort']) ? WhyCibesUspId::count() + 1 : $data['sort'];
-
-            $uspId->fill([
+            $menuSectionId->fill([
+                'url' => $data['url'],
                 'is_active' => !empty($data['is_active']) ? true : false,
                 'sort' => $sort,
             ])->save();
 
-            $idUspId = $uspId->id;
+            $idMenuSectionid = $menuSectionId->id;
 
             foreach ($data['input'] as $languageCode => $input) {
-                $usp = new WhyCibesUsp();
+                $nation = new CompanyVision();
 
-                $input['id_why_cibes_usp_id'] = $idUspId;
+                $input['id_company_vision_id'] = $idMenuSectionid;
                 $input['language_code'] = $languageCode;
 
                 if($languageCode != 'id'){
                     $input['title'] = $data['input']['en']['title'] ?? $data['input']['id']['title'];
-                    $input['subtitle'] = $data['input']['en']['subtitle'] ?? $data['input']['id']['subtitle'];
+                    $input['cta'] = $data['input']['en']['cta'] ?? $data['input']['id']['cta'];
+                    $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
                 }
 
-                $usp->fill($input)->save();
+                $nation->fill($input)->save();
 
-                $idUsp = $usp->id;
+                $idNation = $nation->id;
             }
 
             if ($request->hasFile('image')) {
                 $this->storeFile(
                     $request->file('image'),
-                    $uspId,
+                    $menuSectionId,
                     'image',
-                    "images/home/why-cibes/usp/image/{$idUspId}",
+                    "images/home/company-vision/image/{$idMenuSectionid}",
                     'image'
                 );
             }
 
-            $message = 'Why Cibes USP created successfully';
+            $message = 'Company Vision created successfully';
 
             DB::commit();
         }catch (\Illuminate\Database\QueryException $e) {
@@ -353,7 +228,7 @@ class WhyCibesController extends Controller
                 'code' => 200,
                 'success' => true,
                 'message' => $message,
-                'redirect' => url('admin-cms/content/home/why-cibes')
+                'redirect' => url('admin-cms/content/home/company-vision')
             ], 200)->withHeaders([
                 'Content-Type' => 'application/json'
             ]);
@@ -362,22 +237,22 @@ class WhyCibesController extends Controller
 
     public function edit($id)
     {
-        $data = WhyCibesUspId::with([
+        $data = CompanyVisionId::with([
             'image',
-            'whyCibesUsp'
+            'companyVision'
         ])
         ->find($id)
         ->toArray();
 
-        foreach ($data['why_cibes_usp'] as $key => $val) {
-            $data['why_cibes_usp'][$val['language_code']] = $val;
-            unset($data['why_cibes_usp'][$key]);
+        foreach ($data['company_vision'] as $key => $val) {
+            $data['company_vision'][$val['language_code']] = $val;
+            unset($data['company_vision'][$key]);
         }
 
-        $sort = WhyCibesUspId::select('sort')->orderBy('sort', 'desc')->first();
+        $sort = CompanyVisionId::select('sort')->orderBy('sort', 'desc')->first();
         $sort = $sort->sort;
 
-        return view('backend.pages.content.home.why-cibes.edit', compact('data', 'sort'));
+        return view('backend.pages.content.home.company-vision.edit', compact('data', 'sort'));
     }
 
     public function update($id, Request $request)
@@ -389,27 +264,32 @@ class WhyCibesController extends Controller
 
         $rules = [
             'image' => [],
+            'url' => ['required'],
         ];
 
         $messages = [];
 
         $attributes = [
             'image' => 'Image',
+            'url' => 'URL',
         ];
 
         foreach ($request->input as $lang => $input) {
             if($lang == 'id'){
                 $rules["input.$lang.title"] = ['required'];
-                $rules["input.$lang.subtitle"] = ['required'];
+                $rules["input.$lang.cta"] = ['required'];
+                $rules["input.$lang.description"] = ['required'];
             }else{
                 $rules["input.$lang.title"] = [];
-                $rules["input.$lang.subtitle"] = [];
+                $rules["input.$lang.cta"] = [];
+                $rules["input.$lang.description"] = [];
             }
 
             $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
             $attributes["input.$lang.title"] = "$lang_name Title";
-            $attributes["input.$lang.subtitle"] = "$lang_name Subtitle";
+            $attributes["input.$lang.cta"] = "$lang_name Call to Action";
+            $attributes["input.$lang.description"] = "$lang_name Description";
         }
 
         $validator = Validator::make($data, $rules, $messages, $attributes);
@@ -431,44 +311,46 @@ class WhyCibesController extends Controller
         try{
             DB::beginTransaction();
 
-            $uspId = WhyCibesUspId::find($id);
+            $menuSectionId = CompanyVisionId::find($id);
 
-            $sort = empty($data['sort']) ? WhyCibesUspId::count() + 1 : $data['sort'];
+            $sort = empty($data['sort']) ? CompanyVisionId::count() + 1 : $data['sort'];
 
-            $uspId->fill([
+            $menuSectionId->fill([
+                'url' => $data['url'],
                 'is_active' => !empty($data['is_active']) ? true : false,
                 'sort' => $sort,
             ])->save();
 
-            $idUspId = $uspId->id;
+            $idMenuSectionid = $menuSectionId->id;
 
             foreach ($data['input'] as $languageCode => $input) {
-                $usp = WhyCibesUsp::where('language_code', $languageCode)->where('id_why_cibes_usp_id', $id)->first();
+                $nation = CompanyVision::where('language_code', $languageCode)->where('id_company_vision_id', $id)->first();
 
-                $input['id_why_cibes_usp_id'] = $idUspId;
+                $input['id_company_vision_id'] = $idMenuSectionid;
                 $input['language_code'] = $languageCode;
 
                 if($languageCode != 'id'){
                     $input['title'] = $data['input']['en']['title'] ?? $data['input']['id']['title'];
-                    $input['subtitle'] = $data['input']['en']['subtitle'] ?? $data['input']['id']['subtitle'];
+                    $input['cta'] = $data['input']['en']['cta'] ?? $data['input']['id']['cta'];
+                    $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
                 }
 
-                $usp->fill($input)->save();
+                $nation->fill($input)->save();
 
-                $idUsp = $usp->id;
+                $idNation = $nation->id;
             }
 
             if ($request->hasFile('image')) {
                 $this->storeFile(
                     $request->file('image'),
-                    $uspId,
+                    $menuSectionId,
                     'image',
-                    "images/home/why-cibes/usp/image/{$idUspId}",
+                    "images/home/menu-section/image/{$idMenuSectionid}",
                     'image'
                 );
             }
 
-            $message = 'Why Cibes USP updated successfully';
+            $message = 'Company Vision updated successfully';
 
             DB::commit();
         }catch (\Illuminate\Database\QueryException $e) {
@@ -497,7 +379,7 @@ class WhyCibesController extends Controller
                 'code' => 200,
                 'success' => true,
                 'message' => $message,
-                'redirect' => url('admin-cms/content/home/why-cibes')
+                'redirect' => url('admin-cms/content/home/company-vision')
             ], 200)->withHeaders([
                 'Content-Type' => 'application/json'
             ]);
@@ -521,7 +403,7 @@ class WhyCibesController extends Controller
             try {
                 DB::beginTransaction();
 
-                $update = WhyCibesUspId::where('id', $id)->update([
+                $update = CompanyVisionId::where('id', $id)->update([
                     'is_active' => $status
                 ]);
 
@@ -549,12 +431,12 @@ class WhyCibesController extends Controller
         try{
             DB::beginTransaction();
 
-            $delete = WhyCibesUspId::where('id', $id)->delete();
-            $deleteChild = WhyCibesUsp::where('id_why_cibes_usp_id', $id)->delete();
+            $delete = CompanyVisionId::where('id', $id)->delete();
+            $deleteChild = CompanyVision::where('id_company_vision_id', $id)->delete();
 
             DB::commit();
 
-            return redirect('admin-cms/content/home/why-cibes')->with(['success' => 'Menu Section has been deleted successfully']);
+            return redirect('admin-cms/content/home/company-vision')->with(['success' => 'Company Vision has been deleted successfully']);
         }catch(Exception $e){
             DB::rollBack();
 
