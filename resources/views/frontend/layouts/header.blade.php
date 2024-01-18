@@ -12,12 +12,12 @@
                         <li>
                             <a href="#">{{ __('title.product') }}</a>
                             {{-- <div class="header-dropdown">
-                                
+
                             </div> --}}
                         </li>
                         <li><a href="#">{{ __('title.installation') }}</a></li>
                     </ul>
-                    <a href="#" class="button-primary">{{ __('buttons.install_a_home_elevator') }}</a>
+                    <a href="{{ urlLocale('') }}#contact_us" class="button-primary">{{ __('buttons.install_a_home_elevator') }}</a>
                     <a href="javascript:;" id="sidebarToggle" class="ms-3">
                         <img src="{{ asset('public/frontend/images/menu-burger.png') }}" alt="">
                     </a>
@@ -28,7 +28,7 @@
 </div>
 
 <div class="sidebar">
-    
+
     <div class="sidebar-search">
         <div class="row">
             <div class="col-9">
@@ -71,12 +71,12 @@
             <div class="col-12 col-md-6">
                 <div class="alert alert-light" role="alert">
                     0812 2196 9005
-                </div>                  
+                </div>
             </div>
             <div class="col-12 col-md-6">
                 <div class="alert alert-light" role="alert">
                     indo@cibeslift.com
-                </div>                  
+                </div>
             </div>
         </div>
         <div class="row">

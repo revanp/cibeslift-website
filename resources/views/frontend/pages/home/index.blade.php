@@ -130,46 +130,49 @@
         </div>
     </div>
 </div>
-
 @endif
 
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6 mb-4">
-                <div class="flex-middle h-100">
-                    <span>
-                        <h5 class="title-50-bold">Bringing People Together</h5>
-                        <p>We want our lifts to make a difference in your life and in the life of your loved ones. Bringing people together is our vision, and that is what we are all about.</p>
-                        <a href="#" class="button-orange">Our Company Vision</a>
-                    </span>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 mb-4">
-                <img src="{{ asset('public/frontend/images/Rectangle 9.png') }}" class="w-100" alt="">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6 mb-4">
-                <img src="{{ asset('public/frontend/images/Rectangle 11.png') }}" class="w-100" alt="">
-            </div>
-            <div class="col-12 col-md-6 mb-4">
-                <div class="flex-middle h-100">
-                    <span>
-                        <h5 class="title-50-bold">Worldwide Sales Network</h5>
-                        <p>We have direct sales and distribution in more than 70 countries across the world. Contact us today to get in touch with your closest Cibes dealer.</p>
-                        <a href="#" class="button-orange">Contact Us</a>
-                    </span>
+@foreach ($companyVision as $key => $val)
+    @if ($key % 2 == 0)
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6 mb-4">
+                        <div class="flex-middle h-100">
+                            <span>
+                                <h5 class="title-50-bold">{{ $val->companyVision[0]->title }}</h5>
+                                <p>{{ $val->companyVision[0]->description }}</p>
+                                <a href="{{ $val->url }}" class="button-orange">{{ $val->companyVision[0]->cta }}</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-4">
+                        <img src="{{ $val->image->path }}" class="w-100" alt="">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    @else
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6 mb-4">
+                        <img src="{{ $val->image->path }}" class="w-100" alt="">
+                    </div>
+                    <div class="col-12 col-md-6 mb-4">
+                        <div class="flex-middle h-100">
+                            <span>
+                                <h5 class="title-50-bold">{{ $val->companyVision[0]->title }}</h5>
+                                <p>{{ $val->companyVision[0]->description }}</p>
+                                <a href="{{ $val->url }}" class="button-orange">{{ $val->companyVision[0]->cta }}</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+@endforeach
 
 <div class="section">
     <div class="container">
@@ -241,7 +244,7 @@
     </div>
 </div>
 
-<div class="section banner-background" style="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_010_030_01_0001.png') }}">
+<div class="section banner-background" style="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_010_030_01_0001.png') }}" id="contact_us">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4">
@@ -256,7 +259,7 @@
                             <div class="col-12 col-md-6 mb-4 mb-md-0">
                                 <input class="form-control" type="text" placeholder="Name">
                             </div>
-                            <div class="col-12">
+                            <div class="col-12 col-md-6 mb-4 mb-md-0">
                                 <input class="form-control" type="text" placeholder="Telepon">
                             </div>
                         </div>
@@ -278,7 +281,7 @@
                         </div>
                         <div class="row mb-5">
                             <div class="col-12">
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="3" placeholder="Catatan tambahan (jika ada)"></textarea>
                             </div>
                         </div>
                         <div class="row mb-5">

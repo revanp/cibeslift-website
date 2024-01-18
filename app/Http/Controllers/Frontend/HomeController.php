@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\HomeMenuSection;
 use App\Models\WhyCibesTitle;
 use App\Models\WhyCibesUspId;
+use App\Models\CompanyVisionId;
 
 class HomeController extends Controller
 {
@@ -65,6 +66,16 @@ class HomeController extends Controller
         ->orderBy('sort')
         ->get();
 
-        return view('frontend.pages.home.index', compact('headerBanner', 'video', 'products', 'menuSection', 'whyCibesTitle', 'whyCibesUsp'));
+        $companyVision = CompanyVisionId::with([
+            'image',
+            'companyVision' => function($query){
+                $query->where('language_code', getLocale());
+            }
+        ])
+        ->where('is_active', 1)
+        ->orderBy('sort')
+        ->get();
+
+        return view('frontend.pages.home.index', compact('headerBanner', 'video', 'products', 'menuSection', 'whyCibesTitle', 'whyCibesUsp', 'companyVision'));
     }
 }
