@@ -293,6 +293,8 @@ body {
 }
 
 .card-standard_content {
+    position: relative;
+    z-index: 2;
     padding: 24px;
 }
 .card-standard_img_float_bottom_left span {
@@ -350,11 +352,24 @@ body {
     width: 160px;
     height: 160px;
     border-radius: 100%;
-    background-color: #F89828;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     display: block;
     margin: 0 auto 20px;
+    overflow: hidden;
+    transition: all 200ms linear;
+}
+.slider-history .slick-slide {
+    transition: all 200ms linear;
+}
+.slider-history .slick-slide:hover .slider-history_card {
+    height: 300px;
+    width: 300px;
 }
 .slider-history_content {
+    display: block;
+    padding: 0 50px;
     text-align: center;
 }
 
@@ -369,7 +384,20 @@ body {
     display: block;
     margin: 0 auto 24px;
 }
-
+.card-about {
+    height: 660px;
+    position: relative;
+}
+.card-about:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
 .list-standard {
     padding: 0;
     margin: 0;

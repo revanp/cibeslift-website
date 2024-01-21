@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="section">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 text-center mb-5">
                     <h3 class="title-50-bold">The History of Cibes</h3>
@@ -15,12 +15,10 @@
                     <div class="slider-history">
                         @foreach ($history as $key => $val)
                             <div>
-                                <div class="slider-history_card">
-                                    <img src="{{ $val->image->path }}" alt="" class="w-100">
-                                </div>
+                                <div class="slider-history_card" style="background-image: url('{{ $val->image->path }}');"></div>
                                 <span class="slider-history_content">
                                     <h5 class="title-30-bold mb-4">{{ $val->year }}</h5>
-                                    <p class="title-20-reguler">{{ $val->history[0]->description }}</p>
+                                    <p class="title-14-reguler">{{ $val->history[0]->description }}</p>
                                 </span>
                             </div>
                         @endforeach
@@ -66,16 +64,53 @@
             <div class="row justify-content-center">
                 @foreach ($manufacture as $key => $val)
                     <div class="col-12 col-md-4">
-                        <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ $val->image->path }}');">
+                        <div class="card-about card-standard bg-gray background-default text-center" style="background-image: url('{{ $val->image->path }}');">
                             <div class="card-standard_img"></div>
                             <div class="card-standard_content">
                                 <h5 class="title-30-bold c-white">{{ $val->manufacture[0]->name }}</h5>
                                 <p class="c-white">{{ $val->manufacture[0]->description }}</p>
-                                <a href="#" class="button-orange">Lebih Lengkap</a>
+                                <a data-fancybox data-src="#manufactures" href="javascript:;"  class="button-orange">Lebih Lengkap</a>
                             </div>
                         </div>
                     </div>
                 @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none; min-width: 1200px;" id="manufactures">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-7 text-center mb-5">
+                    <h5 class="title-50-bold">Gavle PU, Swedia</h5>
+                    <p>Dibuka pada tahun 2012, Gavle PU berfungsi sebagai unit pusat produksi dan merupakan Kantor Pusat yang berperan penting dalam aktivitas penjualan internasional kami.</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-4">
+                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');">
+                        <div class="card-standard_img"></div>
+                        <div class="card-standard_content">
+                            <h5 class="title-30-bold c-white">Cibes Air</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');">
+                        <div class="card-standard_img"></div>
+                        <div class="card-standard_content">
+                            <h5 class="title-30-bold c-white">Cibes Air</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');">
+                        <div class="card-standard_img"></div>
+                        <div class="card-standard_content">
+                            <h5 class="title-30-bold c-white">Cibes Air</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -136,7 +171,7 @@
                         <span>
                             <h4 class="title-50-bold">Customer Care yang Siap Melayani 24/7</h4>
                             <p class="mb-5">Demi keamanan dan kenyamanan Anda, kami siap selama 24 jam penuh setiap hari. bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.</p>
-                            <a href="#" class="button-orange">Pasang Lift Cibes</a>
+                            <a data-fancybox data-src="#aftersales" href="javascript:;" class="button-orange">Pasang Lift Cibes</a>
                         </span>
                     </div>
                 </div>
@@ -144,6 +179,78 @@
                     <div class="text-center">
                         <img src="{{ asset('public/frontend/images/user.png') }}" alt="">
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none; min-width: 1200px;" id="aftersales">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-7 text-center mb-5">
+                    <h5 class="title-50-bold">Cibes Lift Indonesia After Sales Service</h5>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-6 col-md-4">
+                    <a href="">
+                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
+                            <div class="card-standard_img"></div>
+                            <div class="card-standard_content">
+                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4">
+                    <a href="">
+                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
+                            <div class="card-standard_img"></div>
+                            <div class="card-standard_content">
+                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4">
+                    <a href="">
+                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
+                            <div class="card-standard_img"></div>
+                            <div class="card-standard_content">
+                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4">
+                    <a href="">
+                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
+                            <div class="card-standard_img"></div>
+                            <div class="card-standard_content">
+                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4">
+                    <a href="">
+                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
+                            <div class="card-standard_img"></div>
+                            <div class="card-standard_content">
+                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4">
+                    <a href="">
+                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
+                            <div class="card-standard_img"></div>
+                            <div class="card-standard_content">
+                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
