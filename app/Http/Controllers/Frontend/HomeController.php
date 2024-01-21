@@ -12,6 +12,7 @@ use App\Models\HomeMenuSection;
 use App\Models\WhyCibesTitle;
 use App\Models\WhyCibesUspId;
 use App\Models\CompanyVisionId;
+use App\Models\TestimonialId;
 
 class HomeController extends Controller
 {
@@ -76,6 +77,18 @@ class HomeController extends Controller
         ->orderBy('sort')
         ->get();
 
-        return view('frontend.pages.home.index', compact('headerBanner', 'video', 'products', 'menuSection', 'whyCibesTitle', 'whyCibesUsp', 'companyVision'));
+        $testimonial = TestimonialId::with([
+            'testimonial' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'productId',
+            'productId.product' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'productId.specificationImage',
+            'image'
+        ])->first();
+
+        return view('frontend.pages.home.index', compact('headerBanner', 'video', 'products', 'menuSection', 'whyCibesTitle', 'whyCibesUsp', 'companyVision', 'testimonial'));
     }
 }

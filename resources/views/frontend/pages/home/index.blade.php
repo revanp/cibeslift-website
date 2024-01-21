@@ -174,23 +174,25 @@
     @endif
 @endforeach
 
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-4 text-center">
-                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" class="w-100" alt="">
-                <p class="title-20-bold mt-3">Cibes V90 Galaxy</p>
-            </div>
-            <div class="col-12 col-md-8">
-                <div class="mb-4">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
+@if (!empty($testimonial))
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4 text-center">
+                    <img src="{{ $testimonial->productId->specificationImage->path }}" class="w-100" alt="">
+                    <p class="title-20-bold mt-3">{{ $testimonial->productId->product[0]->name }}</p>
                 </div>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi ipsam quam possimus perferendis laboriosam repudiandae voluptates voluptas, adipisci modi eligendi natus ab tenetur dolorem exercitationem quod eos rem cupiditate deleniti.</p>
-                <label class="title-20-bold">Ghani, Jakarta Timur</label>
+                <div class="col-12 col-md-8">
+                    <div class="mb-4">
+                        <img src="{{ $testimonial->image->path }}" class="w-100" alt="">
+                    </div>
+                    <p>{{ $testimonial->testimonial[0]->testimony }}</p>
+                    <label class="title-20-bold">{{ $testimonial->testimonial[0]->customer }}</label>
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endif
 
 <div class="section">
     <div class="container">

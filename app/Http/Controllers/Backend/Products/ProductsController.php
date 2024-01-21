@@ -977,13 +977,13 @@ class ProductsController extends Controller
                 );
             }
 
-            if ($request->hasFile('spesification_image')) {
+            if ($request->hasFile('specification_image')) {
                 $this->storeFile(
-                    $request->file('spesification_image'),
+                    $request->file('specification_image'),
                     $productId,
-                    'spesificationImage',
+                    'specificationImage',
                     "images/products/products/spesification-image/{$idProductId}",
-                    'spesification_image'
+                    'specification_image'
                 );
             }
 
