@@ -233,6 +233,41 @@
                 });
             })
 
+            $('form').submit(function(e){
+                e.preventDefault();
+
+                var action = $(this).attr('action');
+
+                var button = $(this).find('button[type="submit"]');
+
+                button.attr('disabled', true);
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: action,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function(data){
+                        if(data.redirect != null){
+                            window.location.replace(data.redirect);
+                        }
+                    },
+                    error: function(data){
+                        var result = data.responseJSON;
+
+                        $.each(result.data, function(key, value){
+                            toastr.error(value[0]);
+                        })
+
+                        button.attr('disabled', false);
+                    }
+                })
+            });
+
             toastr.options = {
                 "closeButton": true,
                 "debug": false,

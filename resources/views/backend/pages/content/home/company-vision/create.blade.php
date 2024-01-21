@@ -130,37 +130,4 @@
     </div>
 @endsection
 
-@section('script')
-    <script>
-        $(document).ready(function(){
-            $('form').submit(function(e){
-            e.preventDefault();
 
-            var action = $(this).attr('action');
-
-            var formData = new FormData(this);
-
-            $.ajax({
-                url: action,
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                cache: false,
-                success: function(data){
-                    if(data.redirect != null){
-                        window.location.replace(data.redirect);
-                    }
-                },
-                error: function(data){
-                    var result = data.responseJSON;
-
-                    $.each(result.data, function(key, value){
-                        toastr.error(value[0]);
-                    })
-                }
-            })
-        });
-        });
-    </script>
-@endsection

@@ -70,6 +70,8 @@
                                                 <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/why-cibes') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Why Cibes</span></a></li>
 
                                                 <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/company-vision') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Company Vision</span></a></li>
+
+                                                <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/testimonial') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Testimonial</span></a></li>
                                             </ul>
                                         </div>
                                     </li>

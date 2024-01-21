@@ -10,7 +10,7 @@
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <div class="d-flex align-items-baseline flex-wrap mr-5">
                     <h5 class="text-dark font-weight-bold my-1 mr-5">
-                        Edit Company Vision
+                        Edit Testimonial
                     </h5>
 
                     <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -18,10 +18,10 @@
                             <a href="#" class="text-muted">Content</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ url('admin-cms/content/home/company-vision') }}" class="text-muted">Company Vision</a>
+                            <a href="{{ url('admin-cms/content/home/testimonial') }}" class="text-muted">Testimonial</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{{ url('admin-cms/content/home/company-vision/edit/'.$data['id']) }}" class="text-muted">Edit Company Vision</a>
+                            <a href="{{ url('admin-cms/content/home/testimonial/edit/'.$data['id']) }}" class="text-muted">Edit Testimonial</a>
                         </li>
                     </ul>
                 </div>
@@ -34,10 +34,10 @@
             <div class="card card-custom">
                 <div class="card-header">
                     <div class="card-title">
-                        <h3 class="card-label">Edit Company Vision</h3>
+                        <h3 class="card-label">Edit Testimonial</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{ url('admin-cms/content/home/company-vision') }}" class="btn btn-danger font-weight-bolder">
+                        <a href="{{ url('admin-cms/content/home/testimonial') }}" class="btn btn-danger font-weight-bolder">
                             <span class="svg-icon svg-icon-md"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <polygon points="0 0 24 0 24 24 0 24"/>
@@ -47,7 +47,7 @@
                         </a>
                     </div>
                 </div>
-                <form action="{{ url('admin-cms/content/home/company-vision/edit/'.$data['id']) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('admin-cms/content/home/testimonial/edit/'.$data['id']) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
@@ -58,21 +58,30 @@
                                     <div class="file-wrapper">
                                         <input type="file" name="image" class="file-input"/>
                                         <div class="file-preview-background">+</div>
-                                        <img src="{{ $data['image']['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                                        @if (!empty($data['image']['path']))
+                                            <img src="{{ $data['image']['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                                        @else
+                                            <img src="" width="240px" class="file-preview"/>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>URL</label>
-                                    <input type="text" class="form-control" placeholder="Enter url (ex: products/v90)" name="url" value="{{ $data['url'] }}"/>
+                                    <label>Product</label>
+                                    <select name="id_product_id" id="" class="form-control">
+                                        <option value="">-- CHOOSE PRODUCT --</option>
+                                        @foreach ($products as $key => $val)
+                                            <option value="{{ $val->id_product_id }}" {{ (!empty($data) && $data['id_product_id'] == $val->id_product_id) ? 'selected' : '' }}>{{ $val->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Sort</label>
                                     <select name="sort" id="" class="form-control">
                                         <option value="">-- LAST ORDER --</option>
                                         @for($i = 1; $i <= $sort; $i++)
-                                            <option value="{{ $i }}" {{ $data['sort'] == $i ? 'selected' : '' }} >{{ $i }}</option>
+                                            <option value="{{ $i }}" {{ (!empty($data) && $data['sort'] == $i) ? 'selected' : '' }} >{{ $i }}</option>
                                         @endfor
                                     </select>
                                 </div>
@@ -80,7 +89,7 @@
                                     <div class="col-12 col-form-label">
                                         <div class="checkbox-inline">
                                             <label class="checkbox checkbox-success">
-                                                <input type="checkbox" name="is_active" {{ $data['is_active'] ? 'checked' : '' }}/>
+                                                <input type="checkbox" name="is_active" {{ (!empty($data) && $data['is_active']) ? 'checked' : '' }}/>
                                                 <span></span>
                                                 Active
                                             </label>
@@ -105,16 +114,12 @@
                                 <div class="tab-pane {{ $key == 'id' ? 'active' : '' }}" id="{{ $key }}Tab" role="tabpanel">
                                     <div class="row mt-5">
                                         <div class="form-group col-md-6">
-                                            <label>Title</label>
-                                            <input type="text" class="form-control" placeholder="Enter title" name="input[{{ $key }}][title]" value="{{ $data['company_vision'][$key]['title'] }}"/>
+                                            <label>Customer</label>
+                                            <input type="text" class="form-control" placeholder="Enter customer" name="input[{{ $key }}][customer]" value="{{ $data['testimonial'][$key]['customer'] ?? '' }}"/>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>Call to Action</label>
-                                            <input type="text" class="form-control" placeholder="Enter call to action" name="input[{{ $key }}][cta]" value="{{ $data['company_vision'][$key]['cta'] }}"/>
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <label>Description</label>
-                                            <textarea name="input[{{ $key }}][description]" id="" rows="5" class="form-control">{{ $data['company_vision'][$key]['description'] }}</textarea>
+                                            <label>Testimony</label>
+                                            <textarea name="input[{{ $key }}][testimony]" placeholder="Enter testimony" id="" rows="5" class="form-control">{{ $data['testimonial'][$key]['testimony'] ?? '' }}</textarea>
                                         </div>
                                     </div>
                                 </div>
