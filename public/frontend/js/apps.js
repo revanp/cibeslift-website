@@ -1,7 +1,7 @@
 $('.slider-history').slick({
     centerMode: true,
     centerPadding: '60px',
-    slidesToShow: 3,
+    slidesToShow: 4,
     responsive: [
         {
             breakpoint: 768,
