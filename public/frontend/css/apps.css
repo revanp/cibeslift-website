@@ -358,6 +358,14 @@ body {
     display: block;
     margin: 0 auto 20px;
     overflow: hidden;
+    transition: all 200ms linear;
+}
+.slider-history .slick-slide {
+    transition: all 200ms linear;
+}
+.slider-history .slick-slide:hover .slider-history_card {
+    height: 300px;
+    width: 300px;
 }
 .slider-history_content {
     display: block;

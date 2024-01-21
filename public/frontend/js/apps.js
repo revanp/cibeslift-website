@@ -1,5 +1,4 @@
 $('.slider-history').slick({
-    centerMode: true,
     centerPadding: '60px',
     slidesToShow: 4,
     responsive: [
@@ -7,7 +6,6 @@ $('.slider-history').slick({
             breakpoint: 768,
             settings: {
             arrows: false,
-            centerMode: true,
             centerPadding: '40px',
             slidesToShow: 3
             }
@@ -16,7 +14,6 @@ $('.slider-history').slick({
             breakpoint: 480,
             settings: {
             arrows: false,
-            centerMode: true,
             centerPadding: '40px',
             slidesToShow: 1
             }
