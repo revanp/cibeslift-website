@@ -10,7 +10,7 @@ Route::get('/', function(){
 
 Route::get('phpxinfo', function(){
     return phpinfo();
-});
+}); 
 
 Route::group(['prefix' => '{locale}', 'as' => '', 'middleware' => ['setLocale']], function(){
     Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
