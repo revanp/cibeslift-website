@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\ProductCategoryId;
 use App\Models\ProductCategory;
+use App\Models\ProductTechnology;
 
 class ProductController extends Controller
 {
@@ -23,6 +24,7 @@ class ProductController extends Controller
         ])
         ->where('language_code', $lang)
         ->whereHas('productId', function($query){
+            $query->where('is_active', 1);
             $query->where('level', 1);
         })
         ->get();
@@ -31,7 +33,22 @@ class ProductController extends Controller
             $products = $products->toArray();
         }
 
-        return view('frontend.pages.product.index', compact('products'));
+        $productTechnologies = ProductTechnology::with([
+            'productTechnologyId',
+            'productTechnologyId.image'
+        ])
+        ->where('language_code', $lang)
+        ->whereHas('productTechnologyId', function($query){
+            $query->where('is_active', 1);
+        })
+        ->limit(6)
+        ->get();
+
+        if(!empty($productTechnologies)){
+            $productTechnologies = $productTechnologies->toArray();
+        }
+
+        return view('frontend.pages.product.index', compact('products', 'productTechnologies'));
     }
 
     public function product($lang, $slug)
