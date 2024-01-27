@@ -53,82 +53,44 @@
                     </div>
                 </div>
             </div>
+        @elseif ($val['product_id']['product_summary_type'] == 2)
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-bg-img has-overlay" style="background-image: url('{{ $val['product_id']['product_summary_image']['path'] }}');">
+                                <div class="card-bg-img-content">
+                                    <span>
+                                        <h4 class="title-50-bold c-white">{{ $val['name'] }}</h4>
+                                        <p class="c-white d-block mb-5">{{ $val['short_description'] }}</p>
+                                        <a href="#" class="button-orange">Learn More</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @elseif ($val['product_id']['product_summary_type'] == 3)
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-bg-img" style="background-image: url('{{ $val['product_id']['product_summary_image']['path'] }}');">
+                                <div class="card-bg-img-content">
+                                    <span>
+                                        <h4 class="title-100-bold c-black">{{ $val['name'] }}</h4>
+                                        <p class="c-black d-block mb-5">{{ $val['short_description'] }}</p>
+                                        <a href="#" class="button-orange">Learn More</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endif
     @endforeach
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card-bg-img has-overlay" style="background-image: url('{{ asset('public/frontend/images/Banner---Homepage-Website.jpg') }}');">
-                        <div class="card-bg-img-content">
-                            <span>
-                                <h4 class="title-50-bold c-white">Cibes Classics</h4>
-                                <p class="c-white d-block mb-5">Old But Gold</p>
-                                <a href="#" class="button-orange">Learn More</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card-bg-img" style="background-image: url('{{ asset('public/frontend/images/Cibes Voyager.png') }}');">
-                        <div class="card-bg-img-content">
-                            <span>
-                                <h4 class="title-100-bold c-black">CIBES VOYAGER</h4>
-                                <p class="c-black d-block mb-5">LINTASI GALAXY</p>
-                                <a href="#" class="button-orange">Learn More</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center mb-5">
-                    <h3 class="title-50-bold">Cibes S-Series</h3>
-                    <p class="title-22-bold">Lift Valing Oke</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="card-standard bg-gray mb-4">
-                        <div class="card-standard_img card-standard_img_float text-center">
-                            <span>
-                                <h4>Cibes Air Series</h4>
-                                <p>Valing Simpel</p>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="card-standard bg-gray mb-4">
-                        <div class="card-standard_img card-standard_img_float text-center">
-                            <span>
-                                <h4>Cibes Air Series</h4>
-                                <p>Valing Simpel</p>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 text-center">
-                    <a href="#" class="button-orange">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="section">
         <div class="container">
