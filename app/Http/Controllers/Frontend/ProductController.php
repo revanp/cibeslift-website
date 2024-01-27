@@ -14,11 +14,12 @@ class ProductController extends Controller
     {
         $products = Product::with([
             'productId',
+            'productId.productSummaryImage',
             'productId.child',
             'productId.child.product' => function($query) use($lang){
                 $query->where('language_code', $lang);
             },
-            'productId.child.thumbnail'
+            'productId.child.thumbnail',
         ])
         ->where('language_code', $lang)
         ->whereHas('productId', function($query){

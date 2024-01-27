@@ -32,32 +32,29 @@
                     </div>
                 </div>
             </div>
-        @endif
-    @endforeach
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    <div class="flex-middle">
-                        <span>
-                            <h4 class="title-50-bold">Cibes Air Series</h4>
-                            <p class="mb-5">Mengalir Seperti Air</p>
-                            <a href="#" class="button-orange">Learn More</a>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-8">
-                    <div class="text-center d-inline-block">
-                        <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
-                    </div>
-                    <div class="text-center d-inline-block">
-                        <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
+        @elseif ($val['product_id']['product_summary_type'] == 1)
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="flex-middle">
+                                <span>
+                                    <h4 class="title-50-bold">{{ $val['name'] }}</h4>
+                                    <p class="mb-5">{{ $val['short_description'] }}</p>
+                                    <a href="#" class="button-orange">Learn More</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <div class="text-center d-inline-block">
+                                <img src="{{ $val['product_id']['product_summary_image']['path'] }}" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        @endif
+    @endforeach
 
     <div class="section">
         <div class="container">
