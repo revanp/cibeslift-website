@@ -274,6 +274,9 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
 }
+.card-standard-smalls {
+    height: 180px;
+}
 .card-standard-small .card-standard_img {
     min-height: 200px;
 }
@@ -283,6 +286,12 @@ body {
 
 .card-standard_img_float {
     position: relative;
+}
+.card-standard_content_bottom {
+    position: absolute !important;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 .card-standard_img_float span {
     position: absolute;
@@ -302,7 +311,37 @@ body {
     bottom: 24px;
     left: 24px;
 }
+.pattern-show, .color-show {
+    padding: 0;
+    margin: 0;
+}
 
+.pattern-show li, .color-show li {
+    display: inline-block;
+    list-style: none;
+}
+.pattern-item, .color-item {
+    padding: 0 12px;
+}
+.pattern-item span {
+    width: 120px;
+    height: 180px;
+    display: block;
+    margin-bottom: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;   
+}
+.color-item span {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    display: block;
+    margin-bottom: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .card-slider {
     width: 100%;
     height: 320px;

@@ -41,7 +41,7 @@
                                 <span>
                                     <h4 class="title-50-bold">{{ $val['name'] }}</h4>
                                     <p class="mb-5">{{ $val['short_description'] }}</p>
-                                    <a href="{{ urlLocale('product/'.$val['slug']) }}" class="button-orange">Learn More</a>
+                                    <a href="#" class="button-orange">Learn More</a>
                                 </span>
                             </div>
                         </div>
@@ -53,44 +53,94 @@
                     </div>
                 </div>
             </div>
-        @elseif ($val['product_id']['product_summary_type'] == 2)
-            <div class="section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card-bg-img has-overlay" style="background-image: url('{{ $val['product_id']['product_summary_image']['path'] }}');">
-                                <div class="card-bg-img-content">
-                                    <span>
-                                        <h4 class="title-50-bold c-white">{{ $val['name'] }}</h4>
-                                        <p class="c-white d-block mb-5">{{ $val['short_description'] }}</p>
-                                        <a href="{{ urlLocale('product/'.$val['slug']) }}" class="button-orange">Learn More</a>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @elseif ($val['product_id']['product_summary_type'] == 3)
-            <div class="section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card-bg-img" style="background-image: url('{{ $val['product_id']['product_summary_image']['path'] }}');">
-                                <div class="card-bg-img-content">
-                                    <span>
-                                        <h4 class="title-100-bold c-black">{{ $val['name'] }}</h4>
-                                        <p class="c-black d-block mb-5">{{ $val['short_description'] }}</p>
-                                        <a href="{{ urlLocale('product/'.$val['slug']) }}" class="button-orange">Learn More</a>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         @endif
     @endforeach
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-bg-img has-overlay" style="background-image: url('{{ asset('public/frontend/images/Banner---Homepage-Website.jpg') }}');">
+                        <div class="card-bg-img-content">
+                            <span>
+                                <h4 class="title-50-bold c-white">Cibes Classics</h4>
+                                <p class="c-white d-block mb-5">Old But Gold</p>
+                                <a href="#" class="button-orange">Learn More</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-bg-img" style="background-image: url('{{ asset('public/frontend/images/Cibes Voyager.png') }}');">
+                        <div class="card-bg-img-content">
+                            <span>
+                                <h4 class="title-100-bold c-black">CIBES VOYAGER</h4>
+                                <p class="c-black d-block mb-5">LINTASI GALAXY</p>
+                                <a href="#" class="button-orange">Learn More</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h3 class="title-50-bold">Cibes S-Series</h3>
+                    <p class="title-22-bold">Lift Valing Oke</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-3">
+                    <div class="card-background" style="background-image: url('{{ $val->productId->thumbnail->path ?? '#' }}')">
+                        <div class="card-background-content">
+                            <h3 class="c-white title-30-bold">Cibes Air Series</h3>
+                            <p class="c-white">Valing Simpel</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card-background" style="background-image: url('{{ $val->productId->thumbnail->path ?? '#' }}')">
+                        <div class="card-background-content">
+                            <h3 class="c-white title-30-bold">Cibes Air Series</h3>
+                            <p class="c-white">Valing Simpel</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card-background" style="background-image: url('{{ $val->productId->thumbnail->path ?? '#' }}')">
+                        <div class="card-background-content">
+                            <h3 class="c-white title-30-bold">Cibes Air Series</h3>
+                            <p class="c-white">Valing Simpel</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card-background" style="background-image: url('{{ $val->productId->thumbnail->path ?? '#' }}')">
+                        <div class="card-background-content">
+                            <h3 class="c-white title-30-bold">Cibes Air Series</h3>
+                            <p class="c-white">Valing Simpel</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <a href="#" class="button-orange">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="section">
         <div class="container">
@@ -102,16 +152,37 @@
             <div class="row">
                 <div class="col-12">
                     <div class="row">
-                        @foreach ($productTechnologies as $key => $val)
-                            <div class="col-12 col-md-4 text-center mb-5">
-                                <a href="javascript:;" data-fancybox data-src="#technology">
-                                    <div class="icon-rounded" style="background-image: url('{{ $val['product_technology_id']['image']['path'] }}');"></div>
-                                    <span>
-                                        <h5 class="title-30-bold">{{ $val['name'] }}</h5>
-                                    </span>
-                                </a>
+                        <div class="col-12 col-md-4 text-center mb-5">
+                            <a href="javascript:;" data-fancybox data-src="#technology">
+                                <div class="icon-rounded" style="background-image: url('{{ asset('public/frontend/images/Cibes Voyager.png') }}');"></div>
+                                <span>
+                                    <h5 class="title-30-bold">Screwdrive</h5>
+                                </span>
+                            </a>
+                        </div>
+                        <div id="technology" style="display: none; min-width: 1200px;">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-7 text-center mb-5">
+                                        <h5 class="title-50-bold">Teknologi Lift Rumah Cibes</h5>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-6">
+                                        <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');">
+                                            <div class="card-standard_img"></div>
+                                            <div class="card-standard_content">
+                                                <h5 class="title-30-bold c-white">Cibes Air</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <h5 class="title-30-bold">Screwdrive</h5>
+                                        <p>Screwdrive bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                                    </div>
+                                </div>
                             </div>
-                        @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
@@ -297,30 +368,6 @@
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="technology" style="display: none; min-width: 1200px;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-7 text-center mb-5">
-                    <h5 class="title-50-bold">Teknologi Lift Rumah Cibes</h5>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-6">
-                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');">
-                        <div class="card-standard_img"></div>
-                        <div class="card-standard_content">
-                            <h5 class="title-30-bold c-white">Cibes Air</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <h5 class="title-30-bold">Screwdrive</h5>
-                    <p>Screwdrive bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
                 </div>
             </div>
         </div>
