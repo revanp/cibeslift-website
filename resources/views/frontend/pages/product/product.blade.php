@@ -48,7 +48,7 @@
         @endif
     @endforeach
 
-    @foreach ($product['product_id']['child'] as $key => $val)
+    {{-- @foreach ($product['product_id']['child'] as $key => $val)
         @if ($key % 2 == 0)
             <div class="section">
                 <div class="container">
@@ -60,7 +60,7 @@
                         <div class="col-12 col-md-8">
                             <div class="flex-center">
                                 <span>
-                                    <h4 class="title-50-bold">{{ $val['product'][0]['page_title'] }}</h4>
+                                    <h4 class="title-50-bold">{{ $val['product'][0]['page_title'] ?? '' }}</h4>
                                     <p>{{ $val['product'][0]['description'] }}</p>
                                     <a href="#" class="button-orange">{{ $val['product'][0]['name'] }}</a>
                                 </span>
@@ -76,9 +76,9 @@
                         <div class="col-12 col-md-8">
                             <div class="flex-center">
                                 <span>
-                                    <h4 class="title-50-bold">{{ $val->product[0]->page_title }}</h4>
-                                    <p>{{ $val->product[0]->description }}</p>
-                                    <a href="#" class="button-orange">{{ $val->product[0]->name }}</a>
+                                    <h4 class="title-50-bold">{{ $val->product[0]->page_title ?? '' }}</h4>
+                                    <p>{{ $val->product[0]->description ?? '' }}</p>
+                                    <a href="#" class="button-orange">{{ $val->product[0]->name ?? '' }}</a>
                                 </span>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                 </div>
             </div>
         @endif
-    @endforeach
+    @endforeach --}}
 
     <div class="section">
         <div class="container">
