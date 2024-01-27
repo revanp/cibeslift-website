@@ -16,10 +16,11 @@
                         @foreach ($val['product_id']['child'] as $key2 => $val2)
                             <div class="col-12 col-md-4">
                                 <div class="card-standard bg-gray mb-4">
-                                    <div class="card-standard_img card-standard_img_float text-center" style="background: url('{{ $val2['thumbnail']['path'] }}'); background-repeat: no-repeat; background-size: cover;">
-                                        <span>
-                                            <h4>{{ $val2['product'][0]['name'] }}</h4>
-                                        </span>
+                                    <div class="card-background text-center" style="background: url('{{ $val2['thumbnail']['path'] }}'); background-repeat: no-repeat; background-size: cover;">
+                                        <div class="card-background-content">
+                                            <h3 class="c-white title-30-bold">{{ $val2['product'][0]['name'] }}</h3>
+                                            <p class="c-white">{{ $val2['product'][0]['short_description'] }}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +42,7 @@
                                 <span>
                                     <h4 class="title-50-bold">{{ $val['name'] }}</h4>
                                     <p class="mb-5">{{ $val['short_description'] }}</p>
-                                    <a href="#" class="button-orange">Learn More</a>
+                                    <a href="{{ urlLocale('product/'.$val['slug']) }}" class="button-orange">Learn More</a>
                                 </span>
                             </div>
                         </div>
@@ -53,26 +54,26 @@
                     </div>
                 </div>
             </div>
-        @endif
-    @endforeach
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card-bg-img has-overlay" style="background-image: url('{{ asset('public/frontend/images/Banner---Homepage-Website.jpg') }}');">
-                        <div class="card-bg-img-content">
-                            <span>
-                                <h4 class="title-50-bold c-white">Cibes Classics</h4>
-                                <p class="c-white d-block mb-5">Old But Gold</p>
-                                <a href="#" class="button-orange">Learn More</a>
-                            </span>
+        @elseif ($val['product_id']['product_summary_type'] == 2)
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-bg-img has-overlay" style="background-image: url('{{ asset('public/frontend/images/Banner---Homepage-Website.jpg') }}');">
+                                <div class="card-bg-img-content">
+                                    <span>
+                                        <h4 class="title-50-bold c-white">{{ $val['name'] }}</h4>
+                                        <p class="c-white d-block mb-5">{{ $val['short_description'] }}</p>
+                                        <a href="{{ urlLocale('product/'.$val['slug']) }}" class="button-orange">Learn More</a>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        @endif
+    @endforeach
 
     <div class="section">
         <div class="container">

@@ -48,7 +48,7 @@ class ProductsController extends Controller
                         if(!empty($val['column'])){
                             $data = $data->orderBy($order['column'], $order['dir']);
                         }else{
-                            $data = $data->orderBy('id', 'desc');
+                            $data = $data->orderBy('id', 'asc');
                         }
                     }
                 }
@@ -79,8 +79,11 @@ class ProductsController extends Controller
                         return $rownum--;
                     }
                 })
+                ->editColumn('updated_at', function($data){
+                    return $data->updated_at->diffForHumans();
+                })
                 ->addColumn('level', function($data){
-                    return '<span class="label label-rounded">'.$data->productId->level.'</span>';
+                    return $data->productId->level % 2 != 0 ? '<span class="label label-rounded label-light-dark">'.$data->productId->level.'</span>' : '<span class="label label-rounded label-light-warning">'.$data->productId->level.'</span>' ;
                 })
                 ->addColumn('parent', function($data){
                     if(!empty($data->productId->parent)){

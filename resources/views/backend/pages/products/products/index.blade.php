@@ -46,6 +46,7 @@
                                     <th>Name</th>
                                     <th>Slug</th>
                                     <th>Status</th>
+                                    <th>Last Updated</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -82,6 +83,7 @@
                     {data: 'level'},
                     {data: 'name'},
                     {data: 'slug'},
+                    {data: 'updated_at'},
                     {data: 'is_active', searchable: false, orderable: false},
                     {data: 'action', searchable: false, orderable: false},
                 ]
