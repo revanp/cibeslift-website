@@ -40,9 +40,14 @@ class ProductController extends Controller
         ->where('language_code', $lang)
         ->whereHas('productTechnologyId', function($query){
             $query->where('is_active', 1);
-        })
-        ->limit(6)
-        ->get();
+        });
+
+        if($productTechnologies->count() <= 6){
+            $productTechnologies = $productTechnologies->limit(6);
+        }else{
+            $productTechnologies = $productTechnologies->limit(5);
+        }
+        $productTechnologies = $productTechnologies->get();
 
         if(!empty($productTechnologies)){
             $productTechnologies = $productTechnologies->toArray();
