@@ -140,6 +140,11 @@
                                             <span class="menu-text">Technologies</span>
                                         </a>
                                     </li>
+                                    <li class="menu-item {{ (request()->is('admin-cms/products/european-standard/*') || request()->is('admin-cms/products/european-standard')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ url('admin-cms/products/european-standard') }}" class="menu-link ">
+                                            <span class="menu-text">European Standard</span>
+                                        </a>
+                                    </li>
                                     <li class="menu-item {{ (request()->is('admin-cms/products/products/*') || request()->is('admin-cms/products/products')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ url('admin-cms/products/products') }}" class="menu-link ">
                                             <span class="menu-text">Products</span>

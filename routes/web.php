@@ -195,6 +195,17 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                 Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'delete']);
             });
 
+            Route::group(['prefix' => 'european-standard'], function(){
+                Route::get('', [App\Http\Controllers\Backend\Products\EuropeanStandardController::class, 'index']);
+                Route::post('datatable', [App\Http\Controllers\Backend\Products\EuropeanStandardController::class, 'index']);
+                Route::get('create', [App\Http\Controllers\Backend\Products\EuropeanStandardController::class, 'create']);
+                Route::post('create', [App\Http\Controllers\Backend\Products\EuropeanStandardController::class, 'store']);
+                Route::get('edit/{id}', [App\Http\Controllers\Backend\Products\EuropeanStandardController::class, 'edit']);
+                Route::post('edit/{id}', [App\Http\Controllers\Backend\Products\EuropeanStandardController::class, 'update']);
+                Route::put('change-status', [App\Http\Controllers\Backend\Products\EuropeanStandardController::class, 'changeStatus']);
+                Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\EuropeanStandardController::class, 'delete']);
+            });
+
             Route::group(['prefix' => 'products'], function(){
                 Route::get('', [App\Http\Controllers\Backend\Products\ProductsController::class, 'index']);
                 Route::post('datatable', [App\Http\Controllers\Backend\Products\ProductsController::class, 'index']);
