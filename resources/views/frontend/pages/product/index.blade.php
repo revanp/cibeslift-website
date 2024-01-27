@@ -104,10 +104,12 @@
                     <div class="row">
                         @foreach ($productTechnologies as $key => $val)
                             <div class="col-12 col-md-4 text-center mb-5">
-                                <div class="icon-rounded" style="background-image: url('{{ $val['product_technology_id']['image']['path'] }}');"></div>
-                                <span>
-                                    <h5 class="title-30-bold">{{ $val['name'] }}</h5>
-                                </span>
+                                <a href="javascript:;" data-fancybox data-src="#technology">
+                                    <div class="icon-rounded" style="background-image: url('{{ $val['product_technology_id']['image']['path'] }}');"></div>
+                                    <span>
+                                        <h5 class="title-30-bold">{{ $val['name'] }}</h5>
+                                    </span>
+                                </a>
                             </div>
                         @endforeach
                     </div>
@@ -295,6 +297,30 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="technology" style="display: none; min-width: 1200px;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-7 text-center mb-5">
+                    <h5 class="title-50-bold">Teknologi Lift Rumah Cibes</h5>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-6">
+                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');">
+                        <div class="card-standard_img"></div>
+                        <div class="card-standard_content">
+                            <h5 class="title-30-bold c-white">Cibes Air</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <h5 class="title-30-bold">Screwdrive</h5>
+                    <p>Screwdrive bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
                 </div>
             </div>
         </div>
