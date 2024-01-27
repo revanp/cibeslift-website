@@ -101,17 +101,17 @@
             </div>
             <div class="row">
                 <div class="col-12 col-md-4">
-                    <a href="#">
+                    <a href="javascript:;" data-fancybox data-src="#customization">
                         <img src="{{ asset('public/frontend/images/Group 124.png') }}" alt="">
                     </a>
                 </div>
                 <div class="col-12 col-md-4">
-                    <a href="#">
+                    <a href="javascript:;" data-fancybox data-src="#customization">
                         <img src="{{ asset('public/frontend/images/Group 125.png') }}" alt="">
                     </a>
                 </div>
                 <div class="col-12 col-md-4">
-                    <a href="#">
+                    <a href="javascript:;" data-fancybox data-src="#customization">
                         <img src="{{ asset('public/frontend/images/Group 126.png') }}" alt="">
                     </a>
                 </div>
@@ -131,9 +131,7 @@
                     <div class="col-6 col-md-4">
                         <a href="">
                             <div class="card-standard bg-gray mb-4">
-                                <div class="card-standard_img">
-                                    <img src="{{ $val['product_technology_id']['image']['path'] ?? '#' }}" alt="">
-                                </div>
+                                <div class="card-standard_img" style="background-image: url('{{ $val['product_technology_id']['image']['path'] ?? '#' }}');"></div>
                                 <div class="card-standard_content">
                                     <h5 class="title-20-bold">{{ $val['product_technology_id']['product_technology'][0]['name'] }}</h5>
                                 </div>
@@ -230,6 +228,30 @@
                             </span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="customization" style="display: none; min-width: 1200px;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-7 text-center mb-5">
+                    <h5 class="title-50-bold">3 Tier Customization</h5>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-6">
+                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');">
+                        <div class="card-standard_img"></div>
+                        <div class="card-standard_content">
+                            <h5 class="title-30-bold c-white">Cibes Air</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <h5 class="title-30-bold">Screwdrive</h5>
+                    <p>Screwdrive bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
                 </div>
             </div>
         </div>

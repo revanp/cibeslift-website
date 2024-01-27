@@ -4,9 +4,9 @@
 
     <div class="banner" style="background-image: url('{{ asset('public/frontend/images/Banner---Homepage-Website.jpg') }}');">
         <div class="container h-100">
-            <div class="row h-100 justify-content-center">
+            <div class="row h-100 justify-content-center text-center">
                 <div class="col-12 col-md-8">
-                    <div class="flex-middle">
+                    <div class="flex-middle" style="justify-content: center;">
                         <span class="banner-contain">
                             <h1 class="mb-4">CIBES V90</h1>
                             <p>Lift rumah dengan teknologi baru</p>
@@ -169,7 +169,7 @@
                                 <div class="position-middle title-30-bold">V90 ELEGANCE</div>
                             </div>
                             <span class="d-block mt-5">
-                                <a data-fancybox data-src="#hidden-content" href="javascript:;" class="button-orange">Learn More</a>
+                                <a href="javascript:;" data-fancybox data-src="#customization" class="button-orange">Learn More</a>
                             </span>
                         </div>
                         <div class="col-12 col-md-4 text-center mb-4">
@@ -178,7 +178,7 @@
                                 <div class="position-middle title-30-bold">V90 ELEGANCE</div>
                             </div>
                             <span class="d-block mt-5">
-                                <a data-fancybox data-src="#hidden-content" href="javascript:;" class="button-orange">Learn More</a>
+                                <a href="javascript:;" data-fancybox data-src="#customization" class="button-orange">Learn More</a>
                             </span>
                         </div>
                         <div class="col-12 col-md-4 text-center mb-4">
@@ -187,7 +187,7 @@
                                 <div class="position-middle title-30-bold">V90 ELEGANCE</div>
                             </div>
                             <span class="d-block mt-5">
-                                <a data-fancybox data-src="#hidden-content" href="javascript:;" class="button-orange">Learn More</a>
+                                <a href="javascript:;" data-fancybox data-src="#customization" class="button-orange">Learn More</a>
                             </span>
                         </div>
                     </div>
@@ -434,7 +434,81 @@
         </div>
     </div>
 
-
+    <div id="customization" style="display: none; min-width: 1200px;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-7 text-center mb-5">
+                    <h5 class="title-50-bold">3 Tier Customization</h5>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-3 text-center" >
+                    <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" class="w-100" alt="">
+                </div>
+                <div class="col-12 col-md-9">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="title-30-bold">Screwdrive</h5>
+                            <p>Screwdrive bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="card-standard position-relative card-standard-smalls background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
+                                <div class="card-standard_content card-standard_content_bottom text-center">
+                                    <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card-standard position-relative card-standard-smalls background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
+                                <div class="card-standard_content card-standard_content_bottom text-center">
+                                    <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card-standard position-relative card-standard-smalls background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
+                                <div class="card-standard_content card-standard_content_bottom text-center">
+                                    <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5 mb-3">
+                        <div class="col-12 mb-4">
+                            <h5 class="title-30-bold">Color Options</h5>
+                        </div>
+                        <div class="col-12">
+                            <ul class="color-show">
+                                <li>
+                                    <div class="color-item">
+                                        <span style="background-color: red;"></span>
+                                        <label>January 4</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row mt-5 mb-3">
+                        <div class="col-12 mb-4">
+                            <h5 class="title-30-bold">Mood Wall Pattern Options</h5>
+                        </div>
+                        <div class="col-12">
+                            <ul class="pattern-show">
+                                <li>
+                                    <div class="pattern-item">
+                                        <span style="background-color: red;"></span>
+                                        <label>Forest Pines</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
