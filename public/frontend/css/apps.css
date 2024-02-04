@@ -330,7 +330,7 @@ body {
     margin-bottom: 12px;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;   
+    background-size: cover;
 }
 .color-item span {
     width: 80px;
@@ -633,7 +633,7 @@ a:hover {
     padding: 0 8px;
 }
 .list-social li a {
-    
+
 }
 .list-social li a img {
     width: 40px;
@@ -719,7 +719,7 @@ a:hover {
 .sidebar-menu li a:hover {
     color: #000;
 }
-.sidebar-menu li a:hover img { 
+.sidebar-menu li a:hover img {
     right: 0;
 }
 .sidebar-info {
@@ -746,13 +746,13 @@ a:hover {
     color: #000;
 }
 .form-select {
-    border: 1px solid #000;
+    /* border: 1px solid #000;
     height: 50px;
-    border-radius: 50px;   
+    border-radius: 50px;    */
 }
 
 @media screen and (max-width: 768px) {
- 
+
     .card-background {
         height: 300px;
         margin-bottom: 12px;
