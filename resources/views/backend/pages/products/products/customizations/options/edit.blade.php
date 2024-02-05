@@ -83,7 +83,7 @@
 
                         <hr>
 
-                        <div class="variation-box mt-5 hide-have-a-child {{ $data['have_a_child'] == '1' ? 'd-none' : '' }}">
+                        <div class="variation-box mt-5 hide-have-a-child {{ empty($data['parent_id']) ? 'd-none' : '' }}">
                             @if (!empty($data['product_customization_option_variation_id']))
                                 @foreach ($data['product_customization_option_variation_id'] as $k => $v)
                                     <input type="hidden" name="variation[{{$k}}][id]" value="{{ $v['id'] }}">
@@ -163,7 +163,7 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="row justify-content-center hide-have-a-child">
+                        <div class="row justify-content-center hide-have-a-child {{ empty($data['parent_id']) ? 'd-none' : '' }}">
                             <a href="{{ count($data['product_customization_option_variation_id']) == 0 ? 1 : count($data['product_customization_option_variation_id']) }}" class="btn btn-primary w-20 mt-5 add-item-variation" data-count="1"><i class="flaticon2-plus"></i> Add Another Variation</a>
                         </div>
                     </div>

@@ -167,54 +167,6 @@
 
 @section('script')
 <script>
-    $('form').submit(function(e){
-        e.preventDefault();
-
-        var action = $(this).attr('action');
-
-        var formData = new FormData(this);
-
-        // $.ajax({
-        //     url: "{{ url('admin-cms/products/products/validation') }}",
-        //     type: 'POST',
-        //     data: formData,
-        //     processData: false,
-        //     contentType: false,
-        //     cache: false,
-        //     success: function(data){
-
-        //     },
-        //     error: function(data){
-        //         var result = data.responseJSON;
-
-        //         $.each(result.data, function(key, value){
-        //             toastr.error(value[0]);
-        //         })
-        //     }
-        // })
-
-        $.ajax({
-            url: action,
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            cache: false,
-            success: function(data){
-                if(data.redirect != null){
-                    window.location.replace(data.redirect);
-                }
-            },
-            error: function(data){
-                var result = data.responseJSON;
-
-                $.each(result.data, function(key, value){
-                    toastr.error(value[0]);
-                })
-            }
-        })
-    });
-
     $('input[name="have_a_child"]').on('change', function(){
         var checked = $('input[name="have_a_child"]:checked').length;
 

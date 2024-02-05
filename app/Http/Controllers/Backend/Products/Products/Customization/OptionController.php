@@ -94,7 +94,7 @@ class OptionController extends Controller
             $attributes["input.$lang.name"] = "$lang_name Name";
         }
 
-        if(empty($data['have_a_child'])){
+        if(!empty($data['variation'][0]['input']['id']['name'])){
             foreach($request->variation as $key => $val){
                 $rules['variation.'.$key.'.image'] = ['required'];
 
@@ -157,38 +157,40 @@ class OptionController extends Controller
                 $idOption = $option->id;
             }
 
-            foreach($data['variation'] as $key => $val){
-                $variationId = new ProductCustomizationOptionVariationId();
+            if(!empty($data['variation'][0]['input']['id']['name'])){
+                foreach($data['variation'] as $key => $val){
+                    $variationId = new ProductCustomizationOptionVariationId();
 
-                $variationId->fill([
-                    'id_product_customization_option_id' => $idOptionId
-                ])->save();
+                    $variationId->fill([
+                        'id_product_customization_option_id' => $idOptionId
+                    ])->save();
 
-                $idVariationId = $variationId->id;
+                    $idVariationId = $variationId->id;
 
-                if ($request->hasFile('variation.'.$key.'.image')) {
-                    $this->storeFile(
-                        $request->file('variation.'.$key.'.image'),
-                        $variationId,
-                        'image',
-                        "images/products/products/customization/option/variation/{$idVariationId}",
-                        'image'
-                    );
-                }
-
-                foreach($val['input'] as $languageCode2 => $val2){
-                    $variation = new ProductCustomizationOptionVariation();
-
-                    $dataVariation['id_product_customization_option_variation_id'] = $idVariationId;
-                    $dataVariation['language_code'] = $languageCode2;
-
-                    if($languageCode2 != 'id'){
-                        $dataVariation['name'] = $data['variation'][$key]['input']['en']['name'] ?? $data['variation'][$key]['input']['id']['name'];
-                    }else{
-                        $dataVariation['name'] = $val2['name'];
+                    if ($request->hasFile('variation.'.$key.'.image')) {
+                        $this->storeFile(
+                            $request->file('variation.'.$key.'.image'),
+                            $variationId,
+                            'image',
+                            "images/products/products/customization/option/variation/{$idVariationId}",
+                            'image'
+                        );
                     }
 
-                    $variation->fill($dataVariation)->save();
+                    foreach($val['input'] as $languageCode2 => $val2){
+                        $variation = new ProductCustomizationOptionVariation();
+
+                        $dataVariation['id_product_customization_option_variation_id'] = $idVariationId;
+                        $dataVariation['language_code'] = $languageCode2;
+
+                        if($languageCode2 != 'id'){
+                            $dataVariation['name'] = $data['variation'][$key]['input']['en']['name'] ?? $data['variation'][$key]['input']['id']['name'];
+                        }else{
+                            $dataVariation['name'] = $val2['name'];
+                        }
+
+                        $variation->fill($dataVariation)->save();
+                    }
                 }
             }
 
@@ -291,7 +293,7 @@ class OptionController extends Controller
             $attributes["input.$lang.name"] = "$lang_name Name";
         }
 
-        if(empty($data['have_a_child'])){
+        if(!empty($data['variation'][0]['input']['id']['name'])){
             foreach($request->variation as $key => $val){
                 $rules['variation.'.$key.'.image'] = [];
 
@@ -356,48 +358,50 @@ class OptionController extends Controller
                 $idOption = $option->id;
             }
 
-            foreach($data['variation'] as $key => $val){
-                if(!empty($val['id'])){
-                    $variationId = ProductCustomizationOptionVariationId::find($id);
-                }else{
-                    $variationId = new ProductCustomizationOptionVariationId();
-                }
-
-                $variationId->fill([
-                    'id_product_customization_option_id' => $idOptionId
-                ])->save();
-
-                $idVariationId = $variationId->id;
-
-                if ($request->hasFile('variation.'.$key.'.image')) {
-                    $this->storeFile(
-                        $request->file('variation.'.$key.'.image'),
-                        $variationId,
-                        'image',
-                        "images/products/products/customization/option/variation/{$idVariationId}",
-                        'image'
-                    );
-                }
-
-                foreach($val['input'] as $languageCode2 => $val2){
+            if(!empty($data['variation'][0]['input']['id']['name'])){
+                foreach($data['variation'] as $key => $val){
                     if(!empty($val['id'])){
-                        $variation = ProductCustomizationOptionVariation::where('id_product_customization_option_variation_id', $val['id'])
-                        ->where('language_code', $languageCode2)
-                        ->first();
+                        $variationId = ProductCustomizationOptionVariationId::find($id);
                     }else{
-                        $variation = new ProductCustomizationOptionVariation();
+                        $variationId = new ProductCustomizationOptionVariationId();
                     }
 
-                    $dataVariation['id_product_customization_option_variation_id'] = $idVariationId;
-                    $dataVariation['language_code'] = $languageCode2;
+                    $variationId->fill([
+                        'id_product_customization_option_id' => $idOptionId
+                    ])->save();
 
-                    if($languageCode2 != 'id'){
-                        $dataVariation['name'] = $data['variation'][$key]['input']['en']['name'] ?? $data['variation'][$key]['input']['id']['name'];
-                    }else{
-                        $dataVariation['name'] = $val2['name'];
+                    $idVariationId = $variationId->id;
+
+                    if ($request->hasFile('variation.'.$key.'.image')) {
+                        $this->storeFile(
+                            $request->file('variation.'.$key.'.image'),
+                            $variationId,
+                            'image',
+                            "images/products/products/customization/option/variation/{$idVariationId}",
+                            'image'
+                        );
                     }
 
-                    $variation->fill($dataVariation)->save();
+                    foreach($val['input'] as $languageCode2 => $val2){
+                        if(!empty($val['id'])){
+                            $variation = ProductCustomizationOptionVariation::where('id_product_customization_option_variation_id', $val['id'])
+                            ->where('language_code', $languageCode2)
+                            ->first();
+                        }else{
+                            $variation = new ProductCustomizationOptionVariation();
+                        }
+
+                        $dataVariation['id_product_customization_option_variation_id'] = $idVariationId;
+                        $dataVariation['language_code'] = $languageCode2;
+
+                        if($languageCode2 != 'id'){
+                            $dataVariation['name'] = $data['variation'][$key]['input']['en']['name'] ?? $data['variation'][$key]['input']['id']['name'];
+                        }else{
+                            $dataVariation['name'] = $val2['name'];
+                        }
+
+                        $variation->fill($dataVariation)->save();
+                    }
                 }
             }
 
