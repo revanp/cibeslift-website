@@ -256,25 +256,26 @@
                 <h5 class="title-50-bold">Punya Pertanyaan Seputar Lift Rumah?</h5>
                 <p class="mb-4">Isi form berikut ini dan Lift Consultant Kami Siap Membantu!</p>
                 <div class="card-form">
-                    <form action="">
+                    <form action="{{ url('form-contact-us') }}" method="POST" class="form-contact-us">
+                        @csrf
                         <div class="row mb-4">
                             <div class="col-12 col-md-6 mb-4 mb-md-0">
-                                <input class="form-control" type="text" placeholder="Name">
+                                <input class="form-control" type="text" placeholder="Name" name="name">
                             </div>
                             <div class="col-12 col-md-6 mb-4 mb-md-0">
-                                <input class="form-control" type="text" placeholder="Telepon">
+                                <input class="form-control" type="text" placeholder="Telepon" name="phone_number">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-12 col-md-6 mb-4 mb-md-0">
-                                <input class="form-control" type="text" placeholder="Email">
+                                <input class="form-control" type="text" placeholder="Email" name="email">
                             </div>
                             <div class="col-12 col-md-3 mb-4 mb-md-0">
-                                <input class="form-control" type="text" placeholder="Kota">
+                                <input class="form-control" type="text" placeholder="Kota" name="city">
                             </div>
                             <div class="col-12 col-md-3">
-                                <select class="form-select">
-                                    <option selected>Jumlah Lantai</option>
+                                <select class="form-select" name="number_of_floors">
+                                    <option selected disabled>Jumlah Lantai</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
@@ -283,12 +284,12 @@
                         </div>
                         <div class="row mb-5">
                             <div class="col-12">
-                                <textarea class="form-control" rows="3" placeholder="Catatan tambahan (jika ada)"></textarea>
+                                <textarea class="form-control" rows="3" name="message" placeholder="Catatan tambahan (jika ada)"></textarea>
                             </div>
                         </div>
                         <div class="row mb-5">
                             <div class="col text-center">
-                                <a href="" class="button-orange">Hubungi Saya</a>
+                                <button class="button-orange">Hubungi Saya</button>
                             </div>
                         </div>
                     </form>
@@ -297,7 +298,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @push('script')
@@ -310,6 +310,33 @@
             src: "{{ $video->video->path ?? '#' }}",
         });
     @endif
+
+    $('.form-contact-us').submit(function(e){
+        e.preventDefault();
+
+        var form = $(this);
+
+        var action = $(this).attr('action');
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: action,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function(data){
+                toastr.success(data.message);
+                form.trigger('reset');
+                $("html, body").animate({scrollTop: 0}, 1000);
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                toastr.error(jqXHR.responseJSON.message);
+            }
+        })
+    })
 </script>
 
 @endpush
