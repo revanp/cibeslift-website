@@ -57,9 +57,8 @@ class OptionController extends Controller
         $parents = ProductCustomizationOption::with(['productCustomizationOptionId'])
             ->where('language_code', 'en')
             ->whereHas('productCustomizationOptionId', function($query) use($idCustomization){
-                $query->where('level', 1);
                 $query->where('id_product_customization_id', $idCustomization);
-                $query->where('have_a_child', true);
+                $query->whereNull('parent_id');
             })
             ->get();
 
@@ -138,9 +137,7 @@ class OptionController extends Controller
 
             $optionId->fill([
                 'id_product_customization_id' => $idCustomization,
-                'level' => !empty($data['parent_id']) ? 2 : 1,
                 'parent_id' => $data['parent_id'] ?? null,
-                'have_a_child' => !empty($data['have_a_child']) ? true : false
             ])->save();
 
             $idOptionId = $optionId->id;
@@ -236,9 +233,8 @@ class OptionController extends Controller
         $parents = ProductCustomizationOption::with(['productCustomizationOptionId'])
             ->where('language_code', 'en')
             ->whereHas('productCustomizationOptionId', function($query) use($idCustomization){
-                $query->where('level', 1);
                 $query->where('id_product_customization_id', $idCustomization);
-                $query->where('have_a_child', true);
+                $query->whereNull('parent_id');
             })
             ->get();
 
@@ -338,9 +334,7 @@ class OptionController extends Controller
 
             $optionId->fill([
                 'id_product_customization_id' => $idCustomization,
-                'level' => !empty($data['parent_id']) ? 2 : 1,
                 'parent_id' => $data['parent_id'] ?? null,
-                'have_a_child' => !empty($data['have_a_child']) ? true : false
             ])->save();
 
             $idOptionId = $optionId->id;
