@@ -260,22 +260,22 @@
                         @csrf
                         <div class="row mb-4">
                             <div class="col-12 col-md-6 mb-4 mb-md-0">
-                                <input class="form-control" type="text" placeholder="Name" name="name">
+                                <input class="form-control" type="text" placeholder="{{ __('placeholder.name') }}" name="name">
                             </div>
                             <div class="col-12 col-md-6 mb-4 mb-md-0">
-                                <input class="form-control" type="text" placeholder="Telepon" name="phone_number">
+                                <input class="form-control" type="text" placeholder="{{ __('placeholder.phone') }}" name="phone_number">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-12 col-md-6 mb-4 mb-md-0">
-                                <input class="form-control" type="text" placeholder="Email" name="email">
+                                <input class="form-control" type="text" placeholder="{{ __('placeholder.email') }}" name="email">
                             </div>
                             <div class="col-12 col-md-3 mb-4 mb-md-0">
-                                <input class="form-control" type="text" placeholder="Kota" name="city">
+                                <input class="form-control" type="text" placeholder="{{ __('placeholder.city') }}" name="city">
                             </div>
                             <div class="col-12 col-md-3">
                                 <select class="form-select" name="number_of_floors">
-                                    <option selected disabled>Jumlah Lantai</option>
+                                    <option selected disabled>{{ __('placeholder.number_of_floors') }}</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
@@ -284,7 +284,7 @@
                         </div>
                         <div class="row mb-5">
                             <div class="col-12">
-                                <textarea class="form-control" rows="3" name="message" placeholder="Catatan tambahan (jika ada)"></textarea>
+                                <textarea class="form-control" rows="3" name="message" placeholder="{{ __('placeholder.additional_note') }}"></textarea>
                             </div>
                         </div>
                         <div class="row mb-5">
