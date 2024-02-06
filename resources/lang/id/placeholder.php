@@ -1,10 +1,10 @@
-<?php
+<?php 
 
-return [
-'name' => 'Nama',
-'phone' => 'Telepon',
-'email' => 'Email',
-'city' => 'Kota',
-'number_of_floors' => 'Jumlah Lantai',
-'additional_note' => 'Catatan Tambahan (opsional)',
+return [ 
+'name' => 'Nama', 
+'phone' => 'Telepon', 
+'email' => 'Surel', 
+'city' => 'Kota', 
+'number_of_floors' => 'Nomor lantai', 
+'additional_note' => 'Catatan Tambahan (opsional)', 
 ];

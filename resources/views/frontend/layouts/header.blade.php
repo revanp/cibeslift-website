@@ -10,7 +10,7 @@
                 <div class="text-end">
                     <ul class="menu main-menu">
                         <li>
-                            <a href="#">{{ __('title.product') }}</a>
+                            <a href="{{ urlLocale('product') }}">{{ __('title.product') }}</a>
                             {{-- <div class="header-dropdown">
 
                             </div> --}}

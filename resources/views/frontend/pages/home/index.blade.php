@@ -194,11 +194,11 @@
     </div>
 @endif
 
-<div class="section">
+{{-- <div class="section">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mb-5">
-                <h3 class="title-50-bold">Instalasi Lift Cibes</h3>
+                <h3 class="title-50-bold">{{ __('title.installation_cibes_lift') }}</h3>
             </div>
         </div>
         <div class="row">
@@ -244,7 +244,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="section banner-background" style="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_010_030_01_0001.png') }}" id="contact_us">
     <div class="container">
@@ -253,8 +253,8 @@
                 <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V90LXPlus_02_110_010_0001 1 (1).png') }}" alt="">
             </div>
             <div class="col-12 col-md-8">
-                <h5 class="title-50-bold">Punya Pertanyaan Seputar Lift Rumah?</h5>
-                <p class="mb-4">Isi form berikut ini dan Lift Consultant Kami Siap Membantu!</p>
+                <h5 class="title-50-bold">{{ __('title.have_questions_about_home_elevators') }}</h5>
+                <p class="mb-4">{{ __('static_content.fill_in_the_following_form') }}</p>
                 <div class="card-form">
                     <form action="{{ url('form-contact-us') }}" method="POST" class="form-contact-us">
                         @csrf
