@@ -108,7 +108,7 @@
                                                     @endforeach
                                                 </ul>
 
-                                                <div class="tab-content mb-4" style="display: block !important;">
+                                                <div class="tab-content" style="display: block !important;">
                                                     @foreach ($lang as $key => $val)
                                                         <div class="tab-pane {{ $key == 'id' ? 'active' : '' }}" id="{{ $key }}{{$k}}VariationTab" role="tabpanel">
                                                             <div class="row mt-5">
@@ -120,6 +120,10 @@
                                                         </div>
                                                     @endforeach
                                                 </div>
+
+                                                @if (count($data['product_customization_option_variation_id']) > 1)
+                                                    <a href="{{ url('admin-cms/products/products/customizations/'.$id.'/options/'.$idCustomization.'/edit/'.$idOption.'/delete-variation/'.$v['id']) }}" class="btn btn-danger btn-delete-variation"><i class="flaticon2-delete"></i> Delete</a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -291,5 +295,26 @@
 
         $(this).data('count', dataCount + 1)
     })
+
+    $('.btn-delete-variation').click(function(e){
+        e.preventDefault();
+
+        var href = $(this).attr('href');
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = href;
+            }
+        });
+
+    });
 </script>
 @endsection

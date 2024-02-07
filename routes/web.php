@@ -233,6 +233,7 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                         Route::post('create', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'store']);
                         Route::get('edit/{idOption}', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'edit']);
                         Route::post('edit/{idOption}', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'update']);
+                        Route::get('edit/{idOption}/delete-variation/{idVariation}', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'deleteVariation']);
                         Route::put('change-status', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'changeStatus']);
                         Route::get('delete/{idOption}', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'delete']);
                     });

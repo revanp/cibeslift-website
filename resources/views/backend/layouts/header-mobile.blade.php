@@ -1,7 +1,7 @@
 <div id="kt_header_mobile" class="header-mobile  header-mobile-fixed " >
 	<div class="d-flex align-items-center">
 		<a href="index.html" class="mr-7">
-			<img alt="Logo" src="{{ asset('public/backend/media/logos/logo-letter-5.png') }}" class="max-h-30px"/>
+			{{-- <img alt="Logo" src="{{ asset('public/backend/media/logos/logo-letter-5.png') }}" class="max-h-30px"/> --}}
 		</a>
     </div>
     <div class="d-flex align-items-center">

@@ -441,6 +441,24 @@ class OptionController extends Controller
         }
     }
 
+    public function deleteVariation($id, $idCustomization, $idOption, $idVariation)
+    {
+        try{
+            DB::beginTransaction();
+
+            $delete = ProductCustomizationOptionVariationId::where('id', $idVariation)->delete();
+            $deleteChild = ProductCustomizationOptionVariation::where('id_product_customization_option_variation_id', $idVariation)->delete();
+
+            DB::commit();
+
+            return redirect()->back()->with(['success' => 'Variation has been deleted successfully']);
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
+        }
+    }
+
     public function delete($id, $idCustomization, $idOption)
     {
         try{
