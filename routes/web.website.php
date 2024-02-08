@@ -16,7 +16,10 @@ Route::post('form-contact-us', [App\Http\Controllers\Frontend\HomeController::cl
 
 Route::group(['prefix' => '{locale}', 'as' => '', 'middleware' => ['setLocale']], function(){
     Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
+
     Route::get('/about-us', [App\Http\Controllers\Frontend\AboutController::class, 'index'])->name('index');
+    Route::get('/about-us/get-manufacture', [App\Http\Controllers\Frontend\AboutController::class, 'getManufacture']);
+
     Route::get('/faq', [App\Http\Controllers\Frontend\FaqController::class, 'index'])->name('index');
 
     Route::get('/product', [\App\Http\Controllers\Frontend\ProductController::class, 'index'])->name('index');

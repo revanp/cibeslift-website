@@ -9,6 +9,7 @@ use App\Models\NationId;
 use App\Models\ManufactureId;
 use App\Models\AboutUsHighlightImage;
 use App\Models\AboutUsHighlightId;
+use Illuminate\Support\Facades\Crypt;
 
 class AboutController extends Controller
 {
@@ -54,5 +55,30 @@ class AboutController extends Controller
         ->get();
 
         return view('frontend.pages.about.index', compact('history', 'nation', 'manufacture', 'highlightImage', 'highlight'));
+    }
+
+    public function getManufacture(Request $request)
+    {
+        $id = Crypt::decrypt($request->id);
+
+        $manufacture = ManufactureId::with([
+            'manufacture' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'image',
+            'nationFlag',
+            'manufactureIdHasProductId',
+            'manufactureIdHasProductId.productId',
+            'manufactureIdHasProductId.productId.thumbnail',
+            'manufactureIdHasProductId.productId.product' => function($query){
+                $query->where('language_code', getLocale());
+            },
+        ])
+        ->where('id', $id)
+        ->orderBy('sort')
+        ->first()
+        ->toArray();
+
+        return view('frontend.pages.about.popup.manufacture', compact('manufacture'))->render();
     }
 }

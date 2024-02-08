@@ -69,7 +69,7 @@
                             <div class="card-standard_content">
                                 <h5 class="title-30-bold c-white">{{ $val->manufacture[0]->name }}</h5>
                                 <p class="c-white">{{ $val->manufacture[0]->description }}</p>
-                                <a data-fancybox data-src="#manufactures" href="javascript:;"  class="button-orange">Lebih Lengkap</a>
+                                <a href="javascript:;" class="button-orange btn-manufacture" data-id="{{ Crypt::encrypt($val->id) }}">Lebih Lengkap</a>
                             </div>
                         </div>
                     </div>
@@ -79,40 +79,7 @@
     </div>
 
     <div style="display: none; min-width: 1200px;" id="manufactures">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-7 text-center mb-5">
-                    <h5 class="title-50-bold">Gavle PU, Swedia</h5>
-                    <p>Dibuka pada tahun 2012, Gavle PU berfungsi sebagai unit pusat produksi dan merupakan Kantor Pusat yang berperan penting dalam aktivitas penjualan internasional kami.</p>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');">
-                        <div class="card-standard_img"></div>
-                        <div class="card-standard_content">
-                            <h5 class="title-30-bold c-white">Cibes Air</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');">
-                        <div class="card-standard_img"></div>
-                        <div class="card-standard_content">
-                            <h5 class="title-30-bold c-white">Cibes Air</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');">
-                        <div class="card-standard_img"></div>
-                        <div class="card-standard_content">
-                            <h5 class="title-30-bold c-white">Cibes Air</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 
     <div class="section">
@@ -402,4 +369,24 @@
 @endsection
 
 @push('script')
+<script>
+    $(document).ready(function(){
+        $('.btn-manufacture').click(function(e){
+            e.preventDefault();
+
+            var id = $(this).data('id');
+
+            $.ajax({
+                url: "{{ urlLocale('about-us/get-manufacture') }}",
+                data: {
+                    id: id
+                },
+                success: function(data){
+                    $("#manufactures").html(data);
+                    $("#manufactures").fancybox().trigger('click');
+                }
+            })
+        });
+    });
+</script>
 @endpush
