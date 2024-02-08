@@ -87,61 +87,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label>Description</label>
-                            <textarea name="input[id][description]" class="ckeditor-id-description @if($errors->has('input.id.description')) is-invalid @endif">{{ old('input.id.description') }}</textarea>
-                            @error('input.id.description')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="separator separator-dashed separator-border-2"></div>
-
-                        <h3 class="display-5 mt-5">SEO</h3>
-                        <div class="row mt-3">
-                            <div class="form-group col-md-6">
-                                <label>SEO Title</label>
-                                <input type="text" class="form-control @if($errors->has('input.id.seo_title')) is-invalid @endif" placeholder="Enter SEO title" name="input[id][seo_title]" value="{{ old('input.id.seo_title') }}"/>
-                                @error('input.id.seo_title')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label>SEO Description</label>
-                                <textarea name="input[id][seo_description]" rows="3" class="form-control @if($errors->has('input.id.seo_description')) is-invalid @endif">{{ old('input.id.seo_description') }}</textarea>
-                                @error('input.id.seo_title')
-                                <div class="form-control">
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label>SEO Keyword</label>
-                                <input type="text" class="form-control @if($errors->has('input.id.seo_keyword')) is-invalid @endif" placeholder="Enter SEO keyword" name="input[id][seo_keyword]" value="{{ old('input.id.seo_keyword') }}"/>
-                                @error('input.id.seo_keyword')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label>SEO Canonical URL</label>
-                                <input type="text" class="form-control @if($errors->has('input.id.seo_canonical_url')) is-invalid @endif" placeholder="Enter SEO canonical URL" name="input[id][seo_canonical_url]" value="{{ old('input.id.seo_canonical_url') }}"/>
-                                @error('input.id.seo_canonical_url')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
                     </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
 {
@@ -73,7 +74,7 @@ class NewsController extends Controller
                     return $data->NewsId->newsCategoryId->newsCategory[0]->name;
                 })
                 ->addColumn('publish_date', function($data){
-                    return date('Y-m-d', strtotime($data->NewsId->publish_date));
+                    return date('Y-m-d H:i', strtotime($data->NewsId->publish_date));
                 })
                 ->addColumn('is_active', function($data){
                     $id = $data->NewsId->id;
@@ -130,7 +131,7 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $data = $request->post();
+        $data = $request->all();
 
         unset($data['_token']);
 
@@ -138,6 +139,7 @@ class NewsController extends Controller
             'id_news_category_id' => ['required'],
             'thumbnail' => ['required', 'file'],
             'publish_date' => ['required'],
+            'publish_time' => ['required'],
             'sort' => []
         ];
 
@@ -147,6 +149,7 @@ class NewsController extends Controller
             'id_news_category_id' => 'News Category',
             'thumbnail' => 'Thumbnail',
             'publish_date' => 'Publish Date',
+            'publish_time' => 'Publish Time',
             'sort' => 'Sort',
         ];
 
@@ -171,7 +174,19 @@ class NewsController extends Controller
             $attributes["input.$lang.seo_title"] = "$lang_name SEO Title";
         }
 
-        $request->validate($rules, $messages, $attributes);
+        $validator = Validator::make($data, $rules, $messages, $attributes);
+
+        if($validator->fails()){
+            return response()->json([
+                'code' => 422,
+                'success' => false,
+                'message' => 'Validation error!',
+                'data' => $validator->errors()
+            ], 422)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }
 
         $isError = false;
 
@@ -186,7 +201,7 @@ class NewsController extends Controller
                 'is_active' => !empty($data['is_active']) ? true : false,
                 'is_top' => !empty($data['is_top']) ? true : false,
                 'is_home' => !empty($data['is_home']) ? true : false,
-                'publish_date' => $data['publish_date'],
+                'publish_date' => date('Y-m-d H:i:s', strtotime($data['publish_date'] . ' ' . $data['publish_time'])),
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
                 'deleted_by' => 0,
@@ -241,10 +256,25 @@ class NewsController extends Controller
         }
 
         if ($isError == true) {
-            return redirect()->back()->with(['error' => $message]);
-        } else {
-            return redirect(url('admin-cms/content/news/news'))
-                ->with(['success' => $message]);
+            return response()->json([
+                'code' => 500,
+                'success' => false,
+                'message' => $message
+            ], 500)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }else{
+            session()->flash('success', $message);
+
+            return response()->json([
+                'code' => 200,
+                'success' => true,
+                'message' => $message,
+                'redirect' => url('admin-cms/content/news/news')
+            ], 200)->withHeaders([
+                'Content-Type' => 'application/json'
+            ]);
         }
     }
 
@@ -270,7 +300,7 @@ class NewsController extends Controller
     public function update($id, Request $request)
     {
         $user = Auth::user();
-        $data = $request->post();
+        $data = $request->all();
 
         unset($data['_token']);
 
@@ -278,6 +308,7 @@ class NewsController extends Controller
             'id_news_category_id' => ['required'],
             'thumbnail' => ['file'],
             'publish_date' => ['required'],
+            'publish_time' => ['required'],
             'sort' => []
         ];
 
@@ -287,6 +318,7 @@ class NewsController extends Controller
             'id_news_category_id' => 'News Category',
             'thumbnail' => 'Thumbnail',
             'publish_date' => 'Publish Date',
+            'publish_time' => 'Publish Time',
             'sort' => 'Sort',
         ];
 
@@ -311,7 +343,19 @@ class NewsController extends Controller
             $attributes["input.$lang.seo_title"] = "$lang_name SEO Title";
         }
 
-        $request->validate($rules, $messages, $attributes);
+        $validator = Validator::make($data, $rules, $messages, $attributes);
+
+        if($validator->fails()){
+            return response()->json([
+                'code' => 422,
+                'success' => false,
+                'message' => 'Validation error!',
+                'data' => $validator->errors()
+            ], 422)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }
 
         $isError = false;
 
@@ -326,7 +370,7 @@ class NewsController extends Controller
                 'is_active' => !empty($data['is_active']) ? true : false,
                 'is_top' => !empty($data['is_top']) ? true : false,
                 'is_home' => !empty($data['is_home']) ? true : false,
-                'publish_date' => $data['publish_date'],
+                'publish_date' => date('Y-m-d H:i:s', strtotime($data['publish_date'] . ' ' . $data['publish_time'])),
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
                 'deleted_by' => 0,
@@ -381,10 +425,25 @@ class NewsController extends Controller
         }
 
         if ($isError == true) {
-            return redirect()->back()->with(['error' => $message]);
-        } else {
-            return redirect(url('admin-cms/content/news/news'))
-                ->with(['success' => $message]);
+            return response()->json([
+                'code' => 500,
+                'success' => false,
+                'message' => $message
+            ], 500)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }else{
+            session()->flash('success', $message);
+
+            return response()->json([
+                'code' => 200,
+                'success' => true,
+                'message' => $message,
+                'redirect' => url('admin-cms/content/news/news')
+            ], 200)->withHeaders([
+                'Content-Type' => 'application/json'
+            ]);
         }
     }
 

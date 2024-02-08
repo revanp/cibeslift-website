@@ -81,7 +81,31 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-3 mt-5">
+                                    <div class="col-12 col-form-label">
+                                        <div class="checkbox-inline">
+                                            <label class="checkbox checkbox-success">
+                                                <input type="checkbox" name="is_active" {{ (!empty(old('is_active')) ? old('is_active') : $data['is_active']) == '1' ? 'checked' : '' }}/>
+                                                <span></span>
+                                                Active
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 mt-5">
+                                    <div class="col-12 col-form-label">
+                                        <div class="checkbox-inline">
+                                            <label class="checkbox checkbox-success">
+                                                <input type="checkbox" name="is_top" {{ (!empty(old('is_top')) ? old('is_top') : $data['is_top']) == '1' ? 'checked' : '' }}/>
+                                                <span></span>
+                                                Always Top?
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3">
                                     <label>Publish Date</label>
                                     <div class="input-group date" >
                                         <input type="text" class="form-control datepicker @if($errors->has('publish_date')) is-invalid @endif" readonly name="publish_date" value="{{ !empty(old('publish_date')) ? old('publish_date') : date('Y-m-d', strtotime($data['publish_date'])) }}"/>
@@ -97,31 +121,24 @@
                                         </div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="form-group col-md-3">
-                                    <div class="col-12 col-form-label">
-                                        <div class="checkbox-inline">
-                                            <label class="checkbox checkbox-success">
-                                                <input type="checkbox" name="is_active" {{ (!empty(old('is_active')) ? old('is_active') : $data['is_active']) == '1' ? 'checked' : '' }}/>
-                                                <span></span>
-                                                Active
-                                            </label>
+                                    <label>Publish Time</label>
+                                    <div class="input-group timepicker">
+                                        <input type="text" class="form-control timepicker-input @if($errors->has('publish_time')) is-invalid @endif" readonly name="publish_time" value="{{ !empty(old('publish_date')) ? old('publish_date') : date('H:i', strtotime($data['publish_date'])) }}"/>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-clock-o"></i>
+                                            </span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <div class="col-12 col-form-label">
-                                        <div class="checkbox-inline">
-                                            <label class="checkbox checkbox-success">
-                                                <input type="checkbox" name="is_top" {{ (!empty(old('is_top')) ? old('is_top') : $data['is_top']) == '1' ? 'checked' : '' }}/>
-                                                <span></span>
-                                                Always Top?
-                                            </label>
+                                    @error('publish_date')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
                                         </div>
-                                    </div>
+                                    @enderror
                                 </div>
-                                <div class="form-group col-md-3">
+
+                                <div class="form-group col-md-3 mt-5">
                                     <div class="col-12 col-form-label">
                                         <div class="checkbox-inline">
                                             <label class="checkbox checkbox-success">

@@ -183,6 +183,13 @@
                     autoclose: true,
                     format: "yyyy-mm-dd",
                 });
+
+                $('.timepicker-input').timepicker({
+                    minuteStep: 1,
+                    defaultTime: '00:00',
+                    showMeridian: false,
+                    snapToStep: true,
+                });
             })
 
             $(document).on('click', '.btn-delete', function(e){

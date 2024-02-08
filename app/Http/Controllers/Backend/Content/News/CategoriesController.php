@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class CategoriesController extends Controller
 {
@@ -94,7 +95,7 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $data = $request->post();
+        $data = $request->all();
 
         unset($data['_token']);
 
@@ -112,7 +113,19 @@ class CategoriesController extends Controller
             $attributes["input.$lang.name"] = "$lang_name Name";
         }
 
-        $request->validate($rules, $messages, $attributes);
+        $validator = Validator::make($data, $rules, $messages, $attributes);
+
+        if($validator->fails()){
+            return response()->json([
+                'code' => 422,
+                'success' => false,
+                'message' => 'Validation error!',
+                'data' => $validator->errors()
+            ], 422)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }
 
         $isError = false;
 
@@ -156,10 +169,25 @@ class CategoriesController extends Controller
         }
 
         if ($isError == true) {
-            return redirect()->back()->with(['error' => $message]);
-        } else {
-            return redirect(url('admin-cms/content/news/categories'))
-                ->with(['success' => $message]);
+            return response()->json([
+                'code' => 500,
+                'success' => false,
+                'message' => $message
+            ], 500)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }else{
+            session()->flash('success', $message);
+
+            return response()->json([
+                'code' => 200,
+                'success' => true,
+                'message' => $message,
+                'redirect' => url('admin-cms/content/news/categories')
+            ], 200)->withHeaders([
+                'Content-Type' => 'application/json'
+            ]);
         }
     }
 
@@ -200,7 +228,19 @@ class CategoriesController extends Controller
             $attributes["input.$lang.name"] = "$lang_name Name";
         }
 
-        $request->validate($rules, $messages, $attributes);
+        $validator = Validator::make($data, $rules, $messages, $attributes);
+
+        if($validator->fails()){
+            return response()->json([
+                'code' => 422,
+                'success' => false,
+                'message' => 'Validation error!',
+                'data' => $validator->errors()
+            ], 422)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }
 
         $isError = false;
 
@@ -244,10 +284,25 @@ class CategoriesController extends Controller
         }
 
         if ($isError == true) {
-            return redirect()->back()->with(['error' => $message]);
-        } else {
-            return redirect(url('admin-cms/content/news/categories'))
-                ->with(['success' => $message]);
+            return response()->json([
+                'code' => 500,
+                'success' => false,
+                'message' => $message
+            ], 500)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }else{
+            session()->flash('success', $message);
+
+            return response()->json([
+                'code' => 200,
+                'success' => true,
+                'message' => $message,
+                'redirect' => url('admin-cms/content/news/categories')
+            ], 200)->withHeaders([
+                'Content-Type' => 'application/json'
+            ]);
         }
     }
 
