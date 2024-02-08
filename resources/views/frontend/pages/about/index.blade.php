@@ -232,72 +232,19 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
-                                <p class="c-white">The Kensington Commercial B05 Jl. Boulevard Raya, Kelapa Gading Jakarta Utara 14240</p>
+                @foreach ($showroom as $key => $val)
+                    <div class="col-6 col-md-4">
+                        <a href="{{ $val->google_maps_link }}" target="_BLANK">
+                            <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ $val->image->path }}')">
+                                <div class="card-standard_img"></div>
+                                <div class="card-standard_content">
+                                    <h5 class="title-20-bold c-white">{{ $val->name }}</h5>
+                                    <p class="c-white">{{ $val->address }}</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
-                                <p class="c-white">The Kensington Commercial B05 Jl. Boulevard Raya, Kelapa Gading Jakarta Utara 14240</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
-                                <p class="c-white">The Kensington Commercial B05 Jl. Boulevard Raya, Kelapa Gading Jakarta Utara 14240</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
-                                <p class="c-white">The Kensington Commercial B05 Jl. Boulevard Raya, Kelapa Gading Jakarta Utara 14240</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
-                                <p class="c-white">The Kensington Commercial B05 Jl. Boulevard Raya, Kelapa Gading Jakarta Utara 14240</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
-                                <p class="c-white">The Kensington Commercial B05 Jl. Boulevard Raya, Kelapa Gading Jakarta Utara 14240</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -310,58 +257,31 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-12 col-md-6">
-                    <div class="card-background" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10.jpg') }}')">
-                        <div class="card-background-content">
-                            <h3 class="c-white title-30-bold">Cibes V-series</h3>
-                            <p class="c-white">Lift cibes bagus bla bla bla bla</p>
-                            <hr>
-                            <a href="#" class="c-white title-20-bold">Lebih lengkap</a>
+                @foreach ($products as $key => $val)
+                    @if ($key < 2)
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="card-background" style="background-image: url('{{ $val->productId->thumbnail->path ?? '#' }}')">
+                                <div class="card-background-content">
+                                    <h3 class="c-white title-30-bold">{{ $val->name }}</h3>
+                                    <p class="c-white">{{ $val->short_description }}</p>
+                                    <hr>
+                                    <a href="{{ urlLocale('product/'.$val->slug) }}" class="c-white title-20-bold">Lebih lengkap</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="card-background" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (1).jpg') }}')">
-                        <div class="card-background-content">
-                            <h3 class="c-white title-30-bold">Cibes V-series</h3>
-                            <p class="c-white">Lift cibes bagus bla bla bla bla</p>
-                            <hr>
-                            <a href="#" class="c-white title-20-bold">Lebih lengkap</a>
+                    @else
+                        <div class="col-12 col-md-4 mb-3">
+                            <div class="card-background" style="background-image: url('{{ $val->productId->thumbnail->path ?? '#' }}')">
+                                <div class="card-background-content">
+                                    <h3 class="c-white title-30-bold">{{ $val->name }}</h3>
+                                    <p class="c-white">{{ $val->short_description }}</p>
+                                    <hr>
+                                    <a href="{{ urlLocale('product/'.$val->slug) }}" class="c-white title-20-bold">Lebih lengkap</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    <div class="card-background" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (2).jpg') }}')">
-                        <div class="card-background-content">
-                            <h3 class="c-white title-30-bold">Cibes V-series</h3>
-                            <p class="c-white">Lift cibes bagus bla bla bla bla</p>
-                            <hr>
-                            <a href="#" class="c-white title-20-bold">Lebih lengkap</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-background" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (3).jpg') }}')">
-                        <div class="card-background-content">
-                            <h3 class="c-white title-30-bold">Cibes V-series</h3>
-                            <p class="c-white">Lift cibes bagus bla bla bla bla</p>
-                            <hr>
-                            <a href="#" class="c-white title-20-bold">Lebih lengkap</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-background" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                        <div class="card-background-content">
-                            <h3 class="c-white title-30-bold">Cibes V-series</h3>
-                            <p class="c-white">Lift cibes bagus bla bla bla bla</p>
-                            <hr>
-                            <a href="#" class="c-white title-20-bold">Lebih lengkap</a>
-                        </div>
-                    </div>
-                </div>
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>

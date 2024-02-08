@@ -9,6 +9,8 @@ use App\Models\NationId;
 use App\Models\ManufactureId;
 use App\Models\AboutUsHighlightImage;
 use App\Models\AboutUsHighlightId;
+use App\Models\Showroom;
+use App\Models\Product;
 use Illuminate\Support\Facades\Crypt;
 
 class AboutController extends Controller
@@ -54,7 +56,24 @@ class AboutController extends Controller
         ->orderBy('sort')
         ->get();
 
-        return view('frontend.pages.about.index', compact('history', 'nation', 'manufacture', 'highlightImage', 'highlight'));
+        $showroom = Showroom::with([
+            'image'
+        ])
+        ->orderBy('sort')
+        ->get();
+
+        $products = Product::with([
+            'productId',
+            'productId.thumbnail'
+        ])
+        ->where('language_code', getLocale())
+        ->whereHas('productId', function($query){
+            $query->where('level', 1);
+            $query->where('is_active', true);
+        })
+        ->get();
+
+        return view('frontend.pages.about.index', compact('history', 'nation', 'manufacture', 'highlightImage', 'highlight', 'showroom', 'products'));
     }
 
     public function getManufacture(Request $request)
