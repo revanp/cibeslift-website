@@ -339,4 +339,22 @@ class CustomizationController extends Controller
             return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
         }
     }
+
+    public function deleteFeature($id, $idCustomization, $idFeature)
+    {
+        try{
+            DB::beginTransaction();
+
+            $delete = ProductCustomizationFeatureId::where('id', $idFeature)->delete();
+            $deleteChild = ProductCustomizationFeature::where('id_product_customization_feature_id', $idFeature)->delete();
+
+            DB::commit();
+
+            return redirect()->back()->with(['success' => 'Feature has been deleted successfully']);
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
+        }
+    }
 }

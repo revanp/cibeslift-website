@@ -122,6 +122,17 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\AboutUs\HighlightController::class, 'delete']);
                 });
 
+                Route::group(['prefix' => 'banner'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\AboutUs\BannerController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\AboutUs\BannerController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\AboutUs\BannerController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\AboutUs\BannerController::class, 'store']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\BannerController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\BannerController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\AboutUs\BannerController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\AboutUs\BannerController::class, 'delete']);
+                });
+
                 Route::group(['prefix' => 'showroom'], function(){
                     Route::get('', [App\Http\Controllers\Backend\Content\AboutUs\ShowroomController::class, 'index']);
                     Route::post('datatable', [App\Http\Controllers\Backend\Content\AboutUs\ShowroomController::class, 'index']);
@@ -187,6 +198,7 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
             Route::group(['prefix' => 'technologies'], function(){
                 Route::get('', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'index']);
                 Route::post('datatable', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'index']);
+                Route::post('create-image', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'storeImage']);
                 Route::get('create', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'create']);
                 Route::post('create', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'store']);
                 Route::get('edit/{id}', [App\Http\Controllers\Backend\Products\TechnologiesController::class, 'edit']);
@@ -224,6 +236,7 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     Route::post('create', [App\Http\Controllers\Backend\Products\Products\CustomizationController::class, 'store']);
                     Route::get('edit/{idCustomization}', [App\Http\Controllers\Backend\Products\Products\CustomizationController::class, 'edit']);
                     Route::post('edit/{idCustomization}', [App\Http\Controllers\Backend\Products\Products\CustomizationController::class, 'update']);
+                    Route::get('edit/{idOption}/delete-feature/{idFeature}', [App\Http\Controllers\Backend\Products\Products\CustomizationController::class, 'deleteFeature']);
                     Route::put('change-status', [App\Http\Controllers\Backend\Products\Products\CustomizationController::class, 'changeStatus']);
                     Route::get('delete/{idCustomization}', [App\Http\Controllers\Backend\Products\Products\CustomizationController::class, 'delete']);
 

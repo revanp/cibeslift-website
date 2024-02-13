@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductCategoryId;
 use App\Models\ProductCategory;
 use App\Models\ProductTechnology;
+use App\Models\ProductTechnologyMoreFeatureImage;
 
 class ProductController extends Controller
 {
@@ -42,6 +43,7 @@ class ProductController extends Controller
             $query->where('is_active', 1);
         });
 
+        $countTechnologies = $productTechnologies->count();
         if($productTechnologies->count() <= 6){
             $productTechnologies = $productTechnologies->limit(6);
         }else{
@@ -53,7 +55,9 @@ class ProductController extends Controller
             $productTechnologies = $productTechnologies->toArray();
         }
 
-        return view('frontend.pages.product.index', compact('products', 'productTechnologies'));
+        $technologyImage = ProductTechnologyMoreFeatureImage::with('image')->first();
+
+        return view('frontend.pages.product.index', compact('products', 'productTechnologies', 'countTechnologies', 'technologyImage'));
     }
 
     public function product($lang, $slug)

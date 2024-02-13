@@ -24,32 +24,67 @@
 
     <div class="d-flex flex-column-fluid">
 		<div class=" container ">
-            <div class="card card-custom">
-                <div class="card-header">
-                    <div class="card-title">
-                        <h3 class="card-label">List Technology</h3>
-                    </div>
-                    <div class="card-toolbar">
-                        <a href="{{ url('admin-cms/products/technologies/create') }}" class="btn btn-primary font-weight-bolder">
-                            <i class="flaticon2-add icon-md"></i> New Record
-                        </a>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card card-custom">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3 class="card-label">List Technology</h3>
+                            </div>
+                            <div class="card-toolbar">
+                                <a href="{{ url('admin-cms/products/technologies/create') }}" class="btn btn-primary font-weight-bolder">
+                                    <i class="flaticon2-add icon-md"></i> New Record
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-separate table-head-custom table-checkable" id="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Name</th>
+                                            <th>Status</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-separate table-head-custom table-checkable" id="table">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Name</th>
-                                    <th>Status</th>
-                                    <th>#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
+                <div class="col-md-4">
+                    <div class="card card-custom mb-5">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3 class="card-label">Extra Feature Thumbnail</h3>
+                            </div>
+                        </div>
+                        <form action="{{ url('admin-cms/products/technologies/create-image') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="card-body">
+                                <div class="form-group picture_upload">
+                                    <label>Image</label>
+                                    <div class="form-group__file">
+                                        <div class="file-wrapper">
+                                            <input type="file" name="image" class="file-input"/>
+                                            <div class="file-preview-background">+</div>
+                                            @if (!empty($image))
+                                                <img src="{{ $image['image']['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                                            @else
+                                                <img src="" width="240px" class="file-preview"/>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

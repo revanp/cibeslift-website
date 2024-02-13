@@ -14,7 +14,18 @@
                     </div>
                     <div class="row">
                         @foreach ($val['product_id']['child'] as $key2 => $val2)
-                            <div class="col-12 col-md-4">
+                            @php
+                                if(count($val['product_id']['child']) % 4 == 0){
+                                    $col = 'col-md-3';
+                                }else if(count($val['product_id']['child']) % 3 == 0){
+                                    $col = 'col-md-4';
+                                }else if(count($val['product_id']['child']) % 2 == 0){
+                                    $col = 'col-md-6';
+                                }else{
+                                    $col = 'col-md-12';
+                                }
+                            @endphp
+                            <div class="col-12 {{ $col }}">
                                 <div class="card-standard bg-gray mb-4">
                                     <div class="card-background text-center" style="background: url('{{ $val2['thumbnail']['path'] }}'); background-repeat: no-repeat; background-size: cover;">
                                         <div class="card-background-content">
@@ -113,6 +124,16 @@
                                 </a>
                             </div>
                         @endforeach
+                        @if ($countTechnologies > 6)
+                        <div class="col-12 col-md-4 text-center mb-5">
+                            <a href="javascript:;" data-fancybox data-src="#moreTechnology">
+                                <div class="icon-rounded" style="background-image: url('{{ $technologyImage->image->path }}');"></div>
+                                <span>
+                                    <h5 class="title-30-bold">Extra Features</h5>
+                                </span>
+                            </a>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

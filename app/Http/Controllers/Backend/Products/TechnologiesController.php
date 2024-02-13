@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductTechnology;
 use App\Models\ProductTechnologyId;
+use App\Models\ProductTechnologyMoreFeatureImage;
 use App\Models\Media;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Exception;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class TechnologiesController extends Controller
 {
@@ -84,7 +86,103 @@ class TechnologiesController extends Controller
                 ->toJson(true);
         }
 
-        return view('backend.pages.products.technologies.index');
+        $image = ProductTechnologyMoreFeatureImage::with([
+            'image'
+        ])->first();
+
+        return view('backend.pages.products.technologies.index', compact('image'));
+    }
+
+    public function storeImage(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->all();
+
+        unset($data['_token']);
+
+        $rules = [
+            'image' => ['required'],
+        ];
+
+        $messages = [];
+
+        $attributes = [
+            'image' => 'Image',
+        ];
+
+        $validator = Validator::make($data, $rules, $messages, $attributes);
+
+        if($validator->fails()){
+            return response()->json([
+                'code' => 422,
+                'success' => false,
+                'message' => 'Validation error!',
+                'data' => $validator->errors()
+            ], 422)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }
+
+        $isError = false;
+
+        try{
+            DB::beginTransaction();
+
+            $image = ProductTechnologyMoreFeatureImage::first();
+
+            if(empty($image)){
+                $image = new ProductTechnologyMoreFeatureImage();
+            }
+
+            $image->fill([])->save();
+
+            $idImage = $image->id;
+
+            if ($request->hasFile('image')) {
+                $this->storeFile(
+                    $request->file('image'),
+                    $image,
+                    'image',
+                    "images/product/technologies/thumbnail/{$idImage}",
+                    'image'
+                );
+            }
+
+            $message = 'Image created successfully';
+
+            DB::commit();
+        }catch (\Illuminate\Database\QueryException $e) {
+            DB::rollBack();
+
+            $isError = true;
+
+            $err     = $e->errorInfo;
+
+            $message =  $err[2];
+        }
+
+        if ($isError == true) {
+            return response()->json([
+                'code' => 500,
+                'success' => false,
+                'message' => $message
+            ], 500)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }else{
+            session()->flash('success', $message);
+
+            return response()->json([
+                'code' => 200,
+                'success' => true,
+                'message' => $message,
+                'redirect' => url('admin-cms/content/products/technologies')
+            ], 200)->withHeaders([
+                'Content-Type' => 'application/json'
+            ]);
+        }
     }
 
     public function create()

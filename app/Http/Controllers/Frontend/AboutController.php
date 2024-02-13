@@ -11,6 +11,7 @@ use App\Models\AboutUsHighlightImage;
 use App\Models\AboutUsHighlightId;
 use App\Models\Showroom;
 use App\Models\Product;
+use App\Models\AboutUsBanner;
 use Illuminate\Support\Facades\Crypt;
 
 class AboutController extends Controller
@@ -56,6 +57,13 @@ class AboutController extends Controller
         ->orderBy('sort')
         ->get();
 
+        $banner = AboutUsBanner::with([
+            'aboutUsBannerId',
+            'aboutUsBannerId.image',
+        ])
+        ->where('language_code', getLocale())
+        ->first();
+
         $showroom = Showroom::with([
             'image'
         ])
@@ -73,7 +81,7 @@ class AboutController extends Controller
         })
         ->get();
 
-        return view('frontend.pages.about.index', compact('history', 'nation', 'manufacture', 'highlightImage', 'highlight', 'showroom', 'products'));
+        return view('frontend.pages.about.index', compact('history', 'nation', 'manufacture', 'highlightImage', 'highlight', 'showroom', 'products', 'banner'));
     }
 
     public function getManufacture(Request $request)

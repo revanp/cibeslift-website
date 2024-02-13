@@ -130,6 +130,8 @@
                                                         </div>
                                                     @endforeach
                                                 </div>
+
+                                                <a href="{{ url('admin-cms/products/products/customizations/'.$id.'/edit/'.$data['id'].'/delete-feature/'.$v['id']) }}" class="btn btn-danger btn-delete-feature"><i class="flaticon2-delete"></i> Delete</a>
                                             </div>
                                         </div>
                                     </div>
@@ -260,5 +262,26 @@
 
         $(this).data('count', dataCount + 1)
     })
+
+    $('.btn-delete-feature').click(function(e){
+        e.preventDefault();
+
+        var href = $(this).attr('href');
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = href;
+            }
+        });
+
+    });
 </script>
 @endsection

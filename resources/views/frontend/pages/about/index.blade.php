@@ -112,23 +112,25 @@
         </div>
     </div>
 
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    <h5 class="title-50-bold">Perusahaan Lift Rumah</h5>
+    @if (!empty($banner))
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <h5 class="title-50-bold">{{ $banner->title ?? '' }}</h5>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <p class="title-20-reguler">{{ $banner->description ?? '' }}</p>
+                    </div>
                 </div>
-                <div class="col-12 col-md-8">
-                    <p class="title-20-reguler">PT. Cibes Lift Indonesia didirikan bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla bla bla </p>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="card-image-banner" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');"></div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card-image-banner" style="background-image: url('{{ $banner->aboutUsBannerId->image->path ?? '#' }}');"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <div class="section">
         <div class="container">

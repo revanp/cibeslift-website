@@ -91,6 +91,8 @@
 
                                                 <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/highlight') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Highlight</span></a></li>
 
+                                                <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/banner') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Banner</span></a></li>
+
                                                 <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/showroom') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Showroom</span></a></li>
                                             </ul>
                                         </div>

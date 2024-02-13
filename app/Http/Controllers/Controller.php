@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Media;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Buglinjo\LaravelWebp\Webp;
 
 class Controller extends BaseController
 {
