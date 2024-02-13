@@ -41,7 +41,7 @@
                     <ul class="list-standard">
                         @foreach ($nation as $key => $val)
                             <li>
-                                <a href="#" target="_blank">
+                                <a href="{{ $val->link ?? '#' }}" target="_blank">
                                     <div class="circle-flag" style="background-image: url('{{ $val->image->path }}');"></div>
                                     <label class="title-20-bold">{{ $val->nation[0]->name }}</label>
                                 </a>

@@ -83,26 +83,26 @@
                     </div>
                 </div>
             </div>
-        @endif
-    @endforeach
-
-    {{-- <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card-bg-img" style="background-image: url('{{ asset('public/frontend/images/Cibes Voyager.png') }}');">
-                        <div class="card-bg-img-content">
-                            <span>
-                                <h4 class="title-100-bold c-black">CIBES VOYAGER</h4>
-                                <p class="c-black d-block mb-5">LINTASI GALAXY</p>
-                                <a href="#" class="button-orange">Learn More</a>
-                            </span>
+        @elseif ($val['product_id']['product_summary_type'] == 3)
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-bg-img" style="background-image: url('{{ $val['product_id']['product_summary_image']['path'] }}');">
+                                <div class="card-bg-img-content">
+                                    <span>
+                                        <h4 class="title-100-bold c-black">{{ strtoupper($val['name']) }}</h4>
+                                        <p class="c-black d-block mb-5">{{ strtoupper($val['short_description']) }}</p>
+                                        <a href="{{ urlLocale('product/'.$val['slug']) }}" class="button-orange">Learn More</a>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div> --}}
+        @endif
+    @endforeach
 
     <div class="section">
         <div class="container">
@@ -127,7 +127,7 @@
                         @if ($countTechnologies > 6)
                         <div class="col-12 col-md-4 text-center mb-5">
                             <a href="javascript:;" data-fancybox data-src="#moreTechnology">
-                                <div class="icon-rounded" style="background-image: url('{{ $technologyImage->image->path }}');"></div>
+                                <div class="icon-rounded" style="background-image: url('{{ $technologyImage->image->path ?? '#' }}');"></div>
                                 <span>
                                     <h5 class="title-30-bold">Extra Features</h5>
                                 </span>
@@ -140,48 +140,32 @@
         </div>
     </div>
 
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center mb-5">
-                    <h5 class="title-50-bold">European Standard</h5>
-                    <p>Keamanan Lift Cibes Sudah Sesuai dengan Standar Keamanan Eropa</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray mb-4 bg-image" style="background-image: url('{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}');">
-                        <div class="card-standard_img card-standard_img_float_bottom_left position-relative">
-                            <span>
-                                <h4 class="c-white">Cibes V-Series</h4>
-                                <p class="c-white title-18-reguler">Bersertifikat LEvel Integrity 3 jadi lebih aman bla bla bla bla</p>
-                            </span>
-                        </div>
+    @if (!empty($productEuropeanStandard))
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center mb-5">
+                        <h5 class="title-50-bold">European Standard</h5>
+                        <p>Keamanan Lift Cibes Sudah Sesuai dengan Standar Keamanan Eropa</p>
                     </div>
                 </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray mb-4 bg-image" style="background-image: url('{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}');">
-                        <div class="card-standard_img card-standard_img_float_bottom_left position-relative">
-                            <span>
-                                <h4 class="c-white">Cibes V-Series</h4>
-                                <p class="c-white title-18-reguler">Bersertifikat LEvel Integrity 3 jadi lebih aman bla bla bla bla</p>
-                            </span>
+                <div class="row">
+                    @foreach ($productEuropeanStandard as $key => $val)
+                        <div class="col-12 col-md-4">
+                            <div class="card-standard bg-gray mb-4 bg-image" style="background-image: url('{{ $val['product_european_standard_id']['image']['path'] ?? '#' }}');">
+                                <div class="card-standard_img card-standard_img_float_bottom_left position-relative">
+                                    <span>
+                                        <h4 class="c-white">{{ $val['name'] }}</h4>
+                                        <p class="c-white title-18-reguler">{{ $val['description'] }}</p>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-standard bg-gray mb-4 bg-image" style="background-image: url('{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}');">
-                        <div class="card-standard_img card-standard_img_float_bottom_left position-relative">
-                            <span>
-                                <h4 class="c-white">Cibes V-Series</h4>
-                                <p class="c-white title-18-reguler">Bersertifikat LEvel Integrity 3 jadi lebih aman bla bla bla bla</p>
-                            </span>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <div class="section">
         <div class="container">

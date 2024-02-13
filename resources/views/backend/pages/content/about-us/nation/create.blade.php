@@ -66,6 +66,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label>Link</label>
+                                    <input type="text" class="form-control" name="link" placeholder="Enter link">
+                                </div>
+                                <div class="form-group">
                                     <label>Sort</label>
                                     <select name="sort" id="" class="form-control">
                                         <option value="">-- LAST ORDER --</option>

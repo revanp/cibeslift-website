@@ -8,6 +8,8 @@ return new class extends Migration
 {
     public function up(): void
     {
+        Schema::dropIfExists('product_technology_more_feature_image');
+
         Schema::create('product_technology_more_feature_image', function (Blueprint $table) {
             $table->id();
             $table->timestamps();

@@ -160,6 +160,7 @@ class NationController extends Controller
             $sort = empty($data['sort']) ? NationId::count() + 1 : $data['sort'];
 
             $nationId->fill([
+                'link' => $data['link'],
                 'is_active' => !empty($data['is_active']) ? true : false,
                 'sort' => $sort,
             ])->save();
@@ -300,6 +301,7 @@ class NationController extends Controller
             $sort = empty($data['sort']) ? NationId::count() + 1 : $data['sort'];
 
             $nationId->fill([
+                'link' => $data['link'],
                 'is_active' => !empty($data['is_active']) ? true : false,
                 'sort' => $sort,
             ])->save();

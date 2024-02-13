@@ -8,6 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
+        Schema::dropIfExists('about_us_banner_id');
+        Schema::dropIfExists('about_us_banner');
+
         Schema::create('about_us_banner_id', function (Blueprint $table) {
             $table->id();
             $table->timestamps();

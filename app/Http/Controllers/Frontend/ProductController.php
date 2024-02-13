@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\ProductCategoryId;
 use App\Models\ProductCategory;
+use App\Models\ProductEuropeanStandard;
 use App\Models\ProductTechnology;
 use App\Models\ProductTechnologyMoreFeatureImage;
 
@@ -57,7 +58,21 @@ class ProductController extends Controller
 
         $technologyImage = ProductTechnologyMoreFeatureImage::with('image')->first();
 
-        return view('frontend.pages.product.index', compact('products', 'productTechnologies', 'countTechnologies', 'technologyImage'));
+        $productEuropeanStandard = ProductEuropeanStandard::with([
+            'productEuropeanStandardId',
+            'productEuropeanStandardId.image'
+        ])
+        ->where('language_code', $lang)
+        ->whereHas('productEuropeanStandardId', function($query){
+            $query->where('is_active', 1);
+        })
+        ->get();
+
+        if(!empty($productEuropeanStandard)){
+            $productEuropeanStandard = $productEuropeanStandard->toArray();
+        }
+
+        return view('frontend.pages.product.index', compact('products', 'productTechnologies', 'countTechnologies', 'technologyImage', 'productEuropeanStandard'));
     }
 
     public function product($lang, $slug)

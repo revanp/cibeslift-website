@@ -16,6 +16,7 @@ class NationId extends Model
     public $incrementing = true;
 
     protected $fillable  = [
+        'link',
         'is_active',
         'sort',
         'image'
