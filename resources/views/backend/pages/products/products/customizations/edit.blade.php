@@ -131,7 +131,9 @@
                                                     @endforeach
                                                 </div>
 
-                                                <a href="{{ url('admin-cms/products/products/customizations/'.$id.'/edit/'.$data['id'].'/delete-feature/'.$v['id']) }}" class="btn btn-danger btn-delete-feature"><i class="flaticon2-delete"></i> Delete</a>
+                                                @if (count($data['product_customization_feature_id']) > 1)
+                                                    <a href="{{ url('admin-cms/products/products/customizations/'.$id.'/edit/'.$data['id'].'/delete-feature/'.$v['id']) }}" class="btn btn-danger btn-delete-feature"><i class="flaticon2-delete"></i> Delete</a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
