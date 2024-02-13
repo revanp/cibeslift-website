@@ -1,7 +1,6 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-
     <div class="banner" style="background-image: url('{{ $product['product_id']['banner']['path'] ?? '#' }}');">
         <div class="container h-100">
             <div class="row h-100 justify-content-center">
@@ -16,37 +15,38 @@
         </div>
     </div>
 
-    @foreach ($product['product_id']['product_usp_id'] as $key => $val)
-        @if ($key % 2 == 0)
-            <div class="section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <h5 class="title-50-bold">{{ $val['product_usp'][0]['name'] }}</h5>
-                            <p>{{ $val['product_usp'][0]['description'] ?? '' }}</p>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <img src="{{ $val['image']['path'] ?? '#' }}" class="w-100" alt="">
-                        </div>
+    <div class="section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 col-md-6">
+                    <div class="flex-middle">
+                        <span>
+                            <h4 class="title-50-bold">{{ $product['page_title'] }}</h4>
+                        </span>
                     </div>
                 </div>
-            </div>
-        @else
-            <div class="section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <img src="{{ $val['image']['path'] ?? '#' }}" class="w-100" alt="">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <h5 class="title-50-bold">{{ $val['product_usp'][0]['name'] }}</h5>
-                            <p>{{ $val['product_usp'][0]['description'] ?? '' }}</p>
-                        </div>
-                    </div>
+                <div class="col-12 col-md-6">
+                    <p>{{ $product['description'] }}</p>
                 </div>
             </div>
-        @endif
-    @endforeach
+
+            @if (!empty($product['product_id']['product_usp_id']))
+                <div class="row">
+                    @foreach ($product['product_id']['product_usp_id'] as $key => $val)
+                        <div class="col-12 col-md-3">
+                            <div class="card card-usp">
+                                <img src="{{ $val['image']['path'] ?? '#' }}" width="50px" class="mb-3" alt="">
+                                <div class="d-block">
+                                    <h5 class="title-30-bold">{{ $val['product_usp'][0]['name'] }}</h5>
+                                    <p>{{ $val['product_usp'][0]['description'] ?? '' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+    </div>
 
     @foreach ($product['product_id']['child'] as $key => $val)
         @if ($key % 2 == 0)
