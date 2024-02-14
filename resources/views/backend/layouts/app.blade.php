@@ -12,6 +12,11 @@
         <link href="{{ asset('public/backend/plugins/global/plugins.bundle.css') }}" rel="stylesheet type="text/css"/>
         <link href="{{ asset('public/backend/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('public/backend/css/style.bundle.css') }}" rel="stylesheet" type="text/css"/>
+
+        <link href="{{ asset('public/backend/css/themes/layout/header/base/light.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('public/backend/css/themes/layout/header/menu/light.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('public/backend/css/themes/layout/brand/dark.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('public/backend/css/themes/layout/aside/dark.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
         <style>
             .form-group__file {
                 display: flex;
@@ -78,11 +83,15 @@
 
         {{-- <link rel="shortcut icon" href="{{ asset('public/backend/media/logos/favicon.ico') }}"/> --}}
     </head>
-    <body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled page-loading">
+    <body  id="kt_body"  class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading"  >
+    {{-- <body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled page-loading"> --}}
         @include('backend.layouts.header-mobile')
 
         <div class="d-flex flex-column flex-root">
             <div class="d-flex flex-row flex-column-fluid page">
+                {{-- Aside --}}
+                @include('backend.layouts.aside')
+
                 <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
                     @include('backend.layouts.header')
 
@@ -273,6 +282,14 @@
                         button.attr('disabled', false);
                     }
                 })
+            });
+
+            $('.new-item-popup').tooltip({
+                trigger: 'manual'
+            });
+            $(document).ready(function() {
+                $('.new-item-popup').tooltip('show');
+                setTimeout(function(){ $('.new-item-popup').tooltip('hide'); }, 3000);
             });
 
             toastr.options = {

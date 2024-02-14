@@ -1,8 +1,8 @@
 <div id="kt_header_mobile" class="header-mobile  header-mobile-fixed " >
 	<div class="d-flex align-items-center">
-		<a href="index.html" class="mr-7">
-			{{-- <img alt="Logo" src="{{ asset('public/backend/media/logos/logo-letter-5.png') }}" class="max-h-30px"/> --}}
-		</a>
+		<a href="{{ url('admin-cms') }}" class="mr-7">
+            <img alt="Logo" src="{{ asset('public/backend/media/logos/cibes_logo.svg') }}" class="max-h-35px"/>
+        </a>
     </div>
     <div class="d-flex align-items-center">
         <button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle">

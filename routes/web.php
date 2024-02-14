@@ -143,6 +143,18 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                     Route::put('change-status', [App\Http\Controllers\Backend\Content\AboutUs\ShowroomController::class, 'changeStatus']);
                     Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\AboutUs\ShowroomController::class, 'delete']);
                 });
+
+                Route::group(['prefix' => 'aftersales'], function(){
+                    Route::get('', [App\Http\Controllers\Backend\Content\AboutUs\AftersalesController::class, 'index']);
+                    Route::post('datatable', [App\Http\Controllers\Backend\Content\AboutUs\AftersalesController::class, 'index']);
+                    Route::get('create', [App\Http\Controllers\Backend\Content\AboutUs\AftersalesController::class, 'create']);
+                    Route::post('create', [App\Http\Controllers\Backend\Content\AboutUs\AftersalesController::class, 'store']);
+                    Route::post('create-title', [App\Http\Controllers\Backend\Content\AboutUs\AftersalesController::class, 'storeTitle']);
+                    Route::get('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\AftersalesController::class, 'edit']);
+                    Route::put('edit/{id}', [App\Http\Controllers\Backend\Content\AboutUs\AftersalesController::class, 'update']);
+                    Route::put('change-status', [App\Http\Controllers\Backend\Content\AboutUs\AftersalesController::class, 'changeStatus']);
+                    Route::get('delete/{id}', [App\Http\Controllers\Backend\Content\AboutUs\AftersalesController::class, 'delete']);
+                });
             });
 
             Route::group(['prefix' => 'faq'], function(){
