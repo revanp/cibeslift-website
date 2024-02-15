@@ -149,7 +149,7 @@
                     </a>
                 </li>
 
-                <li class="menu-item {{ (request()->is('admin-cms/products/products/*') || request()->is('admin-cms/products/products')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                <li class="menu-item {{ (request()->is('admin-cms/products/products/*') || request()->is('admin-cms/products/products')) ? 'menu-item-active' : '' }} new-item-popup" data-toggle="tooltip" data-placement="top" title="Check me for new updates!" aria-haspopup="true">
                     <a href="{{ url('admin-cms/products/products') }}" class="menu-link ">
                         <span class="menu-icon la la-boxes icon-xl"></span>
                         <span class="menu-text">Products</span>
