@@ -23,6 +23,8 @@ use App\Models\ProductIdHasProductTechnologyId;
 use App\Models\ProductIdHasFaqId;
 use App\Models\ProductFeature;
 use App\Models\ProductFeatureId;
+use App\Models\ProductHighlight;
+use App\Models\ProductHighlightId;
 
 class ProductsController extends Controller
 {
@@ -135,6 +137,9 @@ class ProductsController extends Controller
             'productUspId',
             'productUspId.image',
             'productUspId.productUsp',
+            'productHighlightId',
+            'productHighlightId.image',
+            'productHighlightId.productHighlight',
             'productFeatureId',
             'productFeatureId.image',
             'productFeatureId.productFeature',
@@ -178,6 +183,13 @@ class ProductsController extends Controller
             foreach ($val['product_usp'] as $key2 => $val2) {
                 $data['product_usp_id'][$key]['product_usp'][$val2['language_code']] = $val2;
                 unset($data['product_usp_id'][$key]['product_usp'][$key2]);
+            }
+        }
+
+        foreach ($data['product_highlight'] as $key => $val) {
+            foreach ($val['product_highlight'] as $key2 => $val2) {
+                $data['product_highlight'][$key]['product_highlight'][$val2['language_code']] = $val2;
+                unset($data['product_highlight'][$key]['product_highlight'][$key2]);
             }
         }
 
@@ -485,6 +497,150 @@ class ProductsController extends Controller
 
         unset($data['_token']);
 
+        $rules = [
+            'banner' => ['required', 'file'],
+            'thumbnail' => ['file'],
+            'specification_image' => ['file'],
+            // 'product_summary_type' => ['required'],
+            'sort' => [],
+            'technologies' => ['required', 'array']
+        ];
+
+        $messages = [];
+
+        $attributes = [
+            'banner' => 'Banner',
+            'thumbnail' => 'Thumbnail',
+            'spesification_image' => 'Spesification Image',
+            'product_summary_type' => 'Product Summary Type',
+            'sort' => 'Sort',
+            'technologies' => 'Technologies'
+        ];
+
+        foreach ($request->input as $lang => $input) {
+            if($lang == 'id'){
+                $rules["input.$lang.name"] = ['required'];
+                $rules["input.$lang.short_description"] = ['required'];
+                $rules["input.$lang.description"] = [];
+                $rules["input.$lang.page_title"] = ['required'];
+            }else{
+                $rules["input.$lang.name"] = [];
+                $rules["input.$lang.short_description"] = [];
+                $rules["input.$lang.description"] = [];
+                $rules["input.$lang.page_title"] = [];
+            }
+
+            $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+
+            $attributes["input.$lang.name"] = "$lang_name Name";
+            $attributes["input.$lang.short_description"] = "$lang_name Short Description";
+            $attributes["input.$lang.description"] = "$lang_name Description";
+            $attributes["input.$lang.page_title"] = "$lang_name Page Title";
+        }
+
+        if(empty($data['have_a_child'])){
+            $rules['specification.size'] = ['required'];
+            $rules['specification.installation'] = ['required'];
+            $rules['specification.rated_load'] = [''];
+            $rules['specification.power_supply'] = ['required'];
+            $rules['specification.speed'] = ['required'];
+            $rules['specification.min_headroom'] = ['required'];
+            $rules['specification.lift_pit'] = ['required'];
+            $rules['specification.drive_system'] = ['required'];
+            $rules['specification.max_travel'] = ['required'];
+            $rules['specification.max_number_of_stops'] = ['required'];
+            $rules['specification.lift_controls'] = [''];
+            $rules['specification.motor_power'] = [''];
+            $rules['specification.machine_room'] = [''];
+            $rules['specification.door_configuration'] = ['required'];
+            $rules['specification.directive_and_standards'] = [''];
+
+            $attributes['specification.size'] = 'Size';
+            $attributes['specification.installation'] = 'Installation';
+            $attributes['specification.rated_load'] = 'Rated Load';
+            $attributes['specification.power_supply'] = 'Power Supply';
+            $attributes['specification.speed'] = 'Speed';
+            $attributes['specification.min_headroom'] = 'Min. Headroom';
+            $attributes['specification.lift_pit'] = 'Lift Pit';
+            $attributes['specification.drive_system'] = 'Drive System';
+            $attributes['specification.max_travel'] = 'Max Travel';
+            $attributes['specification.max_number_of_stops'] = 'Max. Number Of Stops';
+            $attributes['specification.lift_controls'] = 'Lift Controls';
+            $attributes['specification.motor_power'] = 'Motor Power';
+            $attributes['specification.machine_room'] = 'Machine Room';
+            $attributes['specification.door_configuration'] = 'Doors configuration';
+            $attributes['specification.directive_and_standards'] = 'Directive and Standards';
+        }
+
+        foreach ($request->usp as $key => $input) {
+            if(!empty($input['usp'][$key]['input']['id']['name'])){
+                $rules['usp.'.$key.'.image'] = ['required'];
+
+                $attributes['usp.'.$key.'.image'] = 'USP Image ' . $key + 1;
+
+                foreach($input['input'] as $lang => $input2){
+                    if($lang == 'id'){
+                        $rules["usp.". $key . ".input.". $lang.".name"] = ['required'];
+                        $rules["usp.". $key . ".input.". $lang.".description"] = [];
+                    }else{
+                        $rules["usp.". $key . ".input.". $lang.".name"] = [];
+                        $rules["usp.". $key . ".input.". $lang.".description"] = [];
+                    }
+
+                    $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+
+                    $attributes["usp.". $key . ".input.". $lang.".name"] = "USP $lang_name Name " . $key + 1;
+                    $attributes["usp.". $key . ".input.". $lang.".description"] = "USP $lang_name Description " . $key + 1;
+                }
+            }
+        }
+
+        foreach ($request->highlight as $key => $input) {
+            if(!empty($input['highlight'][$key]['input']['id']['name'])){
+                $rules['highlight.'.$key.'.image'] = ['required'];
+
+                $attributes['highlight.'.$key.'.image'] = 'Highlight Image ' . $key + 1;
+
+                foreach($input['input'] as $lang => $input2){
+                    if($lang == 'id'){
+                        $rules["highlight.". $key . ".input.". $lang.".name"] = ['required'];
+                        $rules["highlight.". $key . ".input.". $lang.".description"] = [];
+                    }else{
+                        $rules["highlight.". $key . ".input.". $lang.".name"] = [];
+                        $rules["highlight.". $key . ".input.". $lang.".description"] = [];
+                    }
+
+                    $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+
+                    $attributes["highlight.". $key . ".input.". $lang.".name"] = "Highlight $lang_name Name " . $key + 1;
+                    $attributes["highlight.". $key . ".input.". $lang.".description"] = "Highlight $lang_name Description " . $key + 1;
+                }
+            }
+        }
+
+        foreach ($request->feature as $key => $input) {
+            if(!empty($input['feature'][$key]['input']['id']['name'])){
+                $rules['feature.'.$key.'.image'] = ['required'];
+
+                $attributes['feature.'.$key.'.image'] = 'Feature Image ' . $key + 1;
+
+                foreach($input['input'] as $lang => $input2){
+                    if($lang == 'id'){
+                        $rules["feature.". $key . ".input.". $lang.".name"] = ['required'];
+                        $rules["feature.". $key . ".input.". $lang.".description"] = [];
+                    }else{
+                        $rules["feature.". $key . ".input.". $lang.".name"] = [];
+                        $rules["feature.". $key . ".input.". $lang.".description"] = [];
+                    }
+
+                    $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+
+                    $attributes["feature.". $key . ".input.". $lang.".name"] = "Feature $lang_name Name " . $key + 1;
+                    $attributes["feature.". $key . ".input.". $lang.".description"] = "Feature $lang_name Description " . $key + 1;
+                }
+            }
+        }
+
         $isError = false;
 
         try {
@@ -556,76 +712,119 @@ class ProductsController extends Controller
             $specification->fill($data['specification'])->save();
 
             foreach($data['usp'] as $key => $val){
-                $uspId = new ProductUspId();
+                if(!empty($data['usp'][$key]['input']['id']['name'])){
+                    $uspId = new ProductUspId();
 
-                $uspId->fill([
-                    'id_product_id' => $idProductId
-                ])->save();
+                    $uspId->fill([
+                        'id_product_id' => $idProductId
+                    ])->save();
 
-                $idUspId = $uspId->id;
+                    $idUspId = $uspId->id;
 
-                if ($request->hasFile('usp.'.$key.'.image')) {
-                    $this->storeFile(
-                        $request->file('usp.'.$key.'.image'),
-                        $uspId,
-                        'image',
-                        "images/products/products/usp/{$idUspId}",
-                        'image'
-                    );
-                }
-
-                foreach($val['input'] as $languageCode2 => $val2){
-                    $usp = new ProductUsp();
-
-                    $dataUsp['id_product_usp_id'] = $idUspId;
-                    $dataUsp['language_code'] = $languageCode2;
-
-                    if($languageCode2 != 'id'){
-                        $dataUsp['name'] = $data['usp'][$key]['input']['en']['name'] ?? $data['usp'][$key]['input']['id']['name'];
-                        $dataUsp['description'] = $data['usp'][$key]['input']['en']['description'] ?? $data['usp'][$key]['input']['id']['description'];
-                    }else{
-                        $dataUsp['name'] = $val2['name'];
-                        $dataUsp['description'] = $val2['description'];
+                    if ($request->hasFile('usp.'.$key.'.image')) {
+                        $this->storeFile(
+                            $request->file('usp.'.$key.'.image'),
+                            $uspId,
+                            'image',
+                            "images/products/products/usp/{$idUspId}",
+                            'image'
+                        );
                     }
 
-                    $usp->fill($dataUsp)->save();
+                    foreach($val['input'] as $languageCode2 => $val2){
+                        $usp = new ProductUsp();
+
+                        $dataUsp['id_product_usp_id'] = $idUspId;
+                        $dataUsp['language_code'] = $languageCode2;
+
+                        if($languageCode2 != 'id'){
+                            $dataUsp['name'] = $data['usp'][$key]['input']['en']['name'] ?? $data['usp'][$key]['input']['id']['name'];
+                            $dataUsp['description'] = $data['usp'][$key]['input']['en']['description'] ?? $data['usp'][$key]['input']['id']['description'];
+                        }else{
+                            $dataUsp['name'] = $val2['name'];
+                            $dataUsp['description'] = $val2['description'];
+                        }
+
+                        $usp->fill($dataUsp)->save();
+                    }
+                }
+            }
+
+            foreach($data['highlight'] as $key => $val){
+                if(!empty($data['highlight'][$key]['input']['id']['name'])){
+                    $highlightId = new ProductHighlightId();
+
+                    $highlightId->fill([
+                        'id_product_id' => $idProductId
+                    ])->save();
+
+                    $idHighlightId = $highlightId->id;
+
+                    if ($request->hasFile('highlight.'.$key.'.image')) {
+                        $this->storeFile(
+                            $request->file('highlight.'.$key.'.image'),
+                            $highlightId,
+                            'image',
+                            "images/products/products/highlight/{$idHighlightId}",
+                            'image'
+                        );
+                    }
+
+                    foreach($val['input'] as $languageCode2 => $val2){
+                        $highlight = new ProductHighlight();
+
+                        $dataHighlight['id_product_highlight_id'] = $idHighlightId;
+                        $dataHighlight['language_code'] = $languageCode2;
+
+                        if($languageCode2 != 'id'){
+                            $dataHighlight['name'] = $data['highlight'][$key]['input']['en']['name'] ?? $data['highlight'][$key]['input']['id']['name'];
+                            $dataHighlight['description'] = $data['highlight'][$key]['input']['en']['description'] ?? $data['highlight'][$key]['input']['id']['description'];
+                        }else{
+                            $dataHighlight['name'] = $val2['name'];
+                            $dataHighlight['description'] = $val2['description'];
+                        }
+
+                        $highlight->fill($dataHighlight)->save();
+                    }
                 }
             }
 
             foreach($data['feature'] as $key => $val){
-                $featureId = new ProductFeatureId();
+                if(!empty($data['feture'][$key]['input']['id']['name'])){
+                    $featureId = new ProductFeatureId();
 
-                $featureId->fill([
-                    'id_product_id' => $idProductId
-                ])->save();
+                    $featureId->fill([
+                        'id_product_id' => $idProductId
+                    ])->save();
 
-                $idFeatureId = $featureId->id;
+                    $idFeatureId = $featureId->id;
 
-                if ($request->hasFile('feature.'.$key.'.image')) {
-                    $this->storeFile(
-                        $request->file('feature.'.$key.'.image'),
-                        $featureId,
-                        'image',
-                        "images/products/products/feature/{$idFeatureId}",
-                        'image'
-                    );
-                }
-
-                foreach($val['input'] as $languageCode2 => $val2){
-                    $feature = new ProductFeature();
-
-                    $dataFeature['id_product_feature_id'] = $idFeatureId;
-                    $dataFeature['language_code'] = $languageCode2;
-
-                    if($languageCode2 != 'id'){
-                        $dataFeature['name'] = $data['feature'][$key]['input']['en']['name'] ?? $data['feature'][$key]['input']['id']['name'];
-                        $dataFeature['description'] = $data['feature'][$key]['input']['en']['description'] ?? $data['feature'][$key]['input']['id']['description'];
-                    }else{
-                        $dataFeature['name'] = $val2['name'];
-                        $dataFeature['description'] = $val2['description'];
+                    if ($request->hasFile('feature.'.$key.'.image')) {
+                        $this->storeFile(
+                            $request->file('feature.'.$key.'.image'),
+                            $featureId,
+                            'image',
+                            "images/products/products/feature/{$idFeatureId}",
+                            'image'
+                        );
                     }
 
-                    $feature->fill($dataFeature)->save();
+                    foreach($val['input'] as $languageCode2 => $val2){
+                        $feature = new ProductFeature();
+
+                        $dataFeature['id_product_feature_id'] = $idFeatureId;
+                        $dataFeature['language_code'] = $languageCode2;
+
+                        if($languageCode2 != 'id'){
+                            $dataFeature['name'] = $data['feature'][$key]['input']['en']['name'] ?? $data['feature'][$key]['input']['id']['name'];
+                            $dataFeature['description'] = $data['feature'][$key]['input']['en']['description'] ?? $data['feature'][$key]['input']['id']['description'];
+                        }else{
+                            $dataFeature['name'] = $val2['name'];
+                            $dataFeature['description'] = $val2['description'];
+                        }
+
+                        $feature->fill($dataFeature)->save();
+                    }
                 }
             }
 
@@ -728,6 +927,9 @@ class ProductsController extends Controller
             'productUspId',
             'productUspId.image',
             'productUspId.productUsp',
+            'productHighlightId',
+            'productHighlightId.image',
+            'productHighlightId.productHighlight',
             'productFeatureId',
             'productFeatureId.image',
             'productFeatureId.productFeature',
@@ -746,6 +948,13 @@ class ProductsController extends Controller
             foreach ($val['product_usp'] as $key2 => $val2) {
                 $data['product_usp_id'][$key]['product_usp'][$val2['language_code']] = $val2;
                 unset($data['product_usp_id'][$key]['product_usp'][$key2]);
+            }
+        }
+
+        foreach ($data['product_highlight_id'] as $key => $val) {
+            foreach ($val['product_highlight'] as $key2 => $val2) {
+                $data['product_highlight_id'][$key]['product_highlight'][$val2['language_code']] = $val2;
+                unset($data['product_highlight_id'][$key]['product_highlight'][$key2]);
             }
         }
 
@@ -797,6 +1006,164 @@ class ProductsController extends Controller
         $data = $request->post();
 
         unset($data['_token']);
+
+        $rules = [
+            'banner' => ['file'],
+            'thumbnail' => ['file'],
+            'specification_image' => ['file'],
+            // 'product_summary_type' => ['required'],
+            'sort' => [],
+            'technologies' => ['required', 'array']
+        ];
+
+        $messages = [];
+
+        $attributes = [
+            'banner' => 'Banner',
+            'thumbnail' => 'Thumbnail',
+            'spesification_image' => 'Spesification Image',
+            'product_summary_type' => 'Product Summary Type',
+            'sort' => 'Sort',
+            'technologies' => 'Technologies'
+        ];
+
+        foreach ($request->input as $lang => $input) {
+            if($lang == 'id'){
+                $rules["input.$lang.name"] = ['required'];
+                $rules["input.$lang.short_description"] = ['required'];
+                $rules["input.$lang.description"] = [];
+                $rules["input.$lang.page_title"] = ['required'];
+            }else{
+                $rules["input.$lang.name"] = [];
+                $rules["input.$lang.short_description"] = [];
+                $rules["input.$lang.description"] = [];
+                $rules["input.$lang.page_title"] = [];
+            }
+
+            $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+
+            $attributes["input.$lang.name"] = "$lang_name Name";
+            $attributes["input.$lang.short_description"] = "$lang_name Short Description";
+            $attributes["input.$lang.description"] = "$lang_name Description";
+            $attributes["input.$lang.page_title"] = "$lang_name Page Title";
+        }
+
+        if(empty($data['have_a_child'])){
+            $rules['specification.size'] = ['required'];
+            $rules['specification.installation'] = ['required'];
+            $rules['specification.rated_load'] = [''];
+            $rules['specification.power_supply'] = ['required'];
+            $rules['specification.speed'] = ['required'];
+            $rules['specification.min_headroom'] = ['required'];
+            $rules['specification.lift_pit'] = ['required'];
+            $rules['specification.drive_system'] = ['required'];
+            $rules['specification.max_travel'] = ['required'];
+            $rules['specification.max_number_of_stops'] = ['required'];
+            $rules['specification.lift_controls'] = [''];
+            $rules['specification.motor_power'] = [''];
+            $rules['specification.machine_room'] = [''];
+            $rules['specification.door_configuration'] = ['required'];
+            $rules['specification.directive_and_standards'] = [''];
+
+            $attributes['specification.size'] = 'Size';
+            $attributes['specification.installation'] = 'Installation';
+            $attributes['specification.rated_load'] = 'Rated Load';
+            $attributes['specification.power_supply'] = 'Power Supply';
+            $attributes['specification.speed'] = 'Speed';
+            $attributes['specification.min_headroom'] = 'Min. Headroom';
+            $attributes['specification.lift_pit'] = 'Lift Pit';
+            $attributes['specification.drive_system'] = 'Drive System';
+            $attributes['specification.max_travel'] = 'Max Travel';
+            $attributes['specification.max_number_of_stops'] = 'Max. Number Of Stops';
+            $attributes['specification.lift_controls'] = 'Lift Controls';
+            $attributes['specification.motor_power'] = 'Motor Power';
+            $attributes['specification.machine_room'] = 'Machine Room';
+            $attributes['specification.door_configuration'] = 'Doors configuration';
+            $attributes['specification.directive_and_standards'] = 'Directive and Standards';
+        }
+
+        foreach ($request->usp as $key => $input) {
+            if(!empty($input['usp'][$key]['input']['id']['name'])){
+                $rules['usp.'.$key.'.image'] = [''];
+
+                $attributes['usp.'.$key.'.image'] = 'USP Image ' . $key + 1;
+
+                foreach($input['input'] as $lang => $input2){
+                    if($lang == 'id'){
+                        $rules["usp.". $key . ".input.". $lang.".name"] = ['required'];
+                        $rules["usp.". $key . ".input.". $lang.".description"] = [];
+                    }else{
+                        $rules["usp.". $key . ".input.". $lang.".name"] = [];
+                        $rules["usp.". $key . ".input.". $lang.".description"] = [];
+                    }
+
+                    $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+
+                    $attributes["usp.". $key . ".input.". $lang.".name"] = "USP $lang_name Name " . $key + 1;
+                    $attributes["usp.". $key . ".input.". $lang.".description"] = "USP $lang_name Description " . $key + 1;
+                }
+            }
+        }
+
+        foreach ($request->highlight as $key => $input) {
+            if(!empty($input['highlight'][$key]['input']['id']['name'])){
+                $rules['highlight.'.$key.'.image'] = [''];
+
+                $attributes['highlight.'.$key.'.image'] = 'Highlight Image ' . $key + 1;
+
+                foreach($input['input'] as $lang => $input2){
+                    if($lang == 'id'){
+                        $rules["highlight.". $key . ".input.". $lang.".name"] = ['required'];
+                        $rules["highlight.". $key . ".input.". $lang.".description"] = [];
+                    }else{
+                        $rules["highlight.". $key . ".input.". $lang.".name"] = [];
+                        $rules["highlight.". $key . ".input.". $lang.".description"] = [];
+                    }
+
+                    $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+
+                    $attributes["highlight.". $key . ".input.". $lang.".name"] = "Highlight $lang_name Name " . $key + 1;
+                    $attributes["highlight.". $key . ".input.". $lang.".description"] = "Highlight $lang_name Description " . $key + 1;
+                }
+            }
+        }
+
+        foreach ($request->feature as $key => $input) {
+            if(!empty($input['feature'][$key]['input']['id']['name'])){
+                $rules['feature.'.$key.'.image'] = [''];
+
+                $attributes['feature.'.$key.'.image'] = 'Feature Image ' . $key + 1;
+
+                foreach($input['input'] as $lang => $input2){
+                    if($lang == 'id'){
+                        $rules["feature.". $key . ".input.". $lang.".name"] = ['required'];
+                        $rules["feature.". $key . ".input.". $lang.".description"] = [];
+                    }else{
+                        $rules["feature.". $key . ".input.". $lang.".name"] = [];
+                        $rules["feature.". $key . ".input.". $lang.".description"] = [];
+                    }
+
+                    $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
+
+                    $attributes["feature.". $key . ".input.". $lang.".name"] = "Feature $lang_name Name " . $key + 1;
+                    $attributes["feature.". $key . ".input.". $lang.".description"] = "Feature $lang_name Description " . $key + 1;
+                }
+            }
+        }
+
+        $validator = Validator::make($data, $rules, $messages, $attributes);
+
+        if($validator->fails()){
+            return response()->json([
+                'code' => 422,
+                'success' => false,
+                'message' => 'Validation error!',
+                'data' => $validator->errors()
+            ], 422)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }
 
         $isError = false;
 
@@ -871,92 +1238,143 @@ class ProductsController extends Controller
             $specification->fill($data['specification'])->save();
 
             foreach($data['usp'] as $key => $val){
-                if(!empty($val['id'])){
-                    $uspId = ProductUspId::find($val['id']);
-                }else{
-                    $uspId = new ProductUspId();
-                }
-
-                $uspId->fill([
-                    'id_product_id' => $idProductId
-                ])->save();
-
-                $idUspId = $uspId->id;
-
-                if ($request->hasFile('usp.'.$key.'.image')) {
-                    $this->storeFile(
-                        $request->file('usp.'.$key.'.image'),
-                        $uspId,
-                        'image',
-                        "images/products/products/usp/{$idUspId}",
-                        'image'
-                    );
-                }
-
-                foreach($val['input'] as $languageCode2 => $val2){
+                if(!empty($data['usp'][$key]['input']['id']['name'])){
                     if(!empty($val['id'])){
-                        $usp = ProductUsp::where('language_code', $languageCode2)->where('id_product_usp_id', $val['id'])->first();
+                        $uspId = ProductUspId::find($val['id']);
                     }else{
-                        $usp = new ProductUsp();
+                        $uspId = new ProductUspId();
                     }
 
-                    $dataUsp['id_product_usp_id'] = $idUspId;
-                    $dataUsp['language_code'] = $languageCode2;
+                    $uspId->fill([
+                        'id_product_id' => $idProductId
+                    ])->save();
 
-                    if($languageCode2 != 'id'){
-                        $dataUsp['name'] = $data['usp'][$key]['input']['en']['name'] ?? $data['usp'][$key]['input']['id']['name'];
-                        $dataUsp['description'] = $data['usp'][$key]['input']['en']['description'] ?? $data['usp'][$key]['input']['id']['description'];
-                    }else{
-                        $dataUsp['name'] = $val2['name'];
-                        $dataUsp['description'] = $val2['description'];
+                    $idUspId = $uspId->id;
+
+                    if ($request->hasFile('usp.'.$key.'.image')) {
+                        $this->storeFile(
+                            $request->file('usp.'.$key.'.image'),
+                            $uspId,
+                            'image',
+                            "images/products/products/usp/{$idUspId}",
+                            'image'
+                        );
                     }
 
-                    $usp->fill($dataUsp)->save();
+                    foreach($val['input'] as $languageCode2 => $val2){
+                        if(!empty($val['id'])){
+                            $usp = ProductUsp::where('language_code', $languageCode2)->where('id_product_usp_id', $val['id'])->first();
+                        }else{
+                            $usp = new ProductUsp();
+                        }
+
+                        $dataUsp['id_product_usp_id'] = $idUspId;
+                        $dataUsp['language_code'] = $languageCode2;
+
+                        if($languageCode2 != 'id'){
+                            $dataUsp['name'] = $data['usp'][$key]['input']['en']['name'] ?? $data['usp'][$key]['input']['id']['name'];
+                            $dataUsp['description'] = $data['usp'][$key]['input']['en']['description'] ?? $data['usp'][$key]['input']['id']['description'];
+                        }else{
+                            $dataUsp['name'] = $val2['name'];
+                            $dataUsp['description'] = $val2['description'];
+                        }
+
+                        $usp->fill($dataUsp)->save();
+                    }
+                }
+            }
+
+            foreach($data['highlight'] as $key => $val){
+                if(!empty($data['highlight'][$key]['input']['id']['name'])){
+                    if(!empty($val['id'])){
+                        $highlightId = ProductHighlightId::find($val['id']);
+                    }else{
+                        $highlightId = new ProductHighlightId();
+                    }
+
+                    $highlightId->fill([
+                        'id_product_id' => $idProductId
+                    ])->save();
+
+                    $idHighlightId = $highlightId->id;
+
+                    if ($request->hasFile('highlight.'.$key.'.image')) {
+                        $this->storeFile(
+                            $request->file('highlight.'.$key.'.image'),
+                            $highlightId,
+                            'image',
+                            "images/products/products/highlight/{$idHighlightId}",
+                            'image'
+                        );
+                    }
+
+                    foreach($val['input'] as $languageCode2 => $val2){
+                        if(!empty($val['id'])){
+                            $highlight = ProductHighlight::where('language_code', $languageCode2)->where('id_product_highlight_id', $val['id'])->first();
+                        }else{
+                            $highlight = new ProductHighlight();
+                        }
+
+                        $dataHighlight['id_product_highlight_id'] = $idHighlightId;
+                        $dataHighlight['language_code'] = $languageCode2;
+
+                        if($languageCode2 != 'id'){
+                            $dataHighlight['name'] = $data['highlight'][$key]['input']['en']['name'] ?? $data['highlight'][$key]['input']['id']['name'];
+                            $dataHighlight['description'] = $data['highlight'][$key]['input']['en']['description'] ?? $data['highlight'][$key]['input']['id']['description'];
+                        }else{
+                            $dataHighlight['name'] = $val2['name'];
+                            $dataHighlight['description'] = $val2['description'];
+                        }
+
+                        $highlight->fill($dataHighlight)->save();
+                    }
                 }
             }
 
             foreach($data['feature'] as $key => $val){
-                if(!empty($val['id'])){
-                    $featureId = ProductFeatureId::find($val['id']);
-                }else{
-                    $featureId = new ProductFeatureId();
-                }
-
-                $featureId->fill([
-                    'id_product_id' => $idProductId
-                ])->save();
-
-                $idFeatureId = $featureId->id;
-
-                if ($request->hasFile('feature.'.$key.'.image')) {
-                    $this->storeFile(
-                        $request->file('feature.'.$key.'.image'),
-                        $featureId,
-                        'image',
-                        "images/products/products/feature/{$idFeatureId}",
-                        'image'
-                    );
-                }
-
-                foreach($val['input'] as $languageCode2 => $val2){
+                if(!empty($data['feture'][$key]['input']['id']['name'])){
                     if(!empty($val['id'])){
-                        $feature = ProductFeature::where('language_code', $languageCode2)->where('id_product_feature_id', $val['id'])->first();
+                        $featureId = ProductFeatureId::find($val['id']);
                     }else{
-                        $feature = new ProductFeature();
+                        $featureId = new ProductFeatureId();
                     }
 
-                    $dataFeature['id_product_feature_id'] = $idFeatureId;
-                    $dataFeature['language_code'] = $languageCode2;
+                    $featureId->fill([
+                        'id_product_id' => $idProductId
+                    ])->save();
 
-                    if($languageCode2 != 'id'){
-                        $dataFeature['name'] = $data['feature'][$key]['input']['en']['name'] ?? $data['feature'][$key]['input']['id']['name'];
-                        $dataFeature['description'] = $data['feature'][$key]['input']['en']['description'] ?? $data['feature'][$key]['input']['id']['description'];
-                    }else{
-                        $dataFeature['name'] = $val2['name'];
-                        $dataFeature['description'] = $val2['description'];
+                    $idFeatureId = $featureId->id;
+
+                    if ($request->hasFile('feature.'.$key.'.image')) {
+                        $this->storeFile(
+                            $request->file('feature.'.$key.'.image'),
+                            $featureId,
+                            'image',
+                            "images/products/products/feature/{$idFeatureId}",
+                            'image'
+                        );
                     }
 
-                    $feature->fill($dataFeature)->save();
+                    foreach($val['input'] as $languageCode2 => $val2){
+                        if(!empty($val['id'])){
+                            $feature = ProductFeature::where('language_code', $languageCode2)->where('id_product_feature_id', $val['id'])->first();
+                        }else{
+                            $feature = new ProductFeature();
+                        }
+
+                        $dataFeature['id_product_feature_id'] = $idFeatureId;
+                        $dataFeature['language_code'] = $languageCode2;
+
+                        if($languageCode2 != 'id'){
+                            $dataFeature['name'] = $data['feature'][$key]['input']['en']['name'] ?? $data['feature'][$key]['input']['id']['name'];
+                            $dataFeature['description'] = $data['feature'][$key]['input']['en']['description'] ?? $data['feature'][$key]['input']['id']['description'];
+                        }else{
+                            $dataFeature['name'] = $val2['name'];
+                            $dataFeature['description'] = $val2['description'];
+                        }
+
+                        $feature->fill($dataFeature)->save();
+                    }
                 }
             }
 
@@ -1101,6 +1519,60 @@ class ProductsController extends Controller
             DB::commit();
 
             return redirect('admin-cms/products/products')->with(['success' => 'Product has been deleted successfully']);
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
+        }
+    }
+
+    public function deleteUsp($id, $idUsp)
+    {
+        try{
+            DB::beginTransaction();
+
+            $delete = ProductUspId::where('id', $idUsp)->delete();
+            $deleteChild = ProductUsp::where('id_product_usp_id', $idUsp)->delete();
+
+            DB::commit();
+
+            return redirect()->back()->with(['success' => 'USP has been deleted successfully']);
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
+        }
+    }
+
+    public function deleteHighlight($id, $idHighlight)
+    {
+        try{
+            DB::beginTransaction();
+
+            $delete = ProductHighlightId::where('id', $idHighlight)->delete();
+            $deleteChild = ProductHighlight::where('id_product_highlight_id', $idHighlight)->delete();
+
+            DB::commit();
+
+            return redirect()->back()->with(['success' => 'Highlight has been deleted successfully']);
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
+        }
+    }
+
+    public function deleteFeature($id, $idFeature)
+    {
+        try{
+            DB::beginTransaction();
+
+            $delete = ProductFeatureId::where('id', $idFeature)->delete();
+            $deleteChild = ProductFeature::where('id_product_feature_id', $idFeature)->delete();
+
+            DB::commit();
+
+            return redirect()->back()->with(['success' => 'Feature has been deleted successfully']);
         }catch(Exception $e){
             DB::rollBack();
 

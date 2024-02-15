@@ -82,48 +82,6 @@
             ClassicEditor.create(document.querySelector('.ckeditor-size'));
         });
 
-        $('form').submit(function(e){
-            e.preventDefault();
-
-            var action = $(this).attr('action');
-
-            var formData = new FormData(this);
-
-            $.ajax({
-                url: "{{ url('admin-cms/products/products/validation') }}",
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                cache: false,
-                success: function(data){
-                    $.ajax({
-                        url: action,
-                        type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        cache: false,
-                        success: function(data){
-                            if(data.redirect != null){
-                                window.location.replace(data.redirect);
-                            }
-                        },
-                        error: function(data){
-                            var result = data.responseJSON;
-                        }
-                    })
-                },
-                error: function(data){
-                    var result = data.responseJSON;
-
-                    $.each(result.data, function(key, value){
-                        toastr.error(value[0]);
-                    })
-                }
-            })
-        });
-
         $('input[name="have_a_child"]').on('change', function(){
             var checked = $('input[name="have_a_child"]:checked').length;
 
@@ -169,15 +127,15 @@
                     <div class="col-md-6">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                             <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" role="tab" href="#idTab">Indonesia</a>
+                                    <a class="nav-link active" data-toggle="tab" role="tab" href="#id-`+dataCount+`-UspTab">Indonesia</a>
                                 </li>
                                                             <li class="nav-item">
-                                    <a class="nav-link " data-toggle="tab" role="tab" href="#enTab">English</a>
+                                    <a class="nav-link " data-toggle="tab" role="tab" href="#en-`+dataCount+`-UspTab">English</a>
                                 </li>
                                                     </ul>
 
                         <div class="tab-content mb-4" style="display: block !important;">
-                                                            <div class="tab-pane active" id="idUspTab" role="tabpanel">
+                                                            <div class="tab-pane active" id="id-`+dataCount+`-UspTab" role="tabpanel">
                                     <div class="row mt-5">
                                         <div class="form-group col-md-12">
                                             <label>Name</label>
@@ -189,7 +147,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                                            <div class="tab-pane " id="enUspTab" role="tabpanel">
+                                                            <div class="tab-pane " id="en-`+dataCount+`-UspTab" role="tabpanel">
                                     <div class="row mt-5">
                                         <div class="form-group col-md-12">
                                             <label>Name</label>
@@ -198,6 +156,69 @@
                                         <div class="form-group col-md-12">
                                             <label>Description</label>
                                             <textarea name="usp[`+dataCount+`][input][en][description]" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                                    </div>
+                    </div>
+                </div>
+            </div>`;
+
+            listBox.append(html);
+
+            $(this).data('count', dataCount + 1)
+        })
+
+        $('.add-item-highlight').click(function(e){
+            e.preventDefault();
+
+            var dataCount = $(this).data('count');
+            var listBox = $('.highlight-box');
+
+            var html = `<div class="highlight-item mt-5">
+                <div class="row">
+                    <div class="form-group picture_upload col-md-6">
+                        <label>Highlight Image</label>
+                        <div class="form-group__file">
+                            <div class="file-wrapper">
+                                <input type="file" name="highlight[`+dataCount+`][image]" class="file-input">
+                                <div class="file-preview-background">+</div>
+                                <img src="" width="240px" class="file-preview">
+                            </div>
+                        </div>
+                                            </div>
+                    <div class="col-md-6">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                            <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" role="tab" href="#id-`+dataCount+`-HighlightTab">Indonesia</a>
+                                </li>
+                                                            <li class="nav-item">
+                                    <a class="nav-link " data-toggle="tab" role="tab" href="#en-`+dataCount+`-HighlightTab">English</a>
+                                </li>
+                                                    </ul>
+
+                        <div class="tab-content mb-4" style="display: block !important;">
+                                                            <div class="tab-pane active" id="id-`+dataCount+`-HighlightTab" role="tabpanel">
+                                    <div class="row mt-5">
+                                        <div class="form-group col-md-12">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter name" name="highlight[`+dataCount+`][input][id][name]" value="">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Description</label>
+                                            <textarea name="highlight[`+dataCount+`][input][id][description]" class="form-control" placeholder="Enter description"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                                            <div class="tab-pane " id="en-`+dataCount+`-HighlightTab" role="tabpanel">
+                                    <div class="row mt-5">
+                                        <div class="form-group col-md-12">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter name" name="highlight[`+dataCount+`][input][en][name]" value="">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Description</label>
+                                            <textarea name="highlight[`+dataCount+`][input][en][description]" class="form-control" placeholder="Enter description"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -232,15 +253,15 @@
                     <div class="col-md-6">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                             <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" role="tab" href="#idTab">Indonesia</a>
+                                    <a class="nav-link active" data-toggle="tab" role="tab" href="#id-`+dataCount+`-FeatureTab">Indonesia</a>
                                 </li>
                                                             <li class="nav-item">
-                                    <a class="nav-link " data-toggle="tab" role="tab" href="#enTab">English</a>
+                                    <a class="nav-link " data-toggle="tab" role="tab" href="#en-`+dataCount+`-FeatureTab">English</a>
                                 </li>
                                                     </ul>
 
                         <div class="tab-content mb-4" style="display: block !important;">
-                                                            <div class="tab-pane active" id="idTab" role="tabpanel">
+                                                            <div class="tab-pane active" id="id-`+dataCount+`-FeatureTab" role="tabpanel">
                                     <div class="row mt-5">
                                         <div class="form-group col-md-12">
                                             <label>Name</label>
@@ -252,7 +273,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                                            <div class="tab-pane " id="enTab" role="tabpanel">
+                                                            <div class="tab-pane " id="en-`+dataCount+`-FeatureTab" role="tabpanel">
                                     <div class="row mt-5">
                                         <div class="form-group col-md-12">
                                             <label>Name</label>
@@ -277,5 +298,26 @@
         $(document).on('click', '.delete-item-value', function(){
             $(this).parent().remove();
         })
+        
+        $('.btn-delete-item').click(function(e){
+            e.preventDefault();
+
+            var href = $(this).attr('href');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            });
+
+        });
     </script>
 @endsection

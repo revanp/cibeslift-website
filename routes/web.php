@@ -239,6 +239,9 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                 Route::post('create', [App\Http\Controllers\Backend\Products\ProductsController::class, 'store']);
                 Route::get('edit/{id}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'edit']);
                 Route::post('edit/{id}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'update']);
+                Route::get('edit/{id}/delete-usp/{idUsp}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'deleteUsp']);
+                Route::get('edit/{id}/delete-highlight/{idHighlight}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'deleteHighlight']);
+                Route::get('edit/{id}/delete-feature/{idFeature}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'deleteFeature']);
                 Route::put('change-status', [App\Http\Controllers\Backend\Products\ProductsController::class, 'changeStatus']);
                 Route::get('delete/{id}', [App\Http\Controllers\Backend\Products\ProductsController::class, 'delete']);
 
