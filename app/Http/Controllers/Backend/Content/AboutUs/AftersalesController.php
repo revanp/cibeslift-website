@@ -129,15 +129,18 @@ class AftersalesController extends Controller
         foreach ($request->input as $lang => $input) {
             if($lang == 'id'){
                 $rules["input.$lang.title"] = ['required'];
+                $rules["input.$lang.cta"] = ['required'];
                 $rules["input.$lang.description"] = ['required'];
             }else{
                 $rules["input.$lang.title"] = [];
+                $rules["input.$lang.cta"] = [];
                 $rules["input.$lang.description"] = [];
             }
 
             $lang_name = $lang == 'id' ? 'Indonesia' : 'English';
 
             $attributes["input.$lang.title"] = "$lang_name Title";
+            $attributes["input.$lang.cta"] = "$lang_name Call to Action";
             $attributes["input.$lang.description"] = "$lang_name Description";
         }
 
@@ -171,6 +174,7 @@ class AftersalesController extends Controller
 
                 if($languageCode != 'id'){
                     $input['title'] = $data['input']['en']['title'] ?? $data['input']['id']['title'];
+                    $input['cta'] = $data['input']['en']['cta'] ?? $data['input']['id']['cta'];
                     $input['description'] = $data['input']['en']['description'] ?? $data['input']['id']['description'];
                 }
 

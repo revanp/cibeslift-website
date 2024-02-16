@@ -132,26 +132,28 @@
         </div>
     @endif
 
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="flex-middle">
-                        <span>
-                            <h4 class="title-50-bold">Customer Care yang Siap Melayani 24/7</h4>
-                            <p class="mb-5">Demi keamanan dan kenyamanan Anda, kami siap selama 24 jam penuh setiap hari. bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.</p>
-                            <a data-fancybox data-src="#aftersales" href="javascript:;" class="button-orange">Pasang Lift Cibes</a>
-                        </span>
+    @if (!empty($aftersalesTitle))
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="flex-middle">
+                            <span>
+                                <h4 class="title-50-bold">{{ $aftersalesTitle->title ?? '' }}</h4>
+                                <p class="mb-5">{{ $aftersalesTitle->description ?? '' }}</p>
+                                <a data-fancybox data-src="#aftersales" href="javascript:;" class="button-orange">{{ $aftersalesTitle->cta ?? '' }}</a>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="text-center">
-                        <img src="{{ asset('public/frontend/images/user.png') }}" alt="">
+                    <div class="col-12 col-md-6">
+                        <div class="text-center">
+                            <img src="{{ $aftersalesTitle->image->path ?? '' }}" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <div style="display: none; min-width: 1200px;" id="aftersales">
         <div class="container">

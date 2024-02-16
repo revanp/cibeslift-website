@@ -12,6 +12,8 @@ use App\Models\AboutUsHighlightId;
 use App\Models\Showroom;
 use App\Models\Product;
 use App\Models\AboutUsBanner;
+use App\Models\AboutUsAftersales;
+use App\Models\AboutUsAftersalesTitle;
 use Illuminate\Support\Facades\Crypt;
 
 class AboutController extends Controller
@@ -81,7 +83,13 @@ class AboutController extends Controller
         })
         ->get();
 
-        return view('frontend.pages.about.index', compact('history', 'nation', 'manufacture', 'highlightImage', 'highlight', 'showroom', 'products', 'banner'));
+        $aftersalesTitle = AboutUsAftersalesTitle::with([
+            'image'
+        ])
+        ->where('language_code', getLocale())
+        ->first();
+
+        return view('frontend.pages.about.index', compact('history', 'nation', 'manufacture', 'highlightImage', 'highlight', 'showroom', 'products', 'banner', 'aftersalesTitle'));
     }
 
     public function getManufacture(Request $request)

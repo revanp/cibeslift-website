@@ -16,6 +16,7 @@ class AboutUsAftersalesTitle extends Model
     protected $fillable  = [
         'title',
         'description',
+        'cta',
         'language_code'
     ];
 

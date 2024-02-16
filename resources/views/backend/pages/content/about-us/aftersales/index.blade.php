@@ -67,9 +67,13 @@
                                     @foreach ($lang as $key => $val)
                                         <div class="tab-pane {{ $key == 'id' ? 'active' : '' }}" id="{{ $key }}Tab" role="tabpanel">
                                             <div class="row mt-5">
-                                                <div class="form-group col-md-12">
+                                                <div class="form-group col-md-6">
                                                     <label>Title</label>
                                                     <input type="text" class="form-control" placeholder="Enter title" name="input[{{ $key }}][title]" value="{{ $title[$key]['title'] ?? '' }}"/>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Call to Action</label>
+                                                    <input type="text" class="form-control" placeholder="Enter call to action" name="input[{{ $key }}][cta]" value="{{ $title[$key]['cta'] ?? '' }}"/>
                                                 </div>
                                                 <div class="form-group col-md-12">
                                                     <label>Description</label>
