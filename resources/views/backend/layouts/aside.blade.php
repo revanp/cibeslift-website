@@ -20,7 +20,7 @@
                     <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                 </li>
 
-                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                <li class="menu-item menu-item-submenu {{ request()->is('admin-cms/content/home/*') ? 'menu-item-active menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="menu-icon la la-home icon-xl"></span>
                         <span class="menu-text">Home</span>
@@ -36,22 +36,22 @@
                                 </span>
                             </li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/header-banner') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Header Banner</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/home/header-banner/*') || request()->is('admin-cms/content/home/header-banner')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/content/home/header-banner') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Header Banner</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/video') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Video</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/home/video/*') || request()->is('admin-cms/content/home/video')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/content/home/video') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Video</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/home-menu-section') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Menu Section</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/home/home-menu-section/*') || request()->is('admin-cms/content/home/home-menu-section')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/content/home/home-menu-section') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Menu Section</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/why-cibes') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Why Cibes</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/home/why-cibes/*') || request()->is('admin-cms/content/home/why-cibes')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/content/home/why-cibes') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Why Cibes</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/company-vision') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Company Vision</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/home/company-vision/*') || request()->is('admin-cms/content/home/company-vision')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/content/home/company-vision') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Company Vision</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/home/testimonial') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Testimonial</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/home/testimonial/*') || request()->is('admin-cms/content/home/testimonial')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/content/home/testimonial') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Testimonial</span></a></li>
                         </ul>
                     </div>
                 </li>
 
-                <li class="menu-item menu-item-submenu menu-item-open" aria-haspopup="true" data-menu-toggle="hover">
+                <li class="menu-item menu-item-submenu {{ request()->is('admin-cms/content/about-us/*') ? 'menu-item-active menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="menu-icon la la-building icon-xl"></span>
                         <span class="menu-text">About Us</span>
@@ -67,24 +67,24 @@
                                 </span>
                             </li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/history') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">History</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/about-us/history/*') || request()->is('admin-cms/content/about-us/history')) ? 'menu-item-active' : '' }} " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/history') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">History</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/nation') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Nation</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/about-us/nation/*') || request()->is('admin-cms/content/about-us/nation')) ? 'menu-item-active' : '' }} " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/nation') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Nation</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/manufacture') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Manufacture</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/about-us/manufacture/*') || request()->is('admin-cms/content/about-us/manufacture')) ? 'menu-item-active' : '' }} " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/manufacture') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Manufacture</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/highlight') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Highlight</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/about-us/highlight/*') || request()->is('admin-cms/content/about-us/highlight')) ? 'menu-item-active' : '' }} " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/highlight') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Highlight</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/banner') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Banner</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/about-us/banner/*') || request()->is('admin-cms/content/about-us/banner')) ? 'menu-item-active' : '' }} " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/banner') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Banner</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/showroom') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Showroom</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/about-us/showroom/*') || request()->is('admin-cms/content/about-us/showroom')) ? 'menu-item-active' : '' }} " aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/showroom') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Showroom</span></a></li>
 
-                            <li class="menu-item new-item-popup" data-toggle="tooltip" data-placement="top" title="Check me for new updates!" aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/aftersales') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Aftersales</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/about-us/aftersales/*') || request()->is('admin-cms/content/about-us/aftersales')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/content/about-us/aftersales') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Aftersales</span></a></li>
                         </ul>
                     </div>
                 </li>
 
-                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                <li class="menu-item menu-item-submenu {{ request()->is('admin-cms/content/faq/*') ? 'menu-item-active menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="menu-icon la la-question icon-xl"></span>
                         <span class="menu-text">FAQ</span>
@@ -100,14 +100,14 @@
                                 </span>
                             </li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/faq/categories') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Categories</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/faq/categories/*') || request()->is('admin-cms/content/faq/categories')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/content/faq/categories') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Categories</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/faq/questions') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Questions</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/faq/questions/*') || request()->is('admin-cms/content/faq/questions')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/content/faq/questions') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Questions</span></a></li>
                         </ul>
                     </div>
                 </li>
 
-                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                <li class="menu-item menu-item-submenu {{ request()->is('admin-cms/content/news/*') ? 'menu-item-active menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="menu-icon la la-newspaper-o icon-xl"></span>
                         <span class="menu-text">News</span>
@@ -123,9 +123,9 @@
                                 </span>
                             </li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/news/categories') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Categories</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/news/categories/*') || request()->is('admin-cms/content/news/questions')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/content/news/categories') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Categories</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/content/news/news') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">News</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/content/news/news/*') || request()->is('admin-cms/content/news/news')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/content/news/news') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">News</span></a></li>
                         </ul>
                     </div>
                 </li>
@@ -149,14 +149,14 @@
                     </a>
                 </li>
 
-                <li class="menu-item {{ (request()->is('admin-cms/products/products/*') || request()->is('admin-cms/products/products')) ? 'menu-item-active' : '' }} new-item-popup" data-toggle="tooltip" data-placement="top" title="Check me for new updates!" aria-haspopup="true">
+                <li class="menu-item {{ (request()->is('admin-cms/products/products/*') || request()->is('admin-cms/products/products')) ? 'menu-item-active' : '' }} new-item-popup" aria-haspopup="true">
                     <a href="{{ url('admin-cms/products/products') }}" class="menu-link ">
                         <span class="menu-icon la la-boxes icon-xl"></span>
                         <span class="menu-text">Products</span>
                     </a>
                 </li>
 
-                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                <li class="menu-item menu-item-submenu {{ request()->is('admin-cms/products/installations/*') ? 'menu-item-active menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="menu-icon la la-code-branch icon-xl"></span>
                         <span class="menu-text">Installations</span>
@@ -172,9 +172,9 @@
                                 </span>
                             </li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/products/installations/master') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Master Data</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/products/installations/master/*') || request()->is('admin-cms/products/installations/master')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/products/installations/master') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Master Data</span></a></li>
 
-                            <li class="menu-item " aria-haspopup="true"><a href="{{ url('admin-cms/products/installations/installations') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Installations</span></a></li>
+                            <li class="menu-item {{ (request()->is('admin-cms/products/installations/installations/*') || request()->is('admin-cms/products/installations/installations')) ? 'menu-item-active' : '' }}" aria-haspopup="true"><a href="{{ url('admin-cms/products/installations/installations') }}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Installations</span></a></li>
                         </ul>
                     </div>
                 </li>
