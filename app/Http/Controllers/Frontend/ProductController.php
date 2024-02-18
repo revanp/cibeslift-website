@@ -84,6 +84,11 @@ class ProductController extends Controller
             'productId.productUspId.productUsp' => function($query){
                 $query->where('language_code', getLocale());
             },
+            'productId.productHighlightId',
+            'productId.productHighlightId.image',
+            'productId.productHighlightId.productHighlight' => function($query){
+                $query->where('language_code', getLocale());
+            },
             'productId.productIdHasProductTechnologyId',
             'productId.productIdHasProductTechnologyId.productTechnologyId',
             'productId.productIdHasProductTechnologyId.productTechnologyId.image',
@@ -102,6 +107,7 @@ class ProductController extends Controller
             },
             'productId.banner',
             'productId.child',
+            'productId.child.thumbnail',
             'productId.child.specificationImage',
             'productId.child.product' => function($query){
                 $query->where('language_code', getLocale());
@@ -120,7 +126,12 @@ class ProductController extends Controller
 
         $product = $product->toArray();
 
-        return view('frontend.pages.product.product', compact('product'));
+        if($product['product_id']['have_a_child']){
+            return view('frontend.pages.product.product', compact('product'));
+        }else{
+            return view('frontend.pages.product.detail', compact('product'));
+        }
+
     }
 
     public function detail()

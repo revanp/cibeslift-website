@@ -1,4 +1,4 @@
-<div class="header">
+<div class="@if(Request::path() == 'id' || Request::url() == 'en') header-home @else header @endif">
     <div class="container">
         <div class="row">
             <div class="col-4 col-md-6">
@@ -42,7 +42,7 @@
                         EN
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="lang">
-                      <li><a class="dropdown-item" href="#">ID</a></li>
+                        <li><a class="dropdown-item" href="#">ID</a></li>
                     </ul>
                 </div>
             </div>

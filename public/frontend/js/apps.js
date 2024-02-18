@@ -21,15 +21,23 @@ $('.slider-history').slick({
     ]
 });
 
+$(window).on("scroll", function() {
+    if($(window).scrollTop() > 50) {
+        $(".header-home").addClass("bg-color-header-blue");
+    } else {
+        $(".header-home").removeClass("bg-color-header-blue");
+    }
+});
+
 const items = document.querySelectorAll(".accordion button");
 
 function toggleAccordion() {
     const itemToggle = this.getAttribute('aria-expanded');
-    
+
     for (i = 0; i < items.length; i++) {
         items[i].setAttribute('aria-expanded', 'false');
     }
-    
+
     if (itemToggle == 'false') {
         this.setAttribute('aria-expanded', 'true');
     }

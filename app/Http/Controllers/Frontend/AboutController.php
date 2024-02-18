@@ -89,7 +89,17 @@ class AboutController extends Controller
         ->where('language_code', getLocale())
         ->first();
 
-        return view('frontend.pages.about.index', compact('history', 'nation', 'manufacture', 'highlightImage', 'highlight', 'showroom', 'products', 'banner', 'aftersalesTitle'));
+        $aftersales = AboutUsAftersales::with([
+            'aboutUsAftersalesId',
+            'aboutUsAftersalesId.image',
+        ])
+        ->where('language_code', getLocale())
+        ->whereHas('aboutUsAftersalesId', function($query){
+            $query->where('is_active', true);
+        })
+        ->get();
+
+        return view('frontend.pages.about.index', compact('history', 'nation', 'manufacture', 'highlightImage', 'highlight', 'showroom', 'products', 'banner', 'aftersalesTitle', 'aftersales'));
     }
 
     public function getManufacture(Request $request)

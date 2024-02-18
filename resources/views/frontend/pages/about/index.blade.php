@@ -163,66 +163,18 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
+                @foreach ($aftersales as $key => $val)
+                    <div class="col-6 col-md-4">
+                        <a href="">
+                            <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ $val->aboutUsAftersalesId->image->path ?? '#' }}')">
+                                <div class="card-standard_img"></div>
+                                <div class="card-standard_content">
+                                    <h5 class="title-20-bold c-white">{{ $val->name }}</h5>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="">
-                        <div class="card-standard background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                            <div class="card-standard_img"></div>
-                            <div class="card-standard_content">
-                                <h5 class="title-20-bold c-white">24/7 Customer Care</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>

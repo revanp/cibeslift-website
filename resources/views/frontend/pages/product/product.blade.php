@@ -13,51 +13,100 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-12 col-md-6">
-                    <div class="flex-middle">
-                        <span>
-                            <h4 class="title-50-bold">{{ $product['page_title'] }}</h4>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <p>{{ $product['description'] }}</p>
-                </div>
-            </div>
-
-            @if (!empty($product['product_id']['product_usp_id']))
+        <div class="absolute-bottom">
+            <div class="container">
                 <div class="row">
-                    @foreach ($product['product_id']['product_usp_id'] as $key => $val)
-                        <div class="col-12 col-md-3">
-                            <div class="card card-usp">
-                                <img src="{{ $val['image']['path'] ?? '#' }}" width="50px" class="mb-3" alt="">
-                                <div class="d-block">
-                                    <h5 class="title-30-bold">{{ $val['product_usp'][0]['name'] }}</h5>
-                                    <p>{{ $val['product_usp'][0]['description'] ?? '' }}</p>
-                                </div>
-                            </div>
+                    @php
+                        $col = 'col-md-12';
+                        if(count($product['product_id']['child']) % 3 == 0){
+                            $col = 'col-md-4';
+                        }if(count($product['product_id']['child']) % 2 == 0){
+                            $col = 'col-md-6';
+                        }
+                    @endphp
+                    @foreach ($product['product_id']['child'] as $key => $val)
+                        <div class="col-12 {{ $col }} text-center">
+                            <a href="#" class="button-orange">{{ $val['product'][0]['name'] }}</a>
                         </div>
                     @endforeach
                 </div>
-            @endif
+            </div>
         </div>
     </div>
+
+    @if (!empty($product['product_id']['product_usp_id']))
+        <div class="section">
+            <div class="row">
+                @foreach ($product['product_id']['product_usp_id'] as $key => $val)
+                    <div class="col-12 col-md-3">
+                        <div class="card card-usp">
+                            <img src="{{ $val['image']['path'] ?? '#' }}" width="50px" class="mb-3" alt="">
+                            <div class="d-block">
+                                <h5 class="title-30-bold">{{ $val['product_usp'][0]['name'] }}</h5>
+                                <p>{{ $val['product_usp'][0]['description'] ?? '' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if (!empty($product['product_id']['product_highlight_id']))
+        @foreach ($product['product_id']['product_highlight_id'] as $key => $val)
+            @if ($key % 2 == 0)
+                <div class="section" style="padding: 75px 0 0 0 !important">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <img src="{{ $val['image']['path'] ?? '#' }}" class="w-100" alt="">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="h-100 flex-middle">
+                                    <span>
+                                        <h5 class="title-50-bold">{{ $val['product_highlight'][0]['name'] }}</h5>
+                                        <p>{{ $val['product_highlight'][0]['description'] }}</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="section" style="padding: 75px 0 0 0 !important">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="h-100 flex-middle">
+                                    <span>
+                                        <h5 class="title-50-bold">{{ $val['product_highlight'][0]['name'] }}</h5>
+                                        <p>{{ $val['product_highlight'][0]['description'] }}</p>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <img src="{{ $val['image']['path'] ?? '#' }}" class="w-100" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    @endif
 
     @foreach ($product['product_id']['child'] as $key => $val)
         @if ($key % 2 == 0)
             <div class="section">
                 <div class="container">
+                    @if ($key == 0)
+                        <hr>
+                    @endif
                     <div class="row">
-                        <div class="col-12 col-md-4 text-center">
-                            <img src="{{ $val['specification_image']['path'] ?? '#' }}" alt="">
-                            <p class="title-20-bold mt-3">{{ $val['product'][0]['name'] }}</p>
+                        <div class="col-12 col-md-6 text-center">
+                            <img src="{{ $val['thumbnail']['path'] ?? '#' }}" alt="" class="w-100">
+                            {{-- <p class="title-20-bold mt-3">{{ $val['product'][0]['name'] }}</p> --}}
                         </div>
-                        <div class="col-12 col-md-8">
+                        <div class="col-12 col-md-6">
                             <div class="flex-center">
                                 <span>
                                     <h4 class="title-50-bold">{{ $val['product'][0]['page_title'] ?? '' }}</h4>
@@ -83,8 +132,8 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-4 text-center">
-                            <img src="{{ $val['specification_image']['path'] ?? '#' }}" alt="">
-                            <p class="title-20-bold mt-3">{{ $val['product'][0]['name'] }}</p>
+                            <img src="{{ $val['thumbnail']['path'] ?? '#' }}" alt="" class="w-100">
+                            {{-- <p class="title-20-bold mt-3">{{ $val['product'][0]['name'] }}</p> --}}
                         </div>
                     </div>
                 </div>

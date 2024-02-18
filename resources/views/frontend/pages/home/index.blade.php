@@ -10,8 +10,8 @@
                     <div class="flex-center">
                         <span class="banner-contain">
                             <h1 class="mb-4">{{ $headerBanner->title }}</h1>
-                            <p>{{ $headerBanner->description }}</p>
-                            <a href="{{ $headerBanner->link }}" class="button-primary mt-5">{{ $headerBanner->cta }}</a>
+                            <p>{!! str_replace("\r\n", '<br>', $headerBanner->description) !!}</p>
+                            <a href="{{ $headerBanner->link }}" class="button-primary button-primary_square mt-5">{{ $headerBanner->cta }}</a>
                         </span>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
             @foreach ($products as $key => $val)
                 @if ($key < 2)
                     <div class="col-12 col-md-6 mb-3">
-                        <div class="card-background" style="background-image: url('{{ $val->productId->thumbnail->path ?? '#' }}')">
+                        <div class="card-background" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ $val->productId->thumbnail->path ?? '#' }}')">
                             <div class="card-background-content">
                                 <h3 class="c-white title-30-bold">{{ $val->name }}</h3>
                                 <p class="c-white">{{ $val->short_description }}</p>
@@ -50,7 +50,7 @@
                     </div>
                 @else
                     <div class="col-12 col-md-4 mb-3">
-                        <div class="card-background" style="background-image: url('{{ $val->productId->thumbnail->path ?? '#' }}')">
+                        <div class="card-background" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ $val->productId->thumbnail->path ?? '#' }}')">
                             <div class="card-background-content">
                                 <h3 class="c-white title-30-bold">{{ $val->name }}</h3>
                                 <p class="c-white">{{ $val->short_description }}</p>
@@ -67,7 +67,7 @@
 
 @foreach ($menuSection as $key => $val)
     @if ($key % 2 == 0)
-        <div class="section background-img" style="background-image: url('{{ $val->homeMenuSectionId->image->path }}');">
+        <div class="section background-img" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ $val->homeMenuSectionId->image->path }}');">
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-6">
@@ -81,7 +81,7 @@
             </div>
         </div>
     @else
-        <div class="section background-img" style="background-image: url('{{ $val->homeMenuSectionId->image->path }}');">
+        <div class="section background-img" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ $val->homeMenuSectionId->image->path }}');">
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-6">
