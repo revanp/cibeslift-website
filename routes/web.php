@@ -264,6 +264,9 @@ Route::group(['prefix' => 'admin-cms', 'as' => 'admin-cms.'], function(){
                         Route::get('edit/{idOption}/delete-variation/{idVariation}', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'deleteVariation']);
                         Route::put('change-status', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'changeStatus']);
                         Route::get('delete/{idOption}', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'delete']);
+
+                        Route::get('get-option-to-duplicate', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'getOptionToDuplicate']);
+                        Route::get('option-to-duplicate', [App\Http\Controllers\Backend\Products\Products\Customization\OptionController::class, 'optionToDuplicate']);
                     });
                 });
             });

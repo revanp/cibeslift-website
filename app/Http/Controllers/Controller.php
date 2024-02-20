@@ -81,6 +81,32 @@ class Controller extends BaseController
         Storage::putFileAs("$path/", $document, $fileName, 'public');
     }
 
+    protected function copyFromMedia($id, $model, $relation, $path, $content_type = null)
+    {
+        $oldMedia = Media::find($id);
+
+        $data = [
+            'content_type' => $content_type,
+            'name' => $oldMedia->name,
+            'path' => $path,
+            'file_name' => $oldMedia->file_name,
+            'type' => $oldMedia->type,
+            'mime_type' => $oldMedia->mime_type,
+            'disk' => config('filesystems.default'),
+            'extension' => $oldMedia->extension,
+            'size' => $oldMedia->size,
+        ];
+
+        if ($model->$relation) {
+            $insert = $model->$relation()->update($data);
+        } else {
+            $insert = $model->$relation()->create($data);
+        }
+
+        $oldMediaPath = $oldMedia->directory;
+        Storage::copy($oldMediaPath, $path.'/'.$oldMedia->file_name);
+    }
+
     protected function storeFileHasMany($file, $model, $relation, $path, $content_type = null, $id = null)
     {
         $document = $file;

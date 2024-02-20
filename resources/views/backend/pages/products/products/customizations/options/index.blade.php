@@ -56,7 +56,7 @@
                                 @foreach ($datas as $key => $val)
                                     <tr>
                                         <td class="align-middle">{{ $key + 1 }}</td>
-                                        <td class="align-middle">{{ $val->name }}</td>
+                                        <td class="align-middle">{{ $val->productCustomizationOptionId->parent->productCustomizationOption[0]->name ?? '-' }}</td>
                                         <td class="align-middle">{{ $val->name }}</td>
                                         <td class="align-middle">
                                             <div class="dropdown dropdown-inline mr-1"><a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i class="flaticon2-menu-1 icon-2x"></i></a><div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"><ul class="nav nav-hoverable flex-column">

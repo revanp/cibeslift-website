@@ -52,6 +52,16 @@
                 <form action="{{ url('admin-cms/products/products/customizations/'.$id.'/options/'.$idCustomization.'/create') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
+                        <div class="form-group col-md-12">
+                            <label>Duplicate From</label>
+                            <select name="duplicate_from" class="form-control duplicate-form">
+                                <option value="" selected disabled>-- SELECT OPTION TO DUPLICATE --</option>
+                            </select>
+                            <span class="form-text text-muted">Only option with variation.</span>
+                        </div>
+
+                        <hr>
+
                         <div class="form-group col-md-3">
                             <div class="col-12 col-form-label">
                                 <div class="checkbox-inline">
@@ -230,6 +240,107 @@
         listBox.append(html);
 
         $(this).data('count', dataCount + 1)
+    })
+
+    $(document).ready(function() {
+        // var haveAChild = $('input[name="have_a_child"]').val();
+
+        $('.duplicate-form').select2({
+            minimumInputLength: 0,
+            tags: true,
+            minimumResultsForSearch: 10,
+            ajax: {
+                url: "{{ url('admin-cms/products/products/customizations/'.$id.'/options/'.$idCustomization.'/get-option-to-duplicate') }}",
+                dataType: "json",
+                type: "GET",
+                data: function (params) {
+                    var queryParameters = {
+                        term: params.term,
+
+                    }
+                    return queryParameters;
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.name,
+                                id: item.id_product_customization_option_id
+                            }
+                        })
+                    };
+                }
+            }
+        })
+    })
+
+    $('.duplicate-form').on('change', function(){
+        var id = $(this).find('option:selected').val();
+        $.ajax({
+            url: "{{ url('admin-cms/products/products/customizations/'.$id.'/options/'.$idCustomization.'/option-to-duplicate') }}",
+            dataType: "json",
+            type: "GET",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                $('input[name="have_a_child"]').attr('disabled', true)
+
+                @foreach ($lang as $key => $val)
+                    $('input[name="input[{{ $key }}][name]"]').val(data.product_customization_option.{{ $key }}.name)
+                @endforeach
+
+                var dataCount = 0;
+                $.each(data.product_customization_option_variation_id, function (k, v){
+                    dataCount = k;
+                    var html = `<div class="variation-item mt-5">
+                        <div class="row">
+                            <div class="form-group picture_upload col-md-6">
+                                <label>Variation Image</label>
+                                <div class="form-group__file">
+                                    <div class="file-wrapper">
+                                        <input type="file" name="variation[`+k+`][image]" class="file-input">
+                                        <div class="file-preview-background">+</div>
+                                        <img src="`+v.image.path+`" width="240px" class="file-preview" style="opacity: 1">
+                                    </div>
+                                </div>
+                                <input type="hidden" name="variation[`+k+`][image_id]" value="`+v.image.id+`">
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    @foreach ($lang as $key => $val)
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ $key == 'id' ? 'active' : '' }}" data-toggle="tab" role="tab" href="#{{ $key }}`+k+`VariationTab">{{ $val }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                                <div class="tab-content mb-4" style="display: block !important;">
+                                    @foreach ($lang as $key => $val)
+                                        <div class="tab-pane {{ $key == 'id' ? 'active' : '' }}" id="{{ $key }}`+k+`VariationTab" role="tabpanel">
+                                            <div class="row mt-5">
+                                                <div class="form-group col-md-12">
+                                                    <label>Name</label>
+                                                    <input type="text" class="form-control" placeholder="Enter name" name="variation[`+k+`][input][{{ $key }}][name]" value="`+ v.product_customization_option_variation.{{ $key }}.name +`">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+
+                    if(k == 0){
+                        $('.variation-box').html(html);
+                    }else{
+                        $('.variation-box').append(html);
+                    }
+                })
+
+                $('.add-item-variation').data('count', dataCount + 1)
+            }
+        })
     })
 </script>
 @endsection

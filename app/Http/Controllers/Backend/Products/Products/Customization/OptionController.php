@@ -42,7 +42,9 @@ class OptionController extends Controller
 
     public function index($id, $idCustomization)
     {
-        $datas = ProductCustomizationOption::with(['productCustomizationOptionId'])
+        $datas = ProductCustomizationOption::with(['productCustomizationOptionId', 'productCustomizationOptionId.parent', 'productCustomizationOptionId.parent.productCustomizationOption' => function($query){
+            $query->where('language_code', 'id');
+        }])
             ->where('language_code', 'id')
             ->whereHas('productCustomizationOptionId', function($query) use($idCustomization){
                 $query->where('id_product_customization_id', $idCustomization);
@@ -96,7 +98,9 @@ class OptionController extends Controller
 
         if(!empty($data['variation'][0]['input']['id']['name'])){
             foreach($request->variation as $key => $val){
-                $rules['variation.'.$key.'.image'] = ['required'];
+                if(empty($data['variation'][$key]['image_id'])){
+                    $rules['variation.'.$key.'.image'] = ['required'];
+                }
 
                 $attributes['variation.'.$key.'.image'] = 'Variation Image ' . $key + 1;
 
@@ -138,6 +142,7 @@ class OptionController extends Controller
             $optionId->fill([
                 'id_product_customization_id' => $idCustomization,
                 'parent_id' => $data['parent_id'] ?? null,
+                'have_a_child' => !empty($data['have_a_child']) ? true : false,
             ])->save();
 
             $idOptionId = $optionId->id;
@@ -170,6 +175,14 @@ class OptionController extends Controller
                     if ($request->hasFile('variation.'.$key.'.image')) {
                         $this->storeFile(
                             $request->file('variation.'.$key.'.image'),
+                            $variationId,
+                            'image',
+                            "images/products/products/customization/option/variation/{$idVariationId}",
+                            'image'
+                        );
+                    }else if(!empty($data['variation'][$key]['image_id'])){
+                        $this->copyFromMedia(
+                            $data['variation'][$key]['image_id'],
                             $variationId,
                             'image',
                             "images/products/products/customization/option/variation/{$idVariationId}",
@@ -475,5 +488,59 @@ class OptionController extends Controller
 
             return redirect()->back()->with(['error' => 'Something went wrong, please try again']);
         }
+    }
+
+    public function getOptionToDuplicate($id, $idCustomization, Request $request)
+    {
+        $parents = ProductCustomizationOption::with([
+            'productCustomizationOptionId',
+            'productCustomizationOptionId.productCustomizationOptionVariationId',
+            'productCustomizationOptionId.productCustomizationId',
+            'productCustomizationOptionId.productCustomizationId.productCustomization' => function($query){
+                $query->where('language_code', 'en');
+            }
+        ])
+        ->where('language_code', 'en')
+        ->whereHas('productCustomizationOptionId.productCustomizationOptionVariationId')
+        ->distinct('product_customization_option.name')
+        ->get();
+
+        if(!empty($parents)){
+            $parents = $parents->toArray();
+
+            foreach($parents as $key => $val){
+                $parents[$key]['name'] = $val['name'] . ' - ' . $val['product_customization_option_id']['product_customization_id']['product_customization'][0]['name'];
+            }
+        }
+
+        return $parents;
+    }
+
+    public function optionToDuplicate($id, $idCustomization, Request $request)
+    {
+        $input = $request->all();
+
+        $data = ProductCustomizationOptionId::with([
+            'productCustomizationOption',
+            'productCustomizationOptionVariationId',
+            'productCustomizationOptionVariationId.image',
+            'productCustomizationOptionVariationId.productCustomizationOptionVariation'
+        ])
+        ->find($input['id'])
+        ->toArray();
+
+        foreach ($data['product_customization_option'] as $key => $val) {
+            $data['product_customization_option'][$val['language_code']] = $val;
+            unset($data['product_customization_option'][$key]);
+        }
+
+        foreach ($data['product_customization_option_variation_id'] as $key => $val) {
+            foreach($val['product_customization_option_variation'] as $key2 => $val2){
+                $data['product_customization_option_variation_id'][$key]['product_customization_option_variation'][$val2['language_code']] = $val2;
+                unset($data['product_customization_option_variation_id'][$key]['product_customization_option_variation'][$key2]);
+            }
+        }
+
+        return $data;
     }
 }
