@@ -99,7 +99,18 @@ class AboutController extends Controller
         })
         ->get();
 
-        return view('frontend.pages.about.index', compact('history', 'nation', 'manufacture', 'highlightImage', 'highlight', 'showroom', 'products', 'banner', 'aftersalesTitle', 'aftersales'));
+        $products = Product::with([
+            'productId',
+            'productId.thumbnail'
+        ])
+        ->where('language_code', getLocale())
+        ->whereHas('productId', function($query){
+            $query->where('level', 1);
+            $query->where('is_active', true);
+        })
+        ->get();
+
+        return view('frontend.pages.about.index', compact('history', 'nation', 'manufacture', 'highlightImage', 'highlight', 'showroom', 'products', 'banner', 'aftersalesTitle', 'aftersales', 'products'));
     }
 
     public function getManufacture(Request $request)

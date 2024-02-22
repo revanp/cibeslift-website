@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Exception;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class CustomizationController extends Controller
 {
@@ -53,13 +54,13 @@ class CustomizationController extends Controller
         unset($data['_token']);
 
         $rules = [
-
+            'image' => ['required']
         ];
 
         $messages = [];
 
         $attributes = [
-
+            'image' => 'Image'
         ];
 
         foreach ($request->input as $lang => $input) {
@@ -77,7 +78,19 @@ class CustomizationController extends Controller
             $attributes["input.$lang.description"] = "$lang_name Description";
         }
 
-        $request->validate($rules, $messages, $attributes);
+        $validator = Validator::make($data, $rules, $messages, $attributes);
+
+        if($validator->fails()){
+            return response()->json([
+                'code' => 422,
+                'success' => false,
+                'message' => 'Validation error!',
+                'data' => $validator->errors()
+            ], 422)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }
 
         $isError = false;
 
@@ -106,6 +119,16 @@ class CustomizationController extends Controller
                 $customization->fill($input)->save();
 
                 $idCustomization = $customization->id;
+            }
+
+            if ($request->hasFile('image')) {
+                $this->storeFile(
+                    $request->file('image'),
+                    $customizationId,
+                    'image',
+                    "images/products/products/customization/{$idCustomizationId}",
+                    'image'
+                );
             }
 
             foreach ($data['feature'] as $key => $val) {
@@ -160,10 +183,25 @@ class CustomizationController extends Controller
         }
 
         if ($isError == true) {
-            return redirect()->back()->with(['error' => $message]);
-        } else {
-            return redirect(url('admin-cms/products/products/customizations/'.$id))
-                ->with(['success' => $message]);
+            return response()->json([
+                'code' => 500,
+                'success' => false,
+                'message' => $message
+            ], 500)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }else{
+            session()->flash('success', $message);
+
+            return response()->json([
+                'code' => 200,
+                'success' => true,
+                'message' => $message,
+                'redirect' => url('admin-cms/products/products/customizations/'.$id)
+            ], 200)->withHeaders([
+                'Content-Type' => 'application/json'
+            ]);
         }
     }
 
@@ -171,6 +209,7 @@ class CustomizationController extends Controller
     {
         $data = ProductCustomizationId::with([
             'productCustomization',
+            'image',
             'productCustomizationFeatureId',
             'productCustomizationFeatureId.image',
             'productCustomizationFeatureId.productCustomizationFeature'
@@ -201,13 +240,13 @@ class CustomizationController extends Controller
         unset($data['_token']);
 
         $rules = [
-
+            'image' => []
         ];
 
         $messages = [];
 
         $attributes = [
-
+            'image' => 'Image'
         ];
 
         foreach ($request->input as $lang => $input) {
@@ -225,7 +264,19 @@ class CustomizationController extends Controller
             $attributes["input.$lang.description"] = "$lang_name Description";
         }
 
-        $request->validate($rules, $messages, $attributes);
+        $validator = Validator::make($data, $rules, $messages, $attributes);
+
+        if($validator->fails()){
+            return response()->json([
+                'code' => 422,
+                'success' => false,
+                'message' => 'Validation error!',
+                'data' => $validator->errors()
+            ], 422)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }
 
         $isError = false;
 
@@ -254,6 +305,16 @@ class CustomizationController extends Controller
                 $customization->fill($input)->save();
 
                 $idCustomization = $customization->id;
+            }
+
+            if ($request->hasFile('image')) {
+                $this->storeFile(
+                    $request->file('image'),
+                    $customizationId,
+                    'image',
+                    "images/products/products/customization/{$idCustomizationId}",
+                    'image'
+                );
             }
 
             foreach ($data['feature'] as $key => $val) {
@@ -314,10 +375,25 @@ class CustomizationController extends Controller
         }
 
         if ($isError == true) {
-            return redirect()->back()->with(['error' => $message]);
-        } else {
-            return redirect(url('admin-cms/products/products/customizations/'.$id))
-                ->with(['success' => $message]);
+            return response()->json([
+                'code' => 500,
+                'success' => false,
+                'message' => $message
+            ], 500)
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                ]);
+        }else{
+            session()->flash('success', $message);
+
+            return response()->json([
+                'code' => 200,
+                'success' => true,
+                'message' => $message,
+                'redirect' => url('admin-cms/products/products/customizations/'.$id)
+            ], 200)->withHeaders([
+                'Content-Type' => 'application/json'
+            ]);
         }
     }
 

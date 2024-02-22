@@ -2,14 +2,14 @@
 
 @section('content')
 
-    <div class="banner" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ $product['product_id']['banner']['path'] ?? '#' }}');">
+    <div class="banner" style="background-image: url('{{ asset('public/frontend/images/Banner---Homepage-Website.jpg') }}');">
         <div class="container h-100">
             <div class="row h-100 justify-content-center text-center">
                 <div class="col-12 col-md-8">
                     <div class="flex-middle" style="justify-content: center;">
                         <span class="banner-contain">
-                            <h1 class="mb-4">{{ $product['name'] }}</h1>
-                            <p>{{ $product['short_description'] }}</p>
+                            <h1 class="mb-4">CIBES V90</h1>
+                            <p>Lift rumah dengan teknologi baru</p>
                         </span>
                     </div>
                 </div>
@@ -32,102 +32,49 @@
                 <div class="col-12 col-md-6">
                     <div class="flex-middle">
                         <span>
-                            <h4 class="title-50-bold">{{ $product['page_title'] }}</h4>
+                            <h4 class="title-50-bold">Cibes V90: Lift Rumah Full Cabin with Shaft</h4>
                         </span>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <p>{{ $product['description'] }}</p>
+                    <p>Demi keamanan dan kenyamanan Anda,  bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.</p>
                 </div>
             </div>
             <div class="row">
-                @foreach ($product['product_id']['product_usp_id'] as $key => $val)
-                    <div class="col-12 col-md-3">
-                        <div class="card card-usp">
-                            <img src="{{ $val['image']['path'] ?? '#' }}" width="50px" class="mb-3" alt="">
-                            <div class="d-block">
-                                <h5 class="title-30-bold">{{ $val['product_usp'][0]['name'] }}</h5>
-                                <p>{{ $val['product_usp'][0]['description'] ?? '' }}</p>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-
-    @if (!empty($product['product_id']['product_highlight_id']))
-        @foreach ($product['product_id']['product_highlight_id'] as $key => $val)
-            @if ($key % 2 == 0)
-                <div class="section" style="padding: 75px 0 0 0 !important">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <img src="{{ $val['image']['path'] ?? '#' }}" class="w-100" alt="">
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="h-100 flex-middle">
-                                    <span>
-                                        <h5 class="title-50-bold">{{ $val['product_highlight'][0]['name'] }}</h5>
-                                        <p>{{ $val['product_highlight'][0]['description'] }}</p>
-                                    </span>
-                                </div>
-                            </div>
+                <div class="col-12 col-md-3">
+                    <div class="card card-usp">
+                        <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
+                        <div class="d-block">
+                            <h5 class="title-30-bold">Infinity Glass</h5>
+                            <p>Integrated Shaft</p>
                         </div>
                     </div>
                 </div>
-            @else
-                <div class="section" style="padding: 75px 0 0 0 !important">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <div class="h-100 flex-middle">
-                                    <span>
-                                        <h5 class="title-50-bold">{{ $val['product_highlight'][0]['name'] }}</h5>
-                                        <p>{{ $val['product_highlight'][0]['description'] }}</p>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <img src="{{ $val['image']['path'] ?? '#' }}" class="w-100" alt="">
-                            </div>
+                <div class="col-12 col-md-3">
+                    <div class="card card-usp">
+                        <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
+                        <div class="d-block">
+                            <h5 class="title-30-bold">Infinity Glass</h5>
+                            <p>Integrated Shaft</p>
                         </div>
                     </div>
                 </div>
-            @endif
-        @endforeach
-    @endif
-
-    {{-- <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="h-100 flex-middle">
-                        <span>
-                            <h5 class="title-50-bold">Compare Lift Model</h5>
-                            <p>Lift Rumah Cibes dapat dikustomisasi sesuai dengan selera Anda. Kami memiliki banyak pilihan warna, material, maupun fitur. </p>
-                        </span>
+                <div class="col-12 col-md-3">
+                    <div class="card card-usp">
+                        <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
+                        <div class="d-block">
+                            <h5 class="title-30-bold">Infinity Glass</h5>
+                            <p>Integrated Shaft</p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="h-100 flex-middle">
-                        <span>
-                            <h5 class="title-50-bold">Customize Your Lift</h5>
-                            <p>Lift Rumah Cibes dapat dipasang dengan mudah. Karena tidak memerlukan pit dan ruang mesin, dan juga sudah dilengkapi dengan shaft bawaan.</p>
-                        </span>
+                <div class="col-12 col-md-3">
+                    <div class="card card-usp">
+                        <img src="{{ asset('public/frontend/images/image 9.png') }}" width="50px" class="mb-3" alt="">
+                        <div class="d-block">
+                            <h5 class="title-30-bold">Infinity Glass</h5>
+                            <p>Integrated Shaft</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,8 +115,44 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="h-100 flex-middle">
+                        <span>
+                            <h5 class="title-50-bold">Compare Lift Model</h5>
+                            <p>Lift Rumah Cibes dapat dikustomisasi sesuai dengan selera Anda. Kami memiliki banyak pilihan warna, material, maupun fitur. </p>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="h-100 flex-middle">
+                        <span>
+                            <h5 class="title-50-bold">Customize Your Lift</h5>
+                            <p>Lift Rumah Cibes dapat dipasang dengan mudah. Karena tidak memerlukan pit dan ruang mesin, dan juga sudah dilengkapi dengan shaft bawaan.</p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="section">
         <div class="container">
             <div class="row">
@@ -227,7 +210,7 @@
                 <div class="col-12 col-md-8">
                     <h5>V90 Galaxy</h5>
                     <p>Screwdrive bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
-
+                    
                 </div>
             </div>
         </div>

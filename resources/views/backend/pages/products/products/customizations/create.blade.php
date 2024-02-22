@@ -49,6 +49,22 @@
                 <form action="{{ url('admin-cms/products/products/customizations/'.$id.'/create') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
+                        <div class="row">
+                            <div class="form-group picture_upload col-md-12">
+                                <label>Image</label>
+                                <div class="form-group__file">
+                                    <div class="file-wrapper">
+                                        <input type="file" name="image" class="file-input"/>
+                                        <div class="file-preview-background">+</div>
+                                        <img src="" width="240px" class="file-preview"/>
+                                    </div>
+                                </div>
+                                @error('image')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
                         @php
                             $lang = ['id' => 'Indonesia', 'en' => 'English'];
                         @endphp
