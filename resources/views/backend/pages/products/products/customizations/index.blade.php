@@ -44,6 +44,7 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
+                                    <th>Image</th>
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>#</th>
@@ -53,6 +54,11 @@
                                 @foreach ($datas as $key => $val)
                                     <tr>
                                         <td class="align-middle">{{ $key + 1 }}</td>
+                                        <td class="align-middle">
+                                            @if (!empty($val->productCustomizationId->image->path))
+                                                <a href="{{ $val->productCustomizationId->image->path }}" target="_BLANK"><img src="{{ $val->productCustomizationId->image->path }}" style="width:200px;"></a>
+                                            @endif
+                                        </td>
                                         <td class="align-middle">{{ $val->name }}</td>
                                         <td class="align-middle">{{ $val->description }}</td>
                                         <td class="align-middle">

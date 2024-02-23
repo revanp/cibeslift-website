@@ -31,7 +31,7 @@ class CustomizationController extends Controller
 
     public function index($id)
     {
-        $datas = ProductCustomization::with(['productCustomizationId'])
+        $datas = ProductCustomization::with(['productCustomizationId', 'productCustomizationId.image'])
             ->where('language_code', 'id')
             ->whereHas('productCustomizationId', function($query) use($id){
                 $query->where('id_product_id', $id);
