@@ -13,7 +13,10 @@
         <link href="{{ asset('public/backend/plugins/custom/prismjs/prismjs.bundle.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('public/backend/css/style.bundle.css?v=7.0.6') }}" rel="stylesheet" type="text/css"/>
 
-        <link rel="shortcut icon" href="{{ asset('public/backend/media/logos/favicon.ico') }}"/>
+        <link rel="shortcut icon" href="{{ asset('public/favicon/favicon.ico') }}"/>
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('public/favicon/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('public/favicon/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('public/favicon/favicon-16x16.png') }}">
     </head>
     <body  id="kt_body"  class="header-fixed header-mobile-fixed subheader-enabled page-loading"  >
         <div class="d-flex flex-column flex-root">
