@@ -106,10 +106,17 @@ class ProductController extends Controller
                 $query->where('language_code', getLocale());
             },
             'productId.banner',
+            'productId.specificationImage',
+            'productId.productSpecification',
             'productId.child',
             'productId.child.thumbnail',
             'productId.child.specificationImage',
             'productId.child.product' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'productId.productCustomizationId',
+            'productId.productCustomizationId.image',
+            'productId.productCustomizationId.productCustomization' => function($query){
                 $query->where('language_code', getLocale());
             },
         ])

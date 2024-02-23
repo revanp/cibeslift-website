@@ -98,136 +98,38 @@
         @endforeach
     @endif
 
-    {{-- <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="h-100 flex-middle">
-                        <span>
-                            <h5 class="title-50-bold">Compare Lift Model</h5>
-                            <p>Lift Rumah Cibes dapat dikustomisasi sesuai dengan selera Anda. Kami memiliki banyak pilihan warna, material, maupun fitur. </p>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="h-100 flex-middle">
-                        <span>
-                            <h5 class="title-50-bold">Customize Your Lift</h5>
-                            <p>Lift Rumah Cibes dapat dipasang dengan mudah. Karena tidak memerlukan pit dan ruang mesin, dan juga sudah dilengkapi dengan shaft bawaan.</p>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="h-100 flex-middle">
-                        <span>
-                            <h5 class="title-50-bold">Compare Lift Model</h5>
-                            <p>Lift Rumah Cibes dapat dikustomisasi sesuai dengan selera Anda. Kami memiliki banyak pilihan warna, material, maupun fitur. </p>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <img src="{{ asset('public/frontend/images/Cibes_Bringing-people-together_Outside_Night.jpg') }}" class="w-100" alt="">
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="h-100 flex-middle">
-                        <span>
-                            <h5 class="title-50-bold">Customize Your Lift</h5>
-                            <p>Lift Rumah Cibes dapat dipasang dengan mudah. Karena tidak memerlukan pit dan ruang mesin, dan juga sudah dilengkapi dengan shaft bawaan.</p>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
     <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center mb-5">
-                    <h3 class="title-50-bold">3 Tier Customization</h3>
+                    <h3 class="title-50-bold">{{ count($product['product_id']['product_customization_id']) }} Tier Customization</h3>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="row">
-                        <div class="col-12 col-md-4 text-center mb-4">
-                            <div class="position-relative">
-                                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
-                                <div class="position-middle title-30-bold">V90 ELEGANCE</div>
+                        @php
+                            $col = 'col-md-12';
+                            if (count($product['product_id']['product_customization_id']) % 4 == 0) {
+                                $col = 'col-md-3';
+                            }else if (count($product['product_id']['product_customization_id']) % 3 == 0) {
+                                $col = 'col-md-4';
+                            }else if (count($product['product_id']['product_customization_id']) % 2 == 0) {
+                                $col = 'col-md-6';
+                            }
+                        @endphp
+                        @foreach ($product['product_id']['product_customization_id'] as $key => $val)
+                            <div class="col-12 {{ $col }} text-center mb-4">
+                                <div class="position-relative">
+                                    <img src="{{ $val['image']['path'] }}" alt="" class="w-100">
+                                    <div class="position-middle title-30-bold">{{ $val['product_customization'][0]['name'] }}</div>
+                                </div>
+                                <span class="d-block mt-5">
+                                    <a href="javascript:;" data-fancybox data-src="#customization" class="button-orange">Learn More</a>
+                                </span>
                             </div>
-                            <span class="d-block mt-5">
-                                <a href="javascript:;" data-fancybox data-src="#customization" class="button-orange">Learn More</a>
-                            </span>
-                        </div>
-                        <div class="col-12 col-md-4 text-center mb-4">
-                            <div class="position-relative">
-                                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
-                                <div class="position-middle title-30-bold">V90 ELEGANCE</div>
-                            </div>
-                            <span class="d-block mt-5">
-                                <a href="javascript:;" data-fancybox data-src="#customization" class="button-orange">Learn More</a>
-                            </span>
-                        </div>
-                        <div class="col-12 col-md-4 text-center mb-4">
-                            <div class="position-relative">
-                                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" alt="">
-                                <div class="position-middle title-30-bold">V90 ELEGANCE</div>
-                            </div>
-                            <span class="d-block mt-5">
-                                <a href="javascript:;" data-fancybox data-src="#customization" class="button-orange">Learn More</a>
-                            </span>
-                        </div>
+                        @endforeach
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div style="display: none;" id="hidden-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="text-center">
-                        <h3>3 Tier Customization</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-4"></div>
-                <div class="col-12 col-md-8">
-                    <h5>V90 Galaxy</h5>
-                    <p>Screwdrive bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
-
                 </div>
             </div>
         </div>
@@ -237,7 +139,7 @@
         <div class="container position-relative">
             <div class="row">
                 <div class="col-12 col-md-6 pe-5">
-                    <p class="title-25"><b>Installation</b> Indoor/Outdoor</p>
+                    <p class="title-25"><strong>Installation</strong> Indoor/Outdoor</p>
 
                     <p class="title-25"><b>Power supply 1</b> × 230 VAC/3 × 230 VAC/3 × 400 VAC, 50 Hz, 16 A, 3 × 2,5 mm²</p>
 
@@ -259,12 +161,12 @@
 
                     <p class="title-25"><b>Motor Power</b> 2.2kw</p>
                 </div>
-                <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" class="img-floating" alt="">
+                <img src="{{ $product['product_id']['specification_image']['path'] ?? '' }}" class="img-floating" alt="">
                 <div class="col-12 col-md-6 ps-5">
                     <div class="flex-center h-100">
                         <span>
-                            <h4 class="title-30-bold">V90 Sizes</h4>
-                            <p class="title-20-regular">Provided in 41 size options bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                            <h4 class="title-30-bold">{{ $product['name'] }} Sizes</h4>
+                            <p class="title-20-regular">{!! $product['product_id']['product_specification']['size'] !!}</p>
                             <a href="#" class="button-orange">Get Full Size Here</a>
                         </span>
                     </div>
