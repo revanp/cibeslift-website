@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <div class="banner" style="background-image: url('{{ $product['product_id']['banner']['path'] ?? '#' }}');">
+    <div class="banner" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ $product['product_id']['banner']['path'] ?? '#' }}');">
         <div class="container h-100">
             <div class="row h-100 justify-content-center">
                 <div class="col-12 col-md-8">
@@ -18,9 +18,11 @@
                 <div class="row">
                     @php
                         $col = 'col-md-12';
-                        if(count($product['product_id']['child']) % 3 == 0){
+                        if(count($product['product_id']['child']) % 4 == 0){
+                            $col = 'col-md-3';
+                        }elseif(count($product['product_id']['child']) % 3 == 0){
                             $col = 'col-md-4';
-                        }if(count($product['product_id']['child']) % 2 == 0){
+                        }elseif(count($product['product_id']['child']) % 2 == 0){
                             $col = 'col-md-6';
                         }
                     @endphp
@@ -36,18 +38,20 @@
 
     @if (!empty($product['product_id']['product_usp_id']))
         <div class="section">
-            <div class="row">
-                @foreach ($product['product_id']['product_usp_id'] as $key => $val)
-                    <div class="col-12 col-md-3">
-                        <div class="card card-usp">
-                            <img src="{{ $val['image']['path'] ?? '#' }}" width="50px" class="mb-3" alt="">
-                            <div class="d-block">
-                                <h5 class="title-30-bold">{{ $val['product_usp'][0]['name'] }}</h5>
-                                <p>{{ $val['product_usp'][0]['description'] ?? '' }}</p>
+            <div class="container">
+                <div class="row">
+                    @foreach ($product['product_id']['product_usp_id'] as $key => $val)
+                        <div class="col-12 col-md-3">
+                            <div class="card card-usp">
+                                <img src="{{ $val['image']['path'] ?? '#' }}" width="50px" class="mb-3" alt="">
+                                <div class="d-block">
+                                    <h5 class="title-30-bold">{{ $val['product_usp'][0]['name'] }}</h5>
+                                    <p>{{ $val['product_usp'][0]['description'] ?? '' }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         </div>
     @endif
@@ -122,7 +126,7 @@
             <div class="section">
                 <div class="container">
                     <div class="row">
-                        <div class="col-12 col-md-8">
+                        <div class="col-12 col-md-6">
                             <div class="flex-center">
                                 <span>
                                     <h4 class="title-50-bold">{{ $val['product'][0]['page_title'] ?? '' }}</h4>
@@ -131,7 +135,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 text-center">
+                        <div class="col-12 col-md-6 text-center">
                             <img src="{{ $val['thumbnail']['path'] ?? '#' }}" alt="" class="w-100">
                             {{-- <p class="title-20-bold mt-3">{{ $val['product'][0]['name'] }}</p> --}}
                         </div>

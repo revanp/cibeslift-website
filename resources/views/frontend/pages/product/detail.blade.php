@@ -42,7 +42,7 @@
             </div>
             <div class="row">
                 @foreach ($product['product_id']['product_usp_id'] as $key => $val)
-                    <div class="col-12 col-md-3">
+                    <div class="col-12 col-md-3 d-flex">
                         <div class="card card-usp">
                             <img src="{{ $val['image']['path'] ?? '#' }}" width="50px" class="mb-3" alt="">
                             <div class="d-block">
@@ -136,9 +136,11 @@
     </div>
 
     <div class="section">
-        <div class="container position-relative">
+        <div class="container">
             <div class="row">
-                <div class="col-12 col-md-6 pe-5">
+                <div class="col-12 col-md-5 pe-5">
+                    <h3 class="title-50-bold mb-5">Specification</h3>
+
                     <p class="title-25"><strong>Installation</strong> Indoor/Outdoor</p>
 
                     <p class="title-25"><b>Power supply 1</b> × 230 VAC/3 × 230 VAC/3 × 400 VAC, 50 Hz, 16 A, 3 × 2,5 mm²</p>
@@ -161,8 +163,12 @@
 
                     <p class="title-25"><b>Motor Power</b> 2.2kw</p>
                 </div>
-                <img src="{{ $product['product_id']['specification_image']['path'] ?? '' }}" class="img-floating" alt="">
-                <div class="col-12 col-md-6 ps-5">
+
+                <div class="col-md-2">
+                    <img src="{{ $product['product_id']['specification_image']['path'] ?? '' }}" class="w-100" alt="">
+                </div>
+
+                <div class="col-12 col-md-5 ps-5">
                     <div class="flex-center h-100">
                         <span>
                             <h4 class="title-30-bold">{{ $product['name'] }} Sizes</h4>
@@ -179,7 +185,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center mb-5">
-                    <h3 class="title-50-bold">Cibes V90 Installation</h3>
+                    <h3 class="title-50-bold">{{ $product['name'] }} Installation</h3>
                 </div>
             </div>
             <div class="row">
@@ -234,7 +240,7 @@
                     <div class="card-standard bg-gray mb-4 bg-image" style="background-image: url('{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}');">
                         <div class="card-standard_img card-standard_img_float_bottom_left position-relative">
                             <span>
-                                <h4 class="c-white title-30-bold mb-4">Desain Cibes V90 Anda</h4>
+                                <h4 class="c-white title-30-bold mb-4">Desain {{ $product['name'] }} Anda</h4>
                                 <a href="#" class="button-orange">Design Here</a>
                             </span>
                         </div>
@@ -307,7 +313,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <span class="text-center">
-                        <h5 class="title-50-bold">Punya Pertanyaan Seputar Cibes V90?</h5>
+                        <h5 class="title-50-bold">Punya Pertanyaan Seputar {{ $product['name'] }}?</h5>
                         <p class="mb-4">Isi form berikut ini dan Lift Consultant Kami Siap Membantu!</p>
                     </span>
                     <div class="card-form">

@@ -1,4 +1,12 @@
-<div class="@if(Request::path() == 'id' || Request::url() == 'en') header-home @else header @endif">
+@php
+    $headerClass = 'header';
+    if(Route::current()->getName() == 'home'){
+        $headerClass = 'header-home';
+    }else if(Route::current()->getName() == 'product.category'){
+        $headerClass = 'header-home';
+    }
+@endphp
+<div class="{{ $headerClass }}">
     <div class="container">
         <div class="row">
             <div class="col-4 col-md-6">
