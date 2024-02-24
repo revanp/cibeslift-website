@@ -27,7 +27,7 @@
                     </ul>
                     <a href="{{ urlLocale('') }}#contact_us" class="button-primary">{{ __('buttons.install_a_home_elevator') }}</a>
                     <a href="javascript:;" id="sidebarToggle" class="ms-3">
-                        <img src="{{ asset('public/frontend/images/menu-burger.png') }}" alt="">
+                        <img src="{{ asset('public/frontend/images/menu-burger.png') }}" alt="" style="height: 45px">
                     </a>
                 </div>
             </div>
