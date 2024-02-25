@@ -183,14 +183,12 @@
             <div class="row">
                 @foreach ($product['product_id']['product_id_has_product_technology_id'] as $key => $val)
                     <div class="col-6 col-md-4">
-                        <a href="">
-                            <div class="card-standard bg-gray mb-4">
-                                <div class="card-standard_img" style="background-image: url('{{ $val['product_technology_id']['image']['path'] ?? '#' }}');"></div>
-                                <div class="card-standard_content">
-                                    <h5 class="title-20-bold">{{ $val['product_technology_id']['product_technology'][0]['name'] }}</h5>
-                                </div>
+                        <div class="card-standard background-default bg-gray mb-4" style="background-image:linear-gradient(0deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)), url('{{ $val['product_technology_id']['image']['path'] ?? '#' }}')">
+                            <div class="card-standard_img"></div>
+                            <div class="card-standard_content">
+                                <h5 class="title-20-bold c-white">{{ $val['product_technology_id']['product_technology'][0]['name'] }}</h5>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -199,27 +197,28 @@
 
     @foreach ($product['product_id']['product_feature_id'] as $key => $val)
         @if ($key % 2 == 0)
-            <div class="section background-default" style="background-image: url('{{ $val['image']['path'] ?? '#' }}');">
+            <div class="section background-default" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ $val['image']['path'] ?? '#' }}'); padding: 200px 0 200px 0;">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-6">
-                            <h5 class="title-50-bold">{{ $val['product_feature'][0]['name'] }}</h5>
-                            <p>{{ $val['product_feature'][0]['description'] }}</p>
+                            <h5 class="title-50-bold c-white">{{ $val['product_feature'][0]['name'] }}</h5>
+                            <p class="c-white">{{ $val['product_feature'][0]['description'] }}</p>
                         </div>
                         <div class="col-12 col-md-6">
+
                         </div>
                     </div>
                 </div>
             </div>
         @else
-            <div class="section background-default" style="background-image: url('{{ $val['image']['path'] ?? '#' }}');">
+            <div class="section background-default" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ $val['image']['path'] ?? '#' }}');">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-6">
                         </div>
                         <div class="col-12 col-md-6">
-                            <h5 class="title-50-bold">{{ $val['product_feature'][0]['name'] }}</h5>
-                            <p>{{ $val['product_feature'][0]['description'] }}</p>
+                            <h5 class="title-50-bold c-white">{{ $val['product_feature'][0]['name'] }}</h5>
+                            <p class="c-white">{{ $val['product_feature'][0]['description'] }}</p>
                         </div>
                     </div>
                 </div>
