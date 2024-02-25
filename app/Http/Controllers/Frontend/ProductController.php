@@ -10,6 +10,8 @@ use App\Models\ProductCategory;
 use App\Models\ProductEuropeanStandard;
 use App\Models\ProductTechnology;
 use App\Models\ProductTechnologyMoreFeatureImage;
+use App\Models\ProductCustomizationId;
+use Illuminate\Support\Facades\Crypt;
 
 class ProductController extends Controller
 {
@@ -144,5 +146,33 @@ class ProductController extends Controller
     public function detail()
     {
         return view('frontend.pages.product.detail');
+    }
+
+    public function getCustomization(Request $request)
+    {
+        $id = Crypt::decrypt($request->id);
+
+        $customization = ProductCustomizationId::with([
+            'productCustomization' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'image',
+            'productCustomizationFeatureId',
+            'productCustomizationFeatureId.image',
+            'productCustomizationFeatureId.productCustomizationFeature' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'productCustomizationOptionId',
+            'productCustomizationOptionId.productCustomizationOption',
+            'productCustomizationOptionId.productCustomizationOptionVariationId',
+            'productCustomizationOptionId.productCustomizationOptionVariationId.image',
+            'productCustomizationOptionId.productCustomizationOptionVariationId.productCustomizationOptionVariation' => function($query){
+                $query->where('language_code', getLocale());
+            },
+        ])
+        ->find($id)
+        ->toArray();
+
+        return view('frontend.pages.product.popup.customization', compact('customization'))->render();
     }
 }

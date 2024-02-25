@@ -6,8 +6,9 @@
             <div class="row h-100 justify-content-center">
                 <div class="col-12 col-md-8">
                     <div class="flex-center">
-                        <span class="banner-contain">
+                        <span class="banner-contain text-center">
                             <h1 class="mb-4">{{ $product['name'] }}</h1>
+                            <p>{{ $product['short_description'] }}</p>
                         </span>
                     </div>
                 </div>
