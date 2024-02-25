@@ -104,7 +104,7 @@
             <div class="section">
                 <div class="container">
                     @if ($key == 0)
-                        <hr>
+                        <hr class="mb-5">
                     @endif
                     <div class="row">
                         <div class="col-12 col-md-6 text-center">
