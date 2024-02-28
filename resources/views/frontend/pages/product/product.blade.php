@@ -150,24 +150,43 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center mb-5">
-                    <h3 class="title-50-bold">3 Tier Customization</h3>
+                    <h3 class="title-50-bold">{{ count($product['product_id']['product_customization_id']) }} Tier Customization</h3>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-md-4">
-                    <a href="javascript:;" data-fancybox data-src="#customization">
-                        <img src="{{ asset('public/frontend/images/Group 124.png') }}" alt="">
-                    </a>
-                </div>
-                <div class="col-12 col-md-4">
-                    <a href="javascript:;" data-fancybox data-src="#customization">
-                        <img src="{{ asset('public/frontend/images/Group 125.png') }}" alt="">
-                    </a>
-                </div>
-                <div class="col-12 col-md-4">
-                    <a href="javascript:;" data-fancybox data-src="#customization">
-                        <img src="{{ asset('public/frontend/images/Group 126.png') }}" alt="">
-                    </a>
+                <div class="col-12">
+                    <div class="row">
+                        @php
+                            $col = 'col-md-12';
+                            if (count($product['product_id']['product_customization_id']) % 4 == 0) {
+                                $col = 'col-md-3';
+                            }else if (count($product['product_id']['product_customization_id']) % 3 == 0) {
+                                $col = 'col-md-4';
+                            }else if (count($product['product_id']['product_customization_id']) % 2 == 0) {
+                                $col = 'col-md-6';
+                            }
+                        @endphp
+                        @foreach ($product['product_id']['product_customization_id'] as $key => $val)
+                            <div class="col-12 {{ $col }} text-center mb-4">
+                                {{-- <div class="position-relative">
+                                    <img src="{{ $val['image']['path'] }}" alt="" class="w-100">
+                                    <div class="position-middle title-30-bold">{{ $val['product_customization'][0]['name'] }}</div>
+                                    <div class="card-standard_content">
+                                        <h5 class="title-20-bold c-white">{{ $val['product_customization'][0]['name'] }}</h5>
+                                    </div>
+                                </div> --}}
+                                <div class="card-standard background-default bg-gray mb-4" style="background-image:linear-gradient(0deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)), url('{{ $val['image']['path'] }}')">
+                                    <div class="card-standard_img"></div>
+                                    <div class="card-standard_content">
+                                        <h5 class="title-20-bold c-white">{{ $val['product_customization'][0]['name'] }}</h5>
+                                    </div>
+                                </div>
+                                <span class="d-block mt-5">
+                                    <a href="javascript:;" class="button-orange btn-customization" data-id="{{ Crypt::encrypt($val['id']) }}">Learn More</a>
+                                </span>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
@@ -287,30 +306,30 @@
     </div>
 
     <div id="customization" style="display: none; min-width: 1200px;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-7 text-center mb-5">
-                    <h5 class="title-50-bold">3 Tier Customization</h5>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-6">
-                    <div class="card-standard bg-gray background-default text-center" style="background-image: url('{{ asset('public/frontend/images/dawdwafa.jpg') }}');">
-                        <div class="card-standard_img"></div>
-                        <div class="card-standard_content">
-                            <h5 class="title-30-bold c-white">Cibes Air</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <h5 class="title-30-bold">Screwdrive</h5>
-                    <p>Screwdrive bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
-                </div>
-            </div>
-        </div>
+
     </div>
 
 @endsection
 
 @push('script')
+<script>
+    $(document).ready(function(){
+        $('.btn-customization').click(function(e){
+            e.preventDefault();
+
+            var id = $(this).data('id');
+
+            $.ajax({
+                url: "{{ urlLocale('product/get-customization') }}",
+                data: {
+                    id: id
+                },
+                success: function(data){
+                    $("#customization").html(data);
+                    $("#customization").fancybox().trigger('click');
+                }
+            })
+        });
+    });
+</script>
 @endpush

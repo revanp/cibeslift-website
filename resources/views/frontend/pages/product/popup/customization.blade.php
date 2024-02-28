@@ -31,7 +31,6 @@
                             @foreach ($val['product_customization_option_variation_id'] as $key2 => $val2)
                                 <li>
                                     <div class="{{ (str_contains($val['product_customization_option'][0]['name'], 'Color') || str_contains($val['product_customization_option'][0]['name'], 'Warna')) ? 'color-item' : 'pattern-item' }}">
-                                        {{-- <img src="{{ $val2['image']['path'] ?? '' }}" class="w-100" alt=""> --}}
                                         <span style="background-image: url('{{ $val2['image']['path'] ?? '' }}');"></span>
                                         <label>{{ $val2['product_customization_option_variation'][0]['name'] }}</label>
                                     </div>
