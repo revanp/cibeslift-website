@@ -23,9 +23,13 @@ $('.slider-history').slick({
 
 $(window).on("scroll", function() {
     if($(window).scrollTop() > 50) {
-        $(".header-home").addClass("bg-color-header-blue");
+        if(!$('.sidebar').hasClass('active')){
+            $(".header-home").addClass("bg-color-header-blue");
+        }
     } else {
-        $(".header-home").removeClass("bg-color-header-blue");
+        if(!$('.sidebar').hasClass('active')){
+            $(".header-home").removeClass("bg-color-header-blue");
+        }
     }
 });
 
@@ -47,4 +51,5 @@ items.forEach(item => item.addEventListener('click', toggleAccordion));
 
 $('#sidebarToggle').on('click', function() {
     $('.sidebar').toggleClass('active');
+    $(".header-home").addClass("bg-color-header-blue");
 });
