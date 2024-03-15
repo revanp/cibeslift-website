@@ -29,7 +29,7 @@
                     @endphp
                     @foreach ($product['product_id']['child'] as $key => $val)
                         <div class="col-12 {{ $col }} text-center">
-                            <a href="#" class="button-orange">{{ $val['product'][0]['name'] }}</a>
+                            <a href="{{ urlLocale('product/'.$product['slug'].'/'.$val['product'][0]['slug']) }}" class="button-orange">{{ $val['product'][0]['name'] }}</a>
                         </div>
                     @endforeach
                 </div>
@@ -216,7 +216,7 @@
 
     @foreach ($product['product_id']['product_feature_id'] as $key => $val)
         @if ($key % 2 == 0)
-            <div class="section background-default" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ $val['image']['path'] ?? '#' }}'); padding: 200px 0 200px 0;">
+            <div class="section background-default" style="background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)), url('{{ $val['image']['path'] ?? '#' }}'); padding: 200px 0 200px 0;">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-6">
@@ -230,7 +230,7 @@
                 </div>
             </div>
         @else
-            <div class="section background-default" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ $val['image']['path'] ?? '#' }}');">
+            <div class="section background-default" style="background-image: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)), url('{{ $val['image']['path'] ?? '#' }}');">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-6">

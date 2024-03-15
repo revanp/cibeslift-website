@@ -181,7 +181,7 @@
         </div>
     </div>
 
-    <div class="section">
+    {{-- <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center mb-5">
@@ -231,7 +231,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="section">
         <div class="container">
@@ -308,34 +308,39 @@
         </div>
     </div>
 
-    <div class="section">
+    @php
+        $backgroundStyle = !empty($product['product_id']['contact_us_image']['path']) ? "background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('".$product['product_id']['contact_us_image']['path']."'); background-size: cover;" : '';
+        $textWhite = !empty($product['product_id']['contact_us_image']['path']) ? 'c-white' : '';
+    @endphp
+    <div class="section" style="{{ $backgroundStyle }}">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <span class="text-center">
-                        <h5 class="title-50-bold">Punya Pertanyaan Seputar {{ $product['name'] }}?</h5>
-                        <p class="mb-4">Isi form berikut ini dan Lift Consultant Kami Siap Membantu!</p>
+                        <h5 class="title-50-bold {{ $textWhite }}">Punya Pertanyaan Seputar {{ $product['name'] }}?</h5>
+                        <p class="mb-4 {{ $textWhite }}">Isi form berikut ini dan Lift Consultant Kami Siap Membantu!</p>
                     </span>
                     <div class="card-form">
-                        <form action="">
+                        <form action="{{ url('form-contact-us') }}" method="POST" class="form-contact-us">
+                            @csrf
                             <div class="row mb-4">
-                                <div class="col-12 col-md-6">
-                                    <input class="form-control" type="text" placeholder="Name">
+                                <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                    <input class="form-control" type="text" placeholder="{{ __('placeholder.name') }}" name="name">
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <input class="form-control" type="text" placeholder="Telepon">
+                                <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                    <input class="form-control" type="text" placeholder="{{ __('placeholder.phone') }}" name="phone_number">
                                 </div>
                             </div>
                             <div class="row mb-4">
-                                <div class="col-12 col-md-6">
-                                    <input class="form-control" type="text" placeholder="Email">
+                                <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                    <input class="form-control" type="text" placeholder="{{ __('placeholder.email') }}" name="email">
+                                </div>
+                                <div class="col-12 col-md-3 mb-4 mb-md-0">
+                                    <input class="form-control" type="text" placeholder="{{ __('placeholder.city') }}" name="city">
                                 </div>
                                 <div class="col-12 col-md-3">
-                                    <input class="form-control" type="text" placeholder="Kota">
-                                </div>
-                                <div class="col-12 col-md-3">
-                                    <select class="form-select">
-                                        <option selected>Jumlah Lantai</option>
+                                    <select class="form-select" name="number_of_floors">
+                                        <option selected disabled>{{ __('placeholder.number_of_floors') }}</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
@@ -344,12 +349,12 @@
                             </div>
                             <div class="row mb-5">
                                 <div class="col-12">
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <textarea class="form-control" rows="7" name="message" placeholder="{{ __('placeholder.additional_note') }}"></textarea>
                                 </div>
                             </div>
                             <div class="row mb-5">
                                 <div class="col text-center">
-                                    <a href="" class="button-orange">Hubungi Saya</a>
+                                    <button class="button-orange">Hubungi Saya</button>
                                 </div>
                             </div>
                         </form>
@@ -384,6 +389,33 @@
                 }
             })
         });
+
+        $('.form-contact-us').submit(function(e){
+            e.preventDefault();
+
+            var form = $(this);
+
+            var action = $(this).attr('action');
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: action,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data){
+                    toastr.success(data.message);
+                    form.trigger('reset');
+                    $("html, body").animate({scrollTop: 0}, 1000);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    toastr.error(jqXHR.responseJSON.message);
+                }
+            })
+        })
     });
 </script>
 @endpush

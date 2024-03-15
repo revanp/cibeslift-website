@@ -920,6 +920,7 @@ class ProductsController extends Controller
             'product',
             'productSpecification',
             'banner',
+            'contactUsImage',
             'specificationImage',
             'thumbnail',
             'menuIcon',
@@ -1011,6 +1012,7 @@ class ProductsController extends Controller
             'banner' => ['file'],
             'thumbnail' => ['file'],
             'specification_image' => ['file'],
+            'contact_us_image' => ['file'],
             // 'product_summary_type' => ['required'],
             'sort' => [],
             'technologies' => ['required', 'array']
@@ -1023,6 +1025,7 @@ class ProductsController extends Controller
             'thumbnail' => 'Thumbnail',
             'spesification_image' => 'Spesification Image',
             'product_summary_type' => 'Product Summary Type',
+            'contact_us_image' => 'Contact Us Image',
             'sort' => 'Sort',
             'technologies' => 'Technologies'
         ];
@@ -1425,6 +1428,16 @@ class ProductsController extends Controller
                     'productSummaryImage',
                     "images/products/products/product-summary-image/{$idProductId}",
                     'product_summary_image'
+                );
+            }
+
+            if ($request->hasFile('contact_us_image')) {
+                $this->storeFile(
+                    $request->file('contact_us_image'),
+                    $productId,
+                    'contactUsImage',
+                    "images/products/products/contact-us-image/{$idProductId}",
+                    'contact_us_image'
                 );
             }
 

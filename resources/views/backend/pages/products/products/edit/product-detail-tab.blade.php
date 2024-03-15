@@ -58,6 +58,16 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group picture_upload col-md-6">
+                <label>Contact Us Background</label>
+                <div class="form-group__file">
+                    <div class="file-wrapper">
+                        <input type="file" name="contact_us_image" class="file-input"/>
+                        <div class="file-preview-background">+</div>
+                        <img src="{{ $data['contact_us_image']['path'] ?? '' }}" style="opacity: 1" width="240px" class="file-preview"/>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

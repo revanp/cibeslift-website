@@ -104,4 +104,9 @@ class ProductId extends Model
     {
         return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'specification_image');
     }
+
+    public function contactUsImage()
+    {
+        return $this->morphOne('App\Models\Media', 'mediable')->where('content_type', 'contact_us_image');
+    }
 }

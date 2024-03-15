@@ -25,9 +25,10 @@ Route::group(['prefix' => '{locale}', 'as' => '', 'middleware' => ['setLocale']]
     Route::get('/product', [\App\Http\Controllers\Frontend\ProductController::class, 'index'])->name('product.index');
     Route::get('product/get-customization', [App\Http\Controllers\Frontend\ProductController::class, 'getCustomization']);
     Route::get('/product/{slug}', [App\Http\Controllers\Frontend\ProductController::class, 'product'])->name('product.category');
-    Route::get('/product/detail', [App\Http\Controllers\Frontend\ProductController::class, 'detail'])->name('product.detail');
+    Route::get('/product/{slug}/{productSlug}', [App\Http\Controllers\Frontend\ProductController::class, 'detail'])->name('detail');
+    // Route::get('/product/detail', [App\Http\Controllers\Frontend\ProductController::class, 'detail'])->name('product.detail');
 
-    // Route::get('/product/{categorySlug}/{productSlug}', [App\Http\Controllers\Frontend\ProductController::class, 'detail'])->name('detail');
+
     Route::get('/blog', [App\Http\Controllers\Frontend\BlogController::class, 'index'])->name('index');
     Route::get('/blog/{slug}', [App\Http\Controllers\Frontend\BlogController::class, 'detail'])->name('detail');
 

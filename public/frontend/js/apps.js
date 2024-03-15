@@ -21,6 +21,17 @@ $('.slider-history').slick({
     ]
 });
 
+$(document).ready(function() {
+    if($(window).scrollTop() > 50) {
+        if(!$('.sidebar').hasClass('active')){
+            $(".header-home").addClass("bg-color-header-blue");
+        }
+    } else {
+        if(!$('.sidebar').hasClass('active')){
+            $(".header-home").removeClass("bg-color-header-blue");
+        }
+    }
+});
 $(window).on("scroll", function() {
     if($(window).scrollTop() > 50) {
         if(!$('.sidebar').hasClass('active')){

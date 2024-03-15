@@ -108,6 +108,7 @@ class ProductController extends Controller
                 $query->where('language_code', getLocale());
             },
             'productId.banner',
+            'productId.contactUsImage',
             'productId.specificationImage',
             'productId.productSpecification',
             'productId.child',
@@ -143,9 +144,77 @@ class ProductController extends Controller
 
     }
 
-    public function detail()
+    public function detail($lang, $slug, $productSlug)
     {
-        return view('frontend.pages.product.detail');
+        $productLevel1 = Product::where('slug', $slug)
+            ->where('language_code', getLocale())
+            ->whereHas('productId', function($query){
+                $query->where('level', 1);
+            })
+            ->first();
+
+        if(empty($productLevel1)){
+            abort(404);
+        }
+
+        $product = Product::with([
+            'productId',
+            'productId.productUspId',
+            'productId.productUspId.image',
+            'productId.productUspId.productUsp' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'productId.productHighlightId',
+            'productId.productHighlightId.image',
+            'productId.productHighlightId.productHighlight' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'productId.productIdHasProductTechnologyId',
+            'productId.productIdHasProductTechnologyId.productTechnologyId',
+            'productId.productIdHasProductTechnologyId.productTechnologyId.image',
+            'productId.productIdHasProductTechnologyId.productTechnologyId.productTechnology' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'productId.productFeatureId',
+            'productId.productFeatureId.image',
+            'productId.productFeatureId.productFeature' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'productId.productIdHasFaqId',
+            'productId.productIdHasFaqId.faqId',
+            'productId.productIdHasFaqId.faqId.faq' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'productId.banner',
+            'productId.contactUsImage',
+            'productId.specificationImage',
+            'productId.productSpecification',
+            'productId.child',
+            'productId.child.thumbnail',
+            'productId.child.specificationImage',
+            'productId.child.product' => function($query){
+                $query->where('language_code', getLocale());
+            },
+            'productId.productCustomizationId',
+            'productId.productCustomizationId.image',
+            'productId.productCustomizationId.productCustomization' => function($query){
+                $query->where('language_code', getLocale());
+            },
+        ])
+        ->where('slug', $productSlug)
+        ->where('language_code', getLocale())
+        ->whereHas('productId', function($query){
+            $query->where('level', 2);
+        })
+        ->first();
+
+        if(empty($product)){
+            abort(404);
+        }
+
+        $product = $product->toArray();
+
+        return view('frontend.pages.product.detail', compact('product'));
     }
 
     public function getCustomization(Request $request)
