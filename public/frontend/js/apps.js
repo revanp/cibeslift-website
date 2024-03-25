@@ -48,3 +48,30 @@ items.forEach(item => item.addEventListener('click', toggleAccordion));
 $('#sidebarToggle').on('click', function() {
     $('.sidebar').toggleClass('active');
 });
+
+if ($(window).width() > 768) {
+    $(".menu li.has-child").on({
+        mouseenter: function () {
+            $('.header-dropdown').addClass('active');
+        },
+        mouseleave: function () {
+            $('.header-dropdown').removeClass('active');
+        }
+    });    
+} else {
+    $(".menu li.has-child").on('click', function() {
+        $('.header-dropdown').addClass('active');
+    });
+    $('.closeMenus').on('click', function() {
+        $('.header-dropdown').removeClass('active');
+    });
+}
+
+$('.menuToggle').on('click', function() {
+    $('.main-menu').addClass('active');
+});
+
+$('.closeMenu').on('click', function() {
+    $('.main-menu').removeClass('active');
+});
+

@@ -69,6 +69,28 @@ body {
     color: white;
     text-decoration: none;
 }
+.nav-tabs {
+    border: 0;
+}
+.nav-tabs .nav-link {
+    color: #0F1F2A;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 20px 60px;
+}
+.nav-tabs .nav-link:hover {
+    border-color: #fff #fff #fff #fff;
+    color: #0F1F2A;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 20px 60px;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    border-color: #fff #fff #F89828 #fff;
+    color: #0F1F2A;
+    padding-bottom: 8px;
+    font-weight: 600;
+}
 .button-orange {
     display: inline-block;
     height: 46px;
@@ -183,6 +205,13 @@ body {
 .title-25 {
     font-size: 25px;
     font-style: normal;
+    line-height: normal;
+}
+.title-25-bold {
+    color: #000;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
     line-height: normal;
 }
 .title-20-bold {
@@ -759,10 +788,6 @@ a:hover {
     text-align: center;
     border-radius: 24px;
 }
-
-.header-dropdown {
-
-}
 .page-link {
     background: transparent !important;
     border: 0 !important;
@@ -773,9 +798,37 @@ a:hover {
     height: 50px;
     border-radius: 50px;    */
 }
-
+.header-dropdown {
+    background: white;
+    position: absolute;
+    top: 140px;
+    left: 0;
+    width: 100%;
+    height: 480px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .4s;
+} 
+.header-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    top: 80px;
+}
+.tab-content>.tab-pane {
+    padding: 24px 0;
+}
+.tab-content a {
+    padding: 0 !important;
+}
+.tab-content .card-background-content p {
+    line-height: 20px;
+    margin-bottom: 0;
+}
+.menu-main {}
 @media screen and (max-width: 768px) {
-
+    .menu-main {
+        
+    }
     .card-background {
         height: 300px;
         margin-bottom: 12px;
@@ -796,8 +849,26 @@ a:hover {
         left: auto;
         right: -100%;
         bottom: 0;
+        transition: all .4s;
         width: 100%;
-        background: white;
+        background: #0F1F2A !important;
+    }
+    .main-menu .menu {
+        width: 100%;
+    }
+    .main-menu ul li {
+        display: block;
+        text-align: left;
+    }
+    .main-menu.active {
+        right: 0;
+        text-align: left;
+        padding: 20px;
+    }
+    .header-dropdown.active {
+        top: 0;
+        height: 100%;
+        padding-top: 50px;
     }
     .title-50-bold {
         font-size: 32px;
@@ -809,9 +880,36 @@ a:hover {
     .sidebar-info {
         left: 12px;
         right: 12px;
+        padding: 12px;
+        border-radius: 12px;
+        bottom: 12px;
     }
     .footer .col {
         flex: auto;
         margin-bottom: 34px;
+    }
+    .banner-contain h1 {
+        font-size: 38px;
+    }
+    .banner-contain p { 
+        font-size: 16px;
+    }
+    .closeMenu {
+        position: absolute;
+        top: 0;
+        right: 20px;
+    }
+    .nav-tabs .nav-link {
+        font-size: 16px;
+        padding: 20px 8px;
+    }
+    .closeMenus {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+    .nav-tabs .nav-link:hover { 
+        padding: 20px 8px;
+        font-size: 16px;
     }
 }
