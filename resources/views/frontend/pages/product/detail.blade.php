@@ -125,7 +125,7 @@
                                     <div class="position-middle title-30-bold">{{ $val['product_customization'][0]['name'] }}</div>
                                 </div>
                                 <span class="d-block mt-5">
-                                    <a href="javascript:;" data-fancybox data-src="#customization" class="button-orange">Learn More</a>
+                                    <a href="javascript:;" class="button-orange btn-customization" data-id="{{ Crypt::encrypt($val['id']) }}">Learn More</a>
                                 </span>
                             </div>
                         @endforeach
@@ -181,7 +181,7 @@
         </div>
     </div>
 
-    <div class="section">
+    {{-- <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center mb-5">
@@ -231,7 +231,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="section">
         <div class="container">
@@ -308,34 +308,39 @@
         </div>
     </div>
 
-    <div class="section">
+    @php
+        $backgroundStyle = !empty($product['product_id']['contact_us_image']['path']) ? "background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('".$product['product_id']['contact_us_image']['path']."'); background-size: cover;" : '';
+        $textWhite = !empty($product['product_id']['contact_us_image']['path']) ? 'c-white' : '';
+    @endphp
+    <div class="section" style="{{ $backgroundStyle }}">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <span class="text-center">
-                        <h5 class="title-50-bold">Punya Pertanyaan Seputar {{ $product['name'] }}?</h5>
-                        <p class="mb-4">Isi form berikut ini dan Lift Consultant Kami Siap Membantu!</p>
+                        <h5 class="title-50-bold {{ $textWhite }}">Punya Pertanyaan Seputar {{ $product['name'] }}?</h5>
+                        <p class="mb-4 {{ $textWhite }}">Isi form berikut ini dan Lift Consultant Kami Siap Membantu!</p>
                     </span>
                     <div class="card-form">
-                        <form action="">
+                        <form action="{{ url('form-contact-us') }}" method="POST" class="form-contact-us">
+                            @csrf
                             <div class="row mb-4">
-                                <div class="col-12 col-md-6">
-                                    <input class="form-control" type="text" placeholder="Name">
+                                <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                    <input class="form-control" type="text" placeholder="{{ __('placeholder.name') }}" name="name">
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <input class="form-control" type="text" placeholder="Telepon">
+                                <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                    <input class="form-control" type="text" placeholder="{{ __('placeholder.phone') }}" name="phone_number">
                                 </div>
                             </div>
                             <div class="row mb-4">
-                                <div class="col-12 col-md-6">
-                                    <input class="form-control" type="text" placeholder="Email">
+                                <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                    <input class="form-control" type="text" placeholder="{{ __('placeholder.email') }}" name="email">
+                                </div>
+                                <div class="col-12 col-md-3 mb-4 mb-md-0">
+                                    <input class="form-control" type="text" placeholder="{{ __('placeholder.city') }}" name="city">
                                 </div>
                                 <div class="col-12 col-md-3">
-                                    <input class="form-control" type="text" placeholder="Kota">
-                                </div>
-                                <div class="col-12 col-md-3">
-                                    <select class="form-select">
-                                        <option selected>Jumlah Lantai</option>
+                                    <select class="form-select" name="number_of_floors">
+                                        <option selected disabled>{{ __('placeholder.number_of_floors') }}</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
@@ -344,12 +349,12 @@
                             </div>
                             <div class="row mb-5">
                                 <div class="col-12">
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <textarea class="form-control" rows="7" name="message" placeholder="{{ __('placeholder.additional_note') }}"></textarea>
                                 </div>
                             </div>
                             <div class="row mb-5">
                                 <div class="col text-center">
-                                    <a href="" class="button-orange">Hubungi Saya</a>
+                                    <button class="button-orange">Hubungi Saya</button>
                                 </div>
                             </div>
                         </form>
@@ -360,82 +365,57 @@
     </div>
 
     <div id="customization" style="display: none; min-width: 1200px;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-7 text-center mb-5">
-                    <h5 class="title-50-bold">3 Tier Customization</h5>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-3 text-center" >
-                    <img src="{{ asset('public/frontend/images/Cibes_ProductPage_V80LXPlus_02_110_010_0001 1.png') }}" class="w-100" alt="">
-                </div>
-                <div class="col-12 col-md-9">
-                    <div class="row">
-                        <div class="col-12">
-                            <h5 class="title-30-bold">Screwdrive</h5>
-                            <p>Screwdrive bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-4">
-                            <div class="card-standard position-relative card-standard-smalls background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                                <div class="card-standard_content card-standard_content_bottom text-center">
-                                    <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="card-standard position-relative card-standard-smalls background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                                <div class="card-standard_content card-standard_content_bottom text-center">
-                                    <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="card-standard position-relative card-standard-smalls background-default bg-gray mb-4" style="background-image: url('{{ asset('public/frontend/images/Rectangle 10 (4).jpg') }}')">
-                                <div class="card-standard_content card-standard_content_bottom text-center">
-                                    <h5 class="title-20-bold c-white">Cibes Lift Indonesia HQ</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-5 mb-3">
-                        <div class="col-12 mb-4">
-                            <h5 class="title-30-bold">Color Options</h5>
-                        </div>
-                        <div class="col-12">
-                            <ul class="color-show">
-                                <li>
-                                    <div class="color-item">
-                                        <span style="background-color: red;"></span>
-                                        <label>January 4</label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="row mt-5 mb-3">
-                        <div class="col-12 mb-4">
-                            <h5 class="title-30-bold">Mood Wall Pattern Options</h5>
-                        </div>
-                        <div class="col-12">
-                            <ul class="pattern-show">
-                                <li>
-                                    <div class="pattern-item">
-                                        <span style="background-color: red;"></span>
-                                        <label>Forest Pines</label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 
 @endsection
 
 @push('script')
+<script>
+    $(document).ready(function(){
+        $('.btn-customization').click(function(e){
+            e.preventDefault();
+
+            var id = $(this).data('id');
+
+            $.ajax({
+                url: "{{ urlLocale('product/get-customization') }}",
+                data: {
+                    id: id
+                },
+                success: function(data){
+                    $("#customization").html(data);
+                    $("#customization").fancybox().trigger('click');
+                }
+            })
+        });
+
+        $('.form-contact-us').submit(function(e){
+            e.preventDefault();
+
+            var form = $(this);
+
+            var action = $(this).attr('action');
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: action,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data){
+                    toastr.success(data.message);
+                    form.trigger('reset');
+                    $("html, body").animate({scrollTop: 0}, 1000);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    toastr.error(jqXHR.responseJSON.message);
+                }
+            })
+        })
+    });
+</script>
 @endpush
